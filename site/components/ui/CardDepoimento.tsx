@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { StarIcon, UserIcon } from "@phosphor-icons/react/dist/ssr";
+import { caminhoPublico } from "@/lib/caminho";
 
 type Props = {
   texto: string;
@@ -36,7 +37,7 @@ export function CardDepoimento({ texto, nome, foto, estrelas }: Props) {
       <figcaption className="mt-6 flex items-center gap-3 border-t border-hairline pt-5">
         {foto ? (
           <Image
-            src={foto}
+            src={caminhoPublico(foto)}
             alt=""
             width={40}
             height={40}

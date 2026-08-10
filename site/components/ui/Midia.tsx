@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CameraIcon } from "@phosphor-icons/react/dist/ssr";
+import { caminhoPublico } from "@/lib/caminho";
 
 type Props = {
   /** Caminho em /public/images quando a foto real existir. Sem isso, renderiza o slot com o briefing. */
@@ -55,7 +56,7 @@ export function Midia({
         style={estilo}
       >
         <Image
-          src={src}
+          src={caminhoPublico(src)}
           alt={alt}
           fill
           priority={prioridade}

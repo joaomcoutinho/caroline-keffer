@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { caminhoPublico } from "@/lib/caminho";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { navegacao, CTA_PRIMARIO } from "@/content/site";
 
@@ -28,7 +29,7 @@ export function Cabecalho() {
           className="shrink-0 transition-transform duration-200 ease-[var(--ease-soft)] hover:scale-[1.04]"
         >
           <Image
-            src="/images/logo-caroline-keffer.jpg"
+            src={caminhoPublico("/images/logo-caroline-keffer.jpg")}
             alt="Clínica Pet Caroline Keffer"
             width={48}
             height={48}

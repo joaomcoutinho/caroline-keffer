@@ -18,3 +18,6 @@ npm-debug.log*
 # Ficam na máquina para refazer recorte, mas não vão para o repositório —
 # são dezenas de MB que o site não serve.
 _fontes/
+
+# Saída do export estático (gerada pela Action a cada push)
+out/

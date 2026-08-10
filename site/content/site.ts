@@ -63,7 +63,7 @@ export const hero = {
      * atrás da pílula do header, e não há imagem acima dela para revelar. A
      * única saída seria encurtar o painel, o que abria um vão no topo.
      */
-    src: "/images/foto_background_hero.png",
+    src: "/images/foto_background_hero.webp",
     alt: "Dra. Caroline Keffer sorrindo, segurando um cão shih-tzu no consultório",
     briefing: "Dra. Carol atendendo, retrato vertical, luz natural",
     proporcao: "4 / 5",
@@ -117,7 +117,7 @@ export const servicos = {
       texto:
         "O atendimento do dia a dia: o que está errado, o que fazer e quanto tempo leva.",
       icone: "stethoscope",
-      src: "/images/consultorio_expandido_16x11_2400px.png",
+      src: "/images/consultorio_expandido_16x11_2400px.webp",
       alt: "Consultório da clínica, com mesa de inox, pia e armário",
       briefing: "Dra. Carol examinando um cão na mesa de atendimento",
       // Já entregue em 16:11: o enquadramento é o da própria foto.
@@ -128,7 +128,7 @@ export const servicos = {
       texto:
         "Castração e cirurgia geral, com pré-operatório e acompanhamento na recuperação.",
       icone: "firstAid",
-      src: "/images/mini_canil_alargado.png",
+      src: "/images/mini_canil_alargado.webp",
       alt: "Área de internação da clínica, com baias de vidro para recuperação",
       briefing: "Sala de cirurgia da clínica, equipamento em foco",
       posicao: "center center",
@@ -137,7 +137,7 @@ export const servicos = {
       nome: "Exames laboratoriais",
       texto: "Coleta feita aqui, sem mandar você para outro endereço.",
       icone: "flask",
-      src: "/images/area_medica_alargado.png",
+      src: "/images/area_medica_alargado.webp",
       alt: "Área técnica da clínica, com bancada de granito e material de coleta",
       briefing: "Coleta de sangue ou microscópio, detalhe de mãos",
       posicao: "center center",
@@ -148,7 +148,7 @@ export const servicos = {
       texto:
         "Para ver o que o exame de sangue não mostra, sem precisar de outro endereço.",
       icone: "scan",
-      src: "/images/veterinary_ultrasound_room.png",
+      src: "/images/veterinary_ultrasound_room.webp",
       alt: "Aparelho de ultrassom veterinário ao lado da mesa de atendimento",
       briefing: "Exame de imagem em andamento, animal contido com cuidado",
       posicao: "center center",
@@ -158,7 +158,7 @@ export const servicos = {
       texto:
         "A consulta vai até você. Resolve para animal idoso, gato que entra em pânico na caixa e pós-operatório em recuperação.",
       icone: "casa",
-      src: "/images/atendimento_domicilio.png",
+      src: "/images/atendimento_domicilio.webp",
       alt: "Cão sendo auscultado no sofá da casa do tutor, com a maleta veterinária ao lado",
       briefing: "Veterinária atendendo um animal na sala de casa do tutor",
       posicao: "center center",
@@ -172,7 +172,7 @@ export const servicos = {
        * na pasta como origem. No enquadramento cheio o filhote ocupava ~8% do
        * quadro e o card lia como "consultório vazio"; aqui ele ocupa ~26%.
        */
-      src: "/images/vet_puppy_recorte.png",
+      src: "/images/vet_puppy_recorte.webp",
       alt: "Filhote sentado na mesa de atendimento, ao lado de estetoscópio e balança",
       briefing: "Filhotes recém-nascidos sendo avaliados na clínica",
       posicao: "center center",
@@ -181,7 +181,7 @@ export const servicos = {
       nome: "Vacinas",
       texto: "Calendário completo para filhote e adulto, cão e gato.",
       icone: "syringe",
-      src: "/images/filhote_vacinacao_documental.png",
+      src: "/images/filhote_vacinacao_documental.webp",
       alt: "Filhote sendo vacinado sobre a mesa de inox, seguro por mãos enluvadas",
       briefing: "Filhote recebendo vacina, close no colo do tutor",
       posicao: "center 55%",
@@ -190,7 +190,7 @@ export const servicos = {
       nome: "Especialidades",
       texto: "Encaminhamento clínico quando o caso pede um olhar específico.",
       icone: "heartbeat",
-      src: "/images/gato_consultorio_documental.png",
+      src: "/images/gato_consultorio_documental.webp",
       alt: "Gato adulto sentado tranquilo sobre a mesa de atendimento",
       briefing: "Atendimento de gato, ambiente calmo",
       posicao: "center 45%",
@@ -199,7 +199,7 @@ export const servicos = {
       nome: "Banho e tosa",
       texto: "Feito na mesma casa que conhece a saúde e a pele do seu animal.",
       icone: "scissors",
-      src: "/images/caes_escovacao_documental.png",
+      src: "/images/caes_escovacao_documental.webp",
       alt: "Cão de pelo longo sendo escovado sobre a bancada do banho e tosa",
       briefing: "Cão no banho e tosa, secagem ou escovação",
       posicao: "center 50%",
@@ -226,19 +226,19 @@ export const semEstresse = {
     {
       texto: "Da recepção a médica, tratamento humanizado e profissional.",
       nome: "Wedja",
-      foto: "/images/wedja.png",
+      foto: "/images/wedja.webp",
       estrelas: 5,
     },
     {
       texto: "Ambiente agradável, equipe atenciosa e produtos bacanas.",
       nome: "Nathalia Magalhães",
-      foto: "/images/nathalia_magalhaes.png",
+      foto: "/images/nathalia_magalhaes.webp",
       estrelas: 5,
     },
     {
       texto: "Ótimos profissionais e preço justo.",
       nome: "Jamylle",
-      foto: "/images/jamylle.png",
+      foto: "/images/jamylle.webp",
       estrelas: 5,
     },
   ],
@@ -253,7 +253,7 @@ export const semEstresse = {
     fonte: "Avaliação no Google",
   },
   foto: {
-    src: "/images/sala_espera_alargado.png",
+    src: "/images/sala_espera_alargado.webp",
     alt: "Sala de espera da clínica, com cadeiras, bebedouro e planta",
     briefing: "Sala de espera real, tutor com o animal no colo, horizontal",
     /* Em largura total, 3/2 daria 800px de altura e dominaria a dobra. */
@@ -271,7 +271,7 @@ export const draCarol = {
   // VALIDAR: número do CRMV antes de publicar.
   credencial: "CRMV-PE (validar)",
   foto: {
-    src: "/images/dra_caroline_alargado.png",
+    src: "/images/dra_caroline_alargado.webp",
     alt: "Dra. Caroline Keffer segurando um gato na área de pet shop da clínica",
     briefing: "Retrato da Dra. Carol, vertical, olhando para a câmera",
     // A foto foi alargada para 3/2; forçá-la num retrato 4/5 recortaria a cena.

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { caminhoPublico } from "@/lib/caminho";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
@@ -42,7 +43,7 @@ export function Fechamento() {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src="/images/logo-caroline-keffer.jpg"
+                src={caminhoPublico("/images/logo-caroline-keffer.jpg")}
                 alt=""
                 width={44}
                 height={44}
