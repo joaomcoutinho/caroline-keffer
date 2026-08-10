@@ -1,0 +1,725 @@
+@import "tailwindcss";
+
+/*
+  TOKENS — Clínica Pet Caroline Keffer
+  Paleta derivada do logo (ver brief.md): teal #2E7A94, teal claro #7EC0DC,
+  vermelho do coração #C1272D, cinza, branco.
+
+  Decisões travadas:
+  - COLOR LOCK: o teal é a FAMÍLIA NEUTRA (toda a escala de "cinza" é tingida de
+    teal, o que afasta do azul-clarinho padrão do setor veterinário). O vermelho
+    é o ÚNICO acento e só aparece em ação. Nenhum segundo acento em nenhuma seção.
+  - O vermelho foi escurecido de #C1272D para #B3242A para passar WCAG AA com
+    texto branco (~6,1:1).
+  - SHAPE LOCK: botão = pílula. Card e mídia = 1rem. Campo = 0,5rem.
+  - THEME LOCK: claro por padrão, escuro via prefers-color-scheme. Uma única
+    inversão por página, no bloco final (CTA + rodapé), que fecha a página.
+  - MOTION 4: transição e revelação de entrada. Zero loop infinito.
+*/
+
+@theme {
+  /* Marca */
+  --color-teal: #2e7a94;
+  --color-teal-soft: #7ec0dc;
+  --color-accent: #b3242a;
+
+  /* Tipografia */
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+
+  /* Forma */
+  --radius-card: 1rem;
+  --radius-field: 0.5rem;
+
+  /* Motion */
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /*
+    Textura de patinhas.
+    Três pegadas num ladrilho de 560px, com ângulos e escalas diferentes e bem
+    afastadas entre si — a densidade anterior (três em 280px) lia como estampa.
+    O ladrilho grande é o que faz o padrão parecer espalhado em vez de repetido.
+  */
+  --textura-patas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560' viewBox='0 0 560 560'%3E%3Cg fill='%23000'%3E%3Cg transform='translate(88 104) rotate(-24)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3Cg transform='translate(412 268) rotate(16) scale(0.8)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3Cg transform='translate(214 452) rotate(-9) scale(0.66)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Tokens semânticos — é isto que os componentes consomem. Nunca hex solto no JSX. */
+:root {
+  --surface: #f8f7f4;
+  --surface-2: #eeeeea;
+  --surface-3: #e2e7e6;
+  --text: #0e2b34;
+  --text-2: #1c4451;
+  /* escurecido de #5d7d87 para passar AA em texto de 14px sobre --surface */
+  --text-3: #4c6a74;
+  --hairline: #d5dddd;
+  --brand: #2e7a94;
+  --brand-soft: #7ec0dc;
+  /* Ação = ciano da marca. Escurecido o suficiente para passar AA com texto branco. */
+  --action: #1f6e88;
+  --action-hover: #175a70;
+  --on-action: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #0b2129;
+    --surface-2: #102c35;
+    --surface-3: #163742;
+    --text: #eef3f3;
+    --text-2: #c6d6da;
+    --text-3: #92abb2;
+    --hairline: #214954;
+    --brand: #7ec0dc;
+    --brand-soft: #a8d6e8;
+    /* no escuro o ciano vem claro, com tinta escura por cima */
+    --action: #7ec0dc;
+    --action-hover: #a8d6e8;
+    --on-action: #07222c;
+  }
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+  --color-hairline: var(--hairline);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
+  --color-on-action: var(--on-action);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--brand);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* Bloco final: única inversão de tema da página, sempre no fim. */
+.bloco-escuro {
+  --surface: #0b2129;
+  --surface-2: #102c35;
+  --surface-3: #163742;
+  --text: #eef3f3;
+  --text-2: #c6d6da;
+  --text-3: #92abb2;
+  --hairline: #214954;
+  --brand: #7ec0dc;
+  --brand-soft: #a8d6e8;
+  --action: #7ec0dc;
+  --action-hover: #a8d6e8;
+  --on-action: #07222c;
+  background-color: var(--surface);
+  color: var(--text);
+}
+
+/*
+  Vidro da marca. Não é o glassmorphism genérico de blur em cima de cinza: a lâmina
+  é tingida de teal, tem borda de 1px e um brilho interno na aresta de cima, que é o
+  que dá a impressão de espessura em vez de "div translúcida".
+*/
+.vidro {
+  border: 1px solid color-mix(in srgb, var(--brand) 18%, transparent);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--brand) 8%, transparent),
+      transparent 60%
+    ),
+    color-mix(in srgb, var(--surface) 72%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 60%, transparent),
+    0 10px 30px -12px color-mix(in srgb, var(--text) 30%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .vidro {
+    border-color: color-mix(in srgb, var(--brand) 26%, transparent);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #fff 12%, transparent),
+      0 10px 30px -12px rgb(0 0 0 / 0.5);
+  }
+}
+
+/* Sem suporte a transparência: vira sólido, sem perder contraste. */
+@media (prefers-reduced-transparency: reduce) {
+  .vidro {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/*
+  Revelação de entrada. O estado visível é o DEFAULT: `revelar-oculto` só é
+  aplicado pelo cliente quando a animação pode de fato rodar (ver Revelar.tsx).
+  Sem JS, em aba oculta ou com reduced-motion, o conteúdo simplesmente aparece.
+*/
+[data-revelar] {
+  transition:
+    opacity 0.55s var(--ease-soft),
+    transform 0.55s var(--ease-soft);
+}
+
+[data-revelar].revelar-oculto {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+/* Mídia assenta em vez de só subir: escala levemente para dentro ao aparecer. */
+[data-revelar].revelar-zoom {
+  transition-duration: 0.8s;
+}
+
+[data-revelar].revelar-zoom.revelar-oculto {
+  transform: translateY(18px) scale(1.035);
+}
+
+/*
+  Botão flutuante do WhatsApp. Verde oficial da marca (#25D366) — única cor fora
+  da paleta no site inteiro, e de propósito: aqui ela é sinalização, não enfeite.
+*/
+.botao-flutuante {
+  background-color: #25d366;
+  /* Prende os anéis dentro do próprio botão: sem isto o z-index -1 escaparia. */
+  isolation: isolate;
+}
+
+.botao-flutuante:hover {
+  background-color: #1eb855;
+}
+
+/*
+  Ondas saindo do epicentro do botão flutuante. Dois anéis defasados em metade
+  do ciclo, então sempre há um em expansão.
+
+  Anima só `transform` e `opacity` (composição na GPU), nunca `box-shadow` ou
+  `width` — em loop infinito, animar propriedade de pintura esquenta o aparelho.
+*/
+.botao-flutuante::before,
+.botao-flutuante::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 9999px;
+  background-color: #25d366;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .botao-flutuante::before,
+  .botao-flutuante::after {
+    animation: pulso-onda 2.6s var(--ease-soft) infinite;
+  }
+
+  .botao-flutuante::after {
+    animation-delay: 1.3s;
+  }
+}
+
+@keyframes pulso-onda {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/*
+  Brilho em loop nos CTAs de WhatsApp.
+
+  Respiro de 2,8s de propósito: em ritmo curto viraria pisca-pisca de banner e
+  brigaria com o registro sóbrio do site. Só `opacity` anima; a sombra em si é
+  estática, então não há repintura a cada quadro.
+*/
+.cta-brilho::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--action) 30%, transparent),
+    0 0 22px 5px color-mix(in srgb, var(--action) 50%, transparent);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cta-brilho::after {
+    animation: cta-respira 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes cta-respira {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/*
+  Textura de patinhas no fundo das seções.
+
+  É uma MÁSCARA preenchida com a cor da marca, não uma imagem colorida: assim a
+  textura acompanha o tema claro e escuro sozinha, sem duas versões do arquivo.
+  Fica em ::before com `pointer-events: none`, atrás do conteúdo e acima do
+  fundo da seção. Opacidade baixa de propósito — é respiro de marca, não estampa.
+*/
+/*
+  A classe NÃO declara `position`. Ela já declarou, e isso quebrava qualquer
+  consumidor posicionado de outro jeito: o `relative` daqui vencia o `absolute`
+  do Tailwind (mesma especificidade, e esta folha vem depois), então a camada de
+  patinhas do hero virava uma caixa de 0x0. Quem usa a classe é que declara o
+  posicionamento — `relative` nas seções, `absolute` na camada do hero.
+*/
+.fundo-patas {
+  isolation: isolate;
+}
+
+.fundo-patas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--brand);
+  opacity: 0.055;
+  -webkit-mask-image: var(--textura-patas);
+  mask-image: var(--textura-patas);
+  -webkit-mask-size: 560px 560px;
+  mask-size: 560px 560px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+}
+
+@media (prefers-color-scheme: dark) {
+  .fundo-patas::before {
+    opacity: 0.08;
+  }
+}
+
+/*
+  FAQ em <details> nativo.
+  O "+" gira para virar "×" quando abre, e o corpo desliza. `interpolate-size`
+  permite animar de 0 até `auto`; onde não houver suporte, abre instantâneo —
+  que é o comportamento padrão do elemento, então nada quebra.
+*/
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  .faq-corpo {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s var(--ease-soft);
+  }
+
+  .faq-item[open] .faq-corpo {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-corpo > * {
+    overflow: hidden;
+  }
+}
+
+.faq-item[open] .faq-sinal {
+  transform: rotate(135deg);
+  border-color: var(--brand);
+  background-color: color-mix(in srgb, var(--brand) 12%, transparent);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+/*
+  Faixa contínua da galeria de pets.
+
+  Anima só `transform`, e por -50% exatos: como a lista é duplicada, ao chegar
+  na metade o quadro é idêntico ao início e o loop não tem emenda.
+  Pausa no hover para dar tempo de olhar o pet que chamou atenção.
+*/
+.faixa-pets {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+}
+
+.faixa-pets-trilho {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  padding: 0.5rem 1.25rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faixa-pets-trilho {
+    animation: desliza-pets 42s linear infinite;
+  }
+
+  .faixa-pets:hover .faixa-pets-trilho {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes desliza-pets {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.faixa-pets-item {
+  width: 230px;
+  flex: none;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--brand) 24%, transparent);
+  transition:
+    transform 0.45s var(--ease-soft),
+    border-color 0.45s var(--ease-soft),
+    box-shadow 0.45s var(--ease-soft);
+}
+
+@media (min-width: 640px) {
+  .faixa-pets-item {
+    width: 280px;
+  }
+}
+
+/* Zoom e destaque no pet sob o cursor; os vizinhos recuam de leve. */
+@media (hover: hover) {
+  .faixa-pets-item:hover {
+    transform: scale(1.06);
+    border-color: color-mix(in srgb, var(--brand) 65%, transparent);
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
+      0 26px 60px -24px color-mix(in srgb, var(--brand) 80%, transparent);
+  }
+
+  .faixa-pets-trilho:hover .faixa-pets-item:not(:hover) {
+    transform: scale(0.97);
+    opacity: 0.72;
+  }
+}
+
+/*
+  Realce de mídia: fio ciano em repouso, halo acendendo no hover.
+
+  O halo permanente e forte foi descartado de propósito — em toda foto da página
+  vira decoração parada e cansa a leitura. Aqui ele é RESPOSTA: em repouso existe
+  só um fio que amarra a foto à paleta, e o brilho acende quando o cursor chega.
+  É o mesmo vocabulário do card de número e do card de depoimento, então a página
+  continua falando uma língua só.
+
+  Não é aplicado na foto do hero: lá a imagem dissolve no fundo por máscara, e
+  qualquer contorno cancelaria esse efeito.
+*/
+.midia-realce {
+  border: 1px solid color-mix(in srgb, var(--brand) 24%, transparent);
+  box-shadow: 0 18px 45px -30px color-mix(in srgb, var(--brand) 65%, transparent);
+  transition:
+    border-color 0.4s var(--ease-soft),
+    box-shadow 0.4s var(--ease-soft),
+    transform 0.4s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .midia-realce:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--brand) 60%, transparent);
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
+      0 26px 60px -26px color-mix(in srgb, var(--brand) 80%, transparent);
+  }
+}
+
+/*
+  Painel de serviço: entra com um deslize curto a cada troca de aba.
+  Curto de propósito — quem está percorrendo a lista com o mouse não pode
+  esperar animação terminar para ler o próximo item.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .servico-painel {
+    animation: entra-painel 0.4s var(--ease-soft) both;
+  }
+}
+
+@keyframes entra-painel {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Item do calendário de vacinas: entra escalonado a cada troca de seleção. */
+@media (prefers-reduced-motion: no-preference) {
+  .vacina-item {
+    animation: entra-item 0.45s var(--ease-soft) both;
+  }
+}
+
+@keyframes entra-item {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Seta da dica de arraste: empurra de leve para o lado, indicando a direção. */
+@media (prefers-reduced-motion: no-preference) {
+  .dica-arraste {
+    animation: empurra-lateral 1.8s var(--ease-soft) infinite;
+  }
+}
+
+@keyframes empurra-lateral {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(4px);
+  }
+}
+
+/*
+  Trilho horizontal: esconde a barra de rolagem (as setas e o corte já comunicam)
+  e desfoca as bordas conforme existe conteúdo além do corte, de cada lado.
+*/
+.trilho {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.trilho::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+  A máscara existe só do lado DIREITO, para dizer "tem mais coisa aqui".
+  Nada de máscara à esquerda: no início do trilho o primeiro card precisa
+  aparecer inteiro e nítido, e era ela que o deixava com a borda apagada.
+*/
+.trilho[data-depois] {
+  -webkit-mask-image: linear-gradient(to right, #000 86%, transparent);
+  mask-image: linear-gradient(to right, #000 86%, transparent);
+}
+
+/*
+  Peça de número (dobra de prova). Em repouso é só texto separado por fio; o
+  hover materializa uma borda e um halo teal atrás, sem empurrar o layout.
+*/
+.numero-card {
+  transition:
+    transform 0.35s var(--ease-soft),
+    border-color 0.35s var(--ease-soft),
+    box-shadow 0.35s var(--ease-soft);
+}
+
+/*
+  Card que responde ao cursor com uma inclinação mínima.
+
+  A perspectiva fica no PAI e a rotação no filho: aplicar as duas no mesmo
+  elemento achata o efeito. A transição é curta o bastante para o card parecer
+  colado no cursor, e não perseguindo ele com atraso.
+
+  Gate por CSS, não por JS: em toque (`hover: none`) e sob reduced-motion as
+  variáveis simplesmente não são usadas, e o card fica parado.
+*/
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .cartao-inclinavel {
+    perspective: 900px;
+  }
+
+  .cartao-inclinavel > * {
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transform-style: preserve-3d;
+    transition: transform 0.25s var(--ease-soft);
+  }
+
+  /* Reflexo que acompanha o cursor, dando espessura ao vidro. */
+  .cartao-inclinavel .numero-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cartao-inclinavel .numero-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      40% 60% at var(--brilho-x, 50%) 0%,
+      color-mix(in srgb, var(--brand) 26%, transparent),
+      transparent 70%
+    );
+    transition: opacity 0.35s var(--ease-soft);
+  }
+
+  .cartao-inclinavel:hover .numero-card::after {
+    opacity: 1;
+  }
+}
+
+/* Halo pulsante do selo "aberto agora". */
+@media (prefers-reduced-motion: no-preference) {
+  .pulso-status {
+    animation: pulso-selo 2.2s ease-out infinite;
+  }
+}
+
+@keyframes pulso-selo {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Traço que se desenha sob o número no hover. */
+.numero-valor {
+  position: relative;
+}
+
+.numero-valor::after {
+  content: "";
+  position: absolute;
+  bottom: -0.4rem;
+  left: 50%;
+  height: 2px;
+  width: 0;
+  border-radius: 999px;
+  background-color: var(--brand);
+  transform: translateX(-50%);
+  transition: width 0.4s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .numero-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
+      0 18px 40px -20px color-mix(in srgb, var(--brand) 70%, transparent);
+  }
+
+  .numero-card:hover .numero-valor::after {
+    width: 2.5rem;
+  }
+}
+
+/*
+  Card de depoimento em destaque. Mesma linguagem do card de número, com o halo
+  um pouco mais forte porque aqui o hover é o convite a ler.
+*/
+.depoimento-card {
+  transition:
+    transform 0.35s var(--ease-soft),
+    border-color 0.35s var(--ease-soft),
+    box-shadow 0.35s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .depoimento-card:hover {
+    transform: translateY(-5px);
+    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
+      0 22px 50px -22px color-mix(in srgb, var(--brand) 75%, transparent);
+  }
+}
+
+/*
+  Mídia que dissolve no fundo em vez de ser um card recortado.
+  Empilhado (mobile) o degradê vem de cima, seguindo a leitura; lado a lado
+  (desktop) vem da esquerda, dissolvendo exatamente na direção da copy.
+*/
+.midia-mesclada {
+  border: 0;
+}
+
+/* No mobile a foto é fundo e quem dá contraste é o véu, então não há máscara.
+   No desktop ela dissolve na direção da copy. */
+@media (min-width: 1024px) {
+  .midia-mesclada {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 38%);
+    mask-image: linear-gradient(to right, transparent, #000 38%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

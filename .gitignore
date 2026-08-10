@@ -1,0 +1,20 @@
+# Dependências e artefatos de build
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Ambiente
+.env
+.env*.local
+
+# Sistema
+.DS_Store
+*.log
+npm-debug.log*
+
+# Fontes de imagem: originais e fotos que não entraram em nenhuma dobra.
+# Ficam na máquina para refazer recorte, mas não vão para o repositório —
+# são dezenas de MB que o site não serve.
+_fontes/
