@@ -8,6 +8,7 @@ import {
   SyringeIcon,
   HeartbeatIcon,
   ScissorsIcon,
+  HandSwipeRightIcon,
   ScanIcon,
   HouseIcon,
   BabyIcon,
@@ -98,7 +99,7 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
         role="tablist"
         aria-label={rotulo}
         aria-orientation="vertical"
-        className="-mx-5 flex snap-x gap-2 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:px-8 lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0"
+        className="trilho-abas -mx-5 flex snap-x scroll-pl-5 gap-2 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0"
       >
         {itens.map((item, i) => {
           const selecionado = i === ativo;
@@ -152,6 +153,16 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
           );
         })}
       </div>
+
+      <p className="mt-3 flex items-center gap-2 text-sm text-text-3 lg:hidden">
+        <HandSwipeRightIcon
+          size={18}
+          weight="light"
+          className="dica-arraste shrink-0 text-brand"
+          aria-hidden
+        />
+        Arraste para ver mais serviços
+      </p>
 
       <div
         role="tabpanel"

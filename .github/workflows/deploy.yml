@@ -46,6 +46,8 @@ jobs:
           # O basePath do Next não alcança o `src` das imagens quando o
           # otimizador está desligado; o helper lib/caminho.ts usa isto.
           NEXT_PUBLIC_BASE_PATH: /caroline-keffer
+          # URL absoluta de onde o site vive: usada no card de compartilhamento.
+          NEXT_PUBLIC_SITE_URL: https://joaomcoutinho.github.io/caroline-keffer
         run: npm run build
 
       - name: Impedir que o Jekyll ignore a pasta _next

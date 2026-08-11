@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { caminhoPublico } from "@/lib/caminho";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
+import { MenuMobile } from "@/components/ui/MenuMobile";
 import { navegacao, CTA_PRIMARIO } from "@/content/site";
 
 /**
@@ -50,24 +51,18 @@ export function Cabecalho() {
           ))}
         </nav>
 
-        {/* Um único rótulo de CTA no site inteiro. No mobile o botão fica só com o
-            ícone (com nome acessível), para não criar um segundo rótulo concorrente.
+        {/* Desktop: CTA no header, porque lá não existe a barra fixa embaixo.
+            Mobile: menu de seções. O botão de WhatsApp saiu daqui — com a barra
+            fixa e o CTA do hero, ele era o TERCEIRO pedido de clique na mesma
+            tela, e três CTAs concorrentes diluem todos.
 
             A visibilidade fica no wrapper, e não no próprio botão: `hidden` e o
             `inline-flex` do botão são utilitários de display na mesma camada do
-            Tailwind, então a ordem no atributo class não decide quem vence e os
-            dois botões acabavam visíveis ao mesmo tempo. */}
-        <span className="hidden shrink-0 sm:block">
-          {/* Maior que os links de nav, mas sem virar o dono da barra. */}
+            Tailwind, então a ordem no atributo class não decide quem vence. */}
+        <span className="hidden shrink-0 lg:block">
           <BotaoWhatsapp rotulo={CTA_PRIMARIO} tamanho="compacto" />
         </span>
-        <span className="shrink-0 sm:hidden">
-          <BotaoWhatsapp
-            rotulo=""
-            nomeAcessivel={CTA_PRIMARIO}
-            tamanho="icone"
-          />
-        </span>
+        <MenuMobile />
       </div>
     </header>
   );

@@ -39,7 +39,14 @@ export const meta = {
   titulo: "Clínica Pet Caroline Keffer | Veterinária na Torre, Recife",
   descricao:
     "Clínica veterinária na Torre, Recife, há mais de 20 anos. Consulta, cirurgia, exames, vacinas e banho e tosa para cães e gatos, com a Dra. Carol. Agende pelo WhatsApp.",
-  url: "https://clinicapetcarolinekeffer.com.br",
+  /*
+   * Endereço real de onde o site está publicado. O card de compartilhamento
+   * exige URL ABSOLUTA de imagem: sem isto o WhatsApp monta o link com o
+   * domínio final (que ainda não existe) somado ao caminho do Pages, e a
+   * prévia sai quebrada. Quando o domínio próprio entrar, é só remover a env.
+   */
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://clinicapetcarolinekeffer.com.br",
 } as const;
 
 export const navegacao = [
@@ -635,7 +642,9 @@ export const guiaFilhote = {
     },
     {
       id: "dois-quatro",
-      rotulo: "2 a 4 meses",
+      /* "De" na frente para o numeral da etapa não encostar no do intervalo:
+         "3 2 a 4 meses" lia como um número só. */
+      rotulo: "De 2 a 4 meses",
       detalhe: "vacinação",
       itens: [
         "Ciclo da múltipla: três doses, com 21 a 30 dias entre elas.",

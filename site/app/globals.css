@@ -417,6 +417,37 @@
   }
 }
 
+/*
+  No mobile o loop automático atrapalhava: ao tocar, a animação pausava e não
+  havia sinal de como retomar. Aqui a faixa vira rolagem com encaixe, que é o
+  gesto que o dedo já espera. As cópias usadas para emendar o loop no desktop
+  são escondidas, senão o usuário rolaria pelos mesmos pets duas vezes.
+*/
+@media (max-width: 1023px) {
+  .faixa-pets {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 1.25rem;
+    scrollbar-width: none;
+  }
+
+  .faixa-pets::-webkit-scrollbar {
+    display: none;
+  }
+
+  .faixa-pets-trilho {
+    animation: none;
+  }
+
+  .faixa-pets-item {
+    scroll-snap-align: start;
+  }
+
+  .faixa-pets-item[aria-hidden="true"] {
+    display: none;
+  }
+}
+
 .faixa-pets-item {
   width: 230px;
   flex: none;
@@ -607,10 +638,12 @@
     inset: 0;
     pointer-events: none;
     opacity: 0;
+    /* Ancorado nos dois eixos: o halo fica sob o cursor em qualquer ponto do
+       card, e não preso na aresta de cima. */
     background: radial-gradient(
-      40% 60% at var(--brilho-x, 50%) 0%,
-      color-mix(in srgb, var(--brand) 26%, transparent),
-      transparent 70%
+      42% 42% at var(--brilho-x, 50%) var(--brilho-y, 50%),
+      color-mix(in srgb, var(--brand) 30%, transparent),
+      transparent 72%
     );
     transition: opacity 0.35s var(--ease-soft);
   }
@@ -722,4 +755,21 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/*
+  Painel do menu mobile.
+
+  O `.vidro` padrão é translúcido demais para conteúdo sobreposto: a headline do
+  hero atravessava e embolava a leitura dos links. Aqui a lâmina é quase opaca —
+  em painel que cobre conteúdo, legibilidade vence transparência.
+*/
+.menu-secoes {
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--brand) 10%, transparent),
+      transparent 60%
+    ),
+    color-mix(in srgb, var(--surface) 97%, transparent);
 }

@@ -135,7 +135,7 @@ export function Vacinas() {
 
             {/* Peso de CTA de seção, igual ao dos Planos: aqui o tutor acabou de
                 descobrir que o pet está atrasado, e é o momento de maior intenção. */}
-            <div className="mt-7">
+            <div className="mt-7 flex justify-center">
               <BotaoWhatsapp rotulo={CTA_PRIMARIO} />
             </div>
           </div>

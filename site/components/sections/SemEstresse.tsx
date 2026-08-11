@@ -53,14 +53,14 @@ export function SemEstresse() {
             />
 
             {/* Cartão contido: a citação acompanha a foto, não compete com ela. */}
-            <figcaption className="vidro absolute right-4 bottom-4 left-4 rounded-[var(--radius-card)] p-4 sm:p-5">
+            <figcaption className="vidro absolute right-3 bottom-3 left-3 rounded-[var(--radius-card)] p-3 sm:right-5 sm:bottom-5 sm:left-5 sm:p-5">
               <QuotesIcon
-                size={18}
+                size={16}
                 weight="fill"
                 className="text-brand"
                 aria-hidden
               />
-              <blockquote className="mt-1.5 font-display text-base leading-snug font-semibold text-balance sm:text-lg">
+              <blockquote className="mt-1 font-display text-sm leading-snug font-semibold text-balance sm:mt-1.5 sm:text-lg">
                 {citacao.texto}
               </blockquote>
               <p className="mt-1.5 text-xs text-text-3 sm:text-sm">{citacao.fonte}</p>

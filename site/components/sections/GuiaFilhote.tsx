@@ -99,7 +99,7 @@ export function GuiaFilhote() {
             {guiaFilhote.aviso}
           </p>
 
-          <div className="mt-6">
+          <div className="mt-6 flex justify-center">
             <BotaoWhatsapp rotulo={CTA_PRIMARIO} />
           </div>
         </div>

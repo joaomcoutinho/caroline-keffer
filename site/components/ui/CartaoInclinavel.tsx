@@ -33,7 +33,9 @@ export function CartaoInclinavel({ children, className = "", grau = 5 }: Props) 
     const y = (e.clientY - r.top) / r.height - 0.5;
     el.style.setProperty("--rx", `${(-y * grau).toFixed(2)}deg`);
     el.style.setProperty("--ry", `${(x * grau).toFixed(2)}deg`);
+    // O reflexo segue o cursor nos DOIS eixos, não só na horizontal.
     el.style.setProperty("--brilho-x", `${((x + 0.5) * 100).toFixed(1)}%`);
+    el.style.setProperty("--brilho-y", `${((y + 0.5) * 100).toFixed(1)}%`);
   };
 
   const sair = () => {

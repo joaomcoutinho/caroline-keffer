@@ -1,3 +1,4 @@
+import { HandSwipeRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { Secao } from "@/components/ui/Secao";
 import { Revelar } from "@/components/ui/Revelar";
 import { Midia } from "@/components/ui/Midia";
@@ -56,6 +57,16 @@ export function Pets() {
             ))}
           </ul>
         </div>
+
+        <p className="mt-4 flex items-center gap-2 text-sm text-text-3 lg:hidden">
+          <HandSwipeRightIcon
+            size={18}
+            weight="light"
+            className="dica-arraste shrink-0 text-brand"
+            aria-hidden
+          />
+          Arraste para ver mais pets
+        </p>
       </Revelar>
     </Secao>
   );

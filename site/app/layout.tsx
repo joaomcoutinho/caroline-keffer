@@ -29,6 +29,21 @@ export const metadata: Metadata = {
     siteName: "Clínica Pet Caroline Keffer",
     locale: "pt_BR",
     type: "website",
+    images: [
+      {
+        url: `${meta.url}/og.png`,
+        width: 1200,
+        height: 630,
+        alt: "Dra. Caroline Keffer com um cão no colo, ao lado da chamada do site",
+      },
+    ],
+  },
+  // O WhatsApp, que é por onde este site mais circula, lê o card do Twitter.
+  twitter: {
+    card: "summary_large_image",
+    title: meta.titulo,
+    description: meta.descricao,
+    images: [`${meta.url}/og.png`],
   },
 };
 
