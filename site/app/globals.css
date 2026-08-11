@@ -773,3 +773,54 @@
     ),
     color-mix(in srgb, var(--surface) 97%, transparent);
 }
+
+/*
+  Folha inferior do menu mobile.
+  Fundo escurece e desfoca o conteúdo atrás; a folha sobe do rodapé, que é
+  onde o polegar alcança. Sem `prefers-reduced-motion` as duas entram secas.
+*/
+.menu-fundo {
+  background-color: color-mix(in srgb, #04141a 62%, transparent);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.menu-folha {
+  /* Painel que cobre conteúdo: legibilidade vence transparência. */
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--brand) 10%, transparent),
+      transparent 55%
+    ),
+    color-mix(in srgb, var(--surface) 98%, transparent);
+  max-height: 88dvh;
+  overflow-y: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .menu-fundo {
+    animation: surge-fundo 0.25s ease-out both;
+  }
+
+  .menu-folha {
+    animation: sobe-folha 0.32s var(--ease-soft) both;
+  }
+}
+
+@keyframes surge-fundo {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sobe-folha {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+/* Com o menu aberto, a barra fixa some: ela duplicaria CTA e horário. */
+body[data-menu-aberto] .barra-agendamento {
+  display: none;
+}

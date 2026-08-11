@@ -2,6 +2,7 @@ import Image from "next/image";
 import { caminhoPublico } from "@/lib/caminho";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { MenuMobile } from "@/components/ui/MenuMobile";
+import { StatusHorario } from "@/components/ui/StatusHorario";
 import { navegacao, CTA_PRIMARIO } from "@/content/site";
 
 /**
@@ -38,6 +39,14 @@ export function Cabecalho() {
             className="h-12 w-12 rounded-full object-cover ring-1 ring-brand/20"
           />
         </a>
+
+        {/* O centro do header no mobile ficou vazio quando o CTA saiu daqui.
+            Em vez de devolver outro botão, entra INFORMAÇÃO: se a clínica está
+            aberta agora é a primeira dúvida de quem chega com o animal no colo,
+            e ocupa o espaço sem disputar clique com o CTA da barra fixa. */}
+        <span className="min-w-0 flex-1 justify-center lg:hidden">
+          <StatusHorario className="justify-center" />
+        </span>
 
         <nav className="hidden items-center gap-7 lg:flex">
           {navegacao.map((item) => (

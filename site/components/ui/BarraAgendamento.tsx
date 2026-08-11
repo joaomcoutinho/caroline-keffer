@@ -21,7 +21,7 @@ import { CTA_PRIMARIO } from "@/content/site";
 export function BarraAgendamento() {
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-40 px-3 pb-[calc(0.6rem+env(safe-area-inset-bottom))] sm:hidden"
+      className="barra-agendamento fixed inset-x-0 bottom-0 z-40 px-3 pb-[calc(0.6rem+env(safe-area-inset-bottom))] sm:hidden"
       role="complementary"
       aria-label="Agendamento rápido"
     >
