@@ -118,6 +118,23 @@ Três baixadas pelo construtor com a ferramenta da Asimov. O que cada uma resolv
 | Raio de bairros atendidos | **SUPOSIÇÃO** |
 | Atende emergência fora do horário | **SUPOSIÇÃO — não prometer no site** |
 | Fotos próprias da clínica e da equipe em alta | **NÃO EXISTE — bloqueio de build, ver Gate 1** |
+| ~80% do tráfego vem de celular | **SUPOSIÇÃO do construtor (JM, 13/08/2026)** — estimativa, não medição. Vale confirmar no Analytics quando o site estiver indexado. |
+
+### Decisão: mobile é o contexto principal, não uma adaptação
+
+**JM, 13/08/2026:** *"acho que faz mais sentido pro mobile mesmo, pois 80% do pessoal
+que pesquisa sobre isso vai pelo celular."*
+
+Consequências práticas, que valem para todas as dobras daqui pra frente:
+
+- **O selo de horário fica só no mobile** (`lg:hidden`). Foi avaliado levá-lo
+  também ao header desktop, para virar decisão de sistema em vez de remendo de
+  tela pequena. Descartado: onde quase ninguém entra, ele só ocuparia espaço
+  entre a navegação e o CTA.
+- Quando uma escolha beneficiar um contexto e prejudicar o outro, **quem ganha é
+  o celular**. O desktop recebe a versão que funciona, não a versão privilegiada.
+- Isso reforça o que já estava no registro: quem chega está preocupado, com o
+  animal no colo, e decide com uma mão só.
 
 ---
 
