@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   ListIcon,
   XIcon,
@@ -26,6 +27,19 @@ import { navegacao, contato, CTA_PRIMARIO } from "@/content/site";
  *
  * Enquanto aberta, a rolagem da página fica travada: sem isso o fundo desliza
  * atrás da folha e a leitura se perde.
+ *
+ * A folha é renderizada num PORTAL, direto em `document.body`, e não como
+ * filha do header. O header tem animação de encolher ligada à rolagem
+ * (`animation-timeline: scroll()`); no Safari, um ancestral com animação em
+ * execução vira contêiner de posicionamento para os descendentes `fixed`,
+ * então a folha parava de se ancorar na tela inteira e se ancorava dentro da
+ * pílula pequena do header. O portal tira a folha desse parentesco e ela volta
+ * a se fixar no viewport de verdade, não importa o que o header esteja fazendo.
+ *
+ * Sem gate de montagem: o portal só é criado quando `aberto` vira `true`, e
+ * isso só acontece depois de um clique no botão — ou seja, já no navegador,
+ * onde `document.body` sempre existe. No primeiro render (servidor e cliente)
+ * `aberto` é `false` nos dois lados, então a hidratação nunca vê o portal.
  */
 export function MenuMobile() {
   const [aberto, setAberto] = useState(false);
@@ -74,91 +88,94 @@ export function MenuMobile() {
         <ListIcon size={20} weight="bold" aria-hidden />
       </button>
 
-      {aberto ? (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <button
-            type="button"
-            aria-label="Fechar menu"
-            onClick={() => setAberto(false)}
-            className="menu-fundo absolute inset-0 h-full w-full cursor-default"
-          />
-
-          <div
-            ref={folha}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Menu de navegação"
-            tabIndex={-1}
-            className="menu-folha vidro absolute inset-x-0 bottom-0 rounded-t-[1.75rem] px-5 pt-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))] outline-none"
-          >
-            {/* Alça: sinaliza folha arrastável e dá um ponto de descanso visual. */}
-            <span
-              aria-hidden
-              className="mx-auto mb-5 block h-1 w-10 rounded-full bg-text-3/40"
-            />
-
-            <div className="mb-4 flex items-center justify-between">
-              <StatusHorario />
+      {aberto
+        ? createPortal(
+            <div className="fixed inset-0 z-50 lg:hidden">
               <button
                 type="button"
-                onClick={() => setAberto(false)}
                 aria-label="Fechar menu"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-text-2 transition-colors hover:border-brand hover:text-brand"
-              >
-                <XIcon size={16} weight="bold" aria-hidden />
-              </button>
-            </div>
+                onClick={() => setAberto(false)}
+                className="menu-fundo absolute inset-0 h-full w-full cursor-default"
+              />
 
-            <nav className="border-t border-hairline">
-              {navegacao.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setAberto(false)}
-                  className="flex items-center justify-between border-b border-hairline py-4 font-display text-lg font-semibold transition-colors hover:text-brand"
-                >
-                  {item.rotulo}
-                  <CaretRightIcon
-                    size={18}
-                    weight="bold"
-                    className="text-text-3"
-                    aria-hidden
-                  />
-                </a>
-              ))}
-            </nav>
-
-            <div className="mt-5">
-              <BotaoWhatsapp rotulo={CTA_PRIMARIO} className="w-full" />
-            </div>
-
-            <div className="mt-3 grid grid-cols-3 gap-1">
-              <a href={contato.telefoneFixoLink} className={linhaContato}>
-                <PhoneIcon size={18} weight="light" aria-hidden />
-                Ligar
-              </a>
-              <a
-                href={contato.mapa}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={linhaContato}
+              <div
+                ref={folha}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Menu de navegação"
+                tabIndex={-1}
+                className="menu-folha vidro absolute inset-x-0 bottom-0 rounded-t-[1.75rem] px-5 pt-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))] outline-none"
               >
-                <MapPinIcon size={18} weight="light" aria-hidden />
-                Chegar
-              </a>
-              <a
-                href={contato.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={linhaContato}
-              >
-                <InstagramLogoIcon size={18} weight="light" aria-hidden />
-                Instagram
-              </a>
-            </div>
-          </div>
-        </div>
-      ) : null}
+                {/* Alça: sinaliza folha arrastável e dá um ponto de descanso visual. */}
+                <span
+                  aria-hidden
+                  className="mx-auto mb-5 block h-1 w-10 rounded-full bg-text-3/40"
+                />
+
+                <div className="mb-4 flex items-center justify-between">
+                  <StatusHorario />
+                  <button
+                    type="button"
+                    onClick={() => setAberto(false)}
+                    aria-label="Fechar menu"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-text-2 transition-colors hover:border-brand hover:text-brand"
+                  >
+                    <XIcon size={16} weight="bold" aria-hidden />
+                  </button>
+                </div>
+
+                <nav className="border-t border-hairline">
+                  {navegacao.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setAberto(false)}
+                      className="flex items-center justify-between border-b border-hairline py-4 font-display text-lg font-semibold transition-colors hover:text-brand"
+                    >
+                      {item.rotulo}
+                      <CaretRightIcon
+                        size={18}
+                        weight="bold"
+                        className="text-text-3"
+                        aria-hidden
+                      />
+                    </a>
+                  ))}
+                </nav>
+
+                <div className="mt-5">
+                  <BotaoWhatsapp rotulo={CTA_PRIMARIO} className="w-full" />
+                </div>
+
+                <div className="mt-3 grid grid-cols-3 gap-1">
+                  <a href={contato.telefoneFixoLink} className={linhaContato}>
+                    <PhoneIcon size={18} weight="light" aria-hidden />
+                    Ligar
+                  </a>
+                  <a
+                    href={contato.mapa}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linhaContato}
+                  >
+                    <MapPinIcon size={18} weight="light" aria-hidden />
+                    Chegar
+                  </a>
+                  <a
+                    href={contato.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linhaContato}
+                  >
+                    <InstagramLogoIcon size={18} weight="light" aria-hidden />
+                    Instagram
+                  </a>
+                </div>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }
