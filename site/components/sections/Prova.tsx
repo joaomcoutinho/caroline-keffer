@@ -7,7 +7,6 @@ import type { Icon } from "@phosphor-icons/react";
 import { Revelar } from "@/components/ui/Revelar";
 import { CartaoInclinavel } from "@/components/ui/CartaoInclinavel";
 import { NumeroContado } from "@/components/ui/NumeroContado";
-import { EstrelasNota } from "@/components/ui/EstrelasNota";
 import { prova } from "@/content/site";
 
 const icones: Record<string, Icon> = {
@@ -24,8 +23,8 @@ const icones: Record<string, Icon> = {
  *
  * O que dá vida:
  * - cada número conta de zero ao valor ao entrar na tela, uma vez só;
- * - o card de nota ganha cinco estrelas preenchendo até 4,8. Só ele tem estrelas
- *   porque só ele é uma proporção — nos outros dois seria enfeite sem sentido;
+ * - as cinco estrelas saíram: a última ficava cortada ao 4,8 e lia como
+ *   render quebrado, não como precisão. O número sozinho já diz a nota;
  * - os cards são de vidro sobre a lâmina ciano, amarrando com o header;
  * - no hover o card sobe, acende halo e risca um traço sob o número.
  */
@@ -44,8 +43,6 @@ export function Prova() {
       <div className="mx-auto grid w-full max-w-[1100px] gap-4 sm:grid-cols-3 sm:gap-6">
         {prova.itens.map((item, i) => {
           const Icone = icones[item.icone];
-          const estrelas = "estrelas" in item ? item.estrelas : undefined;
-
           return (
             <Revelar key={item.rotulo} atraso={i * 0.08} className="h-full">
               <CartaoInclinavel className="h-full">
@@ -62,15 +59,7 @@ export function Prova() {
                   />
                 </p>
 
-                {estrelas ? (
-                  <div className="mt-4">
-                    <EstrelasNota nota={estrelas} />
-                  </div>
-                ) : null}
-
-                <p
-                  className={`text-base font-medium text-text ${estrelas ? "mt-3" : "mt-4"}`}
-                >
+                <p className="mt-4 text-base font-medium text-text">
                   {item.rotulo}
                 </p>
                 <p className="mt-1 text-sm text-text-3">{item.nota}</p>

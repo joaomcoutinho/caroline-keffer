@@ -40,7 +40,7 @@
     afastadas entre si — a densidade anterior (três em 280px) lia como estampa.
     O ladrilho grande é o que faz o padrão parecer espalhado em vez de repetido.
   */
-  --textura-patas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560' viewBox='0 0 560 560'%3E%3Cg fill='%23000'%3E%3Cg transform='translate(88 104) rotate(-24)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3Cg transform='translate(412 268) rotate(16) scale(0.8)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3Cg transform='translate(214 452) rotate(-9) scale(0.66)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  --textura-patas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560' viewBox='0 0 560 560'%3E%3Cg fill='%23000'%3E%3Cg transform='translate(88 104) rotate(-24)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3Cg transform='translate(412 268) rotate(16) scale(0.8)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3Cg transform='translate(214 476) rotate(-9) scale(0.66)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Tokens semânticos — é isto que os componentes consomem. Nunca hex solto no JSX. */
@@ -323,8 +323,13 @@
   mask-image: var(--textura-patas);
   -webkit-mask-size: 560px 560px;
   mask-size: 560px 560px;
-  -webkit-mask-repeat: repeat;
-  mask-repeat: repeat;
+  /*
+    `space` em vez de `repeat`: desenha apenas ladrilhos INTEIROS e distribui a
+    sobra como espaço. Com `repeat` a pegada era cortada na emenda entre duas
+    seções, e meia patinha na divisa lia como falha de render.
+  */
+  -webkit-mask-repeat: space;
+  mask-repeat: space;
 }
 
 @media (prefers-color-scheme: dark) {
