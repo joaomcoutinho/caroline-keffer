@@ -23,8 +23,8 @@ export function Cabecalho() {
       `fixed`, e não `sticky`: assim o header não ocupa espaço no fluxo e o hero
       pode começar no topo absoluto da página, com a foto subindo até a borda.
     */
-    <header className="fixed inset-x-0 top-0 z-40 px-4 pt-3 sm:px-6 sm:pt-4">
-      <div className="vidro mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between gap-4 rounded-full pr-2 pl-3 sm:gap-6 sm:pr-3 sm:pl-4">
+    <header className="cabecalho-encolhe fixed inset-x-0 top-0 z-40 px-4 pt-3 sm:px-6 sm:pt-4">
+      <div className="cabecalho-pilula vidro mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between gap-4 rounded-full pr-2 pl-3 sm:gap-6 sm:pr-3 sm:pl-4">
         <a
           href="#topo"
           aria-label="Clínica Pet Caroline Keffer, ir para o topo"
@@ -36,7 +36,7 @@ export function Cabecalho() {
             width={48}
             height={48}
             priority
-            className="h-12 w-12 rounded-full object-cover ring-1 ring-brand/20"
+            className="cabecalho-selo h-12 w-12 rounded-full object-cover ring-1 ring-brand/20"
           />
         </a>
 

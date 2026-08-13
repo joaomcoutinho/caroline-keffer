@@ -829,3 +829,60 @@
 body[data-menu-aberto] .barra-agendamento {
   display: none;
 }
+
+/*
+  Header que encolhe ao rolar.
+
+  Feito com animação dirigida pela rolagem (`animation-timeline: scroll()`), e
+  NÃO com listener de scroll: listener roda a cada quadro, re-renderiza e trava
+  no celular. Aqui quem conduz é o compositor do navegador, sem uma linha de JS.
+
+  A pílula perde 12px de altura e o selo 8px, mas o horário CONTINUA no header:
+  ele é a informação que justifica o header existir no mobile. Encolher é
+  devolver espaço, não esconder conteúdo.
+
+  Os alvos de toque não encolhem junto: o botão do menu segue com 44px, o mínimo
+  acessível, dentro de uma pílula de 52px.
+
+  Onde não houver suporte, o header simplesmente não encolhe. Nada quebra.
+*/
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cabecalho-encolhe {
+      animation: encolher-respiro linear both;
+      animation-timeline: scroll();
+      animation-range: 0 150px;
+    }
+
+    .cabecalho-pilula {
+      animation: encolher-pilula linear both;
+      animation-timeline: scroll();
+      animation-range: 0 150px;
+    }
+
+    .cabecalho-selo {
+      animation: encolher-selo linear both;
+      animation-timeline: scroll();
+      animation-range: 0 150px;
+    }
+  }
+}
+
+@keyframes encolher-respiro {
+  to {
+    padding-top: 0.5rem;
+  }
+}
+
+@keyframes encolher-pilula {
+  to {
+    height: 3.25rem;
+  }
+}
+
+@keyframes encolher-selo {
+  to {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+}

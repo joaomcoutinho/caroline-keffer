@@ -78,8 +78,15 @@ export function Hero() {
             </p>
           </Revelar>
 
+          {/*
+            `id` só marca posição: a barra fixa observa este ponto para saber
+            quando o CTA saiu da tela. Não altera layout nem estilo.
+          */}
           <Revelar atraso={0.16}>
-            <div className="mt-9 flex flex-col items-start gap-3">
+            <div
+              id="ancora-cta-hero"
+              className="mt-9 flex flex-col items-start gap-3"
+            >
               <BotaoWhatsapp rotulo={hero.cta} />
               <p className="text-sm text-text-3">{hero.ctaMicrocopy}</p>
             </div>
