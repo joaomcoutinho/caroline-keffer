@@ -94,14 +94,27 @@ function quebrar(font, texto, tamanho, maxLargura) {
 
 const LARGURA_FOTO = 620;
 const X_FOTO = W - LARGURA_FOTO;
-const LARGURA_PENUMBRA = 320; // trecho da foto que desvanece até transparente
+
+/*
+  38%: a MESMA fração que `.midia-mesclada` usa no CSS do site de verdade
+  (globals.css) pra dissolver a foto do hero na copy. Não é um número novo —
+  é reaproveitar uma proporção já aprovada, pra o card ficar consistente com
+  o site.
+
+  A primeira versão tinha ido bem além disso (51.6% da largura da foto) e o
+  JM reportou: o degrade "avançava foto adentro" quase até o meio dela, em
+  vez de ficar restrito à emenda entre a metade de texto e a metade de foto.
+  Com 38%, a transição fica contida perto da borda, e o resto da foto (os
+  62% restantes) permanece 100% opaco, sem filtro nenhum por cima.
+*/
+const FRACAO_PENUMBRA = 0.38;
 
 const mascaraAlfa = Buffer.from(`
   <svg width="${LARGURA_FOTO}" height="${H}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0" stop-color="#000" stop-opacity="0" />
-        <stop offset="${(LARGURA_PENUMBRA / LARGURA_FOTO).toFixed(4)}" stop-color="#000" stop-opacity="1" />
+        <stop offset="${FRACAO_PENUMBRA}" stop-color="#000" stop-opacity="1" />
         <stop offset="1" stop-color="#000" stop-opacity="1" />
       </linearGradient>
     </defs>
@@ -113,20 +126,19 @@ const fotoRecortada = await sharp(path.join(RAIZ_SITE, "public/images/foto_backg
   .resize({ width: LARGURA_FOTO, height: H, fit: "cover", position: "top" })
   .toBuffer();
 
-// O escurecimento é aplicado ANTES da máscara de alfa, então tinta e foto
-// desvanecem juntas — não há uma segunda camada com borda própria.
-const fotoEscurecida = await sharp(fotoRecortada)
-  .composite([
-    {
-      input: Buffer.from(
-        `<svg width="${LARGURA_FOTO}" height="${H}"><rect width="100%" height="100%" fill="${COR.fundo}" fill-opacity="0.55"/></svg>`,
-      ),
-      blend: "atop",
-    },
-  ])
-  .toBuffer();
+/*
+  SEM escurecimento na foto inteira. A primeira versão passava uma tinta
+  escura por cima de TODA a foto antes de aplicar a máscara — isso apagava
+  justamente a parte que devia ficar nítida (o lado direito, já opaco). O
+  JM pediu de volta o brilho original: "no jeito que estava anteriormente,
+  estava melhor".
 
-const fotoComAlfa = await sharp(fotoEscurecida)
+  A transição pra o texto continua existindo, só que feita por UMA coisa só:
+  a máscara de alfa desvanecendo a metade esquerda até transparente, o que
+  revela o fundo chapado por baixo. O lado direito, já opaco, fica exatamente
+  como a foto original — sem filtro nenhum por cima.
+*/
+const fotoComAlfa = await sharp(fotoRecortada)
   .composite([{ input: mascaraAlfa, blend: "dest-in" }])
   .png()
   .toBuffer();
