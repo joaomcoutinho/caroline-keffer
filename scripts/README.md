@@ -3,14 +3,16 @@
 Ferramentas de build de **assets**. Ficam fora de `site/` de propósito: nada
 daqui entra no bundle, e o site não depende de nenhuma delas para rodar.
 
-## Estado atual
+## Uso
 
-⚠️ **Em construção.** As fontes já estão resolvidas; o gerador do card de
-compartilhamento (`og.mjs`) ainda não foi escrito. Por isso não há `scripts` no
-`package.json`: anunciar um comando que falha é pior que não anunciar.
+```bash
+cd scripts
+npm install   # primeira vez
+npm run og    # regenera site/public/og.png
+```
 
-O `og.png` que está no ar hoje foi gerado à mão, numa sans genérica. Trocar por
-este caminho é justamente o que falta.
+Depois de rodar, o build do site (`cd ../site && npm run build`) copia o novo
+`og.png` para `out/` automaticamente — é `public/`, não precisa de outro passo.
 
 ## `fontes/`
 
@@ -32,7 +34,14 @@ projeto, mas ficam versionadas para o gerador não depender de rede.
 
 ## Por que o card de compartilhamento é gerado, e não desenhado à mão
 
-No WhatsApp, que é por onde este site mais circula, a prévia aparece com cerca
-de 300px de largura. Um canvas de 1200px é visto a ~27%: tudo abaixo de ~40px
-no original simplesmente some. Gerar por código é o que permite verificar essa
-restrição em vez de confiar no olho.
+Duas razões concretas, não só preferência:
+
+- **Precisão de layout.** `opentype.js` devolve a largura real de cada glifo,
+  então a quebra de linha do subhead e a largura da pílula do CTA são
+  medidas, não chutadas — nunca sobra uma palavra órfã sozinha numa linha.
+- **Sem emenda de cor.** A versão anterior (feita à mão) tinha uma transição
+  visível onde o fundo chapado encontrava a foto escurecida — as duas cores
+  quase combinavam, mas não exatamente. Aqui existe uma única cor de fundo no
+  canvas inteiro, e a foto se dissolve nela por alfa (a mesma camada que
+  escurece a foto também a desvanece até transparente). Sem uma segunda cor
+  de fundo, não há como as duas desalinharem.
