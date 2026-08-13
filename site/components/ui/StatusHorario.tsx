@@ -3,7 +3,13 @@
 import { useSyncExternalStore } from "react";
 import { expediente } from "@/content/site";
 
-type Estado = { aberto: boolean; texto: string };
+/**
+ * O selo tem DUAS informações com pesos diferentes: o estado (o que a pessoa
+ * quer saber em 100ms) e o detalhe (que só importa depois). Guardar as duas
+ * separadas é o que permite dar hierarquia tipográfica em vez de despejar tudo
+ * numa frase de peso uniforme.
+ */
+type Estado = { aberto: boolean; principal: string; complemento: string };
 
 const DIAS_EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -49,12 +55,20 @@ function calcular(): Estado {
   const hoje = expediente.semana[dia];
 
   if (hoje && minutos >= emMinutos(hoje.abre) && minutos < emMinutos(hoje.fecha)) {
-    return { aberto: true, texto: `Aberto agora, até ${humano(hoje.fecha)}` };
+    return {
+      aberto: true,
+      principal: "Aberto agora",
+      complemento: `até ${humano(hoje.fecha)}`,
+    };
   }
 
   // Ainda vai abrir hoje.
   if (hoje && minutos < emMinutos(hoje.abre)) {
-    return { aberto: false, texto: `Abre hoje às ${humano(hoje.abre)}` };
+    return {
+      aberto: false,
+      principal: "Fechado",
+      complemento: `abre às ${humano(hoje.abre)}`,
+    };
   }
 
   // Procura o próximo dia com expediente.
@@ -63,10 +77,14 @@ function calcular(): Estado {
     const proximo = expediente.semana[proximoDia];
     if (!proximo) continue;
     const quando = i === 1 ? "amanhã" : expediente.nomes[proximoDia];
-    return { aberto: false, texto: `Abre ${quando} às ${humano(proximo.abre)}` };
+    return {
+      aberto: false,
+      principal: "Fechado",
+      complemento: `abre ${quando} às ${humano(proximo.abre)}`,
+    };
   }
 
-  return { aberto: false, texto: "Fechado agora" };
+  return { aberto: false, principal: "Fechado", complemento: "" };
 }
 
 /*
@@ -83,8 +101,8 @@ function assinar(aoMudar: () => void) {
 }
 
 function snapshot() {
-  const { aberto, texto } = calcular();
-  return `${aberto ? "1" : "0"}|${texto}`;
+  const { aberto, principal, complemento } = calcular();
+  return `${aberto ? "1" : "0"}|${principal}|${complemento}`;
 }
 
 /** No servidor não há relógio do usuário: devolve vazio e o selo não renderiza. */
@@ -109,25 +127,41 @@ export function StatusHorario({ className = "" }: Props) {
 
   if (!bruto) return null;
 
-  const [marca, ...resto] = bruto.split("|");
-  const estado: Estado = { aberto: marca === "1", texto: resto.join("|") };
+  const [marca, principal, complemento] = bruto.split("|");
+  const aberto = marca === "1";
 
   return (
     <span
-      className={`inline-flex items-center gap-2 text-sm font-medium ${className}`}
+      className={`inline-flex items-center gap-2 text-sm ${className}`}
+      // Uma frase só para quem ouve, em vez de dois pedaços soltos.
+      aria-label={`${principal}${complemento ? `, ${complemento}` : ""}`}
     >
       <span
         aria-hidden
-        className={`relative flex h-2.5 w-2.5 shrink-0 rounded-full ${
-          estado.aberto ? "bg-emerald-400" : "bg-text-3"
+        className={`relative flex h-2 w-2 shrink-0 rounded-full ${
+          aberto ? "bg-emerald-400" : "bg-text-3"
         }`}
       >
-        {estado.aberto ? (
+        {aberto ? (
           <span className="pulso-status absolute inset-0 rounded-full bg-emerald-400" />
         ) : null}
       </span>
-      <span className={estado.aberto ? "text-text" : "text-text-3"}>
-        {estado.texto}
+
+      {/*
+        Hierarquia em vez de frase uniforme: o ESTADO vem em peso e cor cheios,
+        porque é o que se lê num relance; o horário vem apagado, porque só
+        importa depois de saber se está aberto. Antes a linha inteira tinha o
+        mesmo peso e o olho precisava ler tudo para extrair o que interessa.
+      */}
+      <span aria-hidden className="truncate">
+        <span
+          className={`font-semibold ${aberto ? "text-text" : "text-text-2"}`}
+        >
+          {principal}
+        </span>
+        {complemento ? (
+          <span className="text-text-3"> · {complemento}</span>
+        ) : null}
       </span>
     </span>
   );

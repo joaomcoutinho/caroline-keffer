@@ -865,6 +865,12 @@ body[data-menu-aberto] .barra-agendamento {
       animation-timeline: scroll();
       animation-range: 0 150px;
     }
+
+    .cabecalho-botao-menu {
+      animation: encolher-botao-menu linear both;
+      animation-timeline: scroll();
+      animation-range: 0 150px;
+    }
   }
 }
 
@@ -876,11 +882,40 @@ body[data-menu-aberto] .barra-agendamento {
 
 @keyframes encolher-pilula {
   to {
-    height: 3.25rem;
+    height: 3.5rem;
   }
 }
 
 @keyframes encolher-selo {
+  to {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+}
+
+/*
+  O botao do menu precisa encolher JUNTO com a pilula.
+
+  Antes ele ficava travado em 44px dentro de uma pilula de 52px: sobravam 4px
+  de cada lado e a borda dele quase encostava na borda externa do header. Agora
+  a pilula para em 56px e o botao vai a 40px, o que devolve os mesmos 8px de
+  respiro que o selo do logo tem do outro lado.
+
+  O alvo de toque NAO encolhe: o `::after` estende a area clicavel de volta aos
+  44px, que e o minimo acessivel. Encolhe o desenho, nao a area de acerto.
+*/
+.cabecalho-botao-menu {
+  position: relative;
+}
+
+.cabecalho-botao-menu::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+}
+
+@keyframes encolher-botao-menu {
   to {
     height: 2.5rem;
     width: 2.5rem;

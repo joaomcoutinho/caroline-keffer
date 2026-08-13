@@ -69,7 +69,7 @@ export function MenuMobile() {
         aria-expanded={aberto}
         aria-haspopup="dialog"
         aria-label="Abrir menu"
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-hairline text-text transition-[border-color,color] duration-200 hover:border-brand hover:text-brand lg:hidden"
+        className="cabecalho-botao-menu flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-hairline text-text transition-[border-color,color] duration-200 hover:border-brand hover:text-brand lg:hidden"
       >
         <ListIcon size={20} weight="bold" aria-hidden />
       </button>
