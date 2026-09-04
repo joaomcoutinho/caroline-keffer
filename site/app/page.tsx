@@ -4,6 +4,7 @@ import { Prova } from "@/components/sections/Prova";
 import { Servicos } from "@/components/sections/Servicos";
 import { SemEstresse } from "@/components/sections/SemEstresse";
 import { DraCarol } from "@/components/sections/DraCarol";
+import { Equipe } from "@/components/sections/Equipe";
 import { Planos } from "@/components/sections/Planos";
 import { Pets } from "@/components/sections/Pets";
 import { Vacinas } from "@/components/sections/Vacinas";
@@ -39,6 +40,7 @@ export default function Home() {
         <Servicos />
         <SemEstresse />
         <DraCarol />
+        <Equipe />
         <Pets />
         <Vacinas />
         <GuiaFilhote />

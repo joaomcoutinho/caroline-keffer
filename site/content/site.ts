@@ -52,6 +52,7 @@ export const meta = {
 export const navegacao = [
   { rotulo: "Serviços", href: "#servicos" },
   { rotulo: "A clínica", href: "#a-clinica" },
+  { rotulo: "Equipe", href: "#equipe" },
   { rotulo: "Vacinas", href: "#vacinas" },
   { rotulo: "Dúvidas", href: "#duvidas" },
   { rotulo: "Onde ficamos", href: "#onde-ficamos" },
@@ -285,6 +286,51 @@ export const draCarol = {
     proporcao: "3 / 2",
     posicao: "center center",
   },
+} as const;
+
+/**
+ * A equipe.
+ *
+ * O argumento não é "conheça nosso time" (rótulo vazio que todo site tem): é
+ * que a equipe é PEQUENA e FIXA. Num setor onde o concorrente é hospital 24h
+ * com plantonista rodando, ser sempre atendido pelas mesmas quatro pessoas é
+ * vantagem, não limitação — e é a mesma tese do resto do site.
+ *
+ * ⚠️ FOTOS: as duas veterinárias têm retrato de estúdio; Camila e Lucas
+ * mandaram selfie. Todas foram normalizadas no mesmo recorte 4:5 para o grid
+ * não ficar quebrado, mas a diferença de origem continua visível. Vale pedir
+ * à clínica duas fotos no mesmo padrão das outras duas.
+ */
+export const equipe = {
+  headline: "A equipe é pequena, e é sempre a mesma.",
+  subhead:
+    "Quatro pessoas cuidam de tudo, da recepção à cirurgia. Na segunda visita, você já reconhece quem atendeu seu animal na primeira.",
+  membros: [
+    {
+      nome: "Dra. Caroline Keffer",
+      papel: "Médica Veterinária",
+      foto: "/images/equipe-caroline-keffer.webp",
+      alt: "Dra. Caroline Keffer, de jaleco branco, sorrindo",
+    },
+    {
+      nome: "Dra. Isa Lopes",
+      papel: "Médica Veterinária",
+      foto: "/images/equipe-isa-lopes.webp",
+      alt: "Dra. Isa Lopes, de uniforme verde, com os braços cruzados",
+    },
+    {
+      nome: "Camila Amaral",
+      papel: "Gerente",
+      foto: "/images/equipe-camila-amaral.webp",
+      alt: "Camila Amaral, de uniforme da clínica, sorrindo",
+    },
+    {
+      nome: "Lucas Leal",
+      papel: "Pet Groomer",
+      foto: "/images/equipe-lucas-leal.webp",
+      alt: "Lucas Leal, pet groomer da clínica",
+    },
+  ],
 } as const;
 
 export const planos = {

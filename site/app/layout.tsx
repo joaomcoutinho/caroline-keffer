@@ -48,10 +48,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8f7f4" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b2129" },
-  ],
+  // Uma cor só: o site não acompanha mais o tema do sistema (ver THEME LOCK
+  // em globals.css). Duas entradas aqui pintariam a barra do navegador de
+  // escuro numa página que é clara.
+  themeColor: "#f8f7f4",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

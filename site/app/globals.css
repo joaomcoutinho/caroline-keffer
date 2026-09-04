@@ -12,8 +12,10 @@
   - O vermelho foi escurecido de #C1272D para #B3242A para passar WCAG AA com
     texto branco (~6,1:1).
   - SHAPE LOCK: botão = pílula. Card e mídia = 1rem. Campo = 0,5rem.
-  - THEME LOCK: claro por padrão, escuro via prefers-color-scheme. Uma única
-    inversão por página, no bloco final (CTA + rodapé), que fecha a página.
+  - THEME LOCK: o site é CLARO, ponto. O tema escuro existe completo mas fica
+    parqueado atrás de `data-tema="escuro"` (ver bloco lá embaixo) — ninguém
+    cai nele pelo ajuste de sistema. Uma única inversão por página, no bloco
+    final (CTA + rodapé), que fecha a página.
   - MOTION 4: transição e revelação de entrada. Zero loop infinito.
 */
 
@@ -45,6 +47,8 @@
 
 /* Tokens semânticos — é isto que os componentes consomem. Nunca hex solto no JSX. */
 :root {
+  /* Trava a barra de rolagem e os controles nativos no claro também. */
+  color-scheme: light;
   --surface: #f8f7f4;
   --surface-2: #eeeeea;
   --surface-3: #e2e7e6;
@@ -61,8 +65,17 @@
   --on-action: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+/*
+  TEMA ESCURO PARQUEADO (13/08/2026, decisão do JM).
+  O site é uma clínica: o registro claro é o que combina com o consultório, e o
+  escuro fazia o site inteiro virar de noite conforme o SISTEMA de quem acessa,
+  sem ninguém decidir isso.
+
+  Não foi apagado, foi trocado o gatilho: em vez de `prefers-color-scheme`, o
+  escuro agora só entra com `data-tema="escuro"` no <html>. Continua completo e
+  testável (é só pôr o atributo), mas ninguém cai nele por acidente.
+*/
+:root[data-tema="escuro"] {
     --surface: #0b2129;
     --surface-2: #102c35;
     --surface-3: #163742;
@@ -76,7 +89,6 @@
     --action: #7ec0dc;
     --action-hover: #a8d6e8;
     --on-action: #07222c;
-  }
 }
 
 @theme inline {
@@ -157,13 +169,11 @@
     0 10px 30px -12px color-mix(in srgb, var(--text) 30%, transparent);
 }
 
-@media (prefers-color-scheme: dark) {
-  .vidro {
+:root[data-tema="escuro"] .vidro {
     border-color: color-mix(in srgb, var(--brand) 26%, transparent);
     box-shadow:
       inset 0 1px 0 color-mix(in srgb, #fff 12%, transparent),
       0 10px 30px -12px rgb(0 0 0 / 0.5);
-  }
 }
 
 /* Sem suporte a transparência: vira sólido, sem perder contraste. */
@@ -332,10 +342,8 @@
   mask-repeat: space;
 }
 
-@media (prefers-color-scheme: dark) {
-  .fundo-patas::before {
-    opacity: 0.08;
-  }
+:root[data-tema="escuro"] .fundo-patas::before {
+  opacity: 0.08;
 }
 
 /*
