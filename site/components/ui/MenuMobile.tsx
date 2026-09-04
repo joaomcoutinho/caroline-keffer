@@ -73,7 +73,7 @@ export function MenuMobile() {
   }, [aberto]);
 
   const linhaContato =
-    "flex items-center gap-3 rounded-[var(--radius-field)] px-3 py-3 text-sm text-text-2 transition-colors hover:bg-brand/10 hover:text-brand";
+    "flex items-center gap-3 rounded-[var(--radius-field)] px-3 py-3 text-sm text-text-2 transition-colors hover:bg-brand/10 hover:text-action";
 
   return (
     <>
@@ -83,7 +83,7 @@ export function MenuMobile() {
         aria-expanded={aberto}
         aria-haspopup="dialog"
         aria-label="Abrir menu"
-        className="cabecalho-botao-menu flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-hairline text-text transition-[border-color,color] duration-200 hover:border-brand hover:text-brand lg:hidden"
+        className="cabecalho-botao-menu flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-hairline text-text transition-[border-color,color] duration-200 hover:border-brand hover:text-action lg:hidden"
       >
         <ListIcon size={20} weight="bold" aria-hidden />
       </button>
@@ -118,7 +118,7 @@ export function MenuMobile() {
                     type="button"
                     onClick={() => setAberto(false)}
                     aria-label="Fechar menu"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-text-2 transition-colors hover:border-brand hover:text-brand"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-text-2 transition-colors hover:border-brand hover:text-action"
                   >
                     <XIcon size={16} weight="bold" aria-hidden />
                   </button>
@@ -130,7 +130,7 @@ export function MenuMobile() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setAberto(false)}
-                      className="flex items-center justify-between border-b border-hairline py-4 font-display text-lg font-semibold transition-colors hover:text-brand"
+                      className="flex items-center justify-between border-b border-hairline py-4 font-display text-lg font-semibold transition-colors hover:text-action"
                     >
                       {item.rotulo}
                       <CaretRightIcon

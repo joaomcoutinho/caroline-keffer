@@ -26,7 +26,7 @@ export function OndeFicamos() {
               href={contato.mapa}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-7 flex items-start gap-3 text-lg text-text-2 transition-colors hover:text-brand"
+              className="mt-7 flex items-start gap-3 text-lg text-text-2 transition-colors hover:text-action"
             >
               <MapPinIcon size={22} weight="light" className="mt-1 shrink-0" aria-hidden />
               <span>
@@ -41,7 +41,7 @@ export function OndeFicamos() {
           <Revelar atraso={0.1}>
             <a
               href={contato.telefoneFixoLink}
-              className="mt-5 flex items-center gap-3 text-lg text-text-2 transition-colors hover:text-brand"
+              className="mt-5 flex items-center gap-3 text-lg text-text-2 transition-colors hover:text-action"
             >
               <PhoneIcon size={22} weight="light" className="shrink-0" aria-hidden />
               {contato.telefoneFixo}

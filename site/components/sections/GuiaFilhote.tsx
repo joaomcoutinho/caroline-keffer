@@ -28,7 +28,7 @@ export function GuiaFilhote() {
   const pilula =
     "rounded-full border px-5 py-2.5 text-sm font-medium transition-[background-color,color,border-color] duration-200 ease-[var(--ease-soft)]";
   const ativa = "border-transparent bg-action text-on-action";
-  const inativa = "border-hairline text-text-2 hover:border-brand hover:text-brand";
+  const inativa = "border-hairline text-text-2 hover:border-brand hover:text-action";
 
   return (
     <Secao id="filhote" tom="base">

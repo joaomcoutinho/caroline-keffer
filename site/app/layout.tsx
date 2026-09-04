@@ -51,7 +51,7 @@ export const viewport: Viewport = {
   // Uma cor só: o site não acompanha mais o tema do sistema (ver THEME LOCK
   // em globals.css). Duas entradas aqui pintariam a barra do navegador de
   // escuro numa página que é clara.
-  themeColor: "#f8f7f4",
+  themeColor: "#eef6f9",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

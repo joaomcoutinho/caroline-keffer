@@ -49,14 +49,30 @@
 :root {
   /* Trava a barra de rolagem e os controles nativos no claro também. */
   color-scheme: light;
-  --surface: #f8f7f4;
-  --surface-2: #eeeeea;
-  --surface-3: #e2e7e6;
+  /*
+    Superfícies TINGIDAS DE CIANO (04/09/2026, pedido do JM: "está muito
+    branco"). Isto não afrouxa o COLOR LOCK, cumpre ele: o lock manda a escala
+    neutra ser tingida de teal, e a escala anterior era QUENTE (#f8f7f4 tem
+    R>G>B), ou seja, o oposto do previsto.
+  */
+  --surface: #eef6f9;
+  --surface-2: #dcecf2;
+  --surface-3: #c9e1eb;
   --text: #0e2b34;
   --text-2: #1c4451;
-  /* escurecido de #5d7d87 para passar AA em texto de 14px sobre --surface */
-  --text-3: #4c6a74;
-  --hairline: #d5dddd;
+  /*
+    Escurecido de novo, de #4c6a74 para #425e69. Com as superfícies mais
+    saturadas, o valor antigo caía para 4,27 sobre --surface-3 e reprovava em
+    AA. Neste, o pior caso é 5,09 — folga maior que a que existia antes.
+  */
+  --text-3: #425e69;
+  /*
+    O fio também saiu do cinza quente: #d5dddd sobre a superfície ciano dava
+    1,26 e sumia. Este dá 1,52 e pertence à família da marca.
+  */
+  --hairline: #b6ccd6;
+  --patas-cor: #1f6e88;
+  --patas-opacidade: 0.16;
   --brand: #2e7a94;
   --brand-soft: #7ec0dc;
   /* Ação = ciano da marca. Escurecido o suficiente para passar AA com texto branco. */
@@ -327,8 +343,15 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-color: var(--brand);
-  opacity: 0.055;
+  /*
+    A textura tem tokens PROPRIOS para poder ser calibrada sem mexer na marca.
+    Antes era `var(--brand)` (teal) a 5,5%, o que dava ~1,07 de contraste — o
+    JM reportou que as patinhas estavam apagadas. Agora é o azul de ação, mais
+    ciano que o teal, a 16%: ~1,24 de contraste, cerca de 3x mais presente, e
+    igual nas três superfícies (medido).
+  */
+  background-color: var(--patas-cor);
+  opacity: var(--patas-opacidade);
   -webkit-mask-image: var(--textura-patas);
   mask-image: var(--textura-patas);
   -webkit-mask-size: 560px 560px;
@@ -342,8 +365,9 @@
   mask-repeat: space;
 }
 
-:root[data-tema="escuro"] .fundo-patas::before {
-  opacity: 0.08;
+:root[data-tema="escuro"] {
+  --patas-cor: var(--brand);
+  --patas-opacidade: 0.1;
 }
 
 /*

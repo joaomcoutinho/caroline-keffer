@@ -119,16 +119,24 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
               onMouseEnter={() => setAtivo(i)}
               onKeyDown={(e) => aoTeclar(e, i)}
               className={`servico-aba group flex shrink-0 snap-start items-center gap-3 rounded-full border px-5 py-3 text-left whitespace-nowrap transition-[color,border-color,background-color] duration-300 ease-[var(--ease-soft)] lg:w-full lg:shrink lg:rounded-none lg:border-0 lg:border-b lg:border-hairline lg:px-0 lg:py-5 lg:whitespace-normal ${
+                /*
+                  O rótulo da aba selecionada usa `text-text`, não `text-brand`.
+                  Com as superfícies mais claras, o teal da marca sobre a
+                  pílula tingida caía para 3,56 — reprovado em AA. Reduzir a
+                  tinta não resolvia (nem a 5% passava de 4,49). A seleção já é
+                  sinalizada pela borda, pelo preenchimento e, no desktop, pelo
+                  traço; a cor no texto era redundante e era o elo fraco.
+                */
                 selecionado
-                  ? "border-brand bg-brand/10 text-brand lg:bg-transparent"
-                  : "border-hairline text-text-2 hover:text-brand"
+                  ? "border-brand bg-brand/10 text-text lg:bg-transparent"
+                  : "border-hairline text-text-2 hover:text-action"
               }`}
             >
               <Icone
                 size={22}
                 weight="light"
                 className={`shrink-0 transition-colors duration-300 ${
-                  selecionado ? "text-brand" : "text-text-3 group-hover:text-brand"
+                  selecionado ? "text-brand" : "text-text-3 group-hover:text-action"
                 }`}
                 aria-hidden
               />

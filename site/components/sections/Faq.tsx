@@ -37,7 +37,7 @@ export function Faq() {
             <Revelar key={item.pergunta} atraso={i * 0.05}>
               <details className="faq-item group">
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left">
-                  <span className="font-display text-lg leading-snug font-medium text-balance transition-colors duration-200 group-hover:text-brand">
+                  <span className="font-display text-lg leading-snug font-medium text-balance transition-colors duration-200 group-hover:text-action">
                     {item.pergunta}
                   </span>
                   <span className="faq-sinal mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-brand transition-[transform,border-color,background-color] duration-300 ease-[var(--ease-soft)] group-hover:border-brand">

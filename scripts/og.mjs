@@ -122,8 +122,15 @@ const mascaraAlfa = Buffer.from(`
   </svg>
 `);
 
-const fotoRecortada = await sharp(path.join(RAIZ_SITE, "public/images/foto_background_hero.webp"))
-  .resize({ width: LARGURA_FOTO, height: H, fit: "cover", position: "top" })
+/*
+  Recorte EXPLÍCITO, não `cover`. A foto é bem vertical (730x1190) e a caixa do
+  card é quase quadrada (620x630): deixar o `cover` decidir cortava o queixo
+  dela fora. Aqui a janela já sai na proporção da caixa (730/742 = 0,984, a
+  mesma de 620/630) e é centrada no rosto, então nada é cortado.
+*/
+const fotoRecortada = await sharp(path.join(RAIZ_SITE, "public/images/hero_dra_keffer.webp"))
+  .extract({ left: 0, top: 109, width: 730, height: 742 })
+  .resize(LARGURA_FOTO, H)
   .toBuffer();
 
 /*

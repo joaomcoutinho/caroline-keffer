@@ -66,7 +66,7 @@ export function Fechamento() {
               <a
                 key={item.href}
                 href={item.href}
-                className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-brand"
+                className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-action"
               >
                 {item.rotulo}
               </a>
@@ -78,13 +78,13 @@ export function Fechamento() {
               href={contato.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-brand"
+              className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-action"
             >
               WhatsApp {contato.whatsappExibicao}
             </a>
             <a
               href={contato.telefoneFixoLink}
-              className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-brand"
+              className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-action"
             >
               {contato.telefoneFixo}
             </a>
@@ -92,7 +92,7 @@ export function Fechamento() {
               href={contato.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="-my-2 flex items-center gap-2 py-2.5 text-sm text-text-2 transition-colors hover:text-brand"
+              className="-my-2 flex items-center gap-2 py-2.5 text-sm text-text-2 transition-colors hover:text-action"
             >
               <InstagramLogoIcon size={18} weight="light" aria-hidden />
               Instagram

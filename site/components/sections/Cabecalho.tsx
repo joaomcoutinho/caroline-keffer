@@ -53,7 +53,7 @@ export function Cabecalho() {
             <a
               key={item.href}
               href={item.href}
-              className="text-[15px] text-text-2 transition-colors hover:text-brand"
+              className="text-[15px] text-text-2 transition-colors hover:text-action"
             >
               {item.rotulo}
             </a>

@@ -66,17 +66,21 @@ export const hero = {
   ctaMicrocopy: "Resposta no mesmo dia, em horário de funcionamento.",
   foto: {
     /*
-     * Voltou para esta foto de propósito. Na `nova_foto_hero.png` a cabeça da
-     * Dra. fica a ~7% do topo do quadro: com o painel em altura cheia ela cai
-     * atrás da pílula do header, e não há imagem acima dela para revelar. A
-     * única saída seria encurtar o painel, o que abria um vão no topo.
+     * Retrato REAL da Dra. Caroline (JM, 04/09/2026). A foto anterior
+     * (`foto_background_hero.webp`) mostrava outra pessoa — num site sobre
+     * "a mesma veterinária há 20 anos", a foto tinha que ser dela.
+     *
+     * ⚠️ Provisória, por decisão do JM ("por enquanto"): é retrato casual de
+     * busto, não a Dra. atendendo. E tem 730px de largura contra 1664px da
+     * anterior, então em tela retina fica mais macia. Vale pedir à clínica um
+     * retrato dela em alta, no consultório.
      */
-    src: "/images/foto_background_hero.webp",
-    alt: "Dra. Caroline Keffer sorrindo, segurando um cão shih-tzu no consultório",
+    src: "/images/hero_dra_keffer.webp",
+    alt: "Dra. Caroline Keffer sorrindo, retrato em fundo claro",
     briefing: "Dra. Carol atendendo, retrato vertical, luz natural",
     proporcao: "4 / 5",
-    /** A Dra. está à direita do quadro; o recorte precisa segui-la no mobile. */
-    posicao: "62% center",
+    /** O rosto está levemente à direita do centro do quadro. */
+    posicao: "55% center",
   },
 } as const;
 
