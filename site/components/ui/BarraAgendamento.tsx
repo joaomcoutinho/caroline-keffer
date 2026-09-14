@@ -69,7 +69,7 @@ export function BarraAgendamento() {
         <a
           href={contato.telefoneFixoLink}
           aria-label="Ligar para a clínica"
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-text-3/70 text-text transition-colors duration-200 hover:border-brand hover:text-action"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-text-3/70 text-text transition-colors duration-200 hover:border-brand hover:text-acao-texto"
         >
           <PhoneIcon size={22} weight="light" aria-hidden />
         </a>

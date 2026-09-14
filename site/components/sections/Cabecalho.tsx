@@ -14,8 +14,18 @@ import { navegacao, CTA_PRIMARIO } from "@/content/site";
  * Só o logo, sem repetir "Caroline Keffer / Clínica Veterinária" ao lado: o nome
  * já está escrito dentro do selo, e o wordmark duplicado era redundante.
  *
- * O vidro segue o tom da marca (teal), não um cinza neutro: `bg-surface/70` mais
- * uma lâmina teal por cima, borda de 1px e brilho interno na aresta superior.
+ * 09/09/2026 (JM: "que ele tenha mais destaque com um azul mais escuro e não se
+ * perca frente ao azul claro"). A pílula era `.vidro` — lâmina CLARA sobre fundo
+ * claro — e sobre o hero e as seções azuis ela sumia. Agora é `.cabecalho-escuro`.
+ *
+ * A inversão é por TOKEN, não por classe em cada filho: a classe redefine
+ * --text, --brand e --action no escopo do header, então os links, o selo de
+ * horário, o botão do menu e o CTA se adaptam sozinhos. Nenhum desses
+ * componentes precisou mudar. Mesma técnica do `.bloco-escuro` do rodapé.
+ *
+ * Efeito colateral desejado no CTA: dentro do escopo escuro, --action vira o
+ * ciano CLARO com tinta escura (a mesma regra do rodapé), então o botão passa a
+ * saltar da pílula em vez de se dissolver nela.
  */
 export function Cabecalho() {
   return (
@@ -24,7 +34,7 @@ export function Cabecalho() {
       pode começar no topo absoluto da página, com a foto subindo até a borda.
     */
     <header className="cabecalho-encolhe fixed inset-x-0 top-0 z-40 px-4 pt-3 sm:px-6 sm:pt-4">
-      <div className="cabecalho-pilula vidro mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between gap-4 rounded-full pr-2 pl-3 sm:gap-6 sm:pr-3 sm:pl-4">
+      <div className="cabecalho-pilula cabecalho-escuro mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between gap-4 rounded-full pr-2 pl-3 sm:gap-6 sm:pr-3 sm:pl-4">
         <a
           href="#topo"
           aria-label="Clínica Pet Caroline Keffer, ir para o topo"
@@ -36,7 +46,7 @@ export function Cabecalho() {
             width={48}
             height={48}
             priority
-            className="cabecalho-selo h-12 w-12 rounded-full object-cover ring-1 ring-brand/20"
+            className="cabecalho-selo h-12 w-12 rounded-full object-cover ring-1 ring-white/25"
           />
         </a>
 
@@ -53,7 +63,7 @@ export function Cabecalho() {
             <a
               key={item.href}
               href={item.href}
-              className="text-[15px] text-text-2 transition-colors hover:text-action"
+              className="text-[15px] text-text-2 transition-colors hover:text-acao-texto"
             >
               {item.rotulo}
             </a>

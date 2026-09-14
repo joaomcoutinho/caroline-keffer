@@ -1,4 +1,4 @@
-import { WhatsappLogoIcon } from "@phosphor-icons/react/dist/ssr";
+import { LogoWhatsapp } from "@/components/ui/LogoWhatsapp";
 import { contato } from "@/content/site";
 
 type Tamanho = "grande" | "normal" | "compacto" | "icone";
@@ -69,7 +69,7 @@ export function BotaoWhatsapp({
       aria-label={nomeAcessivel ?? undefined}
       className={`${base} ${estilo} ${className}`}
     >
-      <WhatsappLogoIcon size={t.icone} weight="fill" aria-hidden />
+      <LogoWhatsapp size={t.icone} />
       {rotulo}
     </a>
   );

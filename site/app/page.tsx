@@ -7,8 +7,7 @@ import { DraCarol } from "@/components/sections/DraCarol";
 import { Equipe } from "@/components/sections/Equipe";
 import { Planos } from "@/components/sections/Planos";
 import { Pets } from "@/components/sections/Pets";
-import { Vacinas } from "@/components/sections/Vacinas";
-import { GuiaFilhote } from "@/components/sections/GuiaFilhote";
+import { Preventivo } from "@/components/sections/Preventivo";
 import { Faq } from "@/components/sections/Faq";
 import { OndeFicamos } from "@/components/sections/OndeFicamos";
 import { Fechamento } from "@/components/sections/Fechamento";
@@ -27,7 +26,16 @@ import { BarraAgendamento } from "@/components/ui/BarraAgendamento";
  *
  * O comparativo com o hospital 24h também saiu da composição. O componente e o
  * conteúdo seguem em components/sections/Comparativo.tsx e em `comparativo` no
- * content/site.ts — reimportar e inserir depois de GuiaFilhote traz de volta.
+ * content/site.ts — reimportar e inserir traz de volta.
+ *
+ * VACINAS saiu em 11/09/2026, quando a clínica mandou o catálogo real de
+ * serviços e vacinação não estava nele. Um calendário de vacinas interativo para
+ * um serviço que a clínica não presta seria promessa falsa. A dobra está
+ * PARQUEADA, não apagada: components/sections/Vacinas.tsx segue inteiro e
+ * `vacinas` continua em content/site.ts.
+ *
+ * O antigo GUIA DO FILHOTE virou PREVENTIVO: mesma mecânica de trilha, conteúdo
+ * reapontado para periodicidade de consulta e exame, que é o que a clínica faz.
  */
 export default function Home() {
   return (
@@ -38,13 +46,12 @@ export default function Home() {
         <Hero />
         <Prova />
         <Servicos />
+        <Planos />
         <SemEstresse />
         <DraCarol />
         <Equipe />
         <Pets />
-        <Vacinas />
-        <GuiaFilhote />
-        <Planos />
+        <Preventivo />
         <Faq />
         <OndeFicamos />
       </main>

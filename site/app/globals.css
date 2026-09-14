@@ -26,8 +26,8 @@
   --color-accent: #b3242a;
 
   /* Tipografia */
-  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--fonte-titulo), ui-rounded, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--fonte-corpo), ui-sans-serif, system-ui, sans-serif;
 
   /* Forma */
   --radius-card: 1rem;
@@ -37,12 +37,23 @@
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
 
   /*
-    Textura de patinhas.
-    Três pegadas num ladrilho de 560px, com ângulos e escalas diferentes e bem
-    afastadas entre si — a densidade anterior (três em 280px) lia como estampa.
-    O ladrilho grande é o que faz o padrão parecer espalhado em vez de repetido.
+    Textura de patinhas — REDESENHADA (09/09/2026, pedido do JM: a anterior
+    "não estava uma patinha bonita, tem que ser bem desenhada").
+
+    A antiga eram cinco elipses soltas: quatro dedos ovais e uma almofada
+    elíptica. Lia como clip-art porque nenhuma das duas formas existe numa
+    pata de verdade. Esta é desenhada:
+      - almofada metacarpal com TRÊS lóbulos na borda de baixo (o desenho
+        anatômico), em bézier, não elipse;
+      - quatro dedos em GOTA — mais estreitos na ponta, arredondados na base —
+        girados RADIALMENTE, cada um apontando para fora do centro da pata;
+      - dedos internos maiores que os externos, como na pata real.
+    Validada em 110px, 54px e 26px: a silhueta se mantém legível nos três.
+
+    Cinco pegadas por ladrilho de 560px (eram três), com escala de 0,40 a 0,60
+    e ângulos de -36° a +22° — mais presença, sem virar estampa.
   */
-  --textura-patas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560' viewBox='0 0 560 560'%3E%3Cg fill='%23000'%3E%3Cg transform='translate(88 104) rotate(-24)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3Cg transform='translate(412 268) rotate(16) scale(0.8)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3Cg transform='translate(214 476) rotate(-9) scale(0.66)'%3E%3Cellipse cx='-13' cy='-15' rx='6' ry='8'/%3E%3Cellipse cx='-4' cy='-20' rx='6' ry='8.5'/%3E%3Cellipse cx='6' cy='-19' rx='6' ry='8.5'/%3E%3Cellipse cx='15' cy='-13' rx='6' ry='8'/%3E%3Cellipse cx='0' cy='4' rx='13' ry='11'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  --textura-patas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560' viewBox='0 0 560 560'%3E%3Cg fill='%23000'%3E%3Cg transform='translate(84 96) rotate(-26) scale(0.6) translate(-60 -72)'%3E%3Cpath d='M60 65C74 65 86 74 86 85.5C86 93.5 82 100.8 75.5 102.4C71.5 103.4 68.4 101.6 67 99.6C65.8 97.9 63.4 97.5 62 99.1C60.9 100.3 59.1 100.3 58 99.1C56.6 97.5 54.2 97.9 53 99.6C51.6 101.6 48.5 103.4 44.5 102.4C38 100.8 34 93.5 34 85.5C34 74 46 65 60 65Z'/%3E%3Cg transform='translate(30 57) rotate(-36) scale(1.02)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(47 42) rotate(-12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(73 41.5) rotate(12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(90 55.5) rotate(34) scale(1.03)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(300 190) rotate(14) scale(0.44) translate(-60 -72)'%3E%3Cpath d='M60 65C74 65 86 74 86 85.5C86 93.5 82 100.8 75.5 102.4C71.5 103.4 68.4 101.6 67 99.6C65.8 97.9 63.4 97.5 62 99.1C60.9 100.3 59.1 100.3 58 99.1C56.6 97.5 54.2 97.9 53 99.6C51.6 101.6 48.5 103.4 44.5 102.4C38 100.8 34 93.5 34 85.5C34 74 46 65 60 65Z'/%3E%3Cg transform='translate(30 57) rotate(-36) scale(1.02)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(47 42) rotate(-12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(73 41.5) rotate(12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(90 55.5) rotate(34) scale(1.03)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(470 300) rotate(-8) scale(0.52) translate(-60 -72)'%3E%3Cpath d='M60 65C74 65 86 74 86 85.5C86 93.5 82 100.8 75.5 102.4C71.5 103.4 68.4 101.6 67 99.6C65.8 97.9 63.4 97.5 62 99.1C60.9 100.3 59.1 100.3 58 99.1C56.6 97.5 54.2 97.9 53 99.6C51.6 101.6 48.5 103.4 44.5 102.4C38 100.8 34 93.5 34 85.5C34 74 46 65 60 65Z'/%3E%3Cg transform='translate(30 57) rotate(-36) scale(1.02)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(47 42) rotate(-12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(73 41.5) rotate(12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(90 55.5) rotate(34) scale(1.03)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(150 360) rotate(22) scale(0.4) translate(-60 -72)'%3E%3Cpath d='M60 65C74 65 86 74 86 85.5C86 93.5 82 100.8 75.5 102.4C71.5 103.4 68.4 101.6 67 99.6C65.8 97.9 63.4 97.5 62 99.1C60.9 100.3 59.1 100.3 58 99.1C56.6 97.5 54.2 97.9 53 99.6C51.6 101.6 48.5 103.4 44.5 102.4C38 100.8 34 93.5 34 85.5C34 74 46 65 60 65Z'/%3E%3Cg transform='translate(30 57) rotate(-36) scale(1.02)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(47 42) rotate(-12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(73 41.5) rotate(12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(90 55.5) rotate(34) scale(1.03)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(360 470) rotate(-17) scale(0.55) translate(-60 -72)'%3E%3Cpath d='M60 65C74 65 86 74 86 85.5C86 93.5 82 100.8 75.5 102.4C71.5 103.4 68.4 101.6 67 99.6C65.8 97.9 63.4 97.5 62 99.1C60.9 100.3 59.1 100.3 58 99.1C56.6 97.5 54.2 97.9 53 99.6C51.6 101.6 48.5 103.4 44.5 102.4C38 100.8 34 93.5 34 85.5C34 74 46 65 60 65Z'/%3E%3Cg transform='translate(30 57) rotate(-36) scale(1.02)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(47 42) rotate(-12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(73 41.5) rotate(12) scale(1.06)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3Cg transform='translate(90 55.5) rotate(34) scale(1.03)'%3E%3Cpath d='M0-13.2C5.6-13.2 9.2-8.2 9.2-1.8C9.2 4.6 5.2 8.8 0 8.8C-5.2 8.8-9.2 4.6-9.2-1.8C-9.2-8.2-5.6-13.2 0-13.2Z'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Tokens semânticos — é isto que os componentes consomem. Nunca hex solto no JSX. */
@@ -54,31 +65,60 @@
     branco"). Isto não afrouxa o COLOR LOCK, cumpre ele: o lock manda a escala
     neutra ser tingida de teal, e a escala anterior era QUENTE (#f8f7f4 tem
     R>G>B), ou seja, o oposto do previsto.
+
+    09/09/2026 — mais um passo de azul, a pedido do JM ("poderia ganhar um
+    pouco mais de tonalidade de azul"). De #eef6f9/#dcecf2/#c9e1eb para estes.
+    Contraste REMEDIDO com os três tokens de texto nas três superfícies: o pior
+    caso é --text-3 sobre --surface-3, que sai em 4,64 (era 5,09). Continua
+    passando AA, com menos folga — não escurecer mais as superfícies sem
+    escurecer --text-3 junto.
   */
-  --surface: #eef6f9;
-  --surface-2: #dcecf2;
-  --surface-3: #c9e1eb;
-  --text: #0e2b34;
-  --text-2: #1c4451;
+  --surface: #cce4f0;
+  --surface-2: #aed2e6;
+  --surface-3: #8fc3dd;
+  --text: #081c24;
+  --text-2: #12333e;
   /*
     Escurecido de novo, de #4c6a74 para #425e69. Com as superfícies mais
     saturadas, o valor antigo caía para 4,27 sobre --surface-3 e reprovava em
-    AA. Neste, o pior caso é 5,09 — folga maior que a que existia antes.
+    AA. Com a escala de 09/09/2026 o pior caso deste é 4,64 sobre --surface-3.
   */
-  --text-3: #425e69;
+  --text-3: #2d4652;
   /*
     O fio também saiu do cinza quente: #d5dddd sobre a superfície ciano dava
     1,26 e sumia. Este dá 1,52 e pertence à família da marca.
   */
-  --hairline: #b6ccd6;
+  --hairline: #84a9be;
   --patas-cor: #1f6e88;
-  --patas-opacidade: 0.16;
+  /*
+    Baixou de 0,16 para 0,10 (09/09/2026). O ladrilho passou de três para cinco
+    pegadas: mantendo 0,16, a textura deixava de ser fundo e passava a disputar
+    com a interface — na trilha das vacinas as pegadas caíam em cima dos rótulos.
+    Mais pegadas, cada uma mais leve: a presença total sobe, o ruído não.
+  */
+  --patas-opacidade: 0.1;
   --brand: #2e7a94;
   --brand-soft: #7ec0dc;
   /* Ação = ciano da marca. Escurecido o suficiente para passar AA com texto branco. */
   --action: #1f6e88;
   --action-hover: #175a70;
   --on-action: #ffffff;
+  /*
+    A cor de ação tem DOIS papéis, e um valor só não serve para os dois.
+
+    Como FUNDO de botão com texto branco, #1f6e88 dá 5,76 e passa folgado.
+    Como TEXTO sobre superfície clara ela reprovava: 3,02 sobre --surface-3.
+    Isso já era verdade antes de 09/09/2026 e piorou com as superfícies mais
+    escuras — todo `hover:text-acao-texto` do site cai nesse caso.
+
+    Então: --action continua sendo o FUNDO do CTA (o ciano da marca, que é
+    identidade e não pode escurecer), e --acao-texto é a mesma família puxada
+    para baixo até passar AA como tinta: 5,62 sobre --surface-3.
+
+    Nos blocos escuros (.bloco-escuro, .cabecalho-escuro) os dois viram o ciano
+    CLARO, porque lá o fundo é que é escuro.
+  */
+  --acao-texto: #124355;
 }
 
 /*
@@ -105,6 +145,7 @@
     --action: #7ec0dc;
     --action-hover: #a8d6e8;
     --on-action: #07222c;
+    --acao-texto: #7ec0dc;
 }
 
 @theme inline {
@@ -118,6 +159,7 @@
   --color-brand: var(--brand);
   --color-brand-soft: var(--brand-soft);
   --color-action: var(--action);
+  --color-acao-texto: var(--acao-texto);
   --color-action-hover: var(--action-hover);
   --color-on-action: var(--on-action);
 }
@@ -160,8 +202,112 @@
   --action: #7ec0dc;
   --action-hover: #a8d6e8;
   --on-action: #07222c;
+  --acao-texto: #7ec0dc;
   background-color: var(--surface);
   color: var(--text);
+}
+
+/*
+  COSTURA DO HERO — dissolucao da fachada na coluna da copy.
+
+  11/09/2026 (JM: "voce colocou uma divisao muito bruta, apenas uma linha reta
+  misturada com degrade, ta totalmente amador... fazer uma transicao bem fluida
+  e natural, colocar o degrade um pouco por cima da imagem").
+
+  O que estava errado:
+    1. havia um FIO vertical de 1px marcando a divisa. Fio e aresta: ele afirma
+       exatamente o corte que o degrade estava tentando dissolver. Saiu.
+    2. o degrade era uma lamina da cor da superficie POR CIMA da foto, e curta
+       (16 por cento). Lamina colorida por cima nao dissolve, encobre — e o
+       ponto em que ela satura vira uma faixa visivel.
+    3. havia ainda um terceiro veu de brilho ciano do lado da copy, somando uma
+       segunda emenda a poucos pixels da primeira.
+
+  O que e agora: uma MASCARA na propria foto. A imagem perde opacidade de
+  verdade e deixa a superficie da secao aparecer atraves dela — e dissolucao,
+  nao cobertura, entao nao existe cor de lamina para descasar com o fundo.
+
+  A rampa segue SMOOTHSTEP (t ao quadrado vezes (3-2t)) em 16 paradas, e nao um
+  degrade linear. Degrade linear tem derivada constante: o olho enxerga a quebra
+  no ponto em que ele satura, e e isso que le como amador. O smoothstep entra e
+  sai da rampa com derivada zero, entao nao ha ponto em que algo "comeca".
+
+  Largura: 40 por cento da coluna da foto (era 16), o que em tela de 1440 da
+  cerca de 265px de transicao. E o "degrade um pouco por cima da imagem" pedido:
+  ele come parte da foto de proposito, porque e isso que faz as duas metades se
+  encontrarem em vez de se encostarem.
+*/
+.hero-mistura {
+  -webkit-mask-image: linear-gradient(to right, transparent 0.00%, rgb(0 0 0 / 0.011) 2.50%, rgb(0 0 0 / 0.043) 5.00%, rgb(0 0 0 / 0.092) 7.50%, rgb(0 0 0 / 0.156) 10.00%, rgb(0 0 0 / 0.232) 12.50%, rgb(0 0 0 / 0.316) 15.00%, rgb(0 0 0 / 0.407) 17.50%, rgb(0 0 0 / 0.500) 20.00%, rgb(0 0 0 / 0.593) 22.50%, rgb(0 0 0 / 0.684) 25.00%, rgb(0 0 0 / 0.768) 27.50%, rgb(0 0 0 / 0.844) 30.00%, rgb(0 0 0 / 0.908) 32.50%, rgb(0 0 0 / 0.957) 35.00%, rgb(0 0 0 / 0.989) 37.50%, #000 40.00%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0.00%, rgb(0 0 0 / 0.011) 2.50%, rgb(0 0 0 / 0.043) 5.00%, rgb(0 0 0 / 0.092) 7.50%, rgb(0 0 0 / 0.156) 10.00%, rgb(0 0 0 / 0.232) 12.50%, rgb(0 0 0 / 0.316) 15.00%, rgb(0 0 0 / 0.407) 17.50%, rgb(0 0 0 / 0.500) 20.00%, rgb(0 0 0 / 0.593) 22.50%, rgb(0 0 0 / 0.684) 25.00%, rgb(0 0 0 / 0.768) 27.50%, rgb(0 0 0 / 0.844) 30.00%, rgb(0 0 0 / 0.908) 32.50%, rgb(0 0 0 / 0.957) 35.00%, rgb(0 0 0 / 0.989) 37.50%, #000 40.00%, #000 100%);
+}
+
+/*
+  No mobile nao ha duas colunas: a foto e uma faixa embaixo da copy e a emenda e
+  horizontal. Rampa mais curta (22 por cento) porque a faixa e baixa — 40 comeria
+  a fachada inteira.
+*/
+@media (max-width: 1023px) {
+  .hero-mistura {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0.00%, rgb(0 0 0 / 0.011) 1.38%, rgb(0 0 0 / 0.043) 2.75%, rgb(0 0 0 / 0.092) 4.12%, rgb(0 0 0 / 0.156) 5.50%, rgb(0 0 0 / 0.232) 6.88%, rgb(0 0 0 / 0.316) 8.25%, rgb(0 0 0 / 0.407) 9.62%, rgb(0 0 0 / 0.500) 11.00%, rgb(0 0 0 / 0.593) 12.38%, rgb(0 0 0 / 0.684) 13.75%, rgb(0 0 0 / 0.768) 15.12%, rgb(0 0 0 / 0.844) 16.50%, rgb(0 0 0 / 0.908) 17.88%, rgb(0 0 0 / 0.957) 19.25%, rgb(0 0 0 / 0.989) 20.62%, #000 22.00%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0.00%, rgb(0 0 0 / 0.011) 1.38%, rgb(0 0 0 / 0.043) 2.75%, rgb(0 0 0 / 0.092) 4.12%, rgb(0 0 0 / 0.156) 5.50%, rgb(0 0 0 / 0.232) 6.88%, rgb(0 0 0 / 0.316) 8.25%, rgb(0 0 0 / 0.407) 9.62%, rgb(0 0 0 / 0.500) 11.00%, rgb(0 0 0 / 0.593) 12.38%, rgb(0 0 0 / 0.684) 13.75%, rgb(0 0 0 / 0.768) 15.12%, rgb(0 0 0 / 0.844) 16.50%, rgb(0 0 0 / 0.908) 17.88%, rgb(0 0 0 / 0.957) 19.25%, rgb(0 0 0 / 0.989) 20.62%, #000 22.00%, #000 100%);
+  }
+}
+
+/*
+  HEADER ESCURO (09/09/2026, pedido do JM: "mude a cor de background do header
+  para ele ter mais destaque com um azul mais escuro e não se perder frente ao
+  azul claro").
+
+  A pílula usava `.vidro` — lâmina clara sobre fundo claro. Sobre o hero e as
+  seções azuis ela sumia: era azul-claro translúcido em cima de azul-claro.
+
+  Aqui a pílula inverte, e a inversão é feita por TOKEN, não por classe em cada
+  filho. Redefinindo --text, --brand e --action no escopo do header, tudo que
+  vive dentro dele — links, selo de horário, botão do menu, CTA — se adapta
+  sozinho, sem uma linha de mudança nesses componentes. É a mesma técnica do
+  `.bloco-escuro` do rodapé, então o site continua com UMA regra para "ação
+  sobre fundo escuro": ciano CLARO com tinta escura.
+
+  Contrastes medidos sobre #0f3644: branco 12,87 · --text-2 8,9 · ciano claro
+  #7ec0dc 6,41. O CTA fica claro sobre a pílula escura, que é exatamente o
+  destaque que faltava.
+*/
+.cabecalho-escuro {
+  --surface: #0f3644;
+  --text: #f3fafc;
+  --text-2: #cfe3ea;
+  --text-3: #a3c2d1;
+  --hairline: #2c5c6e;
+  --brand: #7ec0dc;
+  --brand-soft: #a8d6e8;
+  --action: #7ec0dc;
+  --action-hover: #a8d6e8;
+  --on-action: #07222c;
+  --acao-texto: #7ec0dc;
+  color: var(--text);
+  border: 1px solid color-mix(in srgb, #7ec0dc 26%, transparent);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, #7ec0dc 12%, transparent),
+      transparent 62%
+    ),
+    color-mix(in srgb, #0f3644 88%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 14%, transparent),
+    0 12px 34px -12px rgb(4 20 26 / 0.55);
+}
+
+/* Sem suporte a transparência: vira sólido, sem perder contraste. */
+@media (prefers-reduced-transparency: reduce) {
+  .cabecalho-escuro {
+    background: #0f3644;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 /*
@@ -227,17 +373,18 @@
 }
 
 /*
-  Botão flutuante do WhatsApp. Verde oficial da marca (#25D366) — única cor fora
-  da paleta no site inteiro, e de propósito: aqui ela é sinalização, não enfeite.
+  Botão flutuante do WhatsApp — em CIANO DA MARCA (09/09/2026, pedido do JM).
+  Era o verde oficial #25D366, a única cor fora da paleta no site inteiro. Quem
+  faz o reconhecimento agora é o glifo oficial, que continua intacto.
 */
 .botao-flutuante {
-  background-color: #25d366;
+  background-color: var(--action);
   /* Prende os anéis dentro do próprio botão: sem isto o z-index -1 escaparia. */
   isolation: isolate;
 }
 
 .botao-flutuante:hover {
-  background-color: #1eb855;
+  background-color: var(--action-hover);
 }
 
 /*
@@ -254,7 +401,7 @@
   inset: 0;
   z-index: -1;
   border-radius: 9999px;
-  background-color: #25d366;
+  background-color: var(--action);
   pointer-events: none;
 }
 
@@ -372,34 +519,42 @@
 
 /*
   FAQ em <details> nativo.
-  O "+" gira para virar "×" quando abre, e o corpo desliza. `interpolate-size`
-  permite animar de 0 até `auto`; onde não houver suporte, abre instantâneo —
-  que é o comportamento padrão do elemento, então nada quebra.
+
+  A ALTURA não é mais animada por CSS. Ela é conduzida pela Web Animations API
+  em `components/ui/ItemFaq.tsx`, e o motivo está documentado lá em cima: o
+  `<details>` tira o atributo `open` no mesmo quadro do clique, então o
+  fechamento nunca chega a ser animável por CSS — abria deslizando e fechava
+  num corte seco.
+
+  Saiu daqui o bloco `@supports (interpolate-size: allow-keywords)` que
+  embrulhava a transição antiga. Ele testava um recurso que aquela técnica
+  (`grid-template-rows: 0fr → 1fr`) nem usava, e com isso barrava a animação em
+  navegadores perfeitamente capazes de rodá-la.
+
+  O que ficou no CSS é só o estado visual do sinal "+".
 */
-@supports (interpolate-size: allow-keywords) {
-  :root {
-    interpolate-size: allow-keywords;
-  }
 
-  .faq-corpo {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.35s var(--ease-soft);
-  }
-
-  .faq-item[open] .faq-corpo {
-    grid-template-rows: 1fr;
-  }
-
-  .faq-corpo > * {
-    overflow: hidden;
-  }
-}
-
-.faq-item[open] .faq-sinal {
+/*
+  `data-aberto`, e não `[open]`: no fechamento o `open` só sai quando a animação
+  termina, então preso a ele o "+" ficaria parado esperando o card fechar em vez
+  de girar junto com o movimento.
+*/
+.faq-item[data-aberto="true"] .faq-sinal {
   transform: rotate(135deg);
   border-color: var(--brand);
   background-color: color-mix(in srgb, var(--brand) 12%, transparent);
+}
+
+/* Sem JS o elemento nativo assume, e aí quem manda é o `open`. */
+.faq-item:not([data-aberto]) [open] .faq-sinal {
+  transform: rotate(135deg);
+}
+
+/* O foco por teclado precisa aparecer no alvo inteiro, não só no texto. */
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -551,25 +706,316 @@
 }
 
 /*
-  Painel de serviço: entra com um deslize curto a cada troca de aba.
-  Curto de propósito — quem está percorrendo a lista com o mouse não pode
-  esperar animação terminar para ler o próximo item.
+  ABA DE SERVIÇO: destaque sob o cursor.
+
+  12/09/2026 (JM): "só esse traço ao lado" não bastava para saber em qual
+  seletor o cursor está. Agora o item sob o cursor (ou selecionado) ganha uma
+  lâmina tingida com borda e halo, e o ícone cresce um pouco.
+
+  A lâmina mora num ::before, e não no fundo do próprio botão, por dois
+  motivos: ela precisa sangrar para os lados (`inset-inline: -0.75rem`) sem
+  empurrar o texto, e precisa ficar recuada em cima e embaixo para o fio que
+  separa as abas continuar aparecendo entre uma e outra.
+
+  Só no desktop. No mobile as abas são pílulas num trilho horizontal e já têm
+  borda e preenchimento próprios.
+*/
+@media (min-width: 1024px) {
+  .servico-aba {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .servico-aba::before {
+    content: "";
+    position: absolute;
+    inset-block: 0.3rem;
+    /*
+      `0`, e não um valor negativo: a lista já sangra 12px para cada lado
+      (`lg:-mx-3`) e o botão devolve esse espaço em padding (`lg:px-3`), o que
+      mantém o texto alinhado com o título da dobra. A lâmina ocupa exatamente
+      a caixa do botão, então o respiro dela já é esses 12px. Somar um negativo
+      aqui fazia o realce ultrapassar a margem da seção.
+    */
+    inset-inline: 0;
+    z-index: -1;
+    border-radius: 0.85rem;
+    border: 1px solid transparent;
+    transition:
+      background-color 0.35s var(--ease-soft),
+      border-color 0.35s var(--ease-soft),
+      box-shadow 0.35s var(--ease-soft);
+  }
+
+  .servico-aba:hover::before,
+  .servico-aba[aria-selected="true"]::before {
+    background-color: color-mix(in srgb, var(--brand) 12%, transparent);
+    border-color: color-mix(in srgb, var(--brand) 38%, transparent);
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--brand) 8%, transparent),
+      0 14px 30px -18px color-mix(in srgb, var(--brand) 70%, transparent);
+  }
+
+  .servico-aba:focus-visible::before {
+    border-color: var(--brand);
+  }
+
+  .servico-aba:hover .servico-icone,
+  .servico-aba[aria-selected="true"] .servico-icone {
+    transform: scale(1.12);
+  }
+}
+
+/*
+  PILHA DE MÍDIAS do painel. Todas montadas, só a ativa visível.
+
+  Ver o comentário em ExploradorServicos.tsx para o porquê: remontar a mídia a
+  cada hover obrigava o navegador a decodificar a foto de novo, e era isso que
+  travava a troca entre um card e outro. Aqui a troca é só opacidade, resolvida
+  pelo compositor.
+
+  `pointer-events: none` nos inativos para que a foto de baixo nunca receba o
+  cursor, e `visibility` junto da opacidade para elas saírem da ordem de foco.
+*/
+.servico-quadro {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.4s var(--ease-soft),
+    visibility 0s linear 0.4s;
+}
+
+.servico-quadro[data-ativo="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0.4s var(--ease-soft),
+    visibility 0s;
+}
+
+/*
+  Texto do painel: entra com um deslize curto a cada troca de aba.
+  Encurtado de 0,4s para 0,28s (12/09/2026): com o hover mais responsivo, a
+  animação longa era o que sobrava de arrasto na troca.
 */
 @media (prefers-reduced-motion: no-preference) {
   .servico-painel {
-    animation: entra-painel 0.4s var(--ease-soft) both;
+    animation: entra-painel 0.28s var(--ease-soft) both;
   }
 }
 
 @keyframes entra-painel {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
     transform: none;
   }
+}
+
+/*
+  TRILHA DE FASES — usada no calendário de vacinas e no guia do filhote.
+
+  09/09/2026 (JM: "melhorar o layout e a intuitividade"). As duas dobras
+  selecionavam a fase com pílulas soltas, iguais às de filtro. O problema não
+  era estética: pílula comunica CATEGORIA (coisas paralelas, escolha uma), e
+  filhote → adulto → idoso não é categoria, é PROGRESSÃO. A trilha mostra que
+  existe um antes e um depois, e onde o animal do visitante está nela.
+
+  Estados: `feito` (já passou), `ativo` (selecionado), `futuro`. O trilho à
+  esquerda de cada passo acende até o ativo — é o mesmo desenho de stepper que
+  as pessoas já leem em rastreio de pedido, então não precisa ser aprendido.
+
+  O <button> continua sendo `role="radio"` dentro de um `radiogroup`: muda o
+  desenho, não a semântica nem a navegação por teclado.
+*/
+.trilha {
+  display: flex;
+  align-items: flex-start;
+}
+
+.trilha-passo {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  cursor: pointer;
+  padding-inline: 0.25rem;
+}
+
+/* Trecho de trilho que chega neste passo. O primeiro não tem de onde vir. */
+/*
+  `left: -50%` e não `0`: o segmento precisa sair do CENTRO do passo anterior e
+  chegar no centro deste. Ancorado na BORDA do passo, sobrava um vão entre o
+  ponto anterior e o começo da linha, e o trilho lia como três traços soltos em
+  vez de uma linha contínua.
+*/
+.trilha-linha {
+  position: absolute;
+  top: 8px;
+  left: -50%;
+  right: 50%;
+  height: 2px;
+  background-color: var(--hairline);
+  transition: background-color 0.35s var(--ease-soft);
+}
+
+.trilha-passo:first-child .trilha-linha {
+  display: none;
+}
+
+.trilha-passo[data-estado="feito"] .trilha-linha,
+.trilha-passo[data-estado="ativo"] .trilha-linha {
+  background-color: var(--brand);
+}
+
+.trilha-ponto {
+  position: relative;
+  z-index: 1;
+  height: 18px;
+  width: 18px;
+  border-radius: 999px;
+  border: 2px solid var(--hairline);
+  background-color: var(--surface);
+  transition:
+    transform 0.35s var(--ease-soft),
+    border-color 0.35s var(--ease-soft),
+    background-color 0.35s var(--ease-soft),
+    box-shadow 0.35s var(--ease-soft);
+}
+
+.trilha-passo[data-estado="feito"] .trilha-ponto {
+  border-color: var(--brand);
+  background-color: var(--brand);
+}
+
+.trilha-passo[data-estado="ativo"] .trilha-ponto {
+  border-color: var(--brand);
+  background-color: var(--brand);
+  transform: scale(1.2);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--brand) 18%, transparent);
+}
+
+.trilha-rotulo {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.25;
+  color: var(--text-3);
+  transition: color 0.35s var(--ease-soft);
+}
+
+.trilha-detalhe {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: var(--text-3);
+}
+
+.trilha-passo[data-estado="ativo"] .trilha-rotulo {
+  color: var(--text);
+}
+
+@media (hover: hover) {
+  .trilha-passo:hover .trilha-rotulo {
+    color: var(--acao-texto);
+  }
+
+  .trilha-passo:not([data-estado="ativo"]):hover .trilha-ponto {
+    border-color: var(--brand);
+  }
+}
+
+/*
+  CARTÃO DE ESPÉCIE (cão / gato) do calendário de vacinas.
+  Alvo grande com ícone: no celular, escolher espécie é o primeiro gesto da
+  dobra e precisa ser acertável com o polegar, sem mira.
+*/
+.especie-card {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--hairline);
+  background-color: color-mix(in srgb, var(--surface) 60%, transparent);
+  padding: 0.875rem 1rem;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  transition:
+    border-color 0.3s var(--ease-soft),
+    background-color 0.3s var(--ease-soft),
+    color 0.3s var(--ease-soft),
+    box-shadow 0.3s var(--ease-soft);
+}
+
+.especie-card[aria-checked="true"] {
+  border-color: color-mix(in srgb, var(--brand) 60%, transparent);
+  background-color: color-mix(in srgb, var(--brand) 12%, transparent);
+  color: var(--text);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 10%, transparent);
+}
+
+@media (hover: hover) {
+  .especie-card:not([aria-checked="true"]):hover {
+    border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+    color: var(--acao-texto);
+  }
+}
+
+/*
+  LISTA NUMERADA com fio de ligação — o resultado das duas dobras.
+
+  Marcador de "check" foi trocado por NÚMERO porque as duas listas são ordem de
+  acontecer, não conjunto de itens marcáveis: as doses da múltipla têm sequência,
+  e as tarefas do filhote também. O fio vertical entre os números é o que diz
+  "isto continua", que era exatamente o que a lista de checks não dizia.
+*/
+.lista-passos > li {
+  position: relative;
+  padding-left: 3rem;
+  padding-bottom: 1.5rem;
+}
+
+.lista-passos > li:last-child {
+  padding-bottom: 0;
+}
+
+.lista-passos > li::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 2.25rem;
+  bottom: 0.25rem;
+  width: 2px;
+  background-color: color-mix(in srgb, var(--brand) 28%, transparent);
+}
+
+.lista-passos > li:last-child::before {
+  display: none;
+}
+
+.lista-num {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  height: 2rem;
+  width: 2rem;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, transparent);
+  background-color: color-mix(in srgb, var(--brand) 12%, transparent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--brand);
 }
 
 /* Item do calendário de vacinas: entra escalonado a cada troca de seleção. */
@@ -738,6 +1184,201 @@
 
   .numero-card:hover .numero-valor::after {
     width: 2.5rem;
+  }
+}
+
+/*
+  CARTÃO DE PLANO DE SAÚDE.
+
+  O cartão inteiro é um link de WhatsApp, então o hover precisa dizer "isto
+  clica" — e não só "isto é bonito". Por isso três coisas acontecem juntas:
+  o cartão sobe, o fio da marca do plano ALARGA (é o único elemento que carrega
+  a identidade enquanto não há logo), e o "Perguntar" sai da sombra.
+
+  `Perguntar` fica em opacidade baixa em repouso de propósito: cinco cartões
+  gritando o mesmo verbo viram ruído. Ele acende no que está sob o cursor.
+*/
+.cartao-plano {
+  transition:
+    transform 0.35s var(--ease-soft),
+    border-color 0.35s var(--ease-soft),
+    box-shadow 0.35s var(--ease-soft);
+}
+
+.plano-traco {
+  transition: width 0.4s var(--ease-soft);
+}
+
+.plano-acao {
+  opacity: 0.45;
+  transition: opacity 0.35s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .cartao-plano:hover {
+    transform: translateY(-5px);
+    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--brand) 10%, transparent),
+      0 20px 44px -22px color-mix(in srgb, var(--brand) 75%, transparent);
+  }
+
+  .cartao-plano:hover .plano-traco {
+    width: 3.5rem;
+  }
+
+  .cartao-plano:hover .plano-acao {
+    opacity: 1;
+  }
+}
+
+/* No teclado o cartão precisa reagir igual, senão só quem usa mouse percebe. */
+.cartao-plano:focus-visible .plano-traco {
+  width: 3.5rem;
+}
+
+.cartao-plano:focus-visible .plano-acao {
+  opacity: 1;
+}
+
+/*
+  Card de membro da equipe: grade rígida + HOLOFOTE.
+
+  11/09/2026 (JM): o arco foi lido como hierarquia ("por que alguns em destaque
+  no meio?"), e a leitura está certa: deslocamento vertical sempre comunica
+  importância. Os quatro voltam ao MESMO nível, e a interatividade passa a vir
+  da resposta ao cursor, não do arranjo.
+
+  É o mesmo padrão da galeria de pets (`.faixa-pets-item`): o card sob o cursor
+  sobe, ganha o halo ciano e a foto aproxima; os outros três recuam em
+  opacidade sem sair do lugar. Em repouso todos são iguais. Ninguém fica em
+  destaque por decisão de layout, só por decisão de quem está olhando.
+
+  Sobe ainda o CTA de WhatsApp sobre a foto, mesmo botão do site inteiro.
+  `:focus-within` faz tudo isso valer também para o teclado, porque o CTA é
+  focável. Em toque (`hover: none`) nada disto se aplica e o CTA não existe:
+  lá quem agenda é a barra fixa.
+
+  `:has()` em vez de `ul:hover`: com `ul:hover` o vão entre os cards também
+  contava como "sobre a grade" e apagava os quatro de uma vez.
+*/
+.membro-card {
+  transition:
+    opacity 0.4s var(--ease-soft),
+    transform 0.4s var(--ease-soft);
+}
+
+.membro-foto {
+  transition:
+    transform 0.45s var(--ease-soft),
+    border-color 0.45s var(--ease-soft),
+    box-shadow 0.45s var(--ease-soft);
+}
+
+.membro-foto img {
+  transition: transform 0.6s var(--ease-soft);
+}
+
+/* Véu ciano da foto. Fica em ::after para não custar um elemento no DOM. */
+.membro-foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--text) 62%, transparent),
+    color-mix(in srgb, var(--brand) 10%, transparent) 55%,
+    transparent
+  );
+  transition: opacity 0.4s var(--ease-soft);
+}
+
+/* CTA que sobe sobre a foto. Só existe onde há hover ou foco. */
+.membro-cta {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 0 0.75rem 1rem;
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition:
+    opacity 0.35s var(--ease-soft),
+    transform 0.35s var(--ease-soft);
+}
+
+@media (hover: none) {
+  .membro-cta {
+    display: none;
+  }
+}
+
+.membro-nome {
+  position: relative;
+  display: inline-block;
+  transition: color 0.35s var(--ease-soft);
+}
+
+.membro-nome::after {
+  content: "";
+  position: absolute;
+  bottom: -0.3rem;
+  left: 0;
+  height: 2px;
+  width: 0;
+  border-radius: 999px;
+  background-color: var(--brand);
+  transition: width 0.4s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  /* Os que NÃO estão sob o cursor (ou sob o foco) recuam. */
+  .equipe-grade:has(.membro-card:hover) .membro-card:not(:hover),
+  .equipe-grade:has(.membro-card:focus-within) .membro-card:not(:focus-within) {
+    opacity: 0.55;
+    transform: scale(0.985);
+  }
+
+  .membro-card:hover .membro-foto,
+  .membro-card:focus-within .membro-foto {
+    transform: translateY(-8px);
+    border-color: color-mix(in srgb, var(--brand) 62%, transparent);
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
+      0 28px 58px -26px color-mix(in srgb, var(--brand) 80%, transparent);
+  }
+
+  .membro-card:hover .membro-foto img,
+  .membro-card:focus-within .membro-foto img {
+    transform: scale(1.05);
+  }
+
+  .membro-card:hover .membro-foto::after,
+  .membro-card:focus-within .membro-foto::after {
+    opacity: 1;
+  }
+
+  .membro-card:hover .membro-cta,
+  .membro-card:focus-within .membro-cta {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .membro-card:hover .membro-nome,
+  .membro-card:focus-within .membro-nome {
+    color: var(--brand);
+  }
+
+  .membro-card:hover .membro-nome::after,
+  .membro-card:focus-within .membro-nome::after {
+    width: 100%;
   }
 }
 

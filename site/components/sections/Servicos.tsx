@@ -19,7 +19,7 @@ export function Servicos() {
       <div className="mx-auto w-full max-w-[1200px]">
         <div className="max-w-[34ch]">
           <Revelar>
-            <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
+            <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
               {servicos.headline}
             </h2>
           </Revelar>

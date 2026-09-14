@@ -1,6 +1,6 @@
-import { PlusIcon } from "@phosphor-icons/react/dist/ssr";
 import { Secao } from "@/components/ui/Secao";
 import { Revelar } from "@/components/ui/Revelar";
+import { ItemFaq } from "@/components/ui/ItemFaq";
 import { faq } from "@/content/site";
 
 /**
@@ -12,8 +12,12 @@ import { faq } from "@/content/site";
  *
  * Construída com `<details>`/`<summary>` nativos: abre e fecha sem JavaScript,
  * já vem com semântica e teclado corretos, e o Google lê o conteúdo mesmo
- * fechado. A altura anima via `interpolate-size`, com degradação limpa onde
- * ainda não houver suporte.
+ * fechado.
+ *
+ * A SEÇÃO continua sendo servidor — só o item é cliente (`ItemFaq`), porque o
+ * que precisa de JS é a animação de abrir e fechar, não o texto. Assim as
+ * perguntas e respostas seguem no HTML servido, que é o que alimenta o schema
+ * FAQPage e a leitura do Google.
  */
 export function Faq() {
   return (
@@ -21,7 +25,7 @@ export function Faq() {
       <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div>
           <Revelar>
-            <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
+            <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
               {faq.headline}
             </h2>
           </Revelar>
@@ -35,21 +39,7 @@ export function Faq() {
         <div className="divide-y divide-hairline border-t border-b border-hairline">
           {faq.itens.map((item, i) => (
             <Revelar key={item.pergunta} atraso={i * 0.05}>
-              <details className="faq-item group">
-                <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left">
-                  <span className="font-display text-lg leading-snug font-medium text-balance transition-colors duration-200 group-hover:text-action">
-                    {item.pergunta}
-                  </span>
-                  <span className="faq-sinal mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-brand transition-[transform,border-color,background-color] duration-300 ease-[var(--ease-soft)] group-hover:border-brand">
-                    <PlusIcon size={16} weight="bold" aria-hidden />
-                  </span>
-                </summary>
-                <div className="faq-corpo">
-                  <p className="max-w-[58ch] pb-6 leading-relaxed text-text-2">
-                    {item.resposta}
-                  </p>
-                </div>
-              </details>
+              <ItemFaq pergunta={item.pergunta} resposta={item.resposta} />
             </Revelar>
           ))}
         </div>

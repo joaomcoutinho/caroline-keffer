@@ -14,7 +14,7 @@ export function Depoimentos() {
   return (
     <Secao tom="base">
       <Revelar>
-        <h2 className="max-w-[24ch] font-display text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
+        <h2 className="max-w-[24ch] font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
           {depoimentos.headline}
         </h2>
       </Revelar>

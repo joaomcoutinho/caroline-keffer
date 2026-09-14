@@ -17,7 +17,7 @@ export function Fechamento() {
       <section className="px-5 py-24 sm:px-8 md:py-32">
         <div className="mx-auto max-w-[52ch] text-center">
           <Revelar>
-            <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-5xl">
+            <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-5xl">
               {ctaFinal.headline}
             </h2>
           </Revelar>
@@ -49,7 +49,7 @@ export function Fechamento() {
                 height={44}
                 className="h-11 w-11 rounded-full object-cover"
               />
-              <span className="font-display text-[15px] leading-tight font-semibold">
+              <span className="font-display text-[15px] leading-tight font-bold">
                 Caroline Keffer
                 <span className="block text-[12px] font-normal text-text-3">
                   Clínica Veterinária
@@ -66,7 +66,7 @@ export function Fechamento() {
               <a
                 key={item.href}
                 href={item.href}
-                className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-action"
+                className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-acao-texto"
               >
                 {item.rotulo}
               </a>
@@ -78,13 +78,13 @@ export function Fechamento() {
               href={contato.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-action"
+              className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-acao-texto"
             >
               WhatsApp {contato.whatsappExibicao}
             </a>
             <a
               href={contato.telefoneFixoLink}
-              className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-action"
+              className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-acao-texto"
             >
               {contato.telefoneFixo}
             </a>
@@ -92,7 +92,7 @@ export function Fechamento() {
               href={contato.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="-my-2 flex items-center gap-2 py-2.5 text-sm text-text-2 transition-colors hover:text-action"
+              className="-my-2 flex items-center gap-2 py-2.5 text-sm text-text-2 transition-colors hover:text-acao-texto"
             >
               <InstagramLogoIcon size={18} weight="light" aria-hidden />
               Instagram

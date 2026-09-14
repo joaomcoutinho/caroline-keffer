@@ -20,7 +20,7 @@ export function Comparativo() {
     <Secao tom="alt">
       <div className="max-w-[46ch]">
         <Revelar>
-          <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
+          <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
             {comparativo.headline}
           </h2>
         </Revelar>
@@ -42,13 +42,13 @@ export function Comparativo() {
               <th scope="col" className="w-[26%] pb-4" />
               <th
                 scope="col"
-                className="w-[37%] rounded-t-[var(--radius-card)] bg-brand/12 px-6 pt-5 pb-4 font-display text-lg font-semibold text-brand"
+                className="w-[37%] rounded-t-[var(--radius-card)] bg-brand/12 px-6 pt-5 pb-4 font-display text-lg font-bold text-brand"
               >
                 {comparativo.colunas.aqui}
               </th>
               <th
                 scope="col"
-                className="w-[37%] px-6 pt-5 pb-4 font-display text-lg font-semibold text-text-2"
+                className="w-[37%] px-6 pt-5 pb-4 font-display text-lg font-bold text-text-2"
               >
                 {comparativo.colunas.hospital}
               </th>
@@ -63,7 +63,7 @@ export function Comparativo() {
               >
                 <th
                   scope="row"
-                  className="block pb-3 font-display text-base font-semibold lg:table-cell lg:py-6 lg:pr-6 lg:align-top"
+                  className="block pb-3 font-display text-base font-bold lg:table-cell lg:py-6 lg:pr-6 lg:align-top"
                 >
                   {linha.criterio}
                 </th>
@@ -94,7 +94,7 @@ export function Comparativo() {
       <Revelar atraso={0.2}>
         {/* `text-brand` aqui dava 4,17 sobre `surface-2`, abaixo do AA para 18px.
             O peso e o tamanho já destacam a frase sem depender da cor. */}
-        <p className="mt-10 max-w-[62ch] font-display text-lg leading-snug font-semibold text-balance text-text sm:text-xl">
+        <p className="mt-10 max-w-[62ch] font-display text-lg leading-snug font-bold text-balance text-text sm:text-xl">
           {comparativo.fecho}
         </p>
       </Revelar>

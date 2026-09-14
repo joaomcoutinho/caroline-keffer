@@ -18,6 +18,17 @@ const WHATSAPP_NUMERO = "5581993037584";
 const WHATSAPP_MENSAGEM =
   "Oi! Vim pelo site e queria marcar uma consulta para o meu pet.";
 
+/**
+ * Link de WhatsApp com uma mensagem específica já escrita.
+ *
+ * Existe para os cartões de plano: em vez de cair no "oi, quero marcar", o
+ * tutor chega perguntando pelo plano DELE, e a recepção já responde a pergunta
+ * certa. Menos ida e volta é menos desistência.
+ */
+export function linkWhatsapp(mensagem: string) {
+  return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
+}
+
 export const contato = {
   whatsapp: `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(
     WHATSAPP_MENSAGEM,
@@ -38,7 +49,7 @@ export const CTA_PRIMARIO = "Agendar pelo WhatsApp";
 export const meta = {
   titulo: "Clínica Pet Caroline Keffer | Veterinária na Torre, Recife",
   descricao:
-    "Clínica veterinária na Torre, Recife, há mais de 20 anos. Consulta, cirurgia, exames, vacinas e banho e tosa para cães e gatos, com a Dra. Carol. Agende pelo WhatsApp.",
+    "Clínica veterinária na Torre, Recife, há mais de 20 anos. Clínica geral, cirurgia (inclusive odontológica e ortopédica), cinco especialidades, exames e banho e tosa para cães e gatos, com a Dra. Carol. Agende pelo WhatsApp.",
   /*
    * Endereço real de onde o site está publicado. O card de compartilhamento
    * exige URL ABSOLUTA de imagem: sem isto o WhatsApp monta o link com o
@@ -51,36 +62,46 @@ export const meta = {
 
 export const navegacao = [
   { rotulo: "Serviços", href: "#servicos" },
+  { rotulo: "Planos", href: "#planos" },
   { rotulo: "A clínica", href: "#a-clinica" },
   { rotulo: "Equipe", href: "#equipe" },
-  { rotulo: "Vacinas", href: "#vacinas" },
   { rotulo: "Dúvidas", href: "#duvidas" },
   { rotulo: "Onde ficamos", href: "#onde-ficamos" },
 ] as const;
 
 export const hero = {
-  headline: "A mesma veterinária, há mais de 20 anos.",
+  /*
+   * Enxugada em 11/09/2026 (JM: "deixa mais enxuta, porém com mesmo impacto e
+   * clareza"). A headline caiu de 63 para 45 caracteres e a subhead de 143 para
+   * 78 — o gancho emocional e a lista de serviços continuam inteiros, saiu a
+   * repetição ("seu cachorro ou seu gato" já está dito em "seu pet") e a
+   * redundância de "a mesma equipe", que a dobra de Equipe argumenta melhor.
+   */
+  headline: "Tudo para seu pet, onde ele se sente em casa.",
   subhead:
-    "Consulta, cirurgia e exames na Torre, com a Dra. Carol atendendo seu cão ou gato pessoalmente.",
+    "Clínica geral, cirurgia, especialidades, exames e banho e tosa na Torre, com a Dra. Carol.",
   cta: CTA_PRIMARIO,
   ctaMicrocopy: "Resposta no mesmo dia, em horário de funcionamento.",
   foto: {
     /*
-     * Retrato REAL da Dra. Caroline (JM, 04/09/2026). A foto anterior
-     * (`foto_background_hero.webp`) mostrava outra pessoa — num site sobre
-     * "a mesma veterinária há 20 anos", a foto tinha que ser dela.
+     * FACHADA da clínica (JM, 09/09/2026), no lugar do retrato da Dra. Carol —
+     * que foi para a dobra `draCarol`, onde conta história.
      *
-     * ⚠️ Provisória, por decisão do JM ("por enquanto"): é retrato casual de
-     * busto, não a Dra. atendendo. E tem 730px de largura contra 1664px da
-     * anterior, então em tela retina fica mais macia. Vale pedir à clínica um
-     * retrato dela em alta, no consultório.
+     * Quem chega pelo Google ainda não sabe se a clínica existe de verdade nem
+     * onde ela fica. A fachada responde as duas coisas antes da primeira linha
+     * de texto: é prova, não decoração.
+     *
+     * É a foto de CÉU ABERTO, e não a frontal, porque o painel do hero é uma
+     * coluna ALTA. Esta é retrato (1001x1251, 0,80) e entra praticamente sem
+     * recorte; a frontal é 4:3 e, espremida na coluna, virava uma tira do meio
+     * da calçada. O céu ainda entrega azul de verdade para a dobra.
+     *
+     * A frontal foi para `ondeFicamos`, onde a caixa é deitada.
      */
-    src: "/images/hero_dra_keffer.webp",
-    alt: "Dra. Caroline Keffer sorrindo, retrato em fundo claro",
-    briefing: "Dra. Carol atendendo, retrato vertical, luz natural",
-    proporcao: "4 / 5",
-    /** O rosto está levemente à direita do centro do quadro. */
-    posicao: "55% center",
+    src: "/images/fachada_ceu.webp",
+    alt: "Fachada da Clínica Veterinária Caroline Keffer vista da calçada, com o céu aberto",
+    /** O letreiro fica no terço de cima do quadro. */
+    posicao: "center 42%",
   },
 } as const;
 
@@ -104,16 +125,22 @@ export const prova = {
       alvo: 20,
       casas: 0,
       sufixo: "+",
-      rotulo: "anos de história e excelência",
+      rotulo: "anos cuidando dos pets da Torre",
       nota: "sempre na Rua Araguatins, na Torre",
       icone: "relogio",
     },
     {
-      alvo: 9,
+      /*
+       * Era "9 serviços no mesmo lugar". Com o catálogo real da clínica
+       * (11/09/2026) sobraram 5 frentes, e 5 é um número fraco de se anunciar.
+       * A ESPECIALIDADE é o número forte e verdadeiro: cinco especialistas
+       * atendendo dentro de casa é o que nenhum concorrente de bairro tem.
+       */
+      alvo: 5,
       casas: 0,
       sufixo: "",
-      rotulo: "serviços no mesmo lugar",
-      nota: "da consulta ao atendimento em casa",
+      rotulo: "especialidades atendendo aqui",
+      nota: "da clínica geral à cirurgia ortopédica",
       icone: "estetoscopio",
     },
   ],
@@ -122,94 +149,111 @@ export const prova = {
 export const servicos = {
   headline: "Consulta, cirurgia e exames no mesmo lugar.",
   subhead:
-    "Você não precisa levar seu pet a três endereços diferentes para resolver uma coisa só.",
+    "Consulta, exame e cirurgia acontecem na mesma casa, com quem já conhece a história do seu pet.",
   itens: [
     {
-      nome: "Consulta clínica",
+      // A clínica chama assim (lista enviada pelo JM em 11/09/2026).
+      nome: "Clínica médica geral",
       texto:
         "O atendimento do dia a dia: o que está errado, o que fazer e quanto tempo leva.",
       icone: "stethoscope",
-      src: "/images/consultorio_expandido_16x11_2400px.webp",
-      alt: "Consultório da clínica, com mesa de inox, pia e armário",
+      /* Foto real da clínica (12/09/2026). Substitui o consultório genérico. */
+      src: "/images/consultorio_mesa.webp",
+      alt: "Consultório da clínica, com mesa de atendimento, cadeiras e o selo da Dra. Caroline Keffer na parede",
       briefing: "Dra. Carol examinando um cão na mesa de atendimento",
-      // Já entregue em 16:11: o enquadramento é o da própria foto.
       posicao: "center center",
     },
     {
       nome: "Cirurgia",
+      /*
+       * Odontológica e ortopédica vieram na lista de 11/09/2026 e NÃO estavam
+       * no site. Ortopedia em clínica de bairro é incomum — era capacidade real
+       * sendo escondida atrás de um "cirurgia geral" genérico.
+       */
       texto:
-        "Castração e cirurgia geral, com pré-operatório e acompanhamento na recuperação.",
+        "Cirurgia geral, odontológica e ortopédica, com pré-operatório e acompanhamento na recuperação.",
+      itens: ["Cirurgia geral", "Cirurgia odontológica", "Cirurgia ortopédica"],
       icone: "firstAid",
-      src: "/images/mini_canil_alargado.webp",
-      alt: "Área de internação da clínica, com baias de vidro para recuperação",
+      /* A sala cirúrgica de verdade (12/09/2026). Antes estava a área de
+         internação aqui, que é outro cômodo. */
+      src: "/images/sala_cirurgica.webp",
+      alt: "Sala cirúrgica da clínica, com mesa de inox, suporte de soro, cilindro de oxigênio e material organizado",
       briefing: "Sala de cirurgia da clínica, equipamento em foco",
       posicao: "center center",
     },
     {
+      nome: "Consulta com especialista",
+      /*
+       * ⚠️ CORREÇÃO DE FATO (11/09/2026). Aqui dizia "Encaminhamento clínico
+       * quando o caso pede um olhar específico" — ou seja, o site afirmava que
+       * a clínica MANDAVA PARA FORA. A lista da clínica mostra o contrário:
+       * são cinco especialidades atendendo dentro de casa.
+       *
+       * Não era só imprecisão, era o site vendendo a clínica por menos do que
+       * ela é, e bem no argumento que o resto da página sustenta ("resolve tudo
+       * no mesmo lugar").
+       */
+      texto:
+        "Cinco especialidades atendem aqui dentro. Quando o caso pede um olhar específico, seu pet não precisa ir para outro endereço.",
+      itens: [
+        "Cardiologia",
+        "Dermatologia",
+        "Nefrologia",
+        "Pneumologia",
+        "Nutrição e gastroenterologia",
+      ],
+      icone: "heartbeat",
+      /* Outro ângulo do consultório (12/09/2026): a bancada de inox e a pia,
+         que é onde o exame acontece. Mostra cômodo diferente do card de
+         clínica geral, que traz a mesa de conversa. */
+      src: "/images/consultorio_bancada.webp",
+      alt: "Bancada de inox com pia e armários no consultório da clínica",
+      briefing: "Atendimento de gato, ambiente calmo",
+      posicao: "center center",
+    },
+    {
+      /* Modalidades confirmadas pela clínica em 11/09/2026 — o VALIDAR que
+         estava aqui ("a fachada só diz de imagem") está resolvido. */
+      nome: "Exames de imagem",
+      texto:
+        "Para ver o que o exame de sangue não mostra, sem precisar de outro endereço.",
+      itens: ["Radiografia", "Ultrassonografia", "Eletrocardiograma"],
+      icone: "scan",
+      /*
+       * ⚠️ A foto anterior (`veterinary_ultrasound_room.webp`) era STOCK, não
+       * era a clínica — justamente o que o brief proíbe. Saiu.
+       *
+       * Nenhuma das oito fotos enviadas em 12/09/2026 mostra o raio-x, o
+       * ultrassom ou o eletrocardiograma, então aqui está o internamento: é
+       * estrutura real da casa, mas NÃO é a sala de imagem. O alt descreve o
+       * que a foto realmente mostra, sem afirmar o que ela não é.
+       * Pedir à clínica uma foto dos aparelhos.
+       */
+      src: "/images/internamento.webp",
+      alt: "Área de internação da clínica, com baias de vidro para recuperação",
+      briefing: "Aparelho de raio-x, ultrassom ou eletrocardiograma da clínica",
+      posicao: "center center",
+    },
+    {
       nome: "Exames laboratoriais",
-      texto: "Coleta feita aqui, sem mandar você para outro endereço.",
+      texto:
+        "A coleta é feita aqui mesmo, e o resultado a Dra. Carol explica pra você.",
       icone: "flask",
-      src: "/images/area_medica_alargado.webp",
-      alt: "Área técnica da clínica, com bancada de granito e material de coleta",
+      /* O laboratório de verdade (12/09/2026). */
+      src: "/images/laboratorio.webp",
+      alt: "Laboratório da clínica, com bancada de granito, tabela de referência na parede e material de coleta",
       briefing: "Coleta de sangue ou microscópio, detalhe de mãos",
       posicao: "center center",
     },
     {
-      // VALIDAR: quais modalidades (raio-x, ultrassom). A fachada só diz "de imagem".
-      nome: "Exames de imagem",
-      texto:
-        "Para ver o que o exame de sangue não mostra, sem precisar de outro endereço.",
-      icone: "scan",
-      src: "/images/veterinary_ultrasound_room.webp",
-      alt: "Aparelho de ultrassom veterinário ao lado da mesa de atendimento",
-      briefing: "Exame de imagem em andamento, animal contido com cuidado",
-      posicao: "center center",
-    },
-    {
-      nome: "Atendimento em casa",
-      texto:
-        "A consulta vai até você. Resolve para animal idoso, gato que entra em pânico na caixa e pós-operatório em recuperação.",
-      icone: "casa",
-      src: "/images/atendimento_domicilio.webp",
-      alt: "Cão sendo auscultado no sofá da casa do tutor, com a maleta veterinária ao lado",
-      briefing: "Veterinária atendendo um animal na sala de casa do tutor",
-      posicao: "center center",
-    },
-    {
-      nome: "Obstetrícia e pediatria",
-      texto: "Acompanhamento da gestação ao parto, e as primeiras consultas do filhote.",
-      icone: "bebe",
       /*
-       * Recorte 16:11 do terço direito de `vet_puppy_final.png`, que continua
-       * na pasta como origem. No enquadramento cheio o filhote ocupava ~8% do
-       * quadro e o card lia como "consultório vazio"; aqui ele ocupa ~26%.
+       * Saiu em 11/09/2026 junto com vacinas, atendimento em casa e obstetrícia,
+       * quando a lista de serviços chegou sem ele. Voltou no mesmo dia, a pedido
+       * do JM: a clínica tem banho e tosa, e o Lucas Leal está na equipe como
+       * pet groomer justamente por isso.
        */
-      src: "/images/vet_puppy_recorte.webp",
-      alt: "Filhote sentado na mesa de atendimento, ao lado de estetoscópio e balança",
-      briefing: "Filhotes recém-nascidos sendo avaliados na clínica",
-      posicao: "center center",
-    },
-    {
-      nome: "Vacinas",
-      texto: "Calendário completo para filhote e adulto, cão e gato.",
-      icone: "syringe",
-      src: "/images/filhote_vacinacao_documental.webp",
-      alt: "Filhote sendo vacinado sobre a mesa de inox, seguro por mãos enluvadas",
-      briefing: "Filhote recebendo vacina, close no colo do tutor",
-      posicao: "center 55%",
-    },
-    {
-      nome: "Especialidades",
-      texto: "Encaminhamento clínico quando o caso pede um olhar específico.",
-      icone: "heartbeat",
-      src: "/images/gato_consultorio_documental.webp",
-      alt: "Gato adulto sentado tranquilo sobre a mesa de atendimento",
-      briefing: "Atendimento de gato, ambiente calmo",
-      posicao: "center 45%",
-    },
-    {
       nome: "Banho e tosa",
-      texto: "Feito na mesma casa que conhece a saúde e a pele do seu animal.",
+      texto: "Feito por quem conhece a pele e a saúde do seu cachorro.",
       icone: "scissors",
       src: "/images/caes_escovacao_documental.webp",
       alt: "Cão de pelo longo sendo escovado sobre a bancada do banho e tosa",
@@ -222,8 +266,8 @@ export const servicos = {
 export const semEstresse = {
   headline: "Consulta sem estresse, porque ele já conhece a casa.",
   corpo: [
-    "Clínica de bairro tem uma vantagem que hospital grande não consegue ter: seu animal volta sempre para o mesmo lugar, com o mesmo cheiro e a mesma pessoa.",
-    "É por isso que a frase mais repetida nas avaliações não é sobre equipamento. É sobre o pet não ter se estressado.",
+    "Clínica de bairro tem uma vantagem que hospital grande não consegue ter: seu pet volta sempre para o mesmo lugar, com o mesmo cheiro e a mesma pessoa.",
+    "É por isso que a frase mais repetida nas avaliações não é sobre equipamento. É sobre o pet ter saído daqui tranquilo.",
   ],
   /**
    * Avaliações reais do Google, transcritas literalmente, com nome e foto de
@@ -265,9 +309,29 @@ export const semEstresse = {
     fonte: "Avaliação no Google",
   },
   foto: {
-    src: "/images/sala_espera_alargado.webp",
-    alt: "Sala de espera da clínica, com cadeiras, bebedouro e planta",
-    briefing: "Sala de espera real, tutor com o animal no colo, horizontal",
+    /*
+     * REVERTIDA para a sala de espera (JM, 09/09/2026: "essa tá com baixa
+     * qualidade, volte para a imagem de antes").
+     *
+     * Tinha entrado aqui a foto do LEMA pintado na parede da recepção
+     * (`recepcao_lema.webp`, que segue em /public/images). O argumento era bom
+     * — a frase da própria casa provando a dobra — mas a foto é de celular,
+     * com foco curto na parede: ampliada na largura da dobra, a moleza
+     * aparecia. Argumento não sustenta imagem ruim.
+     */
+    /*
+     * O consultório com o LEMA pintado na parede (12/09/2026). A foto do lema
+     * já tinha passado por aqui em 09/09 e foi revertida por baixa qualidade:
+     * era um close na parede, de celular, com foco curto. Esta é outra tomada,
+     * com o cômodo inteiro, e resolve o problema — a frase se lê do "C" ao
+     * coração, e ainda entra o selo da clínica na parede ao lado.
+     *
+     * Numa dobra sobre cuidado, a prova mais forte é a frase que a própria
+     * casa escolheu pintar na parede.
+     */
+    src: "/images/consultorio_lema.webp",
+    alt: 'Consultório da clínica com a frase "Cuidamos com o coração, tratamos com afeto" pintada na parede, ao lado do selo da Dra. Caroline Keffer',
+    briefing: "Consultório com o lema da clínica na parede",
     /* Em largura total, 3/2 daria 800px de altura e dominaria a dobra. */
     proporcao: "16 / 9",
     posicao: "center center",
@@ -277,18 +341,27 @@ export const semEstresse = {
 export const draCarol = {
   headline: "Quem atende é a Dra. Carol.",
   corpo: [
-    "Em mais de 20 anos na Torre, ela viu filhote virar idoso e tutor virar cliente de casa. Não é rodízio de plantonista: é a mesma veterinária acompanhando a história do seu animal.",
-    "É pouco comum, e é exatamente o que faz diferença quando o diagnóstico depende de saber como o bicho era antes de adoecer.",
+    "Em mais de 20 anos na Torre, ela viu filhote virar idoso e tutor virar cliente de casa. Não é rodízio de plantonista: é a mesma veterinária acompanhando a história do seu pet.",
+    "É pouco comum, e é exatamente o que faz diferença quando o diagnóstico depende de saber como ele era antes de adoecer.",
   ],
   // VALIDAR: número do CRMV antes de publicar.
   credencial: "CRMV-PE (validar)",
+  /** Aparece na placa sobre o retrato. Autoridade sem depender do CRMV. */
+  papel: "Médica Veterinária",
   foto: {
-    src: "/images/dra_caroline_alargado.webp",
-    alt: "Dra. Caroline Keffer segurando um gato na área de pet shop da clínica",
+    /*
+     * O retrato que estava no hero (JM, 09/09/2026). Aqui ele rende mais: a
+     * dobra é sobre a pessoa, e retrato vertical em coluna própria lê melhor
+     * do que espremido ao lado da copy.
+     *
+     * A foto anterior (`dra_caroline_alargado.webp`) segue em /public/images.
+     */
+    src: "/images/hero_dra_keffer.webp",
+    alt: "Dra. Caroline Keffer sorrindo, retrato em fundo claro",
     briefing: "Retrato da Dra. Carol, vertical, olhando para a câmera",
-    // A foto foi alargada para 3/2; forçá-la num retrato 4/5 recortaria a cena.
-    proporcao: "3 / 2",
-    posicao: "center center",
+    proporcao: "4 / 5",
+    /** Rosto levemente à direita e na parte de cima do quadro. */
+    posicao: "55% 18%",
   },
 } as const;
 
@@ -296,9 +369,13 @@ export const draCarol = {
  * A equipe.
  *
  * O argumento não é "conheça nosso time" (rótulo vazio que todo site tem): é
- * que a equipe é PEQUENA e FIXA. Num setor onde o concorrente é hospital 24h
- * com plantonista rodando, ser sempre atendido pelas mesmas quatro pessoas é
- * vantagem, não limitação — e é a mesma tese do resto do site.
+ * a CONTINUIDADE. Num setor onde o concorrente é hospital 24h com plantonista
+ * rodando, ser sempre atendido pelas mesmas pessoas é vantagem — e é a mesma
+ * tese do resto do site.
+ *
+ * ⚠️ Nunca enquadrar isso como "equipe pequena" (JM, 09/09/2026): "pequena"
+ * é a primeira palavra que o visitante lê e soa a limitação, não a acolhimento.
+ * O enquadramento é o rosto conhecido, nunca o tamanho do time.
  *
  * ⚠️ FOTOS: as duas veterinárias têm retrato de estúdio; Camila e Lucas
  * mandaram selfie. Todas foram normalizadas no mesmo recorte 4:5 para o grid
@@ -306,9 +383,9 @@ export const draCarol = {
  * à clínica duas fotos no mesmo padrão das outras duas.
  */
 export const equipe = {
-  headline: "A equipe é pequena, e é sempre a mesma.",
+  headline: "Sempre os mesmos rostos cuidando do seu pet.",
   subhead:
-    "Quatro pessoas cuidam de tudo, da recepção à cirurgia. Na segunda visita, você já reconhece quem atendeu seu animal na primeira.",
+    "Da recepção à cirurgia, é sempre a mesma equipe. Na segunda visita seu cachorro já reconhece quem cuidou dele na primeira, e isso muda o jeito que ele entra aqui.",
   membros: [
     {
       nome: "Dra. Caroline Keffer",
@@ -337,12 +414,39 @@ export const equipe = {
   ],
 } as const;
 
+/**
+ * Planos de saúde pet credenciados.
+ *
+ * Lista confirmada pela clínica em 11/09/2026 (arte "Aqui aceitamos seu plano"),
+ * resolvendo o VALIDAR que estava aqui desde o início.
+ *
+ * Cada plano é um LINK de WhatsApp com a pergunta já escrita — o cartão não é
+ * enfeite, é o CTA. Quem tem plano quer saber uma coisa só ("o meu cobre
+ * aqui?"), e clicar no próprio plano já manda essa pergunta.
+ *
+ * LOGOS: os cinco vieram da clínica em 11/09/2026 (arquivos originais em
+ * _fontes/planos/). Estão padronizados: fundo transparente, margem aparada,
+ * mesmo respiro em volta. PetHealth e Pet Top chegaram com fundo branco chapado
+ * e o branco foi removido, senão virava retângulo sobre o card azul.
+ *
+ * `cor` é a cor dominante EXTRAÍDA do próprio arquivo do logo, não escolhida à
+ * mão. É o traço acima da marca: amarra o card à identidade do plano sem
+ * competir com o desenho.
+ */
 export const planos = {
   headline: "Seu plano de saúde pet é aceito aqui.",
   subhead:
-    "A clínica é credenciada. Antes de vir, confirme o seu no WhatsApp — leva um minuto e evita surpresa no caixa.",
-  // VALIDAR: lista real de planos credenciados. Placeholder até confirmar.
-  nota: "Lista de planos credenciados a confirmar com a clínica.",
+    "Cinco planos credenciados. Clique no seu e já pergunte pela cobertura no WhatsApp. Leva um minuto e evita surpresa no caixa.",
+  /* Ordem = a da arte "Aqui aceitamos seu plano" da própria clínica. */
+  itens: [
+    { nome: "PetHealth", detalhe: "", logo: "/images/planos/pethealth.webp", cor: "#f89800" },
+    { nome: "CARE", detalhe: "", logo: "/images/planos/care.webp", cor: "#30b8c0" },
+    { nome: "Petlove Saúde", detalhe: "", logo: "/images/planos/petlove.webp", cor: "#581898" },
+    { nome: "Pet Top", detalhe: "", logo: "/images/planos/pettop.webp", cor: "#00c0d0" },
+    { nome: "Plamev Pet", detalhe: "", logo: "/images/planos/plamev.webp", cor: "#18a0c0" },
+  ],
+  rodape:
+    "Não achou o seu? Manda o nome no WhatsApp que a gente confirma na hora.",
 } as const;
 
 export const depoimentos = {
@@ -436,7 +540,7 @@ export const vacinas = {
   subhead:
     "Escolha a espécie e a fase de vida para ver o que costuma entrar no calendário.",
   aviso:
-    "Orientação geral, não prescrição. O calendário do seu animal é definido na consulta, conforme idade, histórico e estilo de vida.",
+    "Orientação geral, não prescrição. O calendário do seu pet é definido na consulta, conforme idade, histórico e estilo de vida.",
   especies: [
     {
       id: "cao",
@@ -541,17 +645,17 @@ export const faq = {
       pergunta: "Quanto custa a consulta?",
       // VALIDAR: se a clínica topar publicar tabela, o valor entra aqui.
       resposta:
-        "O valor depende do que o seu animal precisa. Mande uma mensagem contando o caso que a gente passa o valor antes de você vir, sem compromisso.",
+        "O valor depende do que o seu pet precisa. Manda uma mensagem contando o caso que a gente passa o valor antes de você vir, sem compromisso.",
     },
     {
       pergunta: "Vocês atendem gato?",
       resposta:
-        "Sim. Cão e gato, de filhote a idoso, na consulta, na cirurgia e no banho e tosa.",
+        "Sim. Cão e gato, de filhote a idoso, na consulta, na cirurgia, nos exames e no banho e tosa.",
     },
     {
       pergunta: "Meu pet fica muito estressado no veterinário. Como funciona aqui?",
       resposta:
-        "É uma clínica de bairro, não um hospital movimentado: o atendimento é com a mesma veterinária, no mesmo lugar de sempre. Na prática, o animal vai reconhecendo a casa a cada visita, e é disso que os tutores mais falam nas avaliações.",
+        "É uma clínica de bairro, não um hospital movimentado: o atendimento é com a mesma veterinária, no mesmo lugar de sempre. Na prática, ele vai reconhecendo a casa a cada visita, e é disso que os tutores mais falam nas avaliações.",
     },
     {
       pergunta: "Vocês atendem emergência 24 horas?",
@@ -562,18 +666,20 @@ export const faq = {
       pergunta: "Preciso agendar ou posso chegar direto?",
       // VALIDAR: confirmar se aceita atendimento sem hora marcada.
       resposta:
-        "O melhor caminho é mandar mensagem antes. Assim a gente confirma o horário e você não pega espera com o animal no colo.",
+        "O melhor caminho é mandar mensagem antes. Assim a gente confirma o horário e você chega e já é atendido, sem espera com ele no colo.",
     },
     {
       pergunta: "Tem estacionamento?",
       resposta:
-        "Tem, na frente da clínica, reservado para clientes. Dá para encostar e descer com o animal sem procurar vaga na rua.",
+        "Tem, na frente da clínica, reservado para clientes. Dá para encostar e descer com ele sem procurar vaga na rua.",
     },
     {
       pergunta: "Quais planos de saúde pet vocês aceitam?",
-      // VALIDAR: lista real de credenciados.
+      /* Lista confirmada pela clínica em 11/09/2026 — o VALIDAR saiu daqui.
+         Nomear os cinco vale mais que "somos credenciados": o tutor procura o
+         NOME do plano dele, e essa resposta também alimenta o schema FAQPage. */
       resposta:
-        "A clínica é credenciada a planos de saúde pet. Confirme o seu pelo WhatsApp antes de vir, leva um minuto e evita surpresa no caixa.",
+        "PetHealth, CARE, Petlove Saúde, Pet Top e Plamev Pet. Se o seu não estiver na lista, manda o nome no WhatsApp que a gente confirma na hora.",
     },
   ],
 } as const;
@@ -619,7 +725,7 @@ export const expediente = {
 export const comparativo = {
   headline: "Clínica de bairro ou hospital 24h?",
   subhead:
-    "Depende do que o seu animal precisa. Abaixo está o que cada um resolve melhor, sem enrolação.",
+    "Depende do que o seu pet precisa. Abaixo está o que cada um resolve melhor, com honestidade.",
   colunas: {
     aqui: "Aqui, na Caroline Keffer",
     hospital: "Hospital 24h",
@@ -636,7 +742,7 @@ export const comparativo = {
       hospital: { texto: "Aberto a qualquer hora", vence: true },
     },
     {
-      criterio: "Histórico do seu animal",
+      criterio: "Histórico do seu pet",
       aqui: { texto: "Quem examina é quem acompanha desde filhote", vence: true },
       hospital: { texto: "Prontuário lido na hora, por quem não conhece", vence: false },
     },
@@ -646,72 +752,87 @@ export const comparativo = {
       hospital: { texto: "UTI e equipe completa no local", vence: true },
     },
     {
-      criterio: "Estresse do animal",
+      criterio: "Estresse do seu pet",
       aqui: { texto: "Mesma casa, mesmo cheiro, mesma pessoa", vence: true },
       hospital: { texto: "Ambiente movimentado e desconhecido", vence: false },
     },
   ],
   fecho:
-    "Para emergência de madrugada, vá ao plantão. Para tudo o mais, quem já conhece seu animal resolve melhor.",
+    "Para emergência de madrugada, vá ao plantão. Para tudo o mais, quem já conhece seu pet resolve melhor.",
 } as const;
 
 /**
- * Guia do filhote.
+ * Cuidado preventivo por fase de vida.
  *
- * ⚠️ CONTEÚDO DE SAÚDE, mesmo status do calendário de vacinas: é orientação
- * geral e precisa da revisão da Dra. Carol antes de publicar.
+ * Substitui o "Guia do filhote" (11/09/2026, JM). O guia antigo tinha o ciclo de
+ * VACINAÇÃO como espinha, e vacinação saiu do catálogo da clínica. Em vez de
+ * apagar a dobra, ela foi reapontada: cada item agora corresponde a um serviço
+ * que a clínica presta de fato (consulta, exames laboratoriais, exames de
+ * imagem, cirurgia odontológica, as cinco especialidades).
+ *
+ * FONTES das periodicidades:
+ *   - AAHA/AVMA Preventive Healthcare Guidelines: exame de saúde ANUAL no
+ *     mínimo para adultos, e SEMESTRAL para idosos.
+ *   - AAHA: entre 70% e 80% dos cães e gatos já apresentam sinal de doença
+ *     periodontal aos 3 anos de idade.
+ *   - Prática clínica brasileira corrente para o painel geriátrico: hemograma,
+ *     bioquímico e urinálise duas vezes ao ano a partir dos 7 anos, com T4 em
+ *     gatos pela frequência de alteração de tireoide.
+ *
+ * ⚠️ CONTEÚDO DE SAÚDE. É orientação geral e está marcado como tal na interface,
+ * com a fonte citada. Mesmo assim precisa da revisão e do aval da Dra. Carol
+ * antes de publicar: periodicidade é decisão clínica e muda com porte, raça e
+ * histórico.
  */
-export const guiaFilhote = {
-  headline: "Adotou um filhote? Comece por aqui.",
+export const preventivo = {
+  headline: "Seu pet precisa de quê, e de quanto em quanto tempo?",
   subhead:
-    "O que fazer em cada fase dos primeiros meses, na ordem em que importa.",
+    "O calendário de cuidado que faz um problema barato ser encontrado antes de virar um problema caro.",
   aviso:
-    "Orientação geral. O que o seu filhote precisa é definido na primeira consulta.",
+    "Orientação geral, com base nas diretrizes de cuidado preventivo da AAHA e da AVMA. O intervalo certo para o seu pet é definido na consulta, conforme idade, porte, raça e histórico.",
   etapas: [
     {
-      id: "chegada",
-      rotulo: "Chegou em casa",
-      detalhe: "primeiras 48h",
+      id: "filhote",
+      rotulo: "Filhote",
+      detalhe: "até 1 ano",
       itens: [
-        "Deixe o filhote explorar sozinho antes de pegar no colo. O cheiro do lugar novo cansa.",
-        "Mantenha a mesma ração que ele já comia. Troca brusca causa diarreia.",
-        "Água limpa sempre disponível, num pote baixo que ele alcance.",
-        "Anote de onde ele veio e se já tomou alguma vacina ou vermífugo.",
+        "Primeira consulta assim que ele chegar em casa, mesmo parecendo saudável.",
+        "Exame de fezes logo no começo: parasita é o achado mais comum nessa idade.",
+        "Peso e crescimento acompanhados a cada retorno, com orientação de alimentação.",
+        "É nessa fase que se avalia, caso a caso, o momento da castração.",
       ],
     },
     {
-      id: "primeira-semana",
-      rotulo: "Primeira semana",
-      detalhe: "consulta inicial",
+      id: "adulto",
+      rotulo: "Adulto",
+      detalhe: "1 a 6 anos",
       itens: [
-        "Marque a primeira consulta mesmo que ele pareça saudável.",
-        "Leve a carteirinha, se houver, e uma amostra de fezes fresca.",
-        "Na consulta sai o calendário de vacinas e vermifugação dele.",
-        "Ainda não passeie na rua: sem a vacinação completa, o risco é alto.",
+        "Consulta de rotina uma vez por ano, no mínimo.",
+        "Boca avaliada em toda consulta: entre 70% e 80% dos cães e gatos já têm sinal de doença dentária aos 3 anos.",
+        "Hemograma e bioquímico uma vez por ano formam a linha de base que mostra mudança antes do sintoma.",
+        "Escovação dos dentes em casa, começada cedo. Filhote aceita, adulto resiste.",
       ],
     },
     {
-      id: "dois-quatro",
-      /* "De" na frente para o numeral da etapa não encostar no do intervalo:
-         "3 2 a 4 meses" lia como um número só. */
-      rotulo: "De 2 a 4 meses",
-      detalhe: "vacinação",
+      id: "setemais",
+      rotulo: "A partir de 7 anos",
+      detalhe: "a cada 6 meses",
       itens: [
-        "Ciclo da múltipla: três doses, com 21 a 30 dias entre elas.",
-        "Antirrábica a partir dos 3 meses.",
-        "Passeio liberado só depois da última dose, conforme orientação.",
-        "É a melhor fase para socializar com pessoas e outros animais.",
+        "A consulta passa a ser semestral. Nessa fase a doença avança rápido entre uma visita e outra.",
+        "Hemograma, bioquímico e urinálise duas vezes por ano: é o trio que pega rim e fígado cedo.",
+        "Gato idoso ganha também a dosagem de T4, pela frequência de alteração de tireoide.",
+        "Ultrassom de abdome e eletrocardiograma entram quando o exame físico ou o sangue pedem.",
       ],
     },
     {
-      id: "seis",
-      rotulo: "A partir de 6 meses",
-      detalhe: "castração",
+      id: "alerta",
+      rotulo: "Sinais de alerta",
+      detalhe: "não espere o check-up",
       itens: [
-        "Idade em que a castração costuma ser avaliada, caso a caso.",
-        "Antes da cirurgia, exames pré-operatórios.",
-        "Reforço anual de vacina entra no calendário a partir daqui.",
-        "Comece a escovar os dentes agora: filhote aceita, adulto resiste.",
+        "Beber água ou urinar muito mais que o normal.",
+        "Perder peso comendo a mesma coisa de sempre.",
+        "Cansar rápido no passeio, tossir à noite ou respirar com esforço.",
+        "Mau hálito forte, baba ou dificuldade para mastigar.",
       ],
     },
   ],
@@ -728,11 +849,17 @@ export const ondeFicamos = {
   avisoEmergencia:
     "A clínica não é 24 horas. Fora do horário acima, procure um plantão veterinário.",
   foto: {
-    src: "/images/fachada_keffer.webp",
+    /*
+     * A fachada FRONTAL (JM, 09/09/2026). Vem para cá porque é 4:3 e a caixa
+     * aqui é deitada: entra quase inteira, com o letreiro legível e a entrada
+     * à vista. Em 1280px numa caixa de ~570px, a densidade é de sobra.
+     * A do hero é a de céu aberto, que é retrato.
+     */
+    src: "/images/fachada_hero.webp",
     alt: "Fachada da Clínica Veterinária Caroline Keffer, na Rua Araguatins",
     briefing: "Fachada da clínica, horizontal, luz do dia",
     proporcao: "16 / 10",
-    posicao: "center 42%",
+    posicao: "center 40%",
   },
 } as const;
 

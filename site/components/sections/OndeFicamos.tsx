@@ -16,7 +16,7 @@ export function OndeFicamos() {
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <Revelar>
-            <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
+            <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
               {ondeFicamos.headline}
             </h2>
           </Revelar>
@@ -26,7 +26,7 @@ export function OndeFicamos() {
               href={contato.mapa}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-7 flex items-start gap-3 text-lg text-text-2 transition-colors hover:text-action"
+              className="mt-7 flex items-start gap-3 text-lg text-text-2 transition-colors hover:text-acao-texto"
             >
               <MapPinIcon size={22} weight="light" className="mt-1 shrink-0" aria-hidden />
               <span>
@@ -41,7 +41,7 @@ export function OndeFicamos() {
           <Revelar atraso={0.1}>
             <a
               href={contato.telefoneFixoLink}
-              className="mt-5 flex items-center gap-3 text-lg text-text-2 transition-colors hover:text-action"
+              className="mt-5 flex items-center gap-3 text-lg text-text-2 transition-colors hover:text-acao-texto"
             >
               <PhoneIcon size={22} weight="light" className="shrink-0" aria-hidden />
               {contato.telefoneFixo}

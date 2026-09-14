@@ -26,7 +26,7 @@ export function Pets() {
     <Secao tom="alt" className="overflow-hidden">
       <div className="max-w-[40ch]">
         <Revelar>
-          <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
+          <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
             {pets.headline}
           </h2>
         </Revelar>

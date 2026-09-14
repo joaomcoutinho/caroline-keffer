@@ -51,7 +51,7 @@ export function Prova() {
                   <Icone size={24} weight="light" aria-hidden />
                 </span>
 
-                <p className="numero-valor mt-5 font-display text-5xl leading-none font-semibold text-brand sm:text-[3.25rem]">
+                <p className="numero-valor mt-5 font-display text-5xl leading-none font-bold text-brand sm:text-[3.25rem]">
                   <NumeroContado
                     alvo={item.alvo}
                     casas={item.casas}
