@@ -55,7 +55,7 @@ export const metadata: Metadata = {
         url: `${meta.url}/og.png`,
         width: 1200,
         height: 630,
-        alt: "Dra. Caroline Keffer com um cão no colo, ao lado da chamada do site",
+        alt: "Fachada da Clínica Veterinária Caroline Keffer, na Torre, ao lado da chamada do site",
       },
     ],
   },

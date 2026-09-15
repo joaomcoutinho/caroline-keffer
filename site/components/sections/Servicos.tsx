@@ -1,6 +1,7 @@
 import { Revelar } from "@/components/ui/Revelar";
 import { ExploradorServicos } from "@/components/ui/ExploradorServicos";
-import { servicos } from "@/content/site";
+import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
+import { servicos, linkWhatsapp, CTA_PRIMARIO } from "@/content/site";
 
 /**
  * Dobra 3 — os seis serviços em índice + painel.
@@ -32,7 +33,16 @@ export function Servicos() {
 
         <Revelar atraso={0.12} className="mt-12">
           <ExploradorServicos
-            itens={servicos.itens.map((i) => ({ ...i }))}
+            itens={servicos.itens.map((i) => ({
+              ...i,
+              cta: (
+                <BotaoWhatsapp
+                  rotulo={CTA_PRIMARIO}
+                  href={linkWhatsapp(`Olá! Gostaria de agendar: ${i.nome.toLowerCase()}.`)}
+                  className="w-full"
+                />
+              ),
+            }))}
             rotulo="Serviços da clínica"
           />
         </Revelar>

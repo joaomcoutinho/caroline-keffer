@@ -14,31 +14,26 @@ npm run og    # regenera site/public/og.png
 Depois de rodar, o build do site (`cd ../site && npm run build`) copia o novo
 `og.png` para `out/` automaticamente — é `public/`, não precisa de outro passo.
 
-## `fontes/`
+## Como o `og.png` é gerado (15/09/2026)
 
-Instâncias **estáticas** da Bricolage Grotesque e da Plus Jakarta Sans, que são
-as duas famílias do site.
+O `og.mjs` monta o card em HTML e fotografa com o **Google Chrome** headless
+(DevTools Protocol). Precisa do Chrome instalado (ou `CHROME_PATH`) e de rede
+para as fontes do Google Fonts.
 
-Estáticas, e não as variáveis originais, por um motivo concreto: o `sharp`
-rasteriza SVG com librsvg, que só encontra fontes pelo fontconfig do sistema, e
-o `FONTCONFIG_FILE` apontando para um diretório local **não** é respeitado aqui.
-Testado: o texto saía em Helvetica. As variáveis também não resolvem o eixo de
-peso nesse caminho, então o cabeçalho vinha sempre em Regular.
+Antes era `sharp` + `opentype.js` com TTFs estáticos da Bricolage e da Jakarta,
+que eram as fontes do site. O site passou para Nunito e Nunito Sans, e a Nunito
+é variável: o `opentype.js` não resolve o eixo de peso. No Chrome a tipografia,
+a quebra de linha e o kerning saem iguais aos do site.
 
-A saída é não depender do fontconfig: converter o texto em vetor com
-`opentype.js`, que lê o arquivo direto e ainda devolve a métrica exata de cada
-glifo — o que dá controle real sobre a quebra de linha do card.
-
-Origem: Google Fonts (OFL). Regeneráveis com o `curl` que está no histórico do
-projeto, mas ficam versionadas para o gerador não depender de rede.
+A pasta `fontes/` ficou só como histórico do gerador anterior.
 
 ## Por que o card de compartilhamento é gerado, e não desenhado à mão
 
 Duas razões concretas, não só preferência:
 
-- **Precisão de layout.** `opentype.js` devolve a largura real de cada glifo,
-  então a quebra de linha do subhead e a largura da pílula do CTA são
-  medidas, não chutadas — nunca sobra uma palavra órfã sozinha numa linha.
+- **Precisão de layout.** O card sai do mesmo motor de texto do site (hoje o
+  Chrome, com `text-wrap: balance`), então a quebra de linha é medida, não
+  chutada, e nunca sobra uma palavra órfã sozinha numa linha.
 - **Sem emenda de cor.** A versão anterior (feita à mão) tinha uma transição
   visível onde o fundo chapado encontrava a foto escurecida — as duas cores
   quase combinavam, mas não exatamente. Aqui existe uma única cor de fundo no

@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { InfoIcon, PawPrintIcon } from "@phosphor-icons/react/dist/ssr";
+import {
+  CheckIcon,
+  DogIcon,
+  HeartbeatIcon,
+  InfoIcon,
+  PawPrintIcon,
+  WarningCircleIcon,
+} from "@phosphor-icons/react/dist/ssr";
+import type { Icon } from "@phosphor-icons/react";
 import { Secao } from "@/components/ui/Secao";
 import { Revelar } from "@/components/ui/Revelar";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
@@ -20,13 +28,20 @@ import { preventivo, CTA_PRIMARIO } from "@/content/site";
  * consulta e exame, e chega no WhatsApp já sabendo o que pedir. É a dobra que
  * transforma visitante curioso em agendamento com intenção.
  *
- * A trilha ocupa a largura toda: com quatro fases, espremida em meia coluna os
- * rótulos quebravam em três linhas e o desenho de linha do tempo se perdia.
+ * As fases ocupam a largura toda, em cartões (ver o comentário no JSX).
  *
  * ⚠️ Conteúdo de saúde. As periodicidades vêm das diretrizes da AAHA/AVMA (ver
  * `preventivo` em content/site.ts, que traz as fontes), e a interface diz que é
  * orientação geral. Ainda assim precisa do aval da Dra. Carol antes de publicar.
  */
+/* Ícone por fase, pelo `id` de `preventivo.etapas`. */
+const iconesFase: Record<string, Icon> = {
+  filhote: PawPrintIcon,
+  adulto: DogIcon,
+  setemais: HeartbeatIcon,
+  alerta: WarningCircleIcon,
+};
+
 export function Preventivo() {
   const [etapaId, setEtapaId] = useState<string>(preventivo.etapas[0].id);
   const indice = Math.max(
@@ -50,46 +65,60 @@ export function Preventivo() {
         </Revelar>
       </div>
 
-      <Revelar atraso={0.12} className="mt-10">
-        {/*
-          `overflow-x-auto` porque quatro passos não cabem em 320px sem
-          espremer rótulo. `min-w` garante que, ao rolar, cada passo mantenha
-          largura legível em vez de encolher todos juntos.
+      {/*
+        FASES EM CARTÕES (15/09/2026, JM: "ficou ruim essa segmentação... mais
+        visível, maior destaque, organizado pra aparecer tudo de uma vez, sem
+        scroll pro lado, que já tem muito no site").
 
-          ⚠️ `py-3` NÃO é respiro estético, é correção de recorte (JM, 09/09/2026:
-          "o circulozinho está com uma falha na parte superior"). Pela regra do
-          CSS, `overflow-x: auto` com `overflow-y: visible` computa `overflow-y`
-          para `auto` — ou seja, corta na vertical também. O halo do ponto ativo
-          (`box-shadow: 0 0 0 5px` sobre um ponto em `scale(1.2)`) sobe ~7px
-          acima do topo do trilho, e era isso que ficava decepado, dando a
-          impressão de círculo mal construído. O padding devolve a folga por
-          dentro da área que rola. `-my-3` cancela o efeito no espaçamento.
-        */}
-        <div className="trilho -mx-5 -my-3 overflow-x-auto px-5 py-3 sm:mx-0 sm:px-0">
-          <div
-            role="radiogroup"
-            aria-label="Fase de vida do pet"
-            className="trilha min-w-[34rem]"
-          >
-            {preventivo.etapas.map((e, i) => (
+        A linha do tempo com pontos só funcionava com largura: no celular os
+        rótulos viravam texto miúdo em quatro colunas apertadas. Aqui cada fase
+        é um cartão com ícone, nome e detalhe: 2×2 no celular, uma fileira de
+        quatro no desktop. Tudo visível sem rolar, alvo de toque grande, e a
+        fase escolhida vira o cartão preenchido na cor de ação, sem ambiguidade.
+
+        Continua `radiogroup`/`radio`, com setas do teclado trocando a fase.
+      */}
+      <Revelar atraso={0.12} className="mt-8 sm:mt-10">
+        <div
+          role="radiogroup"
+          aria-label="Fase de vida do pet"
+          className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4"
+        >
+          {preventivo.etapas.map((e, i) => {
+            const Icone = iconesFase[e.id] ?? PawPrintIcon;
+            const ativo = e.id === etapaId;
+            return (
               <button
                 key={e.id}
                 type="button"
                 role="radio"
-                aria-checked={e.id === etapaId}
+                aria-checked={ativo}
+                tabIndex={ativo ? 0 : -1}
                 onClick={() => setEtapaId(e.id)}
-                className="trilha-passo"
-                data-estado={
-                  i < indice ? "feito" : i === indice ? "ativo" : "futuro"
-                }
+                onKeyDown={(ev) => {
+                  const passo = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[ev.key];
+                  if (!passo) return;
+                  ev.preventDefault();
+                  const n = preventivo.etapas.length;
+                  const alvo = preventivo.etapas[(i + passo + n) % n];
+                  setEtapaId(alvo.id);
+                  const irmaos = ev.currentTarget.parentElement?.querySelectorAll("button");
+                  (irmaos?.[(i + passo + n) % n] as HTMLButtonElement | undefined)?.focus();
+                }}
+                className="fase-cartao"
+                data-ativo={ativo}
               >
-                <span className="trilha-linha" aria-hidden />
-                <span className="trilha-ponto" aria-hidden />
-                <span className="trilha-rotulo">{e.rotulo}</span>
-                <span className="trilha-detalhe">{e.detalhe}</span>
+                <span className="fase-icone" aria-hidden>
+                  <Icone size={20} weight={ativo ? "fill" : "light"} />
+                </span>
+                <span className="fase-marca" aria-hidden>
+                  <CheckIcon size={12} weight="bold" />
+                </span>
+                <span className="fase-rotulo">{e.rotulo}</span>
+                <span className="fase-detalhe">{e.detalhe}</span>
               </button>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </Revelar>
 

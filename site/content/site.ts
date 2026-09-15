@@ -80,6 +80,10 @@ export const hero = {
   headline: "Tudo para seu pet, onde ele se sente em casa.",
   subhead:
     "Clínica geral, cirurgia, especialidades, exames e banho e tosa na Torre, com a Dra. Carol.",
+  /** No celular a copy divide a largura com a fachada: só o essencial. */
+  subheadCurta: "Clínica, cirurgia, exames e banho e tosa, com a Dra. Carol.",
+  /** Rótulo acima do título, só no celular, onde a foto ocupa a tela toda. */
+  rotuloMobile: "Clínica veterinária · Torre, Recife",
   cta: CTA_PRIMARIO,
   ctaMicrocopy: "Resposta no mesmo dia, em horário de funcionamento.",
   foto: {
@@ -102,6 +106,8 @@ export const hero = {
     alt: "Fachada da Clínica Veterinária Caroline Keffer vista da calçada, com o céu aberto",
     /** O letreiro fica no terço de cima do quadro. */
     posicao: "center 42%",
+    /** Celular: foto em tela cheia, recortada até o letreiro inteiro. */
+    posicaoMobile: "30% center",
   },
 } as const;
 
@@ -150,6 +156,14 @@ export const servicos = {
   headline: "Consulta, cirurgia e exames no mesmo lugar.",
   subhead:
     "Consulta, exame e cirurgia acontecem na mesma casa, com quem já conhece a história do seu pet.",
+  /*
+   * FORMATO ÚNICO DAS FOTOS (15/09/2026, JM: "uns com borda lateral, outros
+   * não, tá desconexo"). Todas as seis são retrato 4:5, sangradas, recortadas
+   * direto da original (`servico_*.webp`, 880×1100). As fotos da clínica são em
+   * pé; no painel 16:9 só cabiam cortando cabeça ou com faixa desfocada nas
+   * laterais. Em 4:5 as de gente aparecem praticamente inteiras.
+   * Foto nova para cá: 4:5, assunto no centro.
+   */
   itens: [
     {
       // A clínica chama assim (lista enviada pelo JM em 11/09/2026).
@@ -157,9 +171,10 @@ export const servicos = {
       texto:
         "O atendimento do dia a dia: o que está errado, o que fazer e quanto tempo leva.",
       icone: "stethoscope",
-      /* Foto real da clínica (12/09/2026). Substitui o consultório genérico. */
-      src: "/images/consultorio_mesa.webp",
-      alt: "Consultório da clínica, com mesa de atendimento, cadeiras e o selo da Dra. Caroline Keffer na parede",
+      /* Dra. Carol no consultório com um paciente, letreiro da clínica atrás
+         (14/09/2026). É a imagem literal de uma consulta de rotina. */
+      src: "/images/servico_clinica_geral.webp",
+      alt: "Dra. Caroline Keffer sorrindo no consultório com um lulu da pomerânia no colo",
       briefing: "Dra. Carol examinando um cão na mesa de atendimento",
       posicao: "center center",
     },
@@ -176,8 +191,10 @@ export const servicos = {
       icone: "firstAid",
       /* A sala cirúrgica de verdade (12/09/2026). Antes estava a área de
          internação aqui, que é outro cômodo. */
-      src: "/images/sala_cirurgica.webp",
-      alt: "Sala cirúrgica da clínica, com mesa de inox, suporte de soro, cilindro de oxigênio e material organizado",
+      /* Procedimento em andamento (escolha do JM). Em 4:5 a foto aparece
+         quase inteira, com o corpo todo do cirurgião e do paciente. */
+      src: "/images/servico_cirurgia.webp",
+      alt: "Veterinária paramentada realizando procedimento em um cão anestesiado na mesa cirúrgica",
       briefing: "Sala de cirurgia da clínica, equipamento em foco",
       posicao: "center center",
     },
@@ -206,8 +223,19 @@ export const servicos = {
       /* Outro ângulo do consultório (12/09/2026): a bancada de inox e a pia,
          que é onde o exame acontece. Mostra cômodo diferente do card de
          clínica geral, que traz a mesa de conversa. */
-      src: "/images/consultorio_bancada.webp",
-      alt: "Bancada de inox com pia e armários no consultório da clínica",
+      /*
+       * 14/09/2026. O JM sugeriu `caroline_com_cachorro` aqui e pediu uma
+       * avaliação imparcial. Ela foi para Clínica médica geral, onde encaixa
+       * melhor: é a Dra. Carol no consultório com o paciente, a cena literal de
+       * uma consulta de rotina. Para especialista ficou o veterinário com o
+       * paciente na mesa de exame.
+       *
+       * O alt NÃO nomeia a especialidade do profissional: o bordado do jaleco
+       * diz anestesista, e anestesia não está entre as cinco especialidades de
+       * consulta. Afirmar isso aqui seria impreciso.
+       */
+      src: "/images/servico_especialista.webp",
+      alt: "Veterinário sorrindo ao lado de um golden retriever sobre a mesa de exame",
       briefing: "Atendimento de gato, ambiente calmo",
       posicao: "center center",
     },
@@ -229,8 +257,15 @@ export const servicos = {
        * que a foto realmente mostra, sem afirmar o que ela não é.
        * Pedir à clínica uma foto dos aparelhos.
        */
-      src: "/images/internamento.webp",
-      alt: "Área de internação da clínica, com baias de vidro para recuperação",
+      /*
+       * ⚠️ Nenhuma foto recebida mostra raio-x, ultrassom ou eletrocardiograma.
+       * 15/09/2026, a pedido do JM ("melhor colocar do consultório, com algum
+       * equipamento"): o consultório com a bancada de exame em inox, pia e
+       * armários. NÃO é a sala de imagem, e o alt não afirma que é.
+       * Pedir à clínica uma foto dos aparelhos.
+       */
+      src: "/images/servico_imagem.webp",
+      alt: "Consultório da clínica com bancada de exame em inox, pia e armários",
       briefing: "Aparelho de raio-x, ultrassom ou eletrocardiograma da clínica",
       posicao: "center center",
     },
@@ -240,7 +275,7 @@ export const servicos = {
         "A coleta é feita aqui mesmo, e o resultado a Dra. Carol explica pra você.",
       icone: "flask",
       /* O laboratório de verdade (12/09/2026). */
-      src: "/images/laboratorio.webp",
+      src: "/images/servico_laboratorio.webp",
       alt: "Laboratório da clínica, com bancada de granito, tabela de referência na parede e material de coleta",
       briefing: "Coleta de sangue ou microscópio, detalhe de mãos",
       posicao: "center center",
@@ -255,8 +290,10 @@ export const servicos = {
       nome: "Banho e tosa",
       texto: "Feito por quem conhece a pele e a saúde do seu cachorro.",
       icone: "scissors",
-      src: "/images/caes_escovacao_documental.webp",
-      alt: "Cão de pelo longo sendo escovado sobre a bancada do banho e tosa",
+      /* A sala de banho e tosa, com secador e banheira. 15/09/2026: mostra bem
+         mais da altura da sala. */
+      src: "/images/servico_banho_tosa.webp",
+      alt: "Sala de banho e tosa da clínica, com banheira, secador profissional e mural de cão no banho",
       briefing: "Cão no banho e tosa, secagem ou escovação",
       posicao: "center 50%",
     },
@@ -265,9 +302,10 @@ export const servicos = {
 
 export const semEstresse = {
   headline: "Consulta sem estresse, porque ele já conhece a casa.",
+  /* Enxugado em 15/09/2026 (JM: "evitar tanta poluição visual de texto
+     corrido"): eram dois parágrafos, 257 caracteres; agora uma frase só. */
   corpo: [
-    "Clínica de bairro tem uma vantagem que hospital grande não consegue ter: seu pet volta sempre para o mesmo lugar, com o mesmo cheiro e a mesma pessoa.",
-    "É por isso que a frase mais repetida nas avaliações não é sobre equipamento. É sobre o pet ter saído daqui tranquilo.",
+    "Mesmo lugar, mesmo cheiro, mesmas pessoas. É isso que os tutores mais contam nas avaliações.",
   ],
   /**
    * Avaliações reais do Google, transcritas literalmente, com nome e foto de
@@ -310,31 +348,24 @@ export const semEstresse = {
   },
   foto: {
     /*
-     * REVERTIDA para a sala de espera (JM, 09/09/2026: "essa tá com baixa
-     * qualidade, volte para a imagem de antes").
+     * Visão AMPLA do consultório (15/09/2026, JM: "tira essa imagem, coloca
+     * uma de qualidade, que tenha uma visão ampla do consultório"). A anterior
+     * era um ângulo fechado na frase da parede. Esta é a tomada de frente: a
+     * parede com o selo iluminado, a frase, a mesa e as duas cadeiras, que é
+     * exatamente a sala onde o tutor vai sentar.
      *
-     * Tinha entrado aqui a foto do LEMA pintado na parede da recepção
-     * (`recepcao_lema.webp`, que segue em /public/images). O argumento era bom
-     * — a frase da própria casa provando a dobra — mas a foto é de celular,
-     * com foco curto na parede: ampliada na largura da dobra, a moleza
-     * aparecia. Argumento não sustenta imagem ruim.
+     * 15/09/2026: versão melhorada por IA que o JM enviou (guardada em
+     * `_fontes/originais/clinica-2026-09/consultorio_melhorado_ia.jpeg`). A ferramenta de IA
+     * trocou letras da frase na parede ("ceração", "afeio"), então o trecho
+     * da frase foi recolocado a partir da foto original, alinhado e com o tom
+     * casado. Toda foto melhorada por IA: conferir os textos antes de subir.
      */
-    /*
-     * O consultório com o LEMA pintado na parede (12/09/2026). A foto do lema
-     * já tinha passado por aqui em 09/09 e foi revertida por baixa qualidade:
-     * era um close na parede, de celular, com foco curto. Esta é outra tomada,
-     * com o cômodo inteiro, e resolve o problema — a frase se lê do "C" ao
-     * coração, e ainda entra o selo da clínica na parede ao lado.
-     *
-     * Numa dobra sobre cuidado, a prova mais forte é a frase que a própria
-     * casa escolheu pintar na parede.
-     */
-    src: "/images/consultorio_lema.webp",
-    alt: 'Consultório da clínica com a frase "Cuidamos com o coração, tratamos com afeto" pintada na parede, ao lado do selo da Dra. Caroline Keffer',
-    briefing: "Consultório com o lema da clínica na parede",
-    /* Em largura total, 3/2 daria 800px de altura e dominaria a dobra. */
+    src: "/images/consultorio_card.webp",
+    alt: 'Consultório da clínica visto de frente, com a mesa de atendimento, duas cadeiras, o selo da Dra. Caroline Keffer iluminado na parede e a frase "Cuidamos com o coração, tratamos com afeto"',
+    briefing: "Consultório da clínica, vista ampla",
     proporcao: "16 / 9",
-    posicao: "center center",
+    /** O quadro estica até a altura dos depoimentos: segura a mesa e o selo no centro. */
+    posicao: "center 46%",
   },
 } as const;
 
@@ -469,60 +500,46 @@ export const depoimentos = {
 } as const;
 
 /**
- * Galeria dos pets atendidos.
+ * Galeria de atendimentos.
  *
- * O conteúdo JÁ EXISTE: é o destaque "Nossos Pets" do Instagram da clínica.
- * Só precisa ser exportado em alta. Cada slot vira uma foto ao receber `src`.
- */
-/**
- * Galeria dos pets atendidos.
+ * 14/09/2026 (JM): as fotos antigas eram só cães isolados. Agora são 20
+ * momentos reais da equipe com os pacientes, e a dobra mudou de papel: deixou
+ * de ser "acervo de pets" e virou PROVA DE VÍNCULO. Quem olha não vê um cão
+ * bonito, vê como o cão dele vai ser tratado.
  *
- * ⚠️ Esta é a dobra onde foto REAL importa mais: ela afirma que aqueles animais
- * são pacientes da clínica. As quatro primeiras são reais, do acervo da Caroline.
- * Os dois slots restantes seguem como espaço reservado — preencher com foto real,
- * nunca com imagem gerada, sob pena de o site afirmar um paciente que não existe.
+ * Fotos originais em _fontes/originais/pets-atendimento-2026-09/. As versões
+ * do site tiveram as tarjas pretas de vídeo removidas, proporção limitada entre
+ * 0,64 e 0,80, e passaram pelo mesmo tratamento de ruído, nitidez e tom das
+ * fotos do consultório.
+ *
+ * Os ALTs não nomeiam colaboradores que não dá para identificar com certeza.
+ * Só a Dra. Caroline é nomeada, e só onde ela é reconhecível pelo retrato.
  */
 export const pets = {
-  headline: "Quem já passou por aqui.",
+  headline: "Cada consulta termina em colo.",
   subhead:
-    "Uma parte dos cães e gatos que a Dra. Carol acompanha. Muitos chegaram filhotes e hoje já são idosos.",
+    "Esses são alguns dos cães e gatos que a nossa equipe atendeu. Muitos chegaram com medo e hoje entram como quem chega em casa.",
   itens: [
-    {
-      src: "/images/cachorro4.webp",
-      alt: "Cão maltês branco sobre a mesa de atendimento da clínica",
-      briefing: "Cão de porte pequeno na mesa de atendimento",
-      proporcao: "3 / 4",
-      posicao: "center 40%",
-    },
-    {
-      src: "/images/cachorro2.webp",
-      alt: "Filhote de lulu da pomerânia com gravata, na recepção da clínica",
-      briefing: "Filhote na recepção",
-      proporcao: "1 / 1",
-      posicao: "center center",
-    },
-    {
-      src: "/images/cachorro3.webp",
-      alt: "Shih-tzu tosado, com bandana listrada, no banho e tosa",
-      briefing: "Cão tosado com bandana",
-      proporcao: "4 / 5",
-      posicao: "center 35%",
-    },
-    {
-      src: "/images/cao.webp",
-      alt: "Cão maltês branco com gravata azul, recém-tosado",
-      briefing: "Cão recém-tosado com gravata",
-      proporcao: "1 / 1",
-      posicao: "center 30%",
-    },
-    { src: "", alt: "", briefing: "Gato atendido na clínica", proporcao: "3 / 4", posicao: "" },
-    {
-      src: "",
-      alt: "",
-      briefing: "Tutor e pet juntos na recepção",
-      proporcao: "4 / 5",
-      posicao: "",
-    },
+    { src: "/images/galeria/atendimento-01.webp", alt: "Colaboradora sorrindo e abraçando um buldogue francês preto e branco", largura: 720, altura: 1125 },
+    { src: "/images/galeria/atendimento-02.webp", alt: "Veterinária sentada no chão do consultório com dois cães dinamarqueses", largura: 720, altura: 960 },
+    { src: "/images/galeria/atendimento-03.webp", alt: "Colaboradora sorrindo com um cocker spaniel de laço vermelho no colo", largura: 720, altura: 1125 },
+    { src: "/images/galeria/atendimento-04.webp", alt: "Veterinário examinando um border collie deitado na mesa de atendimento", largura: 720, altura: 1124 },
+    { src: "/images/galeria/atendimento-05.webp", alt: "Colaboradora segurando um filhote de yorkshire junto ao rosto", largura: 720, altura: 1124 },
+    { src: "/images/galeria/atendimento-06.webp", alt: "Colaboradora abraçando um dachshund de peitoral verde", largura: 720, altura: 1124 },
+    { src: "/images/galeria/atendimento-07.webp", alt: "Colaboradora sorrindo com dois gatos no colo", largura: 720, altura: 1124 },
+    { src: "/images/galeria/atendimento-08.webp", alt: "Colaboradora agachada ao lado de um beagle", largura: 720, altura: 1125 },
+    { src: "/images/galeria/atendimento-09.webp", alt: "Dra. Caroline Keffer agachada no chão cercada por quatro cães pequenos", largura: 720, altura: 960 },
+    { src: "/images/galeria/atendimento-10.webp", alt: "Dra. Caroline Keffer sentada no chão com um buldogue inglês e um yorkshire", largura: 720, altura: 960 },
+    { src: "/images/galeria/atendimento-11.webp", alt: "Duas colaboradoras sorrindo, cada uma com um gato persa no colo", largura: 720, altura: 1036 },
+    { src: "/images/galeria/atendimento-12.webp", alt: "Colaboradora abraçando um gato maine coon cinza e branco", largura: 720, altura: 1125 },
+    { src: "/images/galeria/atendimento-13.webp", alt: "Colaboradora no consultório com dois shih-tzus de gravata", largura: 720, altura: 1125 },
+    { src: "/images/galeria/atendimento-14.webp", alt: "Colaboradora agachada com dois buldogues franceses", largura: 720, altura: 960 },
+    { src: "/images/galeria/atendimento-15.webp", alt: "Colaboradora na mesa do consultório com um lulu da pomerânia", largura: 720, altura: 1125 },
+    { src: "/images/galeria/atendimento-16.webp", alt: "Colaboradora sorrindo com um pug no colo", largura: 720, altura: 1125 },
+    { src: "/images/galeria/atendimento-17.webp", alt: "Colaboradora abraçando um shih-tzu de laço rosa", largura: 720, altura: 1124 },
+    { src: "/images/galeria/atendimento-18.webp", alt: "Colaboradora abraçando um yorkshire", largura: 720, altura: 1124 },
+    { src: "/images/galeria/atendimento-19.webp", alt: "Colaboradora com dois gatos persas no colo", largura: 720, altura: 1124 },
+    { src: "/images/galeria/atendimento-20.webp", alt: "Veterinário de máscara segurando um pug de roupinha laranja", largura: 720, altura: 1125 },
   ],
 } as const;
 
@@ -776,8 +793,19 @@ export const comparativo = {
  *   - AAHA: entre 70% e 80% dos cães e gatos já apresentam sinal de doença
  *     periodontal aos 3 anos de idade.
  *   - Prática clínica brasileira corrente para o painel geriátrico: hemograma,
- *     bioquímico e urinálise duas vezes ao ano a partir dos 7 anos, com T4 em
- *     gatos pela frequência de alteração de tireoide.
+ *     bioquímico e urinálise duas vezes ao ano a partir dos 7 anos, e T4 em
+ *     gatos a partir dos 8.
+ *
+ * REVISÃO DE 15/09/2026, item por item contra as fontes:
+ *   - "parasita é o achado MAIS comum" virou "verminose é muito comum": o
+ *     superlativo não tinha fonte.
+ *   - hemograma anual para adulto ganhou "geralmente": é a recomendação
+ *     corrente, não uma regra das diretrizes.
+ *   - T4 do gato passou de "idoso" (7) para "a partir dos 8", que é o que a
+ *     fonte diz.
+ *   Todo o resto conferiu, e cada item continua amarrado a um serviço que a
+ *   clínica presta (exames laboratoriais e de imagem, cirurgia odontológica,
+ *   consulta).
  *
  * ⚠️ CONTEÚDO DE SAÚDE. É orientação geral e está marcado como tal na interface,
  * com a fonte citada. Mesmo assim precisa da revisão e do aval da Dra. Carol
@@ -797,7 +825,7 @@ export const preventivo = {
       detalhe: "até 1 ano",
       itens: [
         "Primeira consulta assim que ele chegar em casa, mesmo parecendo saudável.",
-        "Exame de fezes logo no começo: parasita é o achado mais comum nessa idade.",
+        "Exame de fezes logo no começo: verminose é muito comum nessa idade.",
         "Peso e crescimento acompanhados a cada retorno, com orientação de alimentação.",
         "É nessa fase que se avalia, caso a caso, o momento da castração.",
       ],
@@ -809,7 +837,7 @@ export const preventivo = {
       itens: [
         "Consulta de rotina uma vez por ano, no mínimo.",
         "Boca avaliada em toda consulta: entre 70% e 80% dos cães e gatos já têm sinal de doença dentária aos 3 anos.",
-        "Hemograma e bioquímico uma vez por ano formam a linha de base que mostra mudança antes do sintoma.",
+        "Hemograma e bioquímico, geralmente uma vez por ano, formam a linha de base que mostra mudança antes do sintoma.",
         "Escovação dos dentes em casa, começada cedo. Filhote aceita, adulto resiste.",
       ],
     },
@@ -820,7 +848,7 @@ export const preventivo = {
       itens: [
         "A consulta passa a ser semestral. Nessa fase a doença avança rápido entre uma visita e outra.",
         "Hemograma, bioquímico e urinálise duas vezes por ano: é o trio que pega rim e fígado cedo.",
-        "Gato idoso ganha também a dosagem de T4, pela frequência de alteração de tireoide.",
+        "Gato a partir dos 8 anos ganha também a dosagem de T4, porque alteração de tireoide é comum nessa fase.",
         "Ultrassom de abdome e eletrocardiograma entram quando o exame físico ou o sangue pedem.",
       ],
     },

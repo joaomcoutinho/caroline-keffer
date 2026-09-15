@@ -49,75 +49,78 @@ export function Planos() {
         </Revelar>
       </div>
 
-      {/* `items-stretch`: sem ele, o cartão com linha de detalhe (CARE) fica mais
-          alto que os outros e a fileira perde a base comum. */}
-      <ul className="mx-auto mt-11 grid max-w-[1000px] grid-cols-2 items-stretch gap-4 sm:gap-5 lg:grid-cols-5">
-        {planos.itens.map((plano, i) => (
-          <li
-            key={plano.nome}
-            /*
-              Cinco itens em duas colunas deixam o último sozinho na última
-              linha. `last:col-span-2` faz ele ocupar a linha inteira em vez de
-              abrir um buraco ao lado — some no desktop, onde cabem os cinco.
-            */
-            className="h-full last:col-span-2 lg:last:col-span-1"
-          >
-            <Revelar atraso={0.12 + i * 0.05} className="h-full">
-              <a
-                href={linkWhatsapp(
-                  `Oi! Meu pet tem o plano ${plano.nome}. Vocês atendem por ele?`,
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cartao-plano group flex h-full flex-col items-center justify-center gap-3 rounded-[var(--radius-card)] border border-hairline bg-surface px-4 py-7 text-center"
-              >
-                {/* O traço na cor da marca do plano: reconhecimento sem o símbolo. */}
-                <span
-                  aria-hidden
-                  className="plano-traco h-1 w-9 rounded-full"
-                  style={{ backgroundColor: plano.cor }}
-                />
+      {/*
+        FAIXA EM LOOP (15/09/2026, JM: "em loop passando automaticamente... pra
+        não ocupar tanto espaço", e "tem quatro cards de um tamanho e um de
+        tamanho diferente, não pode ser assim").
 
-                {/*
-                  A caixa da marca é a PADRONIZAÇÃO: mesma altura e mesma
-                  largura máxima em todos os cards, e cada logo se encaixa por
-                  `object-contain`. Os cinco têm proporções muito diferentes
-                  (Petlove é uma faixa larga, CARE é um lockup vertical), e é a
-                  caixa comum que faz eles lerem com o mesmo peso óptico: os
-                  largos ocupam a largura, os compactos ocupam a altura.
+        A grade de duas colunas no celular deixava o quinto plano sozinho numa
+        linha inteira, com o dobro da largura, e empilhava três fileiras. Agora
+        é UMA fileira de cartões idênticos, que desliza sozinha. Mesmo padrão
+        da parede de atendimentos: a lista é duplicada e o trilho anda até
+        -50%, onde a cópia começa, então o loop não tem emenda. O espaço entre
+        cartões é `padding-right` em cada item (e não `gap`) pelo mesmo motivo.
 
-                  Sem a caixa, cada logo viria no tamanho do arquivo e a fileira
-                  viraria uma escada.
-                */}
-                <span className="flex h-20 w-full max-w-[11rem] items-center justify-center">
-                  <Image
-                    src={caminhoPublico(plano.logo)}
-                    alt={plano.nome}
-                    width={360}
-                    height={160}
-                    sizes="176px"
-                    className="max-h-full max-w-full w-auto object-contain"
-                  />
-                </span>
+        Não pausa nunca, nem no toque (ver `.faixa-loop` no globals.css). As
+        cópias são `aria-hidden` e fora do Tab. Sem movimento (`prefers-reduced-motion`),
+        vira faixa rolável com o dedo, sem as cópias.
+      */}
+      <Revelar atraso={0.12}>
+        <div className="faixa-loop planos-faixa -mx-5 mt-10 sm:-mx-8 sm:mt-11 lg:mx-0">
+          <ul className="faixa-loop-trilho">
+            {[...planos.itens, ...planos.itens].map((plano, k) => {
+              const copia = k >= planos.itens.length;
+              return (
+                <li key={`${plano.nome}-${k}`} aria-hidden={copia || undefined}>
+                  <a
+                    href={linkWhatsapp(
+                      `Oi! Meu pet tem o plano ${plano.nome}. Vocês atendem por ele?`,
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={copia ? -1 : undefined}
+                    className="cartao-plano group flex h-full flex-col items-center justify-center gap-3 rounded-[var(--radius-card)] border border-hairline bg-surface px-4 py-6 text-center sm:py-7"
+                  >
+                    {/* O traço na cor da marca do plano: reconhecimento sem o símbolo. */}
+                    <span
+                      aria-hidden
+                      className="plano-traco h-1 w-9 rounded-full"
+                      style={{ backgroundColor: plano.cor }}
+                    />
 
-                {plano.detalhe ? (
-                  <span className="text-xs leading-snug text-text-3">
-                    {plano.detalhe}
-                  </span>
-                ) : null}
+                    {/*
+                      A caixa da marca é a PADRONIZAÇÃO: mesma altura e mesma
+                      largura máxima em todos os cards, e cada logo se encaixa
+                      por `object-contain`. Os cinco têm proporções muito
+                      diferentes (Petlove é uma faixa larga, CARE é um lockup
+                      vertical), e é a caixa comum que faz eles lerem com o
+                      mesmo peso óptico.
+                    */}
+                    <span className="flex h-16 w-full max-w-[9.5rem] items-center justify-center sm:h-20 sm:max-w-[11rem]">
+                      <Image
+                        src={caminhoPublico(plano.logo)}
+                        alt={copia ? "" : plano.nome}
+                        width={360}
+                        height={160}
+                        sizes="176px"
+                        className="max-h-full max-w-full w-auto object-contain"
+                      />
+                    </span>
 
-                <span className="plano-acao mt-1 flex items-center gap-1 text-sm font-semibold text-acao-texto">
-                  Perguntar
-                  <ArrowUpRightIcon size={14} weight="bold" aria-hidden />
-                </span>
-              </a>
-            </Revelar>
-          </li>
-        ))}
-      </ul>
+                    <span className="plano-acao mt-1 flex items-center gap-1 text-sm font-semibold text-acao-texto">
+                      Perguntar
+                      <ArrowUpRightIcon size={14} weight="bold" aria-hidden />
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </Revelar>
 
       <Revelar atraso={0.4}>
-        <div className="mx-auto mt-11 flex max-w-[60ch] flex-col items-center gap-4 border-t border-hairline pt-9 text-center">
+        <div className="mx-auto mt-8 flex max-w-[60ch] flex-col items-center gap-4 border-t border-hairline pt-8 text-center sm:mt-11 sm:pt-9">
           <p className="text-text-2">{planos.rodape}</p>
           <BotaoWhatsapp rotulo={CTA_PRIMARIO} />
         </div>

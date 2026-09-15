@@ -208,6 +208,29 @@
 }
 
 /*
+  ONDE A FACHADA COMEÇA (15/09/2026).
+
+  Era uma porcentagem fixa da tela (`right-0 w-[46%]`). Isso descasava da copy:
+  o texto vive dentro do contêiner de 1200px, centrado, e a foto vivia presa na
+  borda direita da TELA. Em cada largura sobrava um vão diferente entre os
+  dois, e em 1440 a foto começava depois do meio, com o degradê comendo o lado
+  esquerdo da fachada.
+
+  Agora a foto começa exatamente onde o bloco de texto termina:
+    borda esquerda do contêiner  max(2rem, (100vw - 75rem) / 2 + 2rem)
+    + largura do bloco de texto  30rem
+    + respiro                    2.5rem
+  e vai dali até a borda direita. Em 1440 ocupa cerca de 52% da tela. Com a
+  coluna nessa largura a proporção dela passa de 0,8, que é a da foto, então a
+  fachada aparece na LARGURA INTEIRA, do limite esquerdo ao direito da imagem,
+  e o recorte fica só em cima e embaixo.
+*/
+:root {
+  --hero-copy-w: 30rem;
+  --hero-foto-x: calc(max(2rem, (100vw - 75rem) / 2 + 2rem) + var(--hero-copy-w) + 2.5rem);
+}
+
+/*
   COSTURA DO HERO — dissolucao da fachada na coluna da copy.
 
   11/09/2026 (JM: "voce colocou uma divisao muito bruta, apenas uma linha reta
@@ -232,25 +255,83 @@
   no ponto em que ele satura, e e isso que le como amador. O smoothstep entra e
   sai da rampa com derivada zero, entao nao ha ponto em que algo "comeca".
 
-  Largura: 40 por cento da coluna da foto (era 16), o que em tela de 1440 da
-  cerca de 265px de transicao. E o "degrade um pouco por cima da imagem" pedido:
-  ele come parte da foto de proposito, porque e isso que faz as duas metades se
-  encontrarem em vez de se encostarem.
+  Largura: 10 por cento da coluna da foto, cerca de 76px em tela de 1440.
+  15/09/2026: caiu de 22 para 10 junto com a mudança de largura da coluna
+  (ver --hero-foto-x). O JM pediu a fachada aparecendo "por completo, até o
+  limite da imagem"; com a coluna começando logo depois do texto, a rampa
+  curta basta para a costura continuar sem aresta.
+  Historico: 16 (corte seco demais) -> 40 em 11/09/2026 (costura suave) -> 22
+  em 14/09/2026, a pedido do JM, para dar respiro e visibilidade ao lado
+  esquerdo da fachada, que com 40 ficava lavado. Por ser smoothstep, encurtar
+  a rampa nao traz de volta a linha de corte: ela continua entrando e saindo
+  com derivada zero, so que num trecho menor.
 */
 .hero-mistura {
-  -webkit-mask-image: linear-gradient(to right, transparent 0.00%, rgb(0 0 0 / 0.011) 2.50%, rgb(0 0 0 / 0.043) 5.00%, rgb(0 0 0 / 0.092) 7.50%, rgb(0 0 0 / 0.156) 10.00%, rgb(0 0 0 / 0.232) 12.50%, rgb(0 0 0 / 0.316) 15.00%, rgb(0 0 0 / 0.407) 17.50%, rgb(0 0 0 / 0.500) 20.00%, rgb(0 0 0 / 0.593) 22.50%, rgb(0 0 0 / 0.684) 25.00%, rgb(0 0 0 / 0.768) 27.50%, rgb(0 0 0 / 0.844) 30.00%, rgb(0 0 0 / 0.908) 32.50%, rgb(0 0 0 / 0.957) 35.00%, rgb(0 0 0 / 0.989) 37.50%, #000 40.00%, #000 100%);
-  mask-image: linear-gradient(to right, transparent 0.00%, rgb(0 0 0 / 0.011) 2.50%, rgb(0 0 0 / 0.043) 5.00%, rgb(0 0 0 / 0.092) 7.50%, rgb(0 0 0 / 0.156) 10.00%, rgb(0 0 0 / 0.232) 12.50%, rgb(0 0 0 / 0.316) 15.00%, rgb(0 0 0 / 0.407) 17.50%, rgb(0 0 0 / 0.500) 20.00%, rgb(0 0 0 / 0.593) 22.50%, rgb(0 0 0 / 0.684) 25.00%, rgb(0 0 0 / 0.768) 27.50%, rgb(0 0 0 / 0.844) 30.00%, rgb(0 0 0 / 0.908) 32.50%, rgb(0 0 0 / 0.957) 35.00%, rgb(0 0 0 / 0.989) 37.50%, #000 40.00%, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0.00%, rgb(0 0 0 / 0.015) 0.71%, rgb(0 0 0 / 0.055) 1.43%, rgb(0 0 0 / 0.118) 2.14%, rgb(0 0 0 / 0.198) 2.86%, rgb(0 0 0 / 0.292) 3.57%, rgb(0 0 0 / 0.394) 4.29%, rgb(0 0 0 / 0.500) 5.00%, rgb(0 0 0 / 0.606) 5.71%, rgb(0 0 0 / 0.708) 6.43%, rgb(0 0 0 / 0.802) 7.14%, rgb(0 0 0 / 0.882) 7.86%, rgb(0 0 0 / 0.945) 8.57%, rgb(0 0 0 / 0.985) 9.29%, #000 10.00%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0.00%, rgb(0 0 0 / 0.015) 0.71%, rgb(0 0 0 / 0.055) 1.43%, rgb(0 0 0 / 0.118) 2.14%, rgb(0 0 0 / 0.198) 2.86%, rgb(0 0 0 / 0.292) 3.57%, rgb(0 0 0 / 0.394) 4.29%, rgb(0 0 0 / 0.500) 5.00%, rgb(0 0 0 / 0.606) 5.71%, rgb(0 0 0 / 0.708) 6.43%, rgb(0 0 0 / 0.802) 7.14%, rgb(0 0 0 / 0.882) 7.86%, rgb(0 0 0 / 0.945) 8.57%, rgb(0 0 0 / 0.985) 9.29%, #000 10.00%, #000 100%);
 }
 
 /*
-  No mobile nao ha duas colunas: a foto e uma faixa embaixo da copy e a emenda e
-  horizontal. Rampa mais curta (22 por cento) porque a faixa e baixa — 40 comeria
-  a fachada inteira.
+  CELULAR E TABLET: opção B (15/09/2026). A fachada ocupa a tela toda, sem
+  máscara; o contraste da copy vem do véu (`.hero-veu`) e da troca de tokens
+  em `.hero-copy`.
 */
 @media (max-width: 1023px) {
   .hero-mistura {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0.00%, rgb(0 0 0 / 0.011) 1.38%, rgb(0 0 0 / 0.043) 2.75%, rgb(0 0 0 / 0.092) 4.12%, rgb(0 0 0 / 0.156) 5.50%, rgb(0 0 0 / 0.232) 6.88%, rgb(0 0 0 / 0.316) 8.25%, rgb(0 0 0 / 0.407) 9.62%, rgb(0 0 0 / 0.500) 11.00%, rgb(0 0 0 / 0.593) 12.38%, rgb(0 0 0 / 0.684) 13.75%, rgb(0 0 0 / 0.768) 15.12%, rgb(0 0 0 / 0.844) 16.50%, rgb(0 0 0 / 0.908) 17.88%, rgb(0 0 0 / 0.957) 19.25%, rgb(0 0 0 / 0.989) 20.62%, #000 22.00%, #000 100%);
-    mask-image: linear-gradient(to bottom, transparent 0.00%, rgb(0 0 0 / 0.011) 1.38%, rgb(0 0 0 / 0.043) 2.75%, rgb(0 0 0 / 0.092) 4.12%, rgb(0 0 0 / 0.156) 5.50%, rgb(0 0 0 / 0.232) 6.88%, rgb(0 0 0 / 0.316) 8.25%, rgb(0 0 0 / 0.407) 9.62%, rgb(0 0 0 / 0.500) 11.00%, rgb(0 0 0 / 0.593) 12.38%, rgb(0 0 0 / 0.684) 13.75%, rgb(0 0 0 / 0.768) 15.12%, rgb(0 0 0 / 0.844) 16.50%, rgb(0 0 0 / 0.908) 17.88%, rgb(0 0 0 / 0.957) 19.25%, rgb(0 0 0 / 0.989) 20.62%, #000 22.00%, #000 100%);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .hero-veu {
+    background: linear-gradient(
+      180deg,
+      rgb(7 34 44 / 0.38) 0%,
+      rgb(7 34 44 / 0) 17%,
+      rgb(7 34 44 / 0) 40%,
+      rgb(7 34 44 / 0.55) 58%,
+      rgb(7 34 44 / 0.86) 76%,
+      rgb(7 34 44 / 0.95) 100%
+    );
+  }
+
+  /* Mesma técnica do `.cabecalho-escuro`: troca de tokens, não de classes. */
+  .hero-copy {
+    --text: #ffffff;
+    --text-2: #d6e9ef;
+    --text-3: #b3cfdb;
+    --brand: #a8d6e8;
+    --action: #7ec0dc;
+    --action-hover: #a8d6e8;
+    --on-action: #07222c;
+    color: var(--text);
+  }
+}
+
+/*
+  Celular de tela BAIXA (iPhone SE e afins, ~667px). A copy inteira subia até
+  o letreiro e cobria o nome da clínica. Aqui sai o rótulo e a subhead, e o
+  título desce um tamanho: o letreiro volta a aparecer limpo acima da copy.
+*/
+@media (max-width: 1023px) and (max-height: 720px) {
+  .hero-rotulo,
+  .hero-sub {
+    display: none;
+  }
+
+  .hero-titulo {
+    margin-top: 0;
+    font-size: 1.95rem;
+  }
+}
+
+/* Recorte da fachada: no celular a foto é tela cheia e deitada no letreiro. */
+.hero-foto {
+  object-position: var(--hero-pos-mobile, 30% center);
+}
+
+@media (min-width: 1024px) {
+  .hero-foto {
+    object-position: var(--hero-pos, center 42%);
   }
 }
 
@@ -518,43 +599,85 @@
 }
 
 /*
-  FAQ em <details> nativo.
+  FAQ — perguntas em card, uma aberta por vez.
 
-  A ALTURA não é mais animada por CSS. Ela é conduzida pela Web Animations API
-  em `components/ui/ItemFaq.tsx`, e o motivo está documentado lá em cima: o
-  `<details>` tira o atributo `open` no mesmo quadro do clique, então o
-  fechamento nunca chega a ser animável por CSS — abria deslizando e fechava
-  num corte seco.
+  15/09/2026 (JM: "mais um clique, mais profissional"). Antes eram linhas
+  separadas por fio, e nada dizia que aquilo era clicável até o cursor chegar
+  no "+". Agora cada pergunta é um card com borda: o desenho de card já é o
+  convite ao clique. A aberta ganha tingido e borda da marca, então dá para ver
+  de relance qual está aberta sem ler.
 
-  Saiu daqui o bloco `@supports (interpolate-size: allow-keywords)` que
-  embrulhava a transição antiga. Ele testava um recurso que aquela técnica
-  (`grid-template-rows: 0fr → 1fr`) nem usava, e com isso barrava a animação em
-  navegadores perfeitamente capazes de rodá-la.
-
-  O que ficou no CSS é só o estado visual do sinal "+".
+  A ALTURA é animada em ItemFaq.tsx (Web Animations API), não aqui. O CSS cuida
+  só das cores e do sinal, e nada disso é animado durante o movimento de altura
+  além de cor de borda e fundo, que são baratas.
 */
+.faq-lista {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--hairline);
+  background-color: color-mix(in srgb, var(--surface) 55%, transparent);
+  padding-inline: 1.25rem;
+  transition:
+    border-color 0.3s var(--ease-soft),
+    background-color 0.3s var(--ease-soft);
+}
+
+@media (min-width: 640px) {
+  .faq-item {
+    padding-inline: 1.5rem;
+  }
+}
+
+.faq-pergunta {
+  transition: color 0.25s var(--ease-soft);
+}
+
+.faq-sinal {
+  transition:
+    transform 0.38s cubic-bezier(0.32, 0.72, 0, 1),
+    background-color 0.3s var(--ease-soft),
+    border-color 0.3s var(--ease-soft),
+    color 0.3s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .faq-item:hover {
+    border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  }
+
+  .faq-item:hover .faq-pergunta {
+    color: var(--acao-texto);
+  }
+
+  .faq-item:hover .faq-sinal {
+    border-color: var(--brand);
+  }
+}
 
 /*
   `data-aberto`, e não `[open]`: no fechamento o `open` só sai quando a animação
-  termina, então preso a ele o "+" ficaria parado esperando o card fechar em vez
-  de girar junto com o movimento.
+  termina, então preso a ele o sinal ficaria parado esperando o card fechar.
 */
+.faq-item[data-aberto="true"] {
+  border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+  background-color: color-mix(in srgb, var(--brand) 8%, var(--surface));
+}
+
 .faq-item[data-aberto="true"] .faq-sinal {
-  transform: rotate(135deg);
-  border-color: var(--brand);
-  background-color: color-mix(in srgb, var(--brand) 12%, transparent);
+  transform: rotate(45deg);
+  border-color: var(--action);
+  background-color: var(--action);
+  color: var(--on-action);
 }
 
-/* Sem JS o elemento nativo assume, e aí quem manda é o `open`. */
-.faq-item:not([data-aberto]) [open] .faq-sinal {
-  transform: rotate(135deg);
-}
-
-/* O foco por teclado precisa aparecer no alvo inteiro, não só no texto. */
 .faq-item summary:focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -562,116 +685,438 @@
 }
 
 /*
-  Faixa contínua da galeria de pets.
+  PAREDE DE ATENDIMENTOS — colunas em contrafluxo.
 
-  Anima só `transform`, e por -50% exatos: como a lista é duplicada, ao chegar
-  na metade o quadro é idêntico ao início e o loop não tem emenda.
-  Pausa no hover para dar tempo de olhar o pet que chamou atenção.
+  14/09/2026. Substitui a faixa horizontal de pets. Ver ParedeAtendimentos.tsx
+  para o porquê do desenho; aqui fica só a mecânica.
+
+  O LOOP SEM EMENDA depende de um detalhe: o espaço entre as fotos é
+  `padding-bottom` em cada item, e NÃO `gap` no trilho. Com `gap`, o trilho
+  duplicado tem 2N fotos e 2N-1 vãos, então -50% cai meio vão antes do começo da
+  cópia e o loop dá um tranco a cada volta. Com o espaço dentro de cada item,
+  -50% cai exatamente no início da cópia.
 */
-.faixa-pets {
+.parede {
+  display: grid;
+  gap: 1rem;
+  height: 46rem;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 6%,
-    #000 94%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 6%,
-    #000 94%,
-    transparent
-  );
+  /* fotos entram e saem esfumando, em vez de cortar reto na borda */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 11%, #000 89%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 11%, #000 89%, transparent);
 }
 
-.faixa-pets-trilho {
-  display: flex;
-  gap: 1.25rem;
-  width: max-content;
-  padding: 0.5rem 1.25rem;
+.parede--4 {
+  display: none;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (min-width: 1024px) {
+  .parede--4 {
+    display: grid;
+  }
+}
+
+.parede-trilho {
+  will-change: transform;
+}
+
+.parede-trilho > li {
+  padding-bottom: 1rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .faixa-pets-trilho {
-    animation: desliza-pets 42s linear infinite;
+  .parede-trilho {
+    animation: parede-sobe var(--duracao, 60s) linear infinite;
   }
 
-  .faixa-pets:hover .faixa-pets-trilho {
+  .parede-coluna[data-sentido="desce"] .parede-trilho {
+    animation-name: parede-desce;
+  }
+
+  /* Cada coluna começa num ponto diferente do ciclo: sem isto as quatro
+     largariam alinhadas e a parede leria como grade andando em bloco. */
+  .parede-coluna:nth-child(2) .parede-trilho { animation-delay: calc(var(--duracao) * -0.35); }
+  .parede-coluna:nth-child(3) .parede-trilho { animation-delay: calc(var(--duracao) * -0.62); }
+  .parede-coluna:nth-child(4) .parede-trilho { animation-delay: calc(var(--duracao) * -0.18); }
+
+  /*
+    Pausa para olhar, e para quem navega por Tab conseguir acertar a foto.
+
+    ⚠️ `:focus-visible`, NUNCA `:focus-within` (15/09/2026). Ao fechar o
+    visualizador, o `<dialog>` devolve o foco para a foto que o abriu. Com
+    `:focus-within` a parede ficava pausada com esse foco, e só voltava a andar
+    quando a janela perdia o foco (trocar de aba). `:focus-visible` só vale
+    para foco de teclado, e o ParedeAtendimentos ainda solta o foco devolvido
+    quando a foto foi aberta com o mouse.
+  */
+  .parede:hover .parede-trilho,
+  .parede:has(.parede-foto:focus-visible) .parede-trilho {
     animation-play-state: paused;
   }
 }
 
-@keyframes desliza-pets {
-  to {
-    transform: translateX(-50%);
+@keyframes parede-sobe {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+@keyframes parede-desce {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+
+/*
+  PAREDE NO CELULAR: três faixas horizontais em contrafluxo (15/09/2026).
+  Mesma técnica das colunas: lista duplicada, trilho até -50%, espaço como
+  `padding-right` de cada item para o loop não ter emenda. Sangra até as bordas
+  da tela, que esfumam como o topo e o pé da parede do desktop.
+*/
+.parede-linhas {
+  display: grid;
+  gap: 0.75rem;
+  margin-inline: -1.25rem;
+}
+
+@media (min-width: 640px) {
+  .parede-linhas {
+    margin-inline: -2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .parede-linhas {
+    display: none;
+  }
+}
+
+.parede-linha {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
+.parede-faixa {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.parede-faixa > li {
+  height: 11rem;
+  padding-right: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .parede-faixa > li {
+    height: 14rem;
+  }
+}
+
+.parede-faixa .parede-foto {
+  width: auto;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .parede-faixa {
+    animation: parede-esquerda var(--duracao, 44s) linear infinite;
+  }
+
+  .parede-linha[data-sentido="direita"] .parede-faixa {
+    animation-name: parede-direita;
+  }
+
+  .parede-linha:nth-child(2) .parede-faixa { animation-delay: calc(var(--duracao) * -0.4); }
+  .parede-linha:nth-child(3) .parede-faixa { animation-delay: calc(var(--duracao) * -0.7); }
+
+  .parede-linha:has(.parede-foto:focus-visible) .parede-faixa {
+    animation-play-state: paused;
+  }
+
+  /* Só com mouse de verdade: no toque o :hover gruda depois do toque. */
+  @media (hover: hover) {
+    .parede-linha:hover .parede-faixa {
+      animation-play-state: paused;
+    }
+  }
+}
+
+@keyframes parede-esquerda {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes parede-direita {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parede-linha {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .parede-faixa > li[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* Sem movimento: vira mosaico parado, sem as cópias e sem altura travada. */
+@media (prefers-reduced-motion: reduce) {
+  .parede {
+    height: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .parede-trilho > li[aria-hidden="true"] {
+    display: none;
   }
 }
 
 /*
-  No mobile o loop automático atrapalhava: ao tocar, a animação pausava e não
-  havia sinal de como retomar. Aqui a faixa vira rolagem com encaixe, que é o
-  gesto que o dedo já espera. As cópias usadas para emendar o loop no desktop
-  são escondidas, senão o usuário rolaria pelos mesmos pets duas vezes.
+  FOTO DA PAREDE — hover sem travar.
+
+  15/09/2026 (JM: "quando passa o mouse numa imagem, expande e volta, a animação
+  dá uma travada, não pode acontecer de jeito nenhum").
+
+  A versão anterior tinha três coisas caras acontecendo no mesmo instante:
+    1. `transform: scale()` na moldura E na foto. Ao mudar de escala, o Chrome
+       precisa redesenhar a imagem na resolução nova, e faz isso bem no quadro
+       em que a animação começa. Era essa a travada no "expande".
+    2. `box-shadow` animado. Sombra de 56px de desfoque é pintura, e pintura
+       animada refaz a sombra a cada quadro.
+    3. `.parede:has(.parede-foto:hover) .parede-foto:not(:hover)`: cada
+       entrada e saída do cursor recalculava o estilo de TODAS as fotos da
+       parede para esmaecer as outras.
+
+  Agora o hover só mexe em `opacity` e num `translateY` curto, que o compositor
+  resolve sem redesenhar nada:
+    - a moldura sobe 4px (translate não muda a escala, então não há redesenho);
+    - o anel ciano e a sombra já ficam DESENHADOS num ::after, e o hover só
+      acende a opacidade dele;
+    - um véu leve na base da foto acende junto, e o selo de ampliar aparece.
+  Sem escala, sem sombra animada, sem esmaecer as vizinhas.
 */
-@media (max-width: 1023px) {
-  .faixa-pets {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-left: 1.25rem;
-    scrollbar-width: none;
-  }
-
-  .faixa-pets::-webkit-scrollbar {
-    display: none;
-  }
-
-  .faixa-pets-trilho {
-    animation: none;
-  }
-
-  .faixa-pets-item {
-    scroll-snap-align: start;
-  }
-
-  .faixa-pets-item[aria-hidden="true"] {
-    display: none;
-  }
-}
-
-.faixa-pets-item {
-  width: 230px;
-  flex: none;
-  border-radius: var(--radius-card);
+.parede-foto {
+  position: relative;
+  display: block;
+  width: 100%;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--brand) 24%, transparent);
+  border-radius: var(--radius-card);
+  border: 1px solid color-mix(in srgb, var(--brand) 22%, transparent);
+  background-color: var(--surface-3);
+  cursor: zoom-in;
+  transition: transform 0.35s var(--ease-soft);
+}
+
+.parede-foto img {
+  display: block;
+}
+
+/* Anel + sombra pré-desenhados. O hover só muda a opacidade. */
+.parede-foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--brand) 70%, transparent),
+    inset 0 -70px 60px -40px color-mix(in srgb, #04141a 45%, transparent);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-soft);
+}
+
+.parede-foto:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* Selo de "ampliar": aparece só na foto sob o cursor. */
+.parede-lupa {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.65rem;
+  z-index: 2;
+  display: grid;
+  height: 2.25rem;
+  width: 2.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--surface) 90%, transparent);
+  color: var(--brand);
+  opacity: 0;
+  transform: translateY(6px);
   transition:
-    transform 0.45s var(--ease-soft),
-    border-color 0.45s var(--ease-soft),
-    box-shadow 0.45s var(--ease-soft);
+    opacity 0.3s var(--ease-soft),
+    transform 0.3s var(--ease-soft);
 }
 
-@media (min-width: 640px) {
-  .faixa-pets-item {
-    width: 280px;
-  }
-}
-
-/* Zoom e destaque no pet sob o cursor; os vizinhos recuam de leve. */
 @media (hover: hover) {
-  .faixa-pets-item:hover {
-    transform: scale(1.06);
-    border-color: color-mix(in srgb, var(--brand) 65%, transparent);
-    box-shadow:
-      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
-      0 26px 60px -24px color-mix(in srgb, var(--brand) 80%, transparent);
+  .parede-foto:hover {
+    transform: translateY(-4px);
   }
 
-  .faixa-pets-trilho:hover .faixa-pets-item:not(:hover) {
-    transform: scale(0.97);
-    opacity: 0.72;
+  .parede-foto:hover::after {
+    opacity: 1;
   }
+
+  .parede-foto:hover .parede-lupa {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.parede-foto:focus-visible::after,
+.parede-foto:focus-visible .parede-lupa {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+  VISOR — a foto ampliada, num <dialog> nativo.
+
+  `<dialog>` com `showModal()` já entrega foco preso, Esc para fechar e a
+  camada `::backdrop`. O que falta é travar a rolagem da página por baixo, que
+  o modal não faz em todos os navegadores: por isso o `html:has()` no fim.
+*/
+.visor {
+  max-height: none;
+  max-width: none;
+  height: 100%;
+  width: 100%;
+  border: 0;
+  padding: 1rem;
+  background: transparent;
+}
+
+.visor[open] {
+  display: grid;
+  place-items: center;
+}
+
+.visor::backdrop {
+  background-color: color-mix(in srgb, #04141a 90%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.visor-moldura {
+  position: relative;
+  width: min(34rem, 100%);
+}
+
+.visor-imagem {
+  display: block;
+  height: auto;
+  max-height: 76dvh;
+  width: 100%;
+  object-fit: contain;
+  border-radius: var(--radius-card);
+  box-shadow: 0 40px 90px -30px rgb(0 0 0 / 0.7);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .visor[open]::backdrop {
+    animation: surge-fundo 0.3s ease-out both;
+  }
+
+  .visor-imagem {
+    animation: visor-entra 0.42s var(--ease-soft) both;
+  }
+}
+
+@keyframes visor-entra {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.visor-legenda {
+  margin-top: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #d9ebf1;
+}
+
+.visor-contador {
+  flex: none;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #ffffff;
+}
+
+.visor-botao {
+  position: absolute;
+  display: grid;
+  height: 2.75rem;
+  width: 2.75rem;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, #ffffff 24%, transparent);
+  background-color: color-mix(in srgb, #ffffff 12%, transparent);
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    background-color 0.25s var(--ease-soft),
+    transform 0.25s var(--ease-soft);
+}
+
+.visor-botao:hover {
+  background-color: color-mix(in srgb, #ffffff 24%, transparent);
+}
+
+.visor-botao:focus-visible {
+  outline: 2px solid var(--brand-soft);
+  outline-offset: 3px;
+}
+
+.visor-fechar {
+  top: -3.5rem;
+  right: 0;
+}
+
+.visor-anterior,
+.visor-proxima {
+  top: 38%;
+}
+
+.visor-anterior {
+  left: -4rem;
+}
+
+.visor-proxima {
+  right: -4rem;
+}
+
+/* Tela estreita: os botões entram sobre a foto, que não tem margem ao lado. */
+@media (max-width: 720px) {
+  .visor-fechar {
+    top: 0.6rem;
+    right: 0.6rem;
+  }
+
+  .visor-anterior {
+    left: 0.6rem;
+  }
+
+  .visor-proxima {
+    right: 0.6rem;
+  }
+}
+
+html:has(.visor[open]) {
+  overflow: hidden;
 }
 
 /*
@@ -706,63 +1151,83 @@
 }
 
 /*
-  ABA DE SERVIÇO: destaque sob o cursor.
+  ABA DE SERVIÇO: MARCADOR DESLIZANTE, MINIMALISTA.
 
-  12/09/2026 (JM): "só esse traço ao lado" não bastava para saber em qual
-  seletor o cursor está. Agora o item sob o cursor (ou selecionado) ganha uma
-  lâmina tingida com borda e halo, e o ícone cresce um pouco.
+  15/09/2026 (JM: "tá muito chamativo, não pegou uma boa referência; deixa mais
+  minimalista, mas que dê pra saber em qual seletor está").
 
-  A lâmina mora num ::before, e não no fundo do próprio botão, por dois
-  motivos: ela precisa sangrar para os lados (`inset-inline: -0.75rem`) sem
-  empurrar o texto, e precisa ficar recuada em cima e embaixo para o fio que
-  separa as abas continuar aparecendo entre uma e outra.
+  A versão de 14/09 marcava a aba com uma caixa inteira: degradê, borda, halo
+  externo, sombra e barra brilhante. Cinco efeitos para dizer uma coisa só.
 
-  Só no desktop. No mobile as abas são pílulas num trilho horizontal e já têm
-  borda e preenchimento próprios.
+  A referência agora é a navegação lateral de documentação e de produto: um
+  FIO fino na borda esquerda e um tingido quase imperceptível. O fio é o que
+  diz "você está aqui"; o tingido só dá corpo para o olho encontrar a linha.
+  Sem borda, sem halo, sem sombra, sem brilho.
+
+  O MOVIMENTO continua, porque é ele que dá a fluidez: o fio desliza até a aba
+  sob o cursor e volta para a ativa ao sair (posição medida em
+  ExploradorServicos.tsx). Sobre uma aba que não é a ativa, o fio fica mais
+  fraco e o tingido some — é mira, não seleção.
+
+  Só no desktop. No celular as abas são pílulas num trilho horizontal.
 */
+.servico-lamina {
+  display: none;
+}
+
 @media (min-width: 1024px) {
-  .servico-aba {
-    position: relative;
-    isolation: isolate;
+  .servico-lamina {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    display: block;
+    pointer-events: none;
+    border-radius: 0.6rem;
+    background-color: color-mix(in srgb, var(--brand) 7%, transparent);
+    transition:
+      transform 0.38s var(--ease-soft),
+      height 0.38s var(--ease-soft),
+      background-color 0.25s var(--ease-soft),
+      opacity 0.25s var(--ease-soft);
   }
 
-  .servico-aba::before {
+  /* O fio: é ele que marca a aba. */
+  .servico-lamina::before {
     content: "";
     position: absolute;
-    inset-block: 0.3rem;
-    /*
-      `0`, e não um valor negativo: a lista já sangra 12px para cada lado
-      (`lg:-mx-3`) e o botão devolve esse espaço em padding (`lg:px-3`), o que
-      mantém o texto alinhado com o título da dobra. A lâmina ocupa exatamente
-      a caixa do botão, então o respiro dela já é esses 12px. Somar um negativo
-      aqui fazia o realce ultrapassar a margem da seção.
-    */
-    inset-inline: 0;
-    z-index: -1;
-    border-radius: 0.85rem;
-    border: 1px solid transparent;
-    transition:
-      background-color 0.35s var(--ease-soft),
-      border-color 0.35s var(--ease-soft),
-      box-shadow 0.35s var(--ease-soft);
+    top: 26%;
+    bottom: 26%;
+    left: 0;
+    width: 2px;
+    border-radius: 999px;
+    background-color: var(--brand);
+    transition: opacity 0.25s var(--ease-soft);
   }
 
-  .servico-aba:hover::before,
-  .servico-aba[aria-selected="true"]::before {
-    background-color: color-mix(in srgb, var(--brand) 12%, transparent);
-    border-color: color-mix(in srgb, var(--brand) 38%, transparent);
-    box-shadow:
-      0 0 0 4px color-mix(in srgb, var(--brand) 8%, transparent),
-      0 14px 30px -18px color-mix(in srgb, var(--brand) 70%, transparent);
+  .servico-lamina[data-pronta="false"] {
+    opacity: 0;
+    transition: none;
   }
 
-  .servico-aba:focus-visible::before {
-    border-color: var(--brand);
+  .servico-lamina[data-hover="true"] {
+    background-color: transparent;
   }
 
-  .servico-aba:hover .servico-icone,
-  .servico-aba[aria-selected="true"] .servico-icone {
-    transform: scale(1.12);
+  .servico-lamina[data-hover="true"]::before {
+    opacity: 0.4;
+  }
+
+  /* Texto: a aba ativa em tinta cheia, as outras um degrau abaixo. */
+  .servico-aba[aria-selected="true"] {
+    color: var(--text);
+  }
+
+  .servico-aba:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: -2px;
+    border-radius: 0.6rem;
   }
 }
 
@@ -917,6 +1382,29 @@
   color: var(--text-3);
 }
 
+/*
+  CELULAR (15/09/2026, JM: "enxugar pra visualizar tudo de uma vez só e não
+  ficar em dúvida se existe mais pro lado"). As quatro fases cabem na largura
+  da tela: letra menor, pouco respiro lateral, e o rótulo quebra em duas linhas
+  quando precisa. Não há mais trilho rolável escondendo a quarta fase.
+*/
+@media (max-width: 639px) {
+  .trilha-passo {
+    gap: 0.5rem;
+    padding-inline: 0.125rem;
+  }
+
+  .trilha-rotulo {
+    font-size: 0.8125rem;
+    line-height: 1.2;
+  }
+
+  .trilha-detalhe {
+    font-size: 0.6875rem;
+    line-height: 1.25;
+  }
+}
+
 .trilha-passo[data-estado="ativo"] .trilha-rotulo {
   color: var(--text);
 }
@@ -929,6 +1417,122 @@
   .trilha-passo:not([data-estado="ativo"]):hover .trilha-ponto {
     border-color: var(--brand);
   }
+}
+
+/*
+  CARTÃO DE FASE DE VIDA (dobra Preventivo, 15/09/2026). Substituiu a trilha
+  de pontos no JSX; as regras `.trilha-*` acima seguem só para Vacinas (parqueada).
+*/
+.fase-cartao {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  min-height: 7.5rem;
+  padding: 1rem;
+  text-align: left;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--hairline);
+  background-color: color-mix(in srgb, var(--surface) 60%, transparent);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background-color 0.3s var(--ease-soft),
+    border-color 0.3s var(--ease-soft),
+    color 0.3s var(--ease-soft),
+    transform 0.3s var(--ease-soft),
+    box-shadow 0.3s var(--ease-soft);
+}
+
+@media (min-width: 640px) {
+  .fase-cartao {
+    padding: 1.25rem;
+    min-height: 8.5rem;
+  }
+}
+
+.fase-icone {
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  margin-bottom: 0.6rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--brand) 14%, transparent);
+  color: var(--brand);
+  transition: background-color 0.3s var(--ease-soft), color 0.3s var(--ease-soft);
+}
+
+.fase-rotulo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+@media (min-width: 640px) {
+  .fase-rotulo {
+    font-size: 1.125rem;
+  }
+}
+
+.fase-detalhe {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: var(--text-3);
+  transition: color 0.3s var(--ease-soft);
+}
+
+.fase-marca {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  display: flex;
+  height: 1.35rem;
+  width: 1.35rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: var(--on-action);
+  color: var(--action);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.25s var(--ease-soft), transform 0.3s var(--ease-soft);
+}
+
+.fase-cartao[data-ativo="true"] {
+  background-color: var(--action);
+  border-color: var(--action);
+  color: var(--on-action);
+  box-shadow: 0 18px 36px -22px color-mix(in srgb, var(--action) 90%, transparent);
+}
+
+.fase-cartao[data-ativo="true"] .fase-icone {
+  background-color: color-mix(in srgb, var(--on-action) 16%, transparent);
+  color: var(--on-action);
+}
+
+.fase-cartao[data-ativo="true"] .fase-detalhe {
+  color: color-mix(in srgb, var(--on-action) 82%, transparent);
+}
+
+.fase-cartao[data-ativo="true"] .fase-marca {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (hover: hover) {
+  .fase-cartao:not([data-ativo="true"]):hover {
+    border-color: var(--brand);
+    transform: translateY(-3px);
+  }
+}
+
+.fase-cartao:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
 }
 
 /*
@@ -1198,6 +1802,108 @@
   `Perguntar` fica em opacidade baixa em repouso de propósito: cinco cartões
   gritando o mesmo verbo viram ruído. Ele acende no que está sob o cursor.
 */
+/*
+  FAIXA EM LOOP: planos de saúde e, no celular, os depoimentos (15/09/2026).
+  Lista duplicada, trilho até -50% (onde a cópia começa), espaço entre itens
+  como `padding-right` de cada um para o loop não ter emenda. `padding-block`
+  dá folga para o cartão subir no hover sem ser cortado; as bordas esfumam.
+
+  O loop NUNCA pausa (JM: "clicando ou não, não deve parar"). A pausa no hover
+  travava a faixa no celular: depois de um toque o navegador mantém o `:hover`
+  no cartão tocado, e a faixa ficava parada até tocar em outro lugar.
+
+  As duas faixas andam na MESMA velocidade (~28px/s no celular): a duração é
+  proporcional à largura de uma volta.
+*/
+.faixa-loop {
+  overflow: hidden;
+  padding-block: 0.75rem;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.faixa-loop-trilho {
+  display: flex;
+  width: max-content;
+}
+
+.faixa-loop-trilho > li {
+  width: var(--faixa-item);
+  flex-shrink: 0;
+  padding-right: var(--faixa-vao, 0.875rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faixa-loop-trilho {
+    animation: faixa-desliza var(--duracao, 32s) linear infinite;
+  }
+}
+
+@keyframes faixa-desliza {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faixa-loop {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-inline: 1.25rem;
+  }
+
+  .faixa-loop-trilho > li {
+    scroll-snap-align: start;
+  }
+
+  .faixa-loop-trilho > li[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+.planos-faixa {
+  --faixa-item: 10.5rem;
+}
+
+@media (min-width: 640px) {
+  .planos-faixa {
+    --faixa-item: 15rem;
+    --faixa-vao: 1.25rem;
+  }
+}
+
+.depoimentos-faixa {
+  --faixa-item: 18rem;
+  --faixa-vao: 1rem;
+}
+
+/* Desktop: os depoimentos voltam a ser a pilha ao lado da foto. */
+@media (min-width: 1024px) {
+  .depoimentos-faixa {
+    height: 100%;
+    overflow: visible;
+    padding-block: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .depoimentos-faixa .faixa-loop-trilho {
+    display: grid;
+    width: auto;
+    height: 100%;
+    gap: 1.25rem;
+    animation: none;
+  }
+
+  .depoimentos-faixa .faixa-loop-trilho > li {
+    width: auto;
+    padding-right: 0;
+  }
+
+  .depoimentos-faixa .faixa-loop-trilho > li[aria-hidden="true"] {
+    display: none;
+  }
+}
+
 .cartao-plano {
   transition:
     transform 0.35s var(--ease-soft),
@@ -1249,7 +1955,7 @@
   importância. Os quatro voltam ao MESMO nível, e a interatividade passa a vir
   da resposta ao cursor, não do arranjo.
 
-  É o mesmo padrão da galeria de pets (`.faixa-pets-item`): o card sob o cursor
+  É o mesmo padrão da parede de atendimentos (`.parede-foto`): o card sob o cursor
   sobe, ganha o halo ciano e a foto aproxima; os outros três recuam em
   opacidade sem sair do lugar. Em repouso todos são iguais. Ninguém fica em
   destaque por decisão de layout, só por decisão de quem está olhando.

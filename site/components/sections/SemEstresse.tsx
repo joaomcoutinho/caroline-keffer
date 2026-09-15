@@ -36,46 +36,66 @@ export function SemEstresse() {
 
         {semEstresse.corpo.map((paragrafo, i) => (
           <Revelar key={i} atraso={0.06 + i * 0.05}>
-            <p className="mt-5 text-lg leading-relaxed text-text-2">{paragrafo}</p>
+            <p className="mt-4 text-lg leading-relaxed text-text-2 sm:mt-5">{paragrafo}</p>
           </Revelar>
         ))}
       </div>
 
-      {/* Foto à esquerda, depoimentos empilhados à direita. */}
-      <div className="mt-14 grid items-stretch gap-8 lg:grid-cols-[13fr_7fr] lg:gap-10">
+      {/*
+        Foto à esquerda, depoimentos empilhados à direita.
+
+        15/09/2026 (JM): a citação saiu de CIMA da foto e foi para baixo dela.
+        No celular o cartão de vidro cobria metade do consultório. E no celular
+        os depoimentos viram uma faixa em loop, em vez de três
+        cards empilhados ocupando uma tela e meia: agora passam sozinhos.
+      */}
+      <div className="mt-10 grid grid-cols-1 items-stretch gap-8 sm:mt-14 lg:grid-cols-[13fr_7fr] lg:gap-10">
         <Revelar atraso={0.12} className="lg:h-full">
-          <figure className="relative h-full">
+          <figure className="flex h-full flex-col">
             <Midia
               src={semEstresse.foto.src}
               posicao={semEstresse.foto.posicao}
               alt={semEstresse.foto.alt}
               briefing={semEstresse.foto.briefing}
               realce
-              className="aspect-[3/2] w-full lg:aspect-auto lg:h-full"
+              className="aspect-[4/3] w-full lg:aspect-auto lg:min-h-0 lg:flex-1"
             />
 
-            {/* Cartão contido: a citação acompanha a foto, não compete com ela. */}
-            <figcaption className="vidro absolute right-3 bottom-3 left-3 rounded-[var(--radius-card)] p-3 sm:right-5 sm:bottom-5 sm:left-5 sm:p-5">
-              <QuotesIcon size={16} weight="fill" className="text-brand" aria-hidden />
-              <blockquote className="mt-1 font-display text-sm leading-snug font-bold text-balance sm:mt-1.5 sm:text-lg">
-                {citacao.texto}
-              </blockquote>
-              <p className="mt-1.5 text-xs text-text-3 sm:text-sm">{citacao.fonte}</p>
+            <figcaption className="mt-4 flex items-start gap-3 sm:mt-5">
+              <QuotesIcon size={22} weight="fill" className="mt-0.5 shrink-0 text-brand" aria-hidden />
+              <span>
+                <blockquote className="font-display text-lg leading-snug font-bold text-balance sm:text-xl">
+                  {citacao.texto}
+                </blockquote>
+                <span className="mt-1 block text-sm text-text-3">{citacao.fonte}</span>
+              </span>
             </figcaption>
           </figure>
         </Revelar>
 
-        <div className="grid gap-5">
-          {semEstresse.depoimentosDestaque.map((item, i) => (
-            <Revelar key={item.texto} atraso={0.16 + i * 0.08}>
-              <CardDepoimento
-                texto={item.texto}
-                nome={item.nome}
-                foto={item.foto}
-                estrelas={item.estrelas}
-              />
-            </Revelar>
-          ))}
+        {/*
+          No celular os depoimentos passam sozinhos numa faixa em loop, na
+          mesma cadência dos planos (JM: "não precisa o usuário arrastar pra
+          ver tudo"). No desktop a mesma lista vira a pilha ao lado da foto.
+          `min-w-0`: sem ele a faixa alarga a coluna da grade e a página
+          ganha rolagem lateral.
+        */}
+        <div className="faixa-loop depoimentos-faixa -mx-5 min-w-0 sm:-mx-8 lg:mx-0">
+          <ul className="faixa-loop-trilho">
+            {[...semEstresse.depoimentosDestaque, ...semEstresse.depoimentosDestaque].map((item, k) => {
+              const copia = k >= semEstresse.depoimentosDestaque.length;
+              return (
+                <li key={`${item.texto}-${k}`} aria-hidden={copia || undefined}>
+                  <CardDepoimento
+                    texto={item.texto}
+                    nome={item.nome}
+                    foto={item.foto}
+                    estrelas={item.estrelas}
+                  />
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </Secao>

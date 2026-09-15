@@ -1,173 +1,153 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { PlusIcon } from "@phosphor-icons/react/dist/ssr";
 
 type Props = {
   pergunta: string;
   resposta: string;
+  /** Controlado por `ListaFaq`: só uma pergunta aberta por vez. */
+  aberto: boolean;
+  aoAlternar: () => void;
 };
+
+/*
+  15/09/2026 (JM: "animação fluida, natural, mais um clique, mais profissional").
+
+  DURAÇÃO FIXA E IGUAL PARA TODOS. A versão anterior variava a duração com o
+  tamanho da resposta. Com uma pergunta aberta por vez, abrir uma FECHA outra
+  no mesmo instante, e se as duas tiverem durações diferentes uma termina antes
+  da outra: a página faz um tremido no meio do movimento. Com a mesma duração e
+  a mesma curva, a que fecha e a que abre se compensam, e o conjunto desliza
+  como uma peça só.
+
+  CURVA. Era `cubic-bezier(0.16, 1, 0.3, 1)`, uma saída exponencial: dispara nos
+  primeiros quadros e se arrasta no fim. Em altura isso lê como "pulou e depois
+  foi assentando". Esta é a curva de folha que o iOS usa: arranca firme, sem
+  salto, e freia macio.
+*/
+const DURACAO = 380;
+const CURVA = "cubic-bezier(0.32, 0.72, 0, 1)";
 
 /**
  * Uma pergunta do FAQ, com abertura e fechamento animados de verdade.
  *
- * ─ POR QUE ISTO EXISTE ─────────────────────────────────────────────────────
+ * `<details>` NÃO ANIMA AO FECHAR sozinho: o navegador tira o `open` no mesmo
+ * quadro e o conteúdo some. Aqui a altura do `<details>` é animada pela Web
+ * Animations API e o `open` só sai quando a animação de fechar termina.
  *
- * Antes era `<details>` puro com uma transição de `grid-template-rows: 0fr → 1fr`
- * no corpo. Dois defeitos, e o segundo é o que dava a sensação de travamento:
+ * O componente é CONTROLADO: quem decide se está aberto é `ListaFaq`, e este
+ * efeito só executa o movimento quando a prop muda. É isso que permite a
+ * lista fechar uma pergunta enquanto abre outra.
  *
- *   1. `<details>` NÃO ANIMA AO FECHAR. O navegador tira o atributo `open` no
- *      mesmo quadro do clique e o conteúdo deixa de ser renderizado na hora —
- *      não sobra nada para a transição animar. Ou seja: abria deslizando e
- *      fechava com um corte seco. Metade da interação era um salto.
+ * INTERRUPÇÃO. A altura de partida é lida ANTES de cancelar a animação em curso,
+ * porque durante uma animação `getBoundingClientRect()` devolve o valor animado.
+ * É o que faz um clique no meio do movimento reverter de onde está.
  *
- *   2. a regra estava dentro de `@supports (interpolate-size: allow-keywords)`,
- *      mas a técnica usada ali (0fr → 1fr) não depende de `interpolate-size`.
- *      O teste barrava navegadores perfeitamente capazes de animar, que caíam
- *      no salto instantâneo mesmo na abertura.
- *
- * ─ COMO FUNCIONA AGORA ─────────────────────────────────────────────────────
- *
- * O clique no `<summary>` é interceptado e a altura do `<details>` é animada
- * pela Web Animations API, do valor atual até o alvo:
- *
- *   - ABRIR:  põe `open` (o conteúdo passa a existir e pode ser medido), mede
- *             o alvo e anima da altura antiga até ele.
- *   - FECHAR: anima até a altura só do `<summary>` e SÓ ENTÃO tira o `open`,
- *             no `onfinish`. É isto que dá o fechamento suave que o elemento
- *             nativo não entrega.
- *
- * INTERRUPÇÃO. A altura de partida é lida com `getBoundingClientRect()` ANTES
- * de cancelar a animação em curso — durante uma animação esse método devolve o
- * valor animado, não o de repouso. Lendo depois do cancel, o card saltaria para
- * a altura final antes de começar o movimento novo. É o que faz cliques rápidos
- * reverterem de onde estão, em vez de piscar.
- *
- * DURAÇÃO PROPORCIONAL. Resposta curta abre rápido, resposta longa ganha um
- * pouco mais de tempo, com teto de 520ms. Duração fixa é o que faz um acordeão
- * parecer lento nos itens pequenos e apressado nos grandes.
- *
- * O "+" é girado por `data-aberto`, que vem do estado do React, e não por
- * `[open]`: no fechamento o `open` só sai no fim da animação, então preso a ele
- * o ícone ficaria parado esperando o card terminar de fechar.
- *
- * Anima só `height` e `transform`/`opacity`. Sem `prefers-reduced-motion`, e
- * sem JavaScript, o `<details>` continua abrindo e fechando sozinho — a
- * semântica, o teclado e a leitura do conteúdo pelo Google não dependem disto.
+ * Sem JavaScript o `<details>` continua funcionando sozinho, e o Google lê o
+ * conteúdo fechado.
  */
-export function ItemFaq({ pergunta, resposta }: Props) {
+export function ItemFaq({ pergunta, resposta, aberto, aoAlternar }: Props) {
   const detalhes = useRef<HTMLDetailsElement>(null);
   const sumario = useRef<HTMLElement>(null);
   const corpo = useRef<HTMLDivElement>(null);
   const animacao = useRef<Animation | null>(null);
-  const [aberto, setAberto] = useState(false);
+  const montado = useRef(false);
 
-  function alternar(evento: React.MouseEvent) {
+  useLayoutEffect(() => {
     const d = detalhes.current;
     const s = sumario.current;
     const c = corpo.current;
     if (!d || !s || !c) return;
 
-    // Quem conduz a abertura daqui em diante é este handler, não o navegador.
-    evento.preventDefault();
-
-    const alvo = !d.open;
+    // Primeira montagem: só aplica o estado, sem animar.
+    if (!montado.current) {
+      montado.current = true;
+      d.open = aberto;
+      return;
+    }
 
     /*
-      Sem animação em dois casos:
-
-        - `prefers-reduced-motion`, que é a razão óbvia;
-        - `document.hidden`, que é a menos óbvia e vale um parágrafo. Numa aba
-          em segundo plano o navegador estrangula a régua de tempo, a animação
-          pode nunca chegar ao fim e o `finished` nunca resolver. Como é no fim
-          da animação que o `open` é retirado, o item ficaria preso ABERTO até a
-          pessoa voltar para a aba. Aqui o estado é aplicado direto — ninguém
-          está olhando o movimento mesmo.
+      Sem animação sob `prefers-reduced-motion` e com a aba oculta. Na aba
+      oculta o navegador estrangula a régua de tempo, a animação pode não
+      terminar, e como é no fim dela que o `open` sai, a pergunta ficaria presa
+      aberta.
     */
     if (
       document.hidden ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      d.open = alvo;
-      setAberto(alvo);
+      animacao.current?.cancel();
+      d.style.overflow = "";
+      d.open = aberto;
       return;
     }
 
-    // ⚠️ Ordem importa: medir ANTES de cancelar (ver INTERRUPÇÃO no topo).
+    // ⚠️ Medir ANTES de cancelar (ver INTERRUPÇÃO acima).
     const de = d.getBoundingClientRect().height;
     animacao.current?.cancel();
 
-    // Para medir o alvo da abertura, o conteúdo precisa estar renderizado.
-    if (alvo) d.open = true;
-    const para = alvo ? s.offsetHeight + c.offsetHeight : s.offsetHeight;
-
-    setAberto(alvo);
-
-    const duracao = Math.min(520, 220 + Math.abs(para - de) * 0.42);
+    if (aberto) d.open = true;
+    const para = aberto ? s.offsetHeight + c.offsetHeight : s.offsetHeight;
 
     d.style.overflow = "hidden";
     const anim = d.animate(
       { height: [`${de}px`, `${para}px`] },
-      { duration: duracao, easing: "cubic-bezier(0.16, 1, 0.3, 1)" },
+      { duration: DURACAO, easing: CURVA },
     );
     animacao.current = anim;
 
-    /*
-      A resposta entra deslizando um pouco depois da altura começar a abrir.
-      Sem esse defasamento o texto aparece inteiro num contêiner ainda apertado
-      e dá a impressão de que ele "empurrou" o card.
-    */
+    // A resposta desliza um pouco depois da altura começar a abrir.
     c.animate(
-      alvo
+      aberto
         ? [
-            { opacity: 0, transform: "translateY(-8px)" },
+            { opacity: 0, transform: "translateY(-6px)" },
             { opacity: 1, transform: "none" },
           ]
         : [
             { opacity: 1, transform: "none" },
-            { opacity: 0, transform: "translateY(-8px)" },
+            { opacity: 0, transform: "translateY(-6px)" },
           ],
       {
-        duration: duracao * 0.8,
-        delay: alvo ? duracao * 0.15 : 0,
-        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+        duration: aberto ? DURACAO * 0.85 : DURACAO * 0.55,
+        delay: aberto ? DURACAO * 0.12 : 0,
+        easing: CURVA,
+        fill: "both",
       },
     );
 
-    /*
-      `finished` em vez de `onfinish`: a promessa REJEITA quando a animação é
-      cancelada, então o `catch` distingue "terminou" de "foi interrompida por
-      outro clique". Com `onfinish` o cancelamento é silencioso, e quem cancela
-      precisaria lembrar de desfazer o `overflow` na mão.
-    */
     anim.finished
       .then(() => {
         d.style.overflow = "";
-        if (!alvo) d.open = false;
+        if (!aberto) d.open = false;
         if (animacao.current === anim) animacao.current = null;
       })
       .catch(() => {
-        /* cancelada: quem cancelou já assumiu o comando e vai reconfigurar. */
+        /* cancelada: o próximo movimento já assumiu. */
       });
-  }
+  }, [aberto]);
 
   return (
     <details ref={detalhes} className="faq-item group" data-aberto={aberto}>
       <summary
         ref={sumario}
-        onClick={alternar}
-        className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left"
+        onClick={(e) => {
+          // Quem conduz a abertura é a lista, não o navegador.
+          e.preventDefault();
+          aoAlternar();
+        }}
+        className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left"
       >
-        <span className="font-display text-lg leading-snug font-medium text-balance transition-colors duration-200 group-hover:text-acao-texto">
+        <span className="faq-pergunta font-display text-lg leading-snug font-semibold text-balance">
           {pergunta}
         </span>
-        <span className="faq-sinal mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-brand transition-[transform,border-color,background-color] duration-300 ease-[var(--ease-soft)] group-hover:border-brand">
+        <span className="faq-sinal flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-hairline text-brand">
           <PlusIcon size={16} weight="bold" aria-hidden />
         </span>
       </summary>
 
       <div ref={corpo}>
-        <p className="max-w-[58ch] pb-6 leading-relaxed text-text-2">
+        <p className="max-w-[60ch] pb-6 leading-relaxed text-text-2">
           {resposta}
         </p>
       </div>

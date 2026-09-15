@@ -1,6 +1,6 @@
 import { Secao } from "@/components/ui/Secao";
 import { Revelar } from "@/components/ui/Revelar";
-import { ItemFaq } from "@/components/ui/ItemFaq";
+import { ListaFaq } from "@/components/ui/ListaFaq";
 import { faq } from "@/content/site";
 
 /**
@@ -14,8 +14,8 @@ import { faq } from "@/content/site";
  * já vem com semântica e teclado corretos, e o Google lê o conteúdo mesmo
  * fechado.
  *
- * A SEÇÃO continua sendo servidor — só o item é cliente (`ItemFaq`), porque o
- * que precisa de JS é a animação de abrir e fechar, não o texto. Assim as
+ * A SEÇÃO continua sendo servidor — só a lista é cliente (`ListaFaq`), porque o
+ * que precisa de JS é saber qual pergunta está aberta e animar, não o texto. Assim as
  * perguntas e respostas seguem no HTML servido, que é o que alimenta o schema
  * FAQPage e a leitura do Google.
  */
@@ -36,13 +36,7 @@ export function Faq() {
           </Revelar>
         </div>
 
-        <div className="divide-y divide-hairline border-t border-b border-hairline">
-          {faq.itens.map((item, i) => (
-            <Revelar key={item.pergunta} atraso={i * 0.05}>
-              <ItemFaq pergunta={item.pergunta} resposta={item.resposta} />
-            </Revelar>
-          ))}
-        </div>
+        <ListaFaq itens={faq.itens} />
       </div>
     </Secao>
   );

@@ -1,8 +1,10 @@
+import type React from "react";
 import Image from "next/image";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
 import { caminhoPublico } from "@/lib/caminho";
-import { hero } from "@/content/site";
+import { StarIcon } from "@phosphor-icons/react/dist/ssr";
+import { hero, prova } from "@/content/site";
 
 /**
  * Dobra 1 — copy à esquerda, fachada à direita.
@@ -19,8 +21,9 @@ import { hero } from "@/content/site";
  * MESMO espaço.
  *
  * A solução é não dividir o espaço: cada um tem o seu.
- *   - Esquerda (54%): só superfície e copy. Zero foto embaixo, então zero véu.
- *   - Direita (46%): fachada em opacidade CHEIA, sem tingimento e sem véu.
+ *   - Esquerda: só superfície e copy, num bloco de 30rem. Zero foto embaixo.
+ *   - Direita: fachada em opacidade CHEIA, começando onde o texto termina
+ *     (ver `--hero-foto-x` no globals.css, 15/09/2026).
  *
  * A COSTURA entre as duas metades (refeita em 11/09/2026 — ver `.hero-mistura`
  * no globals.css). Era feita com três peças empilhadas: uma lâmina da cor da
@@ -42,9 +45,13 @@ import { hero } from "@/content/site";
  * pular). O header é `fixed`, então a foto sobe até a borda superior da tela e
  * passa por trás da pílula.
  *
- * No MOBILE não há duas colunas: a foto vira uma faixa embaixo da copy, com
- * altura própria. Empilhar copy SOBRE foto era o que obrigava o véu no começo
- * desta história.
+ * No MOBILE e no TABLET (15/09/2026, opção B escolhida pelo JM entre três
+ * prévias): a fachada ocupa a tela inteira, recortada até o letreiro, e a copy
+ * vai no pé, clara, sobre um véu escuro que só fecha embaixo. A tentativa
+ * anterior, foto como coluna estreita à direita, escondia a fachada: nenhuma
+ * parte do letreiro cabia numa coluna de 270px. As cores claras vêm da troca
+ * de tokens em `.hero-copy` (globals.css), então botão e textos se adaptam sem
+ * classe duplicada.
  *
  * A section é `flex flex-col justify-center` nos DOIS tamanhos, e não `lg:block`.
  * No desktop a foto é `absolute`, então sai do fluxo e sobra só a copy dentro do
@@ -52,27 +59,32 @@ import { hero } from "@/content/site";
  * no topo e deixava um vão morto embaixo.
  */
 export function Hero() {
+  const [nota, anos] = prova.itens;
+  const selo = `${String(nota.alvo).replace(".", ",")} no Google · ${anos.alvo}${anos.sufixo} anos na Torre`;
+
   return (
     <section
       id="topo"
-      className="relative isolate flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-surface"
+      className="relative isolate flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-surface lg:justify-center"
     >
-      {/* Patinhas: só do lado da copy, nunca por cima da fachada. */}
+      {/* Patinhas: só do lado da copy no desktop. No celular a foto cobre tudo. */}
       <div
         aria-hidden
-        className="fundo-patas pointer-events-none absolute inset-0 -z-10 lg:right-[46%]"
+        className="fundo-patas pointer-events-none absolute inset-0 -z-10 hidden lg:right-[calc(100vw-var(--hero-foto-x))] lg:block"
       />
 
       {/*
         A FACHADA. No desktop é a metade direita, do topo ao rodapé da dobra.
-        `absolute` para poder sangrar até as bordas sem esticar a linha da copy.
+        No celular e no tablet ocupa a tela inteira (opção B, escolhida pelo JM
+        em 15/09/2026 entre três prévias).
       */}
-      <div className="relative order-2 h-[42vh] w-full shrink-0 sm:h-[46vh] lg:absolute lg:inset-y-0 lg:right-0 lg:order-none lg:h-auto lg:w-[46%]">
+      <div className="absolute inset-0 lg:left-[var(--hero-foto-x)]">
         <Revelar atraso={0.1} className="revelar-zoom h-full">
           {/*
             A máscara vai NO CONTÊINER da foto, não numa camada por cima: é o
             que faz a imagem dissolver no fundo da seção em vez de ser coberta
-            por uma lâmina colorida. Ver `.hero-mistura` no globals.css.
+            por uma lâmina colorida. Ver `.hero-mistura` no globals.css. Só
+            vale no desktop.
           */}
           <div className="hero-mistura relative h-full w-full">
             <Image
@@ -80,25 +92,44 @@ export function Hero() {
               alt={hero.foto.alt}
               fill
               priority
-              sizes="(max-width: 1024px) 100vw, 46vw"
-              className="object-cover"
-              style={{ objectPosition: hero.foto.posicao }}
+              sizes="(max-width: 1024px) 100vw, 56vw"
+              className="hero-foto object-cover"
+              style={
+                {
+                  "--hero-pos": hero.foto.posicao,
+                  "--hero-pos-mobile": hero.foto.posicaoMobile,
+                } as React.CSSProperties
+              }
             />
           </div>
         </Revelar>
+
+        {/*
+          VÉU do celular: um toque escuro no topo, para a pílula do header, o
+          meio LIMPO, onde está o letreiro, e fecha escuro no pé, onde a copy
+          clara precisa de contraste.
+        */}
+        <div aria-hidden className="hero-veu absolute inset-0 lg:hidden" />
       </div>
 
-      <div className="relative order-1 mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:order-none">
-        <div className="pt-28 pb-10 sm:pt-32 sm:pb-12 lg:w-[52%] lg:py-28">
+      <div className="hero-copy relative mx-auto w-full max-w-[1200px] px-5 sm:px-8">
+        <div className="pt-24 pb-10 sm:max-w-[36rem] sm:pb-14 lg:w-[var(--hero-copy-w)] lg:max-w-none lg:py-28">
           <Revelar>
-            <h1 className="font-display text-[2.6rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+            <p className="hero-rotulo text-xs font-semibold tracking-[0.08em] text-brand uppercase lg:hidden">
+              {hero.rotuloMobile}
+            </p>
+          </Revelar>
+
+          <Revelar atraso={0.04}>
+            <h1 className="hero-titulo mt-2.5 font-display text-[2.25rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:mt-0 lg:text-[3.5rem]">
               {hero.headline}
             </h1>
           </Revelar>
 
           <Revelar atraso={0.08}>
-            <p className="mt-6 max-w-[46ch] text-lg leading-relaxed text-text-2">
-              {hero.subhead}
+            <p className="hero-sub mt-3 max-w-[46ch] text-base leading-relaxed text-text-2 sm:mt-5 sm:text-lg lg:mt-6">
+              <span className="sm:hidden">{hero.subheadCurta}</span>
+              <span className="hidden sm:inline">{hero.subhead}</span>
             </p>
           </Revelar>
 
@@ -109,10 +140,14 @@ export function Hero() {
           <Revelar atraso={0.16}>
             <div
               id="ancora-cta-hero"
-              className="mt-9 flex flex-col items-start gap-3"
+              className="mt-6 flex flex-col items-start gap-3 sm:mt-8 lg:mt-9"
             >
               <BotaoWhatsapp rotulo={hero.cta} />
-              <p className="text-sm text-text-3">{hero.ctaMicrocopy}</p>
+              <p className="hidden text-sm text-text-3 lg:block">{hero.ctaMicrocopy}</p>
+              <p className="flex items-center gap-1.5 text-[0.8125rem] text-text-3 lg:hidden">
+                <StarIcon size={14} weight="fill" className="text-[#f2b53a]" aria-hidden />
+                {selo}
+              </p>
             </div>
           </Revelar>
         </div>

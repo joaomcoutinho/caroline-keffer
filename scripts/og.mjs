@@ -1,256 +1,158 @@
 // Gera site/public/og.png (1200x630), o card de compartilhamento.
 //
-// Duas decisões de arquitetura, e o porquê de cada uma:
+// 15/09/2026: o card acompanha o hero atual. A foto passou a ser a FACHADA (a
+// mesma do hero) e a copy é a headline do site, não mais o retrato da Dra.
+// Carol com a chamada antiga.
 //
-// 1. TEXTO VIRA VETOR, nunca <text> de SVG. O sharp rasteriza SVG com
-//    librsvg, que só encontra fontes pelo fontconfig do SISTEMA — um
-//    FONTCONFIG_FILE apontando pra um diretório local não é respeitado aqui
-//    (testado: o texto saía em Helvetica). A saída é opentype.js: ele lê o
-//    arquivo da fonte direto e devolve o caminho vetorial de cada glifo, sem
-//    depender de fonte nenhuma instalada.
+// POR QUE CHROME, E NÃO MAIS SHARP + OPENTYPE. O gerador anterior convertia o
+// texto em vetor com opentype.js a partir de TTFs estáticos da Bricolage e da
+// Jakarta, que eram as fontes do site. O site hoje usa Nunito e Nunito Sans, e
+// a Nunito é variável: o opentype.js não resolve o eixo de peso, então o título
+// sairia em Regular. Renderizar HTML no Chrome resolve fonte variável, quebra de
+// linha e kerning do mesmo jeito que o site, com a MESMA tipografia.
 //
-// 2. UMA COR DE FUNDO SÓ. A versão anterior tinha uma emenda visível onde o
-//    retângulo de fundo encontrava a foto escurecida — as duas camadas de cor
-//    quase combinavam, mas não exatamente. Aqui o fundo é um retângulo chapado
-//    de --surface, e a foto se dissolve nele por ALFA: a mesma camada que
-//    escurece a foto também desvanece pra transparente na borda esquerda. Sem
-//    uma segunda cor de fundo, não existe emenda pra desalinhar.
+// Precisa do Google Chrome instalado (caminho em CHROME, ou a variável de
+// ambiente CHROME_PATH) e de rede para baixar as fontes do Google Fonts.
+//
+// Uso: cd scripts && npm run og
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { spawn } from "node:child_process";
+import { readFileSync, writeFileSync, mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
-import sharp from "sharp";
-import opentype from "opentype.js";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const RAIZ_SITE = path.resolve(AQUI, "../site");
-
+const CHROME =
+  process.env.CHROME_PATH ??
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const PORTA = 9444;
 const W = 1200;
 const H = 630;
+const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Tokens do tema escuro (globals.css) — o mesmo escuro que o site usa, não
-// uma paleta inventada para o card.
-const COR = {
-  fundo: "#0b2129",
-  headline: "#eef3f3",
-  subhead: "#c6d6da",
-  eyebrow: "#a8d6e8",
-  ctaFundo: "#7ec0dc",
-  ctaTexto: "#07222c",
-};
+const base64 = (arquivo) => readFileSync(path.join(RAIZ_SITE, arquivo)).toString("base64");
+const fachada = `data:image/webp;base64,${base64("public/images/fachada_ceu.webp")}`;
+const selo = `data:image/jpeg;base64,${base64("public/images/logo-caroline-keffer.jpg")}`;
 
-const bricolage800 = opentype.loadSync(path.join(AQUI, "fontes/bricolage-800.ttf"));
-const jakarta400 = opentype.loadSync(path.join(AQUI, "fontes/jakarta-400.ttf"));
-const jakarta600 = opentype.loadSync(path.join(AQUI, "fontes/jakarta-600.ttf"));
+/*
+  COMPOSIÇÃO. É o hero do desktop em formato de card: copy à esquerda, fachada
+  à direita. O fundo é o azul-petróleo do véu do hero no celular (#07222c →
+  #0f3644), e não a superfície clara do site: prévia de link aparece pequena,
+  no meio de conversa de WhatsApp, e o escuro com texto claro é o que continua
+  legível nesse tamanho.
 
-/** Caminho vetorial de uma linha inteira, com kerning nativo da fonte. */
-function linha(font, texto, x, y, tamanho) {
-  return font.getPath(texto, x, y, tamanho).toPathData(2);
-}
-
-/** Largura de uma linha, sem desenhar — para centralizar ou quebrar. */
-function largura(font, texto, tamanho) {
-  return font.getAdvanceWidth(texto, tamanho);
-}
-
-/**
- * Rastreamento manual (letter-spacing), glifo a glifo. `font.getPath` não
- * aceita tracking nativo, então aqui a posição de cada caractere é calculada
- * à mão. Só vale a pena para textos curtos em caixa alta (o eyebrow); textos
- * longos usam `linha()`, que preserva kerning de verdade.
- */
-function linhaRastreada(font, texto, x, y, tamanho, trackingPx) {
-  let cursor = x;
-  let d = "";
-  for (const ch of texto) {
-    d += font.getPath(ch, cursor, y, tamanho).toPathData(2) + " ";
-    cursor += font.getAdvanceWidth(ch, tamanho) + trackingPx;
+  A fachada ocupa 640px e dissolve na borda esquerda (18% da coluna). A copy
+  tem 500px e termina antes de a foto começar: título por cima do letreiro
+  apagava justamente o nome da clínica. O recorte
+  vertical (`center 36%`) mantém o letreiro e o selo redondo inteiros.
+*/
+const html = `<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&family=Nunito+Sans:wght@400;600&display=block" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: ${W}px; height: ${H}px; overflow: hidden; }
+  body {
+    position: relative;
+    background: linear-gradient(135deg, #07222c 0%, #0f3644 100%);
+    font-family: "Nunito Sans", sans-serif;
+    color: #f3fafc;
   }
-  return { d, largura: cursor - x - trackingPx };
-}
+  .foto {
+    position: absolute; top: 0; right: 0; bottom: 0; width: 640px;
+    background: url(${fachada}) center 36% / cover;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 18%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 18%);
+  }
+  .copy { position: absolute; left: 72px; top: 56px; bottom: 56px; width: 500px; display: flex; flex-direction: column; }
+  .marca { display: flex; align-items: center; gap: 18px; }
+  .marca img { width: 64px; height: 64px; border-radius: 50%; border: 2px solid #fff; }
+  .marca b { display: block; font-weight: 600; font-size: 26px; line-height: 1.1; }
+  .marca span { display: block; margin-top: 4px; font-weight: 600; font-size: 14px; letter-spacing: 0.1em; color: #a8d6e8; }
+  .corpo { margin-top: auto; }
+  h1 { font-family: "Nunito", sans-serif; font-weight: 800; font-size: 58px; line-height: 1.04; text-wrap: balance; letter-spacing: -0.02em; color: #fff; }
+  p { margin-top: 16px; font-size: 25px; line-height: 1.35; color: #cfe3ea; text-wrap: balance; }
+  .rodape { margin-top: 30px; display: flex; align-items: center; gap: 22px; }
+  .cta { display: inline-flex; align-items: center; height: 64px; padding: 0 36px; border-radius: 999px; background: #7ec0dc; color: #07222c; font-weight: 600; font-size: 25px; white-space: nowrap; }
+  .selo { font-size: 19px; color: #b3cfdb; white-space: nowrap; }
+  .selo b { color: #fff; }
+  .estrela { color: #f2b53a; }
+</style></head><body>
+  <div class="foto"></div>
+  <div class="copy">
+    <div class="marca">
+      <img src="${selo}" alt="">
+      <div><b>Caroline Keffer</b><span>CLÍNICA VETERINÁRIA · TORRE, RECIFE</span></div>
+    </div>
+    <div class="corpo">
+      <h1>Tudo para seu pet, onde ele se sente em casa.</h1>
+      <p>Clínica, cirurgia, exames e banho e tosa, com a Dra. Carol.</p>
+      <div class="rodape">
+        <span class="cta">Agendar pelo WhatsApp</span>
+        <span class="selo"><span class="estrela">★</span> <b>4,8</b> no Google</span>
+      </div>
+    </div>
+  </div>
+</body></html>`;
 
-/** Quebra gulosa por largura máxima. Sem hifenização: se uma palavra não coubesse
- * sozinha isso quebraria o layout, mas todo o vocabulário aqui é curto. */
-function quebrar(font, texto, tamanho, maxLargura) {
-  const palavras = texto.split(" ");
-  const linhas = [];
-  let atual = "";
-  for (const palavra of palavras) {
-    const candidata = atual ? `${atual} ${palavra}` : palavra;
-    if (largura(font, candidata, tamanho) > maxLargura && atual) {
-      linhas.push(atual);
-      atual = palavra;
-    } else {
-      atual = candidata;
+const pasta = mkdtempSync(path.join(tmpdir(), "og-"));
+const arquivoHtml = path.join(pasta, "og.html");
+writeFileSync(arquivoHtml, html);
+
+const chrome = spawn(
+  CHROME,
+  ["--headless=new", "--hide-scrollbars", `--remote-debugging-port=${PORTA}`, `--user-data-dir=${pasta}/perfil`, "about:blank"],
+  { stdio: "ignore" },
+);
+
+try {
+  let alvo;
+  for (let i = 0; i < 40 && !alvo; i++) {
+    await esperar(250);
+    try {
+      alvo = (await (await fetch(`http://127.0.0.1:${PORTA}/json`)).json()).find((t) => t.type === "page");
+    } catch {}
+  }
+  if (!alvo) throw new Error("Chrome não respondeu no DevTools Protocol.");
+
+  const ws = new WebSocket(alvo.webSocketDebuggerUrl);
+  await new Promise((r) => ws.addEventListener("open", r));
+  let id = 0;
+  const pendentes = new Map();
+  ws.addEventListener("message", (e) => {
+    const m = JSON.parse(e.data);
+    if (m.id && pendentes.has(m.id)) {
+      pendentes.get(m.id)(m);
+      pendentes.delete(m.id);
     }
-  }
-  if (atual) linhas.push(atual);
-  return linhas;
+  });
+  const cmd = (method, params = {}) =>
+    new Promise((r) => {
+      const i = ++id;
+      pendentes.set(i, r);
+      ws.send(JSON.stringify({ id: i, method, params }));
+    });
+
+  await cmd("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 1, mobile: false });
+  await cmd("Page.navigate", { url: `file://${arquivoHtml}` });
+  await esperar(1500);
+  // Só fotografa depois das fontes carregadas, senão o título sai no fallback.
+  const fontes = await cmd("Runtime.evaluate", {
+    expression: `document.fonts.ready.then(() => [...document.fonts].filter(f => f.status === "loaded").map(f => f.family + " " + f.weight).join(", "))`,
+    awaitPromise: true,
+    returnByValue: true,
+  });
+  console.log("fontes carregadas:", fontes.result?.result?.value || "(nenhuma, confira a rede)");
+
+  const r = await cmd("Page.captureScreenshot", { format: "png", clip: { x: 0, y: 0, width: W, height: H, scale: 1 } });
+  const destino = path.join(RAIZ_SITE, "public/og.png");
+  writeFileSync(destino, Buffer.from(r.result.data, "base64"));
+  console.log(`og.png gerado: ${destino}`);
+  ws.close();
+} finally {
+  chrome.kill();
+  await esperar(300);
+  rmSync(pasta, { recursive: true, force: true });
 }
-
-// ---------------------------------------------------------------------------
-// 1. Fundo + foto, 100% raster (sharp).
-// ---------------------------------------------------------------------------
-
-const LARGURA_FOTO = 620;
-const X_FOTO = W - LARGURA_FOTO;
-
-/*
-  38%: a MESMA fração que `.midia-mesclada` usa no CSS do site de verdade
-  (globals.css) pra dissolver a foto do hero na copy. Não é um número novo —
-  é reaproveitar uma proporção já aprovada, pra o card ficar consistente com
-  o site.
-
-  A primeira versão tinha ido bem além disso (51.6% da largura da foto) e o
-  JM reportou: o degrade "avançava foto adentro" quase até o meio dela, em
-  vez de ficar restrito à emenda entre a metade de texto e a metade de foto.
-  Com 38%, a transição fica contida perto da borda, e o resto da foto (os
-  62% restantes) permanece 100% opaco, sem filtro nenhum por cima.
-*/
-const FRACAO_PENUMBRA = 0.38;
-
-const mascaraAlfa = Buffer.from(`
-  <svg width="${LARGURA_FOTO}" height="${H}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#000" stop-opacity="0" />
-        <stop offset="${FRACAO_PENUMBRA}" stop-color="#000" stop-opacity="1" />
-        <stop offset="1" stop-color="#000" stop-opacity="1" />
-      </linearGradient>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#fade)" />
-  </svg>
-`);
-
-/*
-  Recorte EXPLÍCITO, não `cover`. A foto é bem vertical (730x1190) e a caixa do
-  card é quase quadrada (620x630): deixar o `cover` decidir cortava o queixo
-  dela fora. Aqui a janela já sai na proporção da caixa (730/742 = 0,984, a
-  mesma de 620/630) e é centrada no rosto, então nada é cortado.
-*/
-const fotoRecortada = await sharp(path.join(RAIZ_SITE, "public/images/hero_dra_keffer.webp"))
-  .extract({ left: 0, top: 109, width: 730, height: 742 })
-  .resize(LARGURA_FOTO, H)
-  .toBuffer();
-
-/*
-  SEM escurecimento na foto inteira. A primeira versão passava uma tinta
-  escura por cima de TODA a foto antes de aplicar a máscara — isso apagava
-  justamente a parte que devia ficar nítida (o lado direito, já opaco). O
-  JM pediu de volta o brilho original: "no jeito que estava anteriormente,
-  estava melhor".
-
-  A transição pra o texto continua existindo, só que feita por UMA coisa só:
-  a máscara de alfa desvanecendo a metade esquerda até transparente, o que
-  revela o fundo chapado por baixo. O lado direito, já opaco, fica exatamente
-  como a foto original — sem filtro nenhum por cima.
-*/
-const fotoComAlfa = await sharp(fotoRecortada)
-  .composite([{ input: mascaraAlfa, blend: "dest-in" }])
-  .png()
-  .toBuffer();
-
-const base = await sharp({
-  create: { width: W, height: H, channels: 4, background: COR.fundo },
-})
-  .composite([{ input: fotoComAlfa, left: X_FOTO, top: 0 }])
-  .png()
-  .toBuffer();
-
-// ---------------------------------------------------------------------------
-// 2. Selo da clínica, circular, raster.
-// ---------------------------------------------------------------------------
-
-const DIAMETRO_SELO = 64;
-const X_SELO = 72;
-const Y_SELO = 56;
-
-const mascaraCirculo = Buffer.from(
-  `<svg width="${DIAMETRO_SELO}" height="${DIAMETRO_SELO}"><circle cx="${DIAMETRO_SELO / 2}" cy="${DIAMETRO_SELO / 2}" r="${DIAMETRO_SELO / 2}" fill="#fff"/></svg>`,
-);
-
-const seloRedondo = await sharp(path.join(RAIZ_SITE, "public/images/logo-caroline-keffer.jpg"))
-  .resize(DIAMETRO_SELO, DIAMETRO_SELO)
-  .composite([{ input: mascaraCirculo, blend: "dest-in" }])
-  .png()
-  .toBuffer();
-
-const comSelo = await sharp(base)
-  .composite([{ input: seloRedondo, left: X_SELO, top: Y_SELO }])
-  .png()
-  .toBuffer();
-
-// ---------------------------------------------------------------------------
-// 3. Texto e CTA, 100% vetor (opentype.js → SVG → sharp).
-// ---------------------------------------------------------------------------
-
-const X_TEXTO = 72;
-// A foto só fica opaca a partir de X_FOTO + LARGURA_PENUMBRA (=900px); até lá
-// ela está em transição. O texto pode ir bem além dos 500px conservadores do
-// primeiro rascunho sem colidir com nada visível.
-const MAX_LARGURA_TEXTO = 680;
-
-const wordmark = linha(jakarta600, "Caroline Keffer", X_SELO + DIAMETRO_SELO + 20, Y_SELO + 28, 26);
-const eyebrow = linhaRastreada(
-  jakarta600,
-  "CLÍNICA VETERINÁRIA · TORRE, RECIFE",
-  X_SELO + DIAMETRO_SELO + 20,
-  Y_SELO + 52,
-  14,
-  1.4,
-);
-
-const headlineLinha1 = linha(bricolage800, "A mesma veterinária,", X_TEXTO, 300, 64);
-const headlineLinha2 = linha(bricolage800, "há mais de 20 anos.", X_TEXTO, 374, 64);
-
-const SUBHEAD_Y_INICIO = 428;
-const SUBHEAD_ALTURA_LINHA = 38;
-
-const subheadTexto =
-  "Consulta, cirurgia e exames para cão e gato, sempre com a Dra. Carol.";
-const subheadLinhas = quebrar(jakarta400, subheadTexto, 30, MAX_LARGURA_TEXTO);
-const subheadPaths = subheadLinhas
-  .map((texto, i) => linha(jakarta400, texto, X_TEXTO, SUBHEAD_Y_INICIO + i * SUBHEAD_ALTURA_LINHA, 30))
-  .join(" ");
-
-// CTA: pílula chapada, mesma cor de ação do botão real do site no tema
-// escuro. Texto centralizado por medição real da largura do glifo.
-// A posição Y segue o número de linhas do subhead: se a copy mudar de tamanho
-// amanhã, o botão não fica colado nem flutuando longe do texto.
-const CTA_TEXTO = "Agendar pelo WhatsApp";
-const CTA_TAMANHO_FONTE = 28;
-const ctaLarguraTexto = largura(jakarta600, CTA_TEXTO, CTA_TAMANHO_FONTE);
-const CTA_PAD_X = 44;
-const ctaLarguraPilula = ctaLarguraTexto + CTA_PAD_X * 2;
-const CTA_ALTURA = 68;
-const CTA_X = X_TEXTO;
-const CTA_Y =
-  SUBHEAD_Y_INICIO + subheadLinhas.length * SUBHEAD_ALTURA_LINHA - 12;
-const ctaTextoPath = linha(
-  jakarta600,
-  CTA_TEXTO,
-  CTA_X + CTA_PAD_X,
-  CTA_Y + CTA_ALTURA / 2 + CTA_TAMANHO_FONTE * 0.36,
-  CTA_TAMANHO_FONTE,
-);
-
-const overlaySvg = `
-<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
-  <path d="${wordmark}" fill="${COR.headline}" />
-  <path d="${eyebrow.d}" fill="${COR.eyebrow}" />
-  <path d="${headlineLinha1}" fill="${COR.headline}" />
-  <path d="${headlineLinha2}" fill="${COR.headline}" />
-  <path d="${subheadPaths}" fill="${COR.subhead}" />
-  <rect x="${CTA_X}" y="${CTA_Y}" width="${ctaLarguraPilula}" height="${CTA_ALTURA}" rx="${CTA_ALTURA / 2}" fill="${COR.ctaFundo}" />
-  <path d="${ctaTextoPath}" fill="${COR.ctaTexto}" />
-</svg>
-`;
-
-const final = await sharp(comSelo)
-  .composite([{ input: Buffer.from(overlaySvg) }])
-  .png()
-  .toBuffer();
-
-const destino = path.join(RAIZ_SITE, "public/og.png");
-writeFileSync(destino, final);
-console.log(`og.png gerado: ${destino}`);

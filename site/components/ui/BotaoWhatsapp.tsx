@@ -15,6 +15,11 @@ type Props = {
    * de classes por tamanho, o conflito deixa de existir.
    */
   tamanho?: Tamanho;
+  /**
+   * Destino com mensagem já escrita (ver `linkWhatsapp`). Muda só o texto que
+   * chega no WhatsApp; o rótulo e o visual continuam os do CTA único.
+   */
+  href?: string;
   className?: string;
 };
 
@@ -52,6 +57,7 @@ export function BotaoWhatsapp({
   rotulo,
   nomeAcessivel,
   tamanho = "normal",
+  href = contato.whatsapp,
   className = "",
 }: Props) {
   const t = tamanhos[tamanho];
@@ -63,7 +69,7 @@ export function BotaoWhatsapp({
 
   return (
     <a
-      href={contato.whatsapp}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={nomeAcessivel ?? undefined}
