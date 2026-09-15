@@ -208,80 +208,134 @@
 }
 
 /*
-  ONDE A FACHADA COMEÇA (15/09/2026).
+  HERO (15/09/2026, escolha do JM: "mistura do background de 1 com 2").
 
-  Era uma porcentagem fixa da tela (`right-0 w-[46%]`). Isso descasava da copy:
-  o texto vive dentro do contêiner de 1200px, centrado, e a foto vivia presa na
-  borda direita da TELA. Em cada largura sobrava um vão diferente entre os
-  dois, e em 1440 a foto começava depois do meio, com o degradê comendo o lado
-  esquerdo da fachada.
+  DESKTOP: fundo ciano com patinhas e a pata da marca montada com fotos
+  reais (ver `.hero-palco` abaixo).
 
-  Agora a foto começa exatamente onde o bloco de texto termina:
-    borda esquerda do contêiner  max(2rem, (100vw - 75rem) / 2 + 2rem)
-    + largura do bloco de texto  30rem
-    + respiro                    2.5rem
-  e vai dali até a borda direita. Em 1440 ocupa cerca de 52% da tela. Com a
-  coluna nessa largura a proporção dela passa de 0,8, que é a da foto, então a
-  fachada aparece na LARGURA INTEIRA, do limite esquerdo ao direito da imagem,
-  e o recorte fica só em cima e embaixo.
+  CELULAR E TABLET: opção B. O mesmo `.hero-palco` vira a tela inteira, a
+  almofada da pata vira a foto sem borda, e o véu escurece o pé para a copy.
+
+  É UMA foto só nos dois tamanhos: o que muda é a geometria do palco. Duas
+  <Image> com `priority` baixariam a fachada duas vezes.
 */
-:root {
-  --hero-copy-w: 30rem;
-  --hero-foto-x: calc(max(2rem, (100vw - 75rem) / 2 + 2rem) + var(--hero-copy-w) + 2.5rem);
+.hero {
+  background-color: #07222c;
 }
 
 /*
-  COSTURA DO HERO — dissolucao da fachada na coluna da copy.
+  15/09/2026 (JM: "deixa o fundo mais claro, mais direcionado para o ciano").
+  O petróleo quase preto virou um ciano profundo, mais claro atrás do arco e
+  mais fechado do lado do texto. Os tons do lado do texto foram escolhidos
+  pelo contraste medido com a copy branca: 5,2 a 5,8 no título e no botão, e
+  a subhead clara passa de 4 (texto grande).
 
-  11/09/2026 (JM: "voce colocou uma divisao muito bruta, apenas uma linha reta
-  misturada com degrade, ta totalmente amador... fazer uma transicao bem fluida
-  e natural, colocar o degrade um pouco por cima da imagem").
-
-  O que estava errado:
-    1. havia um FIO vertical de 1px marcando a divisa. Fio e aresta: ele afirma
-       exatamente o corte que o degrade estava tentando dissolver. Saiu.
-    2. o degrade era uma lamina da cor da superficie POR CIMA da foto, e curta
-       (16 por cento). Lamina colorida por cima nao dissolve, encobre — e o
-       ponto em que ela satura vira uma faixa visivel.
-    3. havia ainda um terceiro veu de brilho ciano do lado da copy, somando uma
-       segunda emenda a poucos pixels da primeira.
-
-  O que e agora: uma MASCARA na propria foto. A imagem perde opacidade de
-  verdade e deixa a superficie da secao aparecer atraves dela — e dissolucao,
-  nao cobertura, entao nao existe cor de lamina para descasar com o fundo.
-
-  A rampa segue SMOOTHSTEP (t ao quadrado vezes (3-2t)) em 16 paradas, e nao um
-  degrade linear. Degrade linear tem derivada constante: o olho enxerga a quebra
-  no ponto em que ele satura, e e isso que le como amador. O smoothstep entra e
-  sai da rampa com derivada zero, entao nao ha ponto em que algo "comeca".
-
-  Largura: 10 por cento da coluna da foto, cerca de 76px em tela de 1440.
-  15/09/2026: caiu de 22 para 10 junto com a mudança de largura da coluna
-  (ver --hero-foto-x). O JM pediu a fachada aparecendo "por completo, até o
-  limite da imagem"; com a coluna começando logo depois do texto, a rampa
-  curta basta para a costura continuar sem aresta.
-  Historico: 16 (corte seco demais) -> 40 em 11/09/2026 (costura suave) -> 22
-  em 14/09/2026, a pedido do JM, para dar respiro e visibilidade ao lado
-  esquerdo da fachada, que com 40 ficava lavado. Por ser smoothstep, encurtar
-  a rampa nao traz de volta a linha de corte: ela continua entrando e saindo
-  com derivada zero, so que num trecho menor.
+  As patinhas do resto do site entram aqui em BRANCO a 9%: no azul-ação das
+  outras seções elas sumiriam neste fundo.
 */
-.hero-mistura {
-  -webkit-mask-image: linear-gradient(to right, transparent 0.00%, rgb(0 0 0 / 0.015) 0.71%, rgb(0 0 0 / 0.055) 1.43%, rgb(0 0 0 / 0.118) 2.14%, rgb(0 0 0 / 0.198) 2.86%, rgb(0 0 0 / 0.292) 3.57%, rgb(0 0 0 / 0.394) 4.29%, rgb(0 0 0 / 0.500) 5.00%, rgb(0 0 0 / 0.606) 5.71%, rgb(0 0 0 / 0.708) 6.43%, rgb(0 0 0 / 0.802) 7.14%, rgb(0 0 0 / 0.882) 7.86%, rgb(0 0 0 / 0.945) 8.57%, rgb(0 0 0 / 0.985) 9.29%, #000 10.00%, #000 100%);
-  mask-image: linear-gradient(to right, transparent 0.00%, rgb(0 0 0 / 0.015) 0.71%, rgb(0 0 0 / 0.055) 1.43%, rgb(0 0 0 / 0.118) 2.14%, rgb(0 0 0 / 0.198) 2.86%, rgb(0 0 0 / 0.292) 3.57%, rgb(0 0 0 / 0.394) 4.29%, rgb(0 0 0 / 0.500) 5.00%, rgb(0 0 0 / 0.606) 5.71%, rgb(0 0 0 / 0.708) 6.43%, rgb(0 0 0 / 0.802) 7.14%, rgb(0 0 0 / 0.882) 7.86%, rgb(0 0 0 / 0.945) 8.57%, rgb(0 0 0 / 0.985) 9.29%, #000 10.00%, #000 100%);
+@media (min-width: 1024px) {
+  .hero {
+    --patas-cor: #ffffff;
+    --patas-opacidade: 0.09;
+    background:
+      radial-gradient(55% 75% at 78% 38%, #3a97b4 0%, rgb(58 151 180 / 0) 70%),
+      linear-gradient(115deg, #1c6c87 0%, #237591 45%, #2b84a1 100%);
+  }
+}
+
+.hero-palco {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-janela {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-dedo,
+.hero-cartao {
+  display: none;
 }
 
 /*
-  CELULAR E TABLET: opção B (15/09/2026). A fachada ocupa a tela toda, sem
-  máscara; o contraste da copy vem do véu (`.hero-veu`) e da troca de tokens
-  em `.hero-copy`.
+  DESKTOP: a PATA DA MARCA montada com fotos reais (15/09/2026, opção B
+  escolhida pelo JM entre três conceitos). A almofada é a fachada, a mesma foto
+  que no celular ocupa a tela, e os quatro dedos são atendimentos e o
+  consultório.
+
+  Todas as medidas são porcentagens de uma caixa 700×780, então a pata inteira
+  escala com a largura do palco sem desmontar. O palco termina ~2,5rem antes do
+  contêiner à direita e deixa livre à esquerda a largura da copy
+  (`lg:w-[28rem] xl:w-[30rem]` no Hero) em 1024, 1280, 1512 e 1920.
 */
-@media (max-width: 1023px) {
-  .hero-mistura {
-    -webkit-mask-image: none;
-    mask-image: none;
+@media (min-width: 1024px) {
+  .hero-palco {
+    inset: auto;
+    top: calc(50% + 2.25rem);
+    right: max(1.5rem, calc((100vw - 75rem) / 2 - 2.5rem));
+    width: min(46vw, 43.75rem);
+    aspect-ratio: 700 / 780;
+    transform: translateY(-50%);
   }
 
+  .hero-janela,
+  .hero-dedo {
+    border: 5px solid rgb(255 255 255 / 0.9);
+    box-shadow: 0 26px 50px -26px rgb(4 30 40 / 0.6);
+  }
+
+  .hero-janela {
+    inset: auto;
+    left: 15.71%;
+    top: 42.3%;
+    width: 68.57%;
+    height: 53.85%;
+    border-radius: 48% 48% 44% 44% / 55% 55% 45% 45%;
+  }
+
+  .hero-dedo {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  .hero-dedo:nth-of-type(1) { left: 0;      top: 21.79%; width: 24.29%; height: 26.92%; transform: rotate(-24deg); }
+  .hero-dedo:nth-of-type(2) { left: 21.43%; top: 1.28%;  width: 25.71%; height: 28.85%; transform: rotate(-8deg); }
+  .hero-dedo:nth-of-type(3) { left: 52.86%; top: 1.28%;  width: 25.71%; height: 28.85%; transform: rotate(8deg); }
+  .hero-dedo:nth-of-type(4) { left: 75.71%; top: 21.79%; width: 24.29%; height: 26.92%; transform: rotate(24deg); }
+
+  /* Cartão de vidro CLARO sobre a foto. */
+  .hero-cartao {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    align-items: center;
+    gap: 0.5rem;
+    color: #081c24;
+    background: rgb(255 255 255 / 0.86);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgb(255 255 255 / 0.7);
+    box-shadow: 0 22px 44px -22px rgb(0 0 0 / 0.55);
+  }
+
+  .hero-cartao--local {
+    right: 11%;
+    bottom: 1%;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+}
+
+/*
+  CELULAR E TABLET: véu que deixa o meio limpo (letreiro) e fecha escuro no pé.
+*/
+@media (max-width: 1023px) {
   .hero-veu {
     background: linear-gradient(
       180deg,
@@ -293,17 +347,29 @@
       rgb(7 34 44 / 0.95) 100%
     );
   }
+}
 
-  /* Mesma técnica do `.cabecalho-escuro`: troca de tokens, não de classes. */
+/* A copy é clara nos dois tamanhos. Troca de tokens, como no `.cabecalho-escuro`. */
+.hero-copy {
+  --text: #ffffff;
+  --text-2: #d6e9ef;
+  --text-3: #b3cfdb;
+  --brand: #a8d6e8;
+  --action: #7ec0dc;
+  --action-hover: #a8d6e8;
+  --on-action: #07222c;
+  color: var(--text);
+}
+
+/* Desktop, sobre o ciano: rótulo e destaque mais claros, e o botão BRANCO,
+   que num fundo ciano destaca mais que o ciano-claro. */
+@media (min-width: 1024px) {
   .hero-copy {
-    --text: #ffffff;
-    --text-2: #d6e9ef;
-    --text-3: #b3cfdb;
-    --brand: #a8d6e8;
-    --action: #7ec0dc;
-    --action-hover: #a8d6e8;
-    --on-action: #07222c;
-    color: var(--text);
+    --text-2: #e3f2f7;
+    --brand: #e6f5fa;
+    --action: #ffffff;
+    --action-hover: #e6f5fa;
+    --on-action: #0f3644;
   }
 }
 
@@ -1817,7 +1883,9 @@ html:has(.visor[open]) {
 */
 .faixa-loop {
   overflow: hidden;
-  padding-block: 0.75rem;
+  /* Folga para o glow do hover não ser cortado pelo `overflow: hidden`
+     (cortado, ele virava uma mancha retangular atrás do cartão). */
+  padding-block: 1.5rem;
   -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
@@ -1836,6 +1904,18 @@ html:has(.visor[open]) {
 @media (prefers-reduced-motion: no-preference) {
   .faixa-loop-trilho {
     animation: faixa-desliza var(--duracao, 32s) linear infinite;
+  }
+
+  /*
+    Desktop (15/09/2026, JM): com o MOUSE sobre um cartão a faixa para, e volta
+    a andar quando ele sai. Só em aparelho com mouse de verdade
+    (`hover: hover` + `pointer: fine`): no toque o `:hover` gruda depois do
+    toque e a faixa ficaria parada.
+  */
+  @media (hover: hover) and (pointer: fine) {
+    .faixa-loop:has(li:hover) .faixa-loop-trilho {
+      animation-play-state: paused;
+    }
   }
 }
 
@@ -1921,12 +2001,19 @@ html:has(.visor[open]) {
 }
 
 @media (hover: hover) {
+  /*
+    GLOW RENTE À BORDA (15/09/2026). Era um anel de 5px mais uma sombra de 44px
+    deslocada para baixo, e dentro da faixa com `overflow: hidden` essa sombra
+    saía cortada numa caixa reta atrás do cartão. Agora é um contorno de 1,5px
+    e um halo simétrico e curto, que segue o raio do cartão por igual nos
+    quatro lados e cabe na folga da faixa.
+  */
   .cartao-plano:hover {
-    transform: translateY(-5px);
-    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--brand) 70%, transparent);
     box-shadow:
-      0 0 0 5px color-mix(in srgb, var(--brand) 10%, transparent),
-      0 20px 44px -22px color-mix(in srgb, var(--brand) 75%, transparent);
+      0 0 0 1.5px color-mix(in srgb, var(--brand) 55%, transparent),
+      0 0 14px 1px color-mix(in srgb, var(--brand) 40%, transparent);
   }
 
   .cartao-plano:hover .plano-traco {

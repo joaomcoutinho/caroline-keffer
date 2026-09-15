@@ -303,7 +303,7 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
         id="servico-painel"
         aria-labelledby={`servico-aba-${ativo}`}
         tabIndex={0}
-        className="sm:grid sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:items-center sm:gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-stretch lg:gap-12"
+        className="sm:grid sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:items-center sm:gap-8 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-stretch lg:gap-12"
       >
         {/*
           AS MÍDIAS FICAM TODAS MONTADAS, empilhadas, e só a ativa aparece.
@@ -344,23 +344,23 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
         </div>
 
         {/*
-          COLUNA DE TEXTO NA ALTURA DA FOTO (15/09/2026, JM: "ocupar o espaço da
-          parte direita"). Centralizado, o texto curto deixava um vão em cima e
-          embaixo, e a direita lia como vazia. Agora a coluna é estreita e fixa
-          (19rem), a foto cresce para a direita, e o texto se ancora nas duas
-          pontas: contador, título e descrição no topo, alinhados com o topo da
-          foto; o CTA do serviço no pé, alinhado com a
-          base dela.
+          COLUNA DE TEXTO (15/09/2026, duas rodadas com o JM). A coluna é
+          estreita e fixa (21rem) para a foto crescer. Primeiro o CTA ficava
+          ancorado no pé, alinhado com a base da foto, mas em serviço de texto
+          curto sobrava um vão enorme entre a descrição e o botão, e os dois
+          liam como coisas separadas. Agora título, descrição, pílulas e CTA
+          são UM bloco, centrado na altura da foto, com o texto maior
+          ocupando o espaço.
         */}
-        <div key={atual.nome} className="servico-painel flex flex-col">
-          <p className="mt-6 text-sm font-semibold tracking-[0.08em] text-brand tabular-nums sm:mt-0 lg:pt-1">
+        <div key={atual.nome} className="servico-painel flex flex-col lg:justify-center">
+          <p className="mt-6 text-sm font-semibold tracking-[0.08em] text-brand tabular-nums sm:mt-0">
             {String(ativo + 1).padStart(2, "0")}
             <span className="text-text-3"> / {String(itens.length).padStart(2, "0")}</span>
           </p>
-          <h3 className="mt-3 font-display text-2xl leading-tight font-bold text-balance lg:text-[1.75rem]">
+          <h3 className="mt-3 font-display text-2xl leading-tight font-bold text-balance lg:text-[2.35rem] lg:leading-[1.1]">
             {atual.nome}
           </h3>
-          <p className="mt-3 text-lg leading-relaxed text-text-2">
+          <p className="mt-3 text-lg leading-relaxed text-text-2 lg:mt-4 lg:text-xl">
             {atual.texto}
           </p>
 
@@ -390,7 +390,7 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
             (`Servicos.tsx`): assim o conteúdo do site não entra no pacote de
             JavaScript deste componente.
           */}
-          {atual.cta ? <div className="mt-8 lg:mt-auto">{atual.cta}</div> : null}
+          {atual.cta ? <div className="mt-8">{atual.cta}</div> : null}
         </div>
       </div>
     </div>

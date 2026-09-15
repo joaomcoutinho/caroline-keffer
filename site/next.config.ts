@@ -1,3 +1,4 @@
+import { networkInterfaces } from "node:os";
 import type { NextConfig } from "next";
 
 /*
@@ -14,12 +15,25 @@ import type { NextConfig } from "next";
   desenvolvimento quebraria o `npm run dev` em localhost:3000.
 */
 const noPages = process.env.DEPLOY_ALVO === "pages";
+
+/*
+  Só vale no `npm run dev`. O Next bloqueia (403) os scripts de desenvolvimento
+  quando a página é aberta por um endereço diferente de `localhost`, e aí o site
+  abre no celular sem hidratar: nada de faixa em loop, FAQ ou galeria. Liberar
+  os IPs da PRÓPRIA máquina deixa testar pelo celular na mesma rede Wi-Fi com
+  `http://<ip-do-mac>:3000`, sem fixar um IP que muda de rede para rede.
+*/
+const ipsDaMaquina = Object.values(networkInterfaces())
+  .flat()
+  .filter((i) => i && i.family === "IPv4")
+  .map((i) => i!.address);
 const base = "/caroline-keffer";
 
 const nextConfig: NextConfig = {
   ...(noPages
     ? { output: "export", basePath: base, assetPrefix: base }
     : {}),
+  allowedDevOrigins: ipsDaMaquina,
   images: { unoptimized: true },
   // Sem servidor não há redirect de /rota para /rota/: cada uma vira index.html.
   trailingSlash: true,

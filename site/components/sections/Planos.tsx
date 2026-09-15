@@ -66,7 +66,7 @@ export function Planos() {
         vira faixa rolável com o dedo, sem as cópias.
       */}
       <Revelar atraso={0.12}>
-        <div className="faixa-loop planos-faixa -mx-5 mt-10 sm:-mx-8 sm:mt-11 lg:mx-0">
+        <div className="faixa-loop planos-faixa -mx-5 mt-7 sm:-mx-8 sm:mt-8 lg:mx-0">
           <ul className="faixa-loop-trilho">
             {[...planos.itens, ...planos.itens].map((plano, k) => {
               const copia = k >= planos.itens.length;
@@ -120,7 +120,7 @@ export function Planos() {
       </Revelar>
 
       <Revelar atraso={0.4}>
-        <div className="mx-auto mt-8 flex max-w-[60ch] flex-col items-center gap-4 border-t border-hairline pt-8 text-center sm:mt-11 sm:pt-9">
+        <div className="mx-auto mt-5 flex max-w-[60ch] flex-col items-center gap-4 border-t border-hairline pt-8 text-center sm:mt-8 sm:pt-9">
           <p className="text-text-2">{planos.rodape}</p>
           <BotaoWhatsapp rotulo={CTA_PRIMARIO} />
         </div>

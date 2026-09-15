@@ -78,12 +78,24 @@ export const hero = {
    * redundância de "a mesma equipe", que a dobra de Equipe argumenta melhor.
    */
   headline: "Tudo para seu pet, onde ele se sente em casa.",
+  /** Fim da headline pintado na cor de destaque. Precisa ser o final exato dela. */
+  headlineDestaque: "em casa.",
   subhead:
     "Clínica geral, cirurgia, especialidades, exames e banho e tosa na Torre, com a Dra. Carol.",
-  /** No celular a copy divide a largura com a fachada: só o essencial. */
+  /** No celular a copy fica sobre a foto: só o essencial. */
   subheadCurta: "Clínica, cirurgia, exames e banho e tosa, com a Dra. Carol.",
-  /** Rótulo acima do título, só no celular, onde a foto ocupa a tela toda. */
-  rotuloMobile: "Clínica veterinária · Torre, Recife",
+  /**
+   * Os quatro DEDOS da pata do hero no desktop (a almofada é a fachada).
+   * Fotos reais: atendimentos da galeria, o especialista e o consultório.
+   */
+  pata: [
+    { src: "/images/servico_especialista.webp", alt: "Veterinário sorrindo ao lado de um golden retriever sobre a mesa de exame", posicao: "60% 30%" },
+    { src: "/images/galeria/atendimento-01.webp", alt: "Colaboradora sorrindo e abraçando um buldogue francês preto e branco", posicao: "50% 35%" },
+    { src: "/images/galeria/atendimento-05.webp", alt: "Colaboradora segurando um filhote de yorkshire junto ao rosto", posicao: "50% 35%" },
+    { src: "/images/consultorio_card.webp", alt: "Consultório da clínica com a mesa de atendimento e o selo da clínica iluminado na parede", posicao: "50% 45%" },
+  ],
+  /** Rótulo acima do título. */
+  rotulo: "Clínica veterinária · Torre, Recife",
   cta: CTA_PRIMARIO,
   ctaMicrocopy: "Resposta no mesmo dia, em horário de funcionamento.",
   foto: {
