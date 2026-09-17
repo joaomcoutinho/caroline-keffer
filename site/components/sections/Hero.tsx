@@ -1,31 +1,32 @@
 import type React from "react";
 import Image from "next/image";
-import { MapPinIcon } from "@phosphor-icons/react/dist/ssr";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
 import { caminhoPublico } from "@/lib/caminho";
-import { contato, hero } from "@/content/site";
+import { hero } from "@/content/site";
 
 /**
  * Dobra 1 — a fachada da clínica e a promessa do site.
  *
  * HISTÓRICO CURTO. A fachada já foi full-bleed atrás de um véu (virava
- * fantasma), depois uma coluna à direita dissolvida por máscara na copy
- * (09 a 15/09/2026). Em 15/09/2026 o JM escolheu entre prévias:
+ * fantasma), depois coluna à direita dissolvida por máscara, depois arco. Em
+ * 15/09/2026, depois de várias prévias, o JM escolheu a PATA DA MARCA montada
+ * com fotos reais, no arranjo "fios pontilhados":
  *
- * DESKTOP (15/09/2026, opção B entre três conceitos): fundo ciano com as
- * patinhas do site e a PATA DA MARCA montada com fotos reais. A almofada é a
- * fachada; os quatro dedos são atendimentos e o consultório. O endereço vai
- * num cartão de vidro sobre a almofada.
+ * DESKTOP (16/09/2026, tarde: o JM achou "texto à esquerda, pata à direita"
+ * simples demais; um council cego comparou o atual com três protótipos e
+ * escolheu "texto dentro da pata"): a copy fica CENTRALIZADA e a pata se abre
+ * em volta dela, com os quatro dedos em arco nas laterais e a almofada (a
+ * FACHADA) logo abaixo dos CTAs, grande, entrando na primeira tela em
+ * qualquer altura (JM: "sobe a fachada, ela é a primeira impressão"). Só
+ * título, frase e dois CTAs (WhatsApp e serviços).
+ * Passar o mouse num dedo acende o dedo, todos no padrão da Dra. Carol.
  *
- * CELULAR E TABLET: opção B. A fachada ocupa a tela inteira, recortada até o
- * letreiro, e a copy vai no pé, clara, sobre um véu que só escurece embaixo.
+ * CELULAR E TABLET (o mesmo council preferiu manter): a pata inteira no alto
+ * da dobra, com a copy centralizada embaixo. Ver o bloco HERO no globals.css.
  *
- * Nos dois tamanhos é o MESMO elemento de foto (`.hero-palco`), e só a
- * geometria muda no CSS. Duas <Image> com `priority` baixariam a fachada duas
- * vezes. A copy é clara sempre: as cores vêm da troca de tokens em
- * `.hero-copy` (globals.css), então botão e textos se adaptam sem classe
- * duplicada.
+ * A pata e a copy são as mesmas em qualquer largura; só a composição muda no
+ * CSS. A copy é clara sempre: as cores vêm da troca de tokens em `.hero-copy`.
  *
  * `min-h-[100dvh]` (nunca `h-screen`: no iOS a barra do Safari faz a página
  * pular). O header é `fixed` e passa por cima da dobra.
@@ -38,20 +39,55 @@ export function Hero() {
   return (
     <section
       id="topo"
-      className="hero fundo-patas relative isolate flex min-h-[100dvh] flex-col justify-end overflow-hidden lg:justify-center"
+      className="hero fundo-patas relative isolate flex min-h-[100dvh] flex-col justify-center overflow-hidden"
     >
+      {/*
+        FUNDO IMERSIVO. A própria fachada, desfocada e bem grande, vira a luz
+        ambiente da dobra (como a capa de um álbum atrás do player). Por cima,
+        os anéis que giram devagar e uma trilha de pegadas que caminha até a
+        clínica. (O facho de luz vindo do alto foi vetado pelo JM.)
+      */}
+      <div aria-hidden className="hero-ambiente">
+        <Image src={caminhoPublico(hero.foto.src)} alt="" fill sizes="40vw" className="object-cover" />
+      </div>
+      <div aria-hidden className="hero-orbitas" />
+      {(["esq", "dir"] as const).map((lado) => (
+        <div key={lado} aria-hidden className={`hero-trilha hero-trilha--${lado}`}>
+          {[0, 1, 2, 3, 4].map((passo) => (
+            <svg key={passo} viewBox="0 0 40 40" fill="currentColor">
+              <ellipse cx="20" cy="27" rx="10" ry="8.5" />
+              <ellipse cx="8" cy="17" rx="4" ry="5" transform="rotate(-20 8 17)" />
+              <ellipse cx="15.5" cy="9.5" rx="4" ry="5.2" />
+              <ellipse cx="24.5" cy="9.5" rx="4" ry="5.2" />
+              <ellipse cx="32" cy="17" rx="4" ry="5" transform="rotate(20 32 17)" />
+            </svg>
+          ))}
+        </div>
+      ))}
+
       <div className="hero-palco">
-        {/* Dedos da pata: só no desktop (ver `.hero-dedo`). */}
+        {/*
+          Dedos da pata. O rótulo fica FORA do recorte da foto, pendurado na
+          borda de baixo: dentro do oval ele era cortado e cobria o pet.
+        */}
         {hero.pata.map((dedo) => (
-          <div key={dedo.src} className="hero-dedo">
+          <div key={dedo.src} className={`hero-dedo${dedo.destaque ? " hero-dedo--destaque" : ""}`}>
+            <div className="hero-dedo-foto">
             <Image
               src={caminhoPublico(dedo.src)}
               alt={dedo.alt}
               fill
-              sizes="190px"
+              sizes="200px"
               className="object-cover"
-              style={{ objectPosition: dedo.posicao }}
+              style={{
+                objectPosition: dedo.posicao,
+                // Aproxima o recorte quando a foto tem cartaz ou rosto de pet na borda.
+                transform: `scale(${dedo.zoom})`,
+                transformOrigin: dedo.origem,
+              }}
             />
+            </div>
+            <span className="hero-dedo-rotulo">{dedo.rotulo}</span>
           </div>
         ))}
 
@@ -63,48 +99,57 @@ export function Hero() {
                 alt={hero.foto.alt}
                 fill
                 priority
-                sizes="(max-width: 1023px) 100vw, 500px"
+                sizes="(max-width: 639px) 70vw, (max-width: 1023px) 45vw, 560px"
                 className="hero-foto object-cover"
                 style={
                   {
                     "--hero-pos": hero.foto.posicao,
-                    "--hero-pos-mobile": hero.foto.posicaoMobile,
                   } as React.CSSProperties
                 }
               />
             </div>
           </Revelar>
 
-          {/* Véu do celular: meio limpo no letreiro, pé escuro para a copy. */}
-          <div aria-hidden className="hero-veu absolute inset-0 lg:hidden" />
-        </div>
-
-        {/* Cartão do endereço: só no desktop (ver `.hero-cartao`). */}
-        <div className="hero-cartao hero-cartao--local">
-          <MapPinIcon size={16} weight="fill" className="text-[#d6453d]" aria-hidden />
-          {contato.endereco} · Torre
+          {/* O coração do logo, no canto da almofada. */}
+          <svg aria-hidden className="hero-coracao" viewBox="0 0 32 30">
+            <path
+              d="M16 28 C 5 20, 1 13, 3 7.5 C 5 2.5, 11.5 1.8, 16 7 C 20.5 1.8, 27 2.5, 29 7.5 C 31 13, 27 20, 16 28 Z"
+              fill="#e2463f"
+              stroke="#ffffff"
+              strokeWidth="2.5"
+            />
+          </svg>
         </div>
       </div>
 
-      <div className="hero-copy relative mx-auto w-full max-w-[1200px] px-5 sm:px-8">
-        <div className="pt-24 pb-10 sm:max-w-[36rem] sm:pb-14 lg:w-[28rem] lg:max-w-none lg:py-28 xl:w-[30rem]">
-          <Revelar>
-            <p className="hero-rotulo text-xs font-semibold tracking-[0.08em] text-brand uppercase lg:text-sm lg:tracking-[0.12em]">
-              {hero.rotulo}
-            </p>
-          </Revelar>
-
+      <div className="hero-copy relative mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-4 2xl:max-w-[1400px]">
+        <div className="mx-auto max-w-[24rem] pt-7 pb-14 text-center sm:max-w-[34rem] sm:pt-10 lg:max-w-[36rem] lg:pb-0">
           <Revelar atraso={0.04}>
-            <h1 className="hero-titulo mt-2.5 font-display text-[2.25rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:mt-4 lg:text-[3.1rem] lg:leading-[1.03] xl:text-[3.75rem]">
-              {tituloAntes}
-              {tituloDestaque ? <span className="text-[#7ec0dc] lg:text-[#bfe9f7]">{tituloDestaque}</span> : null}
+            <h1 className="hero-titulo font-display text-[2.25rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">
+              {/*
+                No desktop cada trecho vira uma linha, quebrando por sentido
+                ("Tudo para seu pet," / "onde ele se sente" / "em casa.").
+                No celular o título corre normal.
+              */}
+              {tituloAntes.split(/(?<=,) /).map((trecho) => (
+                <span key={trecho} className="hero-trecho">
+                  {trecho}{" "}
+                </span>
+              ))}
+              {tituloDestaque ? <span className="hero-trecho hero-destaque">{tituloDestaque}</span> : null}
             </h1>
           </Revelar>
 
           <Revelar atraso={0.08}>
-            <p className="hero-sub mt-3 max-w-[46ch] text-base leading-relaxed text-text-2 sm:mt-5 sm:text-lg lg:mt-6 lg:text-lg xl:text-xl">
+            <p className="hero-sub mx-auto mt-3 max-w-[46ch] text-base leading-normal text-balance text-text-2 sm:leading-relaxed sm:mt-5 sm:text-lg lg:mt-4 lg:text-base xl:mt-5 xl:text-xl">
               <span className="sm:hidden">{hero.subheadCurta}</span>
-              <span className="hidden sm:inline">{hero.subhead}</span>
+              <span className="hidden sm:inline">
+                {hero.subhead.split(/(?<=especialidades,) /).map((trecho) => (
+                  <span key={trecho} className="block">
+                    {trecho}
+                  </span>
+                ))}
+              </span>
             </p>
           </Revelar>
 
@@ -115,13 +160,20 @@ export function Hero() {
           <Revelar atraso={0.16}>
             <div
               id="ancora-cta-hero"
-              className="mt-6 flex flex-col items-start gap-3 sm:mt-8 lg:mt-10"
+              className="mx-auto mt-6 flex w-fit flex-col items-stretch gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:items-center sm:justify-center lg:mt-6 xl:mt-8"
             >
               <BotaoWhatsapp rotulo={hero.cta} />
+              <a href={hero.ctaServicos.href} className="hero-cta-servicos">
+                {hero.ctaServicos.rotulo}
+                <svg aria-hidden viewBox="0 0 20 20" width="18" height="18" fill="none">
+                  <path d="M10 4v12m0 0-5-5m5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
             </div>
           </Revelar>
         </div>
       </div>
+
     </section>
   );
 }

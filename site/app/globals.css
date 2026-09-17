@@ -208,148 +208,584 @@
 }
 
 /*
-  HERO (15/09/2026, escolha do JM: "mistura do background de 1 com 2").
+  HERO · A PATA DA MARCA (15 e 16/09/2026).
 
-  DESKTOP: fundo ciano com patinhas e a pata da marca montada com fotos
-  reais (ver `.hero-palco` abaixo).
+  Escolhida pelo JM entre várias prévias e refinada por 11 rodadas de council
+  cego (docs/hero/AUDITORIA-VISUAL.md). A pata é a mesma em qualquer largura;
+  só a composição em volta muda:
 
-  CELULAR E TABLET: opção B. O mesmo `.hero-palco` vira a tela inteira, a
-  almofada da pata vira a foto sem borda, e o véu escurece o pé para a copy.
+  - CELULAR (até 639px): a pata centralizada no alto da dobra, a copy
+    centralizada embaixo. O dedo da Dra. Carol é o único com rótulo, porque
+    num dedo de ~90px não cabe "Especialidades".
+  - TABLET (640 a 1023px): a mesma pilha, com a pata maior e todos os rótulos.
+  - DESKTOP (1024px+): copy à esquerda, pata à direita alinhada à borda da
+    navbar, âncoras que acendem partes da pata.
+  - TELA LARGA (1536px+): a navbar abre para 1400px e a dobra cresce junto.
 
-  É UMA foto só nos dois tamanhos: o que muda é a geometria do palco. Duas
-  <Image> com `priority` baixariam a fachada duas vezes.
+  Todas as medidas da pata são porcentagens de uma caixa 700×780: ela escala
+  pela largura do palco sem desmontar.
 */
 .hero {
-  background-color: #07222c;
+  --patas-cor: #ffffff;
+  --patas-opacidade: 0.14;
+  background:
+    radial-gradient(90% 45% at 50% 28%, #3a97b4 0%, rgb(58 151 180 / 0) 70%),
+    linear-gradient(180deg, #1c6c87 0%, #135a72 44%, #0d4658 56%);
 }
 
 /*
-  15/09/2026 (JM: "deixa o fundo mais claro, mais direcionado para o ciano").
-  O petróleo quase preto virou um ciano profundo, mais claro atrás do arco e
-  mais fechado do lado do texto. Os tons do lado do texto foram escolhidos
-  pelo contraste medido com a copy branca: 5,2 a 5,8 no título e no botão, e
-  a subhead clara passa de 4 (texto grande).
+  Patinhas: no celular somem atrás da copy (metade de baixo) e em volta da
+  pata. No desktop somem atrás da coluna de texto e em volta da pata.
+*/
+.hero.fundo-patas::before {
+  -webkit-mask-image:
+    var(--textura-patas),
+    linear-gradient(180deg, #000 48%, transparent 60%),
+    radial-gradient(ellipse 38% 24% at 50% 27%, transparent 86%, #000 100%);
+  mask-image:
+    var(--textura-patas),
+    linear-gradient(180deg, #000 48%, transparent 60%),
+    radial-gradient(ellipse 38% 24% at 50% 27%, transparent 86%, #000 100%);
+  -webkit-mask-size: 300px 300px, 100% 100%, 100% 100%;
+  mask-size: 300px 300px, 100% 100%, 100% 100%;
+  -webkit-mask-repeat: space, no-repeat, no-repeat;
+  mask-repeat: space, no-repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
 
-  As patinhas do resto do site entram aqui em BRANCO a 9%: no azul-ação das
-  outras seções elas sumiriam neste fundo.
+/*
+  Desktop (texto dentro da pata): o CENTRO, atrás da copy, fecha em petróleo
+  escuro para o texto pequeno ler bem; as laterais, onde ficam os dedos,
+  clareiam para ciano. As patinhas somem atrás da copy e da almofada.
 */
 @media (min-width: 1024px) {
   .hero {
-    --patas-cor: #ffffff;
-    --patas-opacidade: 0.09;
+    --patas-opacidade: 0.13;
     background:
-      radial-gradient(55% 75% at 78% 38%, #3a97b4 0%, rgb(58 151 180 / 0) 70%),
-      linear-gradient(115deg, #1c6c87 0%, #237591 45%, #2b84a1 100%);
+      radial-gradient(ellipse 34% 40% at 50% 36%, #0f4a5e 0%, rgb(15 74 94 / 0.85) 45%, rgb(15 74 94 / 0) 100%),
+      radial-gradient(ellipse 30% 55% at 8% 45%, rgb(64 160 190 / 0.9) 0%, rgb(64 160 190 / 0) 100%),
+      radial-gradient(ellipse 30% 55% at 92% 45%, rgb(64 160 190 / 0.9) 0%, rgb(64 160 190 / 0) 100%),
+      linear-gradient(180deg, #1f7593 0%, #196a86 55%, #11526a 100%);
+  }
+
+  .hero.fundo-patas::before {
+    -webkit-mask-image:
+      var(--textura-patas),
+      radial-gradient(ellipse 30% 42% at 50% 36%, transparent 70%, #000 100%),
+      radial-gradient(ellipse 22% 30% at 50% 88%, transparent 80%, #000 100%);
+    mask-image:
+      var(--textura-patas),
+      radial-gradient(ellipse 30% 42% at 50% 36%, transparent 70%, #000 100%),
+      radial-gradient(ellipse 22% 30% at 50% 88%, transparent 80%, #000 100%);
+    -webkit-mask-size: 360px 360px, 100% 100%, 100% 100%;
+    mask-size: 360px 360px, 100% 100%, 100% 100%;
   }
 }
 
-.hero-palco {
-  position: absolute;
-  inset: 0;
+@media (min-width: 1536px) {
+  .hero.fundo-patas::before {
+    -webkit-mask-size: 480px 480px, 100% 100%, 100% 100%;
+    mask-size: 480px 480px, 100% 100%, 100% 100%;
+    -webkit-mask-position: 120px 60px, 0 0, 0 0;
+    mask-position: 120px 60px, 0 0, 0 0;
+  }
 }
 
-.hero-janela {
+/*
+  Anéis de fundo: dão profundidade sem poluir. No celular giram em volta da
+  pata; no desktop, em volta do título, como órbita dos dedos.
+*/
+.hero-orbitas {
   position: absolute;
-  inset: 0;
-  overflow: hidden;
+  z-index: 0;
+  left: 50%;
+  top: calc(5.5rem + min(80vw, 21rem) * 0.55);
+  width: min(108vw, 26rem);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 1.5px dashed rgb(255 255 255 / 0.16);
+  pointer-events: none;
 }
 
-.hero-dedo,
-.hero-cartao {
+.hero-orbitas::after {
+  content: "";
+  position: absolute;
+  inset: 17%;
+  border-radius: 50%;
+  border: 1.5px solid rgb(255 255 255 / 0.09);
+}
+
+@media (min-width: 640px) {
+  .hero-orbitas {
+    top: calc(7.5rem + min(62vw, 27rem) * 0.55);
+    width: 33rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-orbitas {
+    top: calc(var(--domo-top) + var(--domo) * 0.42);
+    width: calc(var(--domo) * 2.3);
+  }
+
+  .hero-orbitas::after {
+    inset: 19%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-orbitas {
+    animation: orbita-gira 90s linear infinite;
+  }
+}
+
+@keyframes orbita-gira {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/*
+  Luz ambiente: a fachada desfocada ao extremo espalha o azul do céu e o
+  cinza da parede em volta da pata. No celular fica atrás da pata; no
+  desktop, atrás da almofada.
+*/
+.hero-ambiente {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 2rem;
+  width: 120vw;
+  height: 34rem;
+  translate: -50% 0;
+  opacity: 0.4;
+  filter: blur(60px) saturate(1.3);
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+}
+
+/* Trilha de pegadas (desktop): caminha dos cantos de baixo até a clínica. */
+.hero-trilha {
   display: none;
 }
 
-/*
-  DESKTOP: a PATA DA MARCA montada com fotos reais (15/09/2026, opção B
-  escolhida pelo JM entre três conceitos). A almofada é a fachada, a mesma foto
-  que no celular ocupa a tela, e os quatro dedos são atendimentos e o
-  consultório.
+@media (min-width: 1024px) {
+  .hero-ambiente {
+    top: calc(var(--domo-top) - 12rem);
+    width: calc(var(--domo) * 2.6);
+    height: calc(var(--domo) * 1.6);
+    opacity: 0.55;
+  }
 
-  Todas as medidas são porcentagens de uma caixa 700×780, então a pata inteira
-  escala com a largura do palco sem desmontar. O palco termina ~2,5rem antes do
-  contêiner à direita e deixa livre à esquerda a largura da copy
-  (`lg:w-[28rem] xl:w-[30rem]` no Hero) em 1024, 1280, 1512 e 1920.
+  .hero-trilha {
+    position: absolute;
+    z-index: 0;
+    bottom: 3vh;
+    display: block;
+    width: 11vw;
+    height: 44vh;
+    color: #ffffff;
+    pointer-events: none;
+  }
+
+  .hero-trilha--esq {
+    left: 1.5vw;
+  }
+
+  .hero-trilha--dir {
+    right: 1.5vw;
+    scale: -1 1;
+  }
+
+  .hero-trilha svg {
+    position: absolute;
+    width: 1.9rem;
+    opacity: 0.16;
+  }
+
+  /* Pés alternados, subindo em diagonal suave. */
+  .hero-trilha svg:nth-child(1) { left: 10%; bottom: 0;   rotate: 20deg; }
+  .hero-trilha svg:nth-child(2) { left: 48%; bottom: 17%; rotate: 28deg; }
+  .hero-trilha svg:nth-child(3) { left: 22%; bottom: 38%; rotate: 16deg; }
+  .hero-trilha svg:nth-child(4) { left: 62%; bottom: 57%; rotate: 30deg; }
+  .hero-trilha svg:nth-child(5) { left: 38%; bottom: 80%; rotate: 22deg; }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .hero-trilha svg {
+    opacity: 0;
+    animation: passo 7s ease-in-out infinite;
+  }
+
+  .hero-trilha svg:nth-child(2) { animation-delay: 0.6s; }
+  .hero-trilha svg:nth-child(3) { animation-delay: 1.2s; }
+  .hero-trilha svg:nth-child(4) { animation-delay: 1.8s; }
+  .hero-trilha svg:nth-child(5) { animation-delay: 2.4s; }
+  .hero-trilha--dir svg { animation-delay: calc(var(--d, 0s) + 3.5s); }
+  .hero-trilha--dir svg:nth-child(2) { --d: 0.6s; }
+  .hero-trilha--dir svg:nth-child(3) { --d: 1.2s; }
+  .hero-trilha--dir svg:nth-child(4) { --d: 1.8s; }
+  .hero-trilha--dir svg:nth-child(5) { --d: 2.4s; }
+}
+
+@keyframes passo {
+  0% { opacity: 0; }
+  8%, 45% { opacity: 0.3; }
+  60%, 100% { opacity: 0; }
+}
+
+/* ── A PATA (todas as larguras) ───────────────────────────────────────── */
+
+.hero-palco {
+  position: relative;
+  z-index: 1;
+  width: min(80vw, 21rem);
+  aspect-ratio: 700 / 780;
+  margin: 5.5rem auto 0;
+  flex-shrink: 0;
+}
+
+@media (max-width: 639px) and (min-height: 900px) {
+  .hero-palco {
+    width: min(86vw, 24rem);
+  }
+}
+
+@media (min-width: 640px) {
+  .hero-palco {
+    width: min(62vw, 27rem);
+    margin-top: 7.5rem;
+  }
+}
+
+/*
+  Desktop: a ALTURA manda. A fachada entra logo abaixo dos CTAs e aparece na
+  primeira tela em qualquer janela (JM, 16/09/2026: "sobe a fachada, ela é a
+  primeira impressão"). Título, apoio e botões escalam por vw E vh, e a
+  posição da almofada é a soma exata da altura da copy.
+
+  O palco deixa de ser caixa (`static`): dedos e almofada se posicionam
+  direto na dobra.
 */
 @media (min-width: 1024px) {
-  .hero-palco {
-    inset: auto;
-    top: calc(50% + 2.25rem);
-    right: max(1.5rem, calc((100vw - 75rem) / 2 - 2.5rem));
-    width: min(46vw, 43.75rem);
-    aspect-ratio: 700 / 780;
-    transform: translateY(-50%);
-  }
-
-  .hero-janela,
-  .hero-dedo {
-    border: 5px solid rgb(255 255 255 / 0.9);
-    box-shadow: 0 26px 50px -26px rgb(4 30 40 / 0.6);
-  }
-
-  .hero-janela {
-    inset: auto;
-    left: 15.71%;
-    top: 42.3%;
-    width: 68.57%;
-    height: 53.85%;
-    border-radius: 48% 48% 44% 44% / 55% 55% 45% 45%;
-  }
-
-  .hero-dedo {
+  .hero {
+    --largura: min(92vw, 82.5rem);
+    --tit: clamp(2.5rem, min(3.7vw, 6.4vh), 4rem);
+    --sub: clamp(1rem, min(1.3vw, 2.3vh), 1.25rem);
+    --copy-topo: calc(5.5rem + 3vh);
+    --copy-fim: calc(var(--copy-topo) + var(--tit) * 3.41 + var(--sub) * 3 + 5.25rem);
+    --domo-top: calc(var(--copy-fim) + 1.75rem);
+    --domo: min(40vw, 44rem);
     display: block;
-    position: absolute;
-    overflow: hidden;
-    border-radius: 50%;
+    min-height: max(100dvh, 40rem);
   }
 
-  .hero-dedo:nth-of-type(1) { left: 0;      top: 21.79%; width: 24.29%; height: 26.92%; transform: rotate(-24deg); }
-  .hero-dedo:nth-of-type(2) { left: 21.43%; top: 1.28%;  width: 25.71%; height: 28.85%; transform: rotate(-8deg); }
-  .hero-dedo:nth-of-type(3) { left: 52.86%; top: 1.28%;  width: 25.71%; height: 28.85%; transform: rotate(8deg); }
-  .hero-dedo:nth-of-type(4) { left: 75.71%; top: 21.79%; width: 24.29%; height: 26.92%; transform: rotate(24deg); }
+  .hero-palco {
+    position: static;
+    width: auto;
+    aspect-ratio: auto;
+    margin: 0;
+  }
+}
 
-  /* Cartão de vidro CLARO sobre a foto. */
-  .hero-cartao {
-    display: flex;
-    position: absolute;
-    z-index: 2;
-    align-items: center;
-    gap: 0.5rem;
-    color: #081c24;
-    background: rgb(255 255 255 / 0.86);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgb(255 255 255 / 0.7);
-    box-shadow: 0 22px 44px -22px rgb(0 0 0 / 0.55);
+@media (min-width: 1536px) {
+  .hero {
+    --largura: min(92vw, 90rem);
+  }
+}
+
+.hero-janela,
+.hero-dedo-foto {
+  position: absolute;
+  overflow: hidden;
+  border: 4px solid rgb(255 255 255 / 0.92);
+  box-shadow: 0 22px 44px -24px rgb(4 30 40 / 0.65);
+}
+
+.hero-dedo {
+  position: absolute;
+}
+
+.hero-dedo-foto {
+  inset: 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-janela,
+  .hero-dedo-foto {
+    border-width: 5px;
+  }
+}
+
+/* A almofada é a fachada, no formato de cúpula da almofada do LOGO. */
+.hero-janela {
+  left: 14.3%;
+  top: 40.1%;
+  width: 71.4%;
+  height: 56.9%;
+  border-radius: 50% 50% 40% 40% / 64% 64% 36% 36%;
+  transition:
+    box-shadow 0.4s var(--ease-soft),
+    filter 0.4s var(--ease-soft);
+}
+
+/* Recorte: aproxima para a esquerda e tira a placa de estacionamento. */
+.hero-foto {
+  object-position: var(--hero-pos, center 42%);
+  transform: scale(1.16);
+  transform-origin: 28% 45%;
+}
+
+.hero-dedo-foto {
+  border-radius: 50%;
+  /* Anel só aparece no hover (em repouso a pata fica limpa). */
+  outline: 2px dashed rgb(191 230 244 / 0);
+  outline-offset: 7px;
+  transition:
+    box-shadow 0.4s var(--ease-soft),
+    outline-color 0.4s var(--ease-soft),
+    filter 0.4s var(--ease-soft);
+}
+
+.hero-dedo:nth-of-type(1) { --giro: -24deg; left: 0;      top: 21.79%; width: 24.29%; height: 26.92%; transform: rotate(-24deg); }
+.hero-dedo:nth-of-type(2) { --giro: -8deg;  left: 21.43%; top: 1.28%;  width: 25.71%; height: 28.85%; transform: rotate(-8deg); }
+.hero-dedo:nth-of-type(3) { --giro: 8deg;   left: 52.86%; top: 1.28%;  width: 25.71%; height: 28.85%; transform: rotate(8deg); }
+.hero-dedo:nth-of-type(4) { --giro: 24deg;  left: 75.71%; top: 21.79%; width: 24.29%; height: 26.92%; transform: rotate(24deg); }
+
+@media (min-width: 1024px) {
+  /*
+    Dedos em ARCO sobre a almofada, como no logo (JM: "tem que perceber que
+    é uma pata se formando"): os de dentro, maiores, ficam altos e colados
+    ao texto; os de fora ficam mais abertos e mais baixos, na altura do topo
+    da almofada. `--meio` é meia largura do bloco de texto (o maior entre
+    título, apoio e a dupla de botões), para os dedos nunca encostarem na copy.
+  */
+  .hero {
+    --meio: max(calc(var(--tit) * 4.1), calc(var(--sub) * 11.5), 14.5rem);
+    --wi: min(calc(var(--largura) * 0.14), 27vh);
+    --wo: min(calc(var(--largura) * 0.12), 22vh);
+    --topo-fora: calc(var(--domo-top) - var(--wo) * 0.35);
+    --topo-dentro: calc(var(--topo-fora) - 1rem - var(--wi) * 1.13);
   }
 
-  .hero-cartao--local {
-    right: 11%;
-    bottom: 1%;
-    padding: 0.55rem 1.1rem;
-    border-radius: 999px;
-    font-size: 0.875rem;
-    font-weight: 600;
+  .hero-dedo:nth-of-type(1) {
+    --giro: -30deg;
+    --w: var(--wo);
+    left: calc(50% - var(--meio) - var(--wi) * 0.55 - 2.25rem - var(--wo));
+    top: var(--topo-fora);
+  }
+
+  .hero-dedo:nth-of-type(2) {
+    --giro: -12deg;
+    --w: var(--wi);
+    left: calc(50% - var(--meio) - 1.75rem - var(--wi));
+    top: var(--topo-dentro);
+  }
+
+  .hero-dedo:nth-of-type(3) {
+    --giro: 12deg;
+    --w: var(--wi);
+    left: calc(50% + var(--meio) + 1.75rem);
+    top: var(--topo-dentro);
+  }
+
+  .hero-dedo:nth-of-type(4) {
+    --giro: 30deg;
+    --w: var(--wo);
+    left: calc(50% + var(--meio) + var(--wi) * 0.55 + 2.25rem);
+    top: var(--topo-fora);
+  }
+
+  .hero-dedo:is(:nth-of-type(1), :nth-of-type(2), :nth-of-type(3), :nth-of-type(4)) {
+    width: var(--w);
+    height: calc(var(--w) * 1.13);
+    transform: rotate(var(--giro));
+  }
+
+  /* A almofada: grande, centrada, logo abaixo dos botões. */
+  .hero-janela {
+    left: 50%;
+    top: var(--domo-top);
+    width: var(--domo);
+    height: calc(var(--domo) * 0.84);
+    translate: -50% 0;
+    border-width: 6px;
+    box-shadow:
+      0 0 0 12px rgb(126 192 220 / 0.16),
+      0 0 90px 10px rgb(126 192 220 / 0.28),
+      0 30px 60px -24px rgb(4 30 40 / 0.8);
+  }
+
+  /* Enquadra letreiro e porta sem cortar o nome da clínica. */
+  .hero-foto {
+    object-position: center 58%;
+    transform: scale(1.1);
+    transform-origin: 4% 58%;
+  }
+}
+
+/* O dedo da Dra. Carol é o destaque (BRIEF): anel ciano fixo. */
+.hero-dedo--destaque .hero-dedo-foto {
+  outline: 3px solid #7ec0dc;
+  outline-offset: 5px;
+}
+
+/*
+  Celular e tablet (JM, 16/09/2026): sem hover, e os quatro dedos iguais, com
+  o mesmo anel ciano e o mesmo brilho em volta. O destaque da Dra. Carol fica
+  só no rótulo.
+*/
+@media (max-width: 1023px) {
+  .hero-dedo-foto,
+  .hero-dedo--destaque .hero-dedo-foto {
+    outline: 2.5px solid #7ec0dc;
+    outline-offset: 4px;
+    box-shadow:
+      0 0 16px 3px rgb(126 192 220 / 0.45),
+      0 22px 44px -24px rgb(4 30 40 / 0.65);
+    transition: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Rótulo em pílula pendurado na borda de baixo do dedo, sempre na horizontal. */
+.hero-dedo-rotulo {
+  position: absolute;
+  left: 50%;
+  bottom: -0.55rem;
+  z-index: 1;
+  transform: translateX(-50%) rotate(calc(var(--giro, 0deg) * -1));
+  white-space: nowrap;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.95);
+  color: #0c2b36;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  box-shadow: 0 8px 18px -10px rgb(4 30 40 / 0.6);
+  transition: box-shadow 0.3s ease;
+}
+
+/*
+  Rótulo da Dra. Carol: branco como os outros, com o anel ciano do dedo em
+  volta. Em ciano chapado ele parecia um segundo botão e sumia no fundo.
+*/
+.hero-dedo--destaque .hero-dedo-rotulo {
+  background: #ffffff;
+  color: #0d4658;
+  font-weight: 800;
+  box-shadow:
+    0 0 0 2px #7ec0dc,
+    0 8px 18px -8px rgb(4 30 40 / 0.7);
+}
+
+/* No celular só a Dra. Carol tem rótulo: quatro pílulas lotariam a pata pequena. */
+@media (max-width: 639px) {
+  .hero-dedo:not(.hero-dedo--destaque) .hero-dedo-rotulo {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-dedo-rotulo {
+    bottom: -0.7rem;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* O coração do logo, dentro da almofada: o único vermelho da dobra. */
+.hero-coracao {
+  position: absolute;
+  right: 8%;
+  bottom: 9%;
+  z-index: 2;
+  width: 11.2%;
+  filter: drop-shadow(0 6px 10px rgb(4 30 40 / 0.45));
+}
+
+/* No desktop a base da almofada pode passar da dobra: o coração sobe. */
+@media (min-width: 1024px) {
+  .hero-coracao {
+    right: 7%;
+    bottom: auto;
+    top: 46%;
+    width: 8%;
   }
 }
 
 /*
-  CELULAR E TABLET: véu que deixa o meio limpo (letreiro) e fecha escuro no pé.
+  ENTRADA: a pata "carimba". Almofada primeiro (Revelar), dedos em sequência
+  com um leve quique, coração por último. Só opacidade e escala.
 */
-@media (max-width: 1023px) {
-  .hero-veu {
-    background: linear-gradient(
-      180deg,
-      rgb(7 34 44 / 0.38) 0%,
-      rgb(7 34 44 / 0) 17%,
-      rgb(7 34 44 / 0) 40%,
-      rgb(7 34 44 / 0.55) 58%,
-      rgb(7 34 44 / 0.86) 76%,
-      rgb(7 34 44 / 0.95) 100%
-    );
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dedo {
+    animation: dedo-entra 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .hero-dedo:nth-of-type(1) { animation-delay: 0.35s; }
+  .hero-dedo:nth-of-type(2) { animation-delay: 0.47s; }
+  .hero-dedo:nth-of-type(3) { animation-delay: 0.59s; }
+  .hero-dedo:nth-of-type(4) { animation-delay: 0.71s; }
+
+  .hero-coracao {
+    animation: dedo-entra 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.95s both;
+  }
+
+  /* No celular o coração bate devagar, sozinho: é o toque de vida da dobra. */
+  @media (hover: none) {
+    .hero-coracao {
+      animation:
+        dedo-entra 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.95s both,
+        coracao-bate 2.6s ease-in-out 1.8s infinite;
+    }
   }
 }
 
-/* A copy é clara nos dois tamanhos. Troca de tokens, como no `.cabecalho-escuro`. */
+@keyframes dedo-entra {
+  from {
+    opacity: 0;
+    scale: 0.4;
+  }
+}
+
+@keyframes coracao-bate {
+  0%, 60%, 100% { scale: 1; }
+  15% { scale: 1.18; }
+  30% { scale: 0.96; }
+  45% { scale: 1.1; }
+}
+
+/*
+  HOVER (só com mouse de verdade) = brilho, nunca crescer nem deslocar.
+*/
+/*
+  HOVER (só com mouse, desktop): a FOTO aproxima dentro do dedo, suave. Sem
+  brilho e sem mexer no contorno (JM, 16/09/2026). `scale` é propriedade
+  separada, então soma com o zoom de enquadramento que vem inline.
+*/
+.hero-dedo-foto img {
+  transition: scale 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (min-width: 1024px) {
+  .hero-dedo:hover .hero-dedo-foto img {
+    scale: 1.14;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-dedo-foto img {
+    transition: none;
+  }
+}
+
+/* ── A COPY ───────────────────────────────────────────────────────────── */
+
+/* Clara em qualquer largura. Troca de tokens, como no `.cabecalho-escuro`. */
 .hero-copy {
   --text: #ffffff;
   --text-2: #d6e9ef;
@@ -361,43 +797,116 @@
   color: var(--text);
 }
 
-/* Desktop, sobre o ciano: rótulo e destaque mais claros, e o botão BRANCO,
-   que num fundo ciano destaca mais que o ciano-claro. */
+.hero-destaque {
+  color: #a8d6e8;
+}
+
+/*
+  CTA secundário (Ver serviços): pílula vazada, mesma altura do botão de
+  WhatsApp, para não disputar com ele. Só o contorno acende no hover.
+*/
+.hero-cta-servicos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1.5px solid rgb(255 255 255 / 0.55);
+  padding: calc(1rem - 1.5px) 1.75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #ffffff;
+  text-decoration: none;
+  transition:
+    border-color 0.25s var(--ease-soft),
+    background-color 0.25s var(--ease-soft),
+    box-shadow 0.25s var(--ease-soft);
+}
+
+.hero-cta-servicos svg {
+  color: #7ec0dc;
+}
+
+.hero-cta-servicos:hover,
+.hero-cta-servicos:focus-visible {
+  border-color: #ffffff;
+  background: rgb(255 255 255 / 0.08);
+  box-shadow: 0 0 22px 2px rgb(126 192 220 / 0.35);
+}
+
+/* O título quebra por sentido em qualquer largura. */
+.hero-trecho {
+  display: block;
+}
+
 @media (min-width: 1024px) {
   .hero-copy {
     --text-2: #e3f2f7;
     --brand: #e6f5fa;
-    --action: #ffffff;
-    --action-hover: #e6f5fa;
-    --on-action: #0f3644;
+    /* Botão principal mais luminoso: precisa dominar o centro da pata. */
+    --action: #9ad6ee;
+    --action-hover: #c4e8f5;
+    z-index: 2;
+    /* A copy passa por cima dos dedos, mas não captura o ponteiro deles. */
+    pointer-events: none;
   }
-}
 
-/*
-  Celular de tela BAIXA (iPhone SE e afins, ~667px). A copy inteira subia até
-  o letreiro e cobria o nome da clínica. Aqui sai o rótulo e a subhead, e o
-  título desce um tamanho: o letreiro volta a aparecer limpo acima da copy.
-*/
-@media (max-width: 1023px) and (max-height: 720px) {
-  .hero-rotulo,
-  .hero-sub {
-    display: none;
+  /* Medidas explícitas: a posição da almofada depende da altura exata da copy. */
+  .hero-copy > div {
+    padding-top: var(--copy-topo);
+  }
+
+  .hero-copy > * > * {
+    pointer-events: auto;
+  }
+
+  .hero-copy .cta-brilho {
+    box-shadow: 0 16px 34px -14px rgb(2 20 28 / 0.9);
   }
 
   .hero-titulo {
     margin-top: 0;
-    font-size: 1.95rem;
+    font-size: var(--tit);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+
+  .hero-sub {
+    margin-top: calc(var(--tit) * 0.35);
+    font-size: var(--sub);
+    line-height: 1.5;
+  }
+
+  #ancora-cta-hero {
+    margin-top: 1.75rem;
   }
 }
 
-/* Recorte da fachada: no celular a foto é tela cheia e deitada no letreiro. */
-.hero-foto {
-  object-position: var(--hero-pos-mobile, 30% center);
-}
+/*
+  Celular de tela BAIXA (iPhone SE e afins, ~667px): pata menor, para os
+  botões caberem na primeira tela.
+*/
+@media (max-width: 639px) and (max-height: 720px) {
+  /* Pata menor e com respiro de 20px abaixo da navbar; o espaço sai do vão
+     entre a pata e a copy. */
+  .hero-palco {
+    width: min(52vw, 12.25rem);
+    margin-top: 5.75rem;
+  }
 
-@media (min-width: 1024px) {
-  .hero-foto {
-    object-position: var(--hero-pos, center 42%);
+  .hero-copy > div {
+    padding-top: 1rem;
+  }
+
+  .hero-dedo-rotulo {
+    font-size: 0.5625rem;
+    padding: 0.15rem 0.4rem;
+  }
+
+  .hero-titulo {
+    font-size: 1.85rem;
   }
 }
 
@@ -587,12 +1096,13 @@
 .cta-brilho::after {
   content: "";
   position: absolute;
-  inset: -3px;
+  /* inset 0: com -3px sobrava uma faixa escura entre o botão e o brilho. */
+  inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  box-shadow:
-    0 0 0 3px color-mix(in srgb, var(--action) 30%, transparent),
-    0 0 22px 5px color-mix(in srgb, var(--action) 50%, transparent);
+  /* Só brilho difuso: o anel sólido de 3px lia como borda dupla ou foco de
+     teclado nos prints (council do hero, 16/09/2026). */
+  box-shadow: 0 0 26px 4px color-mix(in srgb, var(--action) 55%, transparent);
   opacity: 0;
 }
 
@@ -665,6 +1175,37 @@
 }
 
 /*
+  Convite final (bloco escuro): patinhas claras, mais discretas no centro,
+  onde ficam o título e o botão.
+*/
+.fechamento-patas {
+  --patas-cor: #a8d6e8;
+  --patas-opacidade: 0.12;
+}
+
+.fechamento-patas::before {
+  -webkit-mask-image:
+    var(--textura-patas),
+    radial-gradient(ellipse 34% 60% at 50% 50%, rgb(0 0 0 / 0.25) 0%, #000 100%);
+  mask-image:
+    var(--textura-patas),
+    radial-gradient(ellipse 34% 60% at 50% 50%, rgb(0 0 0 / 0.25) 0%, #000 100%);
+  -webkit-mask-size: 420px 420px, 100% 100%;
+  mask-size: 420px 420px, 100% 100%;
+  -webkit-mask-repeat: space, no-repeat;
+  mask-repeat: space, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+@media (max-width: 639px) {
+  .fechamento-patas::before {
+    -webkit-mask-size: 240px 240px, 100% 100%;
+    mask-size: 240px 240px, 100% 100%;
+  }
+}
+
+/*
   FAQ — perguntas em card, uma aberta por vez.
 
   15/09/2026 (JM: "mais um clique, mais profissional"). Antes eram linhas
@@ -680,9 +1221,12 @@
 .faq-lista {
   display: grid;
   gap: 0.75rem;
+  /* A página não "corrige" a rolagem enquanto um card fecha e outro abre. */
+  overflow-anchor: none;
 }
 
 .faq-item {
+  overflow-anchor: none;
   border-radius: var(--radius-card);
   border: 1px solid var(--hairline);
   background-color: color-mix(in srgb, var(--surface) 55%, transparent);

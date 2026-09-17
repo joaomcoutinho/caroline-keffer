@@ -83,20 +83,20 @@ export const hero = {
   subhead:
     "Clínica geral, cirurgia, especialidades, exames e banho e tosa na Torre, com a Dra. Carol.",
   /** No celular a copy fica sobre a foto: só o essencial. */
-  subheadCurta: "Clínica, cirurgia, exames e banho e tosa, com a Dra. Carol.",
+  subheadCurta: "Clínica, cirurgia, exames, banho e tosa, com a Dra. Carol.",
   /**
    * Os quatro DEDOS da pata do hero no desktop (a almofada é a fachada).
    * Fotos reais: atendimentos da galeria, o especialista e o consultório.
    */
   pata: [
-    { src: "/images/servico_especialista.webp", alt: "Veterinário sorrindo ao lado de um golden retriever sobre a mesa de exame", posicao: "60% 30%" },
-    { src: "/images/galeria/atendimento-01.webp", alt: "Colaboradora sorrindo e abraçando um buldogue francês preto e branco", posicao: "50% 35%" },
-    { src: "/images/galeria/atendimento-05.webp", alt: "Colaboradora segurando um filhote de yorkshire junto ao rosto", posicao: "50% 35%" },
-    { src: "/images/consultorio_card.webp", alt: "Consultório da clínica com a mesa de atendimento e o selo da clínica iluminado na parede", posicao: "50% 45%" },
+    { src: "/images/servico_especialista.webp", alt: "Veterinário sorrindo ao lado de um golden retriever sobre a mesa de exame", posicao: "60% 12%", rotulo: "Especialidades", zoom: 1, origem: "50% 50%", destaque: false },
+    { src: "/images/hero_dra_lulu.webp", alt: "Dra. Caroline Keffer sorrindo com um lulu da pomerânia no colo", posicao: "50% 30%", rotulo: "Dra. Carol", zoom: 1, origem: "50% 50%", destaque: true },
+    { src: "/images/galeria/atendimento-03.webp", alt: "Colaboradora sorrindo com um cocker spaniel de laço vermelho no colo", posicao: "50% 32%", rotulo: "Atendimento", zoom: 1, origem: "50% 50%", destaque: false },
+    { src: "/images/galeria/atendimento-05.webp", alt: "Colaboradora segurando um filhote de yorkshire junto ao rosto", posicao: "50% 35%", rotulo: "Equipe", zoom: 1, origem: "50% 50%", destaque: false },
   ],
-  /** Rótulo acima do título. */
-  rotulo: "Clínica veterinária · Torre, Recife",
   cta: CTA_PRIMARIO,
+  /** CTA secundário do hero: leva à dobra de serviços. */
+  ctaServicos: { rotulo: "Ver serviços", href: "#servicos" },
   ctaMicrocopy: "Resposta no mesmo dia, em horário de funcionamento.",
   foto: {
     /*
@@ -118,8 +118,6 @@ export const hero = {
     alt: "Fachada da Clínica Veterinária Caroline Keffer vista da calçada, com o céu aberto",
     /** O letreiro fica no terço de cima do quadro. */
     posicao: "center 42%",
-    /** Celular: foto em tela cheia, recortada até o letreiro inteiro. */
-    posicaoMobile: "30% center",
   },
 } as const;
 

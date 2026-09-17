@@ -26,7 +26,7 @@ type Props = {
   foi assentando". Esta é a curva de folha que o iOS usa: arranca firme, sem
   salto, e freia macio.
 */
-const DURACAO = 380;
+const DURACAO = 440;
 const CURVA = "cubic-bezier(0.32, 0.72, 0, 1)";
 
 /**
@@ -88,7 +88,13 @@ export function ItemFaq({ pergunta, resposta, aberto, aoAlternar }: Props) {
     animacao.current?.cancel();
 
     if (aberto) d.open = true;
-    const para = aberto ? s.offsetHeight + c.offsetHeight : s.offsetHeight;
+    /*
+      A borda do card entra na conta: o <details> é border-box, então a altura
+      animada inclui a borda. Sem ela o card pulava 2px no último quadro, ao
+      abrir e ao fechar (16/09/2026, JM: "abertura sem travar").
+    */
+    const borda = d.offsetHeight - d.clientHeight;
+    const para = borda + (aberto ? s.offsetHeight + c.offsetHeight : s.offsetHeight);
 
     d.style.overflow = "hidden";
     const anim = d.animate(
@@ -101,16 +107,16 @@ export function ItemFaq({ pergunta, resposta, aberto, aoAlternar }: Props) {
     c.animate(
       aberto
         ? [
-            { opacity: 0, transform: "translateY(-6px)" },
+            { opacity: 0, transform: "translateY(-4px)" },
             { opacity: 1, transform: "none" },
           ]
         : [
             { opacity: 1, transform: "none" },
-            { opacity: 0, transform: "translateY(-6px)" },
+            { opacity: 0, transform: "translateY(-4px)" },
           ],
       {
-        duration: aberto ? DURACAO * 0.85 : DURACAO * 0.55,
-        delay: aberto ? DURACAO * 0.12 : 0,
+        duration: aberto ? DURACAO * 0.9 : DURACAO * 0.5,
+        delay: aberto ? DURACAO * 0.1 : 0,
         easing: CURVA,
         fill: "both",
       },

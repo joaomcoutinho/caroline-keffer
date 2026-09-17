@@ -34,7 +34,7 @@ export function Cabecalho() {
       pode começar no topo absoluto da página, com a foto subindo até a borda.
     */
     <header className="cabecalho-encolhe fixed inset-x-0 top-0 z-40 px-4 pt-3 sm:px-6 sm:pt-4">
-      <div className="cabecalho-pilula cabecalho-escuro mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between gap-4 rounded-full pr-2 pl-3 sm:gap-6 sm:pr-3 sm:pl-4">
+      <div className="cabecalho-pilula cabecalho-escuro mx-auto flex h-16 w-full max-w-[1200px] 2xl:max-w-[1400px] items-center justify-between gap-4 rounded-full pr-2 pl-3 sm:gap-6 sm:pr-3 sm:pl-4">
         <a
           href="#topo"
           aria-label="Clínica Pet Caroline Keffer, ir para o topo"

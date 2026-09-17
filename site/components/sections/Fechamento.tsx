@@ -14,7 +14,8 @@ import { ctaFinal, rodape, contato, navegacao } from "@/content/site";
 export function Fechamento() {
   return (
     <div className="bloco-escuro mt-px">
-      <section className="px-5 py-24 sm:px-8 md:py-32">
+      {/* Patinhas da marca no fundo do convite final (JM, 16/09/2026). */}
+      <section className="fechamento-patas fundo-patas relative overflow-hidden px-5 py-24 sm:px-8 md:py-32">
         <div className="mx-auto max-w-[52ch] text-center">
           <Revelar>
             <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-5xl">
