@@ -3076,177 +3076,159 @@ html:has(.visor[open]) {
 
 
 /*
-  Card de membro da equipe: grade rígida + HOLOFOTE.
+  EQUIPE · FICHA QUE SOBE (18/09/2026, opção E1 escolhida pelo JM).
 
-  11/09/2026 (JM): o arco foi lido como hierarquia ("por que alguns em destaque
-  no meio?"), e a leitura está certa: deslocamento vertical sempre comunica
-  importância. Os quatro voltam ao MESMO nível, e a interatividade passa a vir
-  da resposta ao cursor, não do arranjo.
+  O card é a foto inteira, em retrato 3:4, com uma ficha no pé. Em repouso a
+  ficha mostra nome e função sobre um véu; com o cursor (ou o foco do teclado)
+  ela ABRE: a linha de detalhe e o botão entram, a foto aproxima devagar e uma
+  patinha da marca é carimbada no canto. Os outros três recuam em opacidade.
 
-  É o mesmo padrão da parede de atendimentos (`.parede-foto`): o card sob o cursor
-  sobe, ganha o halo ciano e a foto aproxima; os outros três recuam em
-  opacidade sem sair do lugar. Em repouso todos são iguais. Ninguém fica em
-  destaque por decisão de layout, só por decisão de quem está olhando.
-
-  Sobe ainda o CTA de WhatsApp sobre a foto, mesmo botão do site inteiro.
-  `:focus-within` faz tudo isso valer também para o teclado, porque o CTA é
-  focável. Em toque (`hover: none`) nada disto se aplica e o CTA não existe:
-  lá quem agenda é a barra fixa.
-
-  `:has()` em vez de `ul:hover`: com `ul:hover` o vão entre os cards também
-  contava como "sobre a grade" e apagava os quatro de uma vez.
+  A abertura usa `grid-template-rows: 0fr → 1fr`, que anima altura sem número
+  mágico e sem medir nada no JavaScript.
 */
 .membro-card {
   transition:
     opacity 0.4s var(--ease-soft),
-    transform 0.4s var(--ease-soft);
+    scale 0.4s var(--ease-soft);
 }
 
 .membro-foto {
-  transition:
-    transform 0.45s var(--ease-soft),
-    border-color 0.45s var(--ease-soft),
-    box-shadow 0.45s var(--ease-soft);
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  border: 1px solid color-mix(in srgb, var(--brand) 26%, transparent);
+  aspect-ratio: 3 / 4;
+  box-shadow: 0 20px 40px -30px rgb(4 30 40 / 0.6);
 }
 
 .membro-foto img {
-  transition: transform 0.7s var(--ease-soft);
+  transition: scale 0.8s var(--ease-soft);
 }
 
-/* Véu ciano da foto. Fica em ::after para não custar um elemento no DOM. */
+/* Véu que dá leitura à ficha, sempre presente. */
 .membro-foto::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0;
   background: linear-gradient(
-    to top,
-    color-mix(in srgb, var(--text) 62%, transparent),
-    color-mix(in srgb, var(--brand) 10%, transparent) 55%,
-    transparent
+    0deg,
+    rgb(7 34 44 / 0.94) 0%,
+    rgb(7 34 44 / 0.7) 26%,
+    rgb(7 34 44 / 0.12) 55%,
+    rgb(7 34 44 / 0) 78%
   );
-  transition: opacity 0.4s var(--ease-soft);
 }
 
-/*
-  CARIMBO DE PATA (18/09/2026, JM: "melhora esse hover, mais autêntico"). Uma
-  patinha da marca entra girando no canto do retrato quando o cursor chega.
-  É o mesmo desenho da textura do site, então a interação fala a língua da
-  marca em vez de acender um halo genérico.
-*/
+/* Carimbo de patinha no canto: entra girando quando a ficha abre. */
 .membro-foto::before {
   content: "";
   position: absolute;
-  z-index: 2;
-  top: 0.6rem;
-  right: 0.6rem;
-  height: 2.1rem;
-  width: 2.1rem;
+  z-index: 3;
+  top: 0.75rem;
+  right: 0.75rem;
+  height: 2rem;
+  width: 2rem;
   pointer-events: none;
   opacity: 0;
-  rotate: -18deg;
+  rotate: -20deg;
   scale: 0.6;
   background-color: #ffffff;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5' transform='rotate(-20 8 17)'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5' transform='rotate(20 32 17)'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5' transform='rotate(-20 8 17)'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5' transform='rotate(20 32 17)'/%3E%3C/svg%3E") center / contain no-repeat;
   transition:
     opacity 0.45s var(--ease-soft),
-    rotate 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    scale 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    rotate 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    scale 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* CTA que sobe sobre a foto. Só existe onde há hover ou foco. */
-.membro-cta {
+.membro-ficha {
   position: absolute;
-  inset-inline: 0;
-  bottom: 0;
   z-index: 2;
-  display: flex;
-  justify-content: center;
-  padding: 0 0.75rem 1rem;
+  inset: auto 0 0;
+  padding: 1rem 1rem 1.1rem;
+  color: #ffffff;
+}
+
+.membro-papel {
+  margin-top: 0.15rem;
+  font-size: 0.8125rem;
+  color: #cfe3ea;
+}
+
+/* A parte que abre. `0fr → 1fr` anima a altura sem número mágico. */
+.membro-abre {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.membro-abre-interno {
+  overflow: hidden;
+}
+
+.membro-detalhe {
+  margin-top: 0.7rem;
+  border-top: 1px solid rgb(255 255 255 / 0.22);
+  padding-top: 0.7rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: #e3f2f7;
+}
+
+.membro-cta {
+  margin-top: 0.8rem;
   opacity: 0;
-  transform: translateY(14px);
-  pointer-events: none;
+  translate: 0 8px;
   transition:
-    opacity 0.35s var(--ease-soft),
-    transform 0.35s var(--ease-soft);
-}
-
-@media (hover: none) {
-  .membro-cta {
-    display: none;
-  }
-}
-
-.membro-nome {
-  position: relative;
-  display: inline-block;
-  transition: color 0.35s var(--ease-soft);
-}
-
-.membro-nome::after {
-  content: "";
-  position: absolute;
-  bottom: -0.3rem;
-  left: 0;
-  height: 2px;
-  width: 0;
-  border-radius: 999px;
-  background-color: var(--brand);
-  transition: width 0.4s var(--ease-soft);
+    opacity 0.35s var(--ease-soft) 0.1s,
+    translate 0.35s var(--ease-soft) 0.1s;
 }
 
 @media (hover: hover) {
-  /* Os que NÃO estão sob o cursor (ou sob o foco) recuam. */
-  .equipe-grade:has(.membro-card:hover) .membro-card:not(:hover),
-  .equipe-grade:has(.membro-card:focus-within) .membro-card:not(:focus-within) {
-    opacity: 0.55;
-    transform: scale(0.985);
-  }
-
-  /* 17/09/2026: sem salto e sem halo. O retrato é que ganha cor. */
-  .membro-card:hover .membro-foto,
-  .membro-card:focus-within .membro-foto {
-    border-color: color-mix(in srgb, var(--brand) 62%, transparent);
-  }
-
-  /* O retrato aproxima de leve, devagar: nada de tingido nem de salto. */
   .membro-card:hover .membro-foto img,
   .membro-card:focus-within .membro-foto img {
-    transform: scale(1.04);
-  }
-
-  .membro-card:hover .membro-foto::after,
-  .membro-card:focus-within .membro-foto::after {
-    opacity: 1;
+    scale: 1.04;
   }
 
   .membro-card:hover .membro-foto::before,
   .membro-card:focus-within .membro-foto::before {
-    opacity: 0.9;
+    opacity: 0.92;
     rotate: 0deg;
     scale: 1;
+  }
+
+  .membro-card:hover .membro-abre,
+  .membro-card:focus-within .membro-abre {
+    grid-template-rows: 1fr;
   }
 
   .membro-card:hover .membro-cta,
   .membro-card:focus-within .membro-cta {
     opacity: 1;
-    transform: none;
-    pointer-events: auto;
+    translate: 0 0;
   }
 
-  .membro-card:hover .membro-nome,
-  .membro-card:focus-within .membro-nome {
-    color: var(--brand);
-  }
-
-  .membro-card:hover .membro-nome::after,
-  .membro-card:focus-within .membro-nome::after {
-    width: 100%;
+  /* Os que não estão sob o cursor recuam, sem sair do lugar. */
+  .equipe-grade:has(.membro-card:hover) .membro-card:not(:hover),
+  .equipe-grade:has(.membro-card:focus-within) .membro-card:not(:focus-within) {
+    opacity: 0.6;
+    scale: 0.99;
   }
 }
+
+/* No toque a ficha já nasce aberta; o botão não existe (a barra fixa faz o papel). */
+@media (hover: none) {
+  .membro-abre {
+    grid-template-rows: 1fr;
+  }
+
+  .membro-cta {
+    display: none;
+  }
+}
+
 
 /*
   CARD DE DEPOIMENTO — coreografia trazida do protótipo da Nuvens de Desejos

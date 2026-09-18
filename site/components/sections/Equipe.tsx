@@ -51,38 +51,55 @@ export function Equipe() {
         </Revelar>
       </div>
 
-      <ul className="equipe-grade mt-12 grid grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-4 lg:gap-7">
+      {/*
+        FICHA QUE SOBE (18/09/2026, JM escolheu a opção E1 entre três
+        protótipos). O card é a FOTO inteira; sobre ela, no pé, uma ficha com
+        nome e função. Ao chegar o cursor (ou o foco do teclado), a ficha abre:
+        entra a linha de detalhe e o botão de falar com a pessoa, e uma patinha
+        da marca é carimbada no canto.
+
+        No toque não há hover: a ficha já nasce aberta, sem o botão — lá quem
+        agenda é a barra fixa.
+      */}
+      <ul className="equipe-grade mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
         {equipe.membros.map((membro, i) => (
           <li key={membro.nome}>
             <Revelar atraso={0.08 + i * 0.06}>
               <article className="membro-card">
-                <div className="membro-foto relative overflow-hidden rounded-[var(--radius-card)] border border-brand/26">
+                <div className="membro-foto">
                   <Image
                     src={caminhoPublico(membro.foto)}
                     alt={membro.alt}
                     width={640}
-                    height={800}
-                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 45vw, 260px"
-                    className="aspect-4/5 w-full object-cover"
+                    height={854}
+                    sizes="(max-width: 1024px) 45vw, 280px"
+                    className="h-full w-full object-cover"
                   />
 
-                  {/* Sobe sobre a foto no hover e no foco. Some no toque. */}
-                  <div className="membro-cta">
-                    <BotaoWhatsapp rotulo={CTA_PRIMARIO} tamanho="compacto" />
-                  </div>
-                </div>
+                  <div className="membro-ficha">
+                    <h3 className="membro-nome font-display text-[1.05rem] leading-snug font-bold text-balance">
+                      {membro.nome}
+                    </h3>
+                    <p className="membro-papel">{membro.papel}</p>
 
-                <div className="mt-4 border-t border-hairline pt-4">
-                  <h3 className="font-display text-base leading-snug font-bold text-balance sm:text-[1.0625rem]">
-                    <span className="membro-nome">{membro.nome}</span>
-                  </h3>
-                  <p className="mt-1 text-sm text-text-3">{membro.papel}</p>
+                    <div className="membro-abre">
+                      <div className="membro-abre-interno">
+                        {membro.detalhe ? (
+                          <p className="membro-detalhe">{membro.detalhe}</p>
+                        ) : null}
+                        <div className="membro-cta">
+                          <BotaoWhatsapp rotulo={CTA_PRIMARIO} tamanho="compacto" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </article>
             </Revelar>
           </li>
         ))}
       </ul>
+
     </Secao>
   );
 }

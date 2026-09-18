@@ -463,23 +463,32 @@ export const equipe = {
     {
       nome: "Dra. Caroline Keffer",
       papel: "Médica Veterinária",
+      /* Só a Dra. Carol tem detalhe: é o único fato que o site já afirma.
+         Para as outras três, PEDIR À CLÍNICA uma linha cada (VALIDAR). */
+      detalhe: "Responsável técnica, há mais de 20 anos na Torre",
       foto: "/images/equipe-caroline-keffer.webp",
       alt: "Dra. Caroline Keffer, de jaleco branco, sorrindo",
     },
     {
       nome: "Dra. Isa Lopes",
+      /* VALIDAR com a clínica: uma linha curta sobre o que a pessoa faz. */
+      detalhe: "",
       papel: "Médica Veterinária",
       foto: "/images/equipe-isa-lopes.webp",
       alt: "Dra. Isa Lopes, de uniforme verde, com os braços cruzados",
     },
     {
       nome: "Camila Amaral",
+      /* VALIDAR com a clínica: uma linha curta sobre o que a pessoa faz. */
+      detalhe: "",
       papel: "Gerente",
       foto: "/images/equipe-camila-amaral.webp",
       alt: "Camila Amaral, de uniforme da clínica, sorrindo",
     },
     {
       nome: "Lucas Leal",
+      /* VALIDAR com a clínica: uma linha curta sobre o que a pessoa faz. */
+      detalhe: "",
       papel: "Pet Groomer",
       foto: "/images/equipe-lucas-leal.webp",
       alt: "Lucas Leal, pet groomer da clínica",
