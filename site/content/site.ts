@@ -128,7 +128,7 @@ export const hero = {
   fotoMobile: {
     src: "/images/fachada_hero.webp",
     alt: "Fachada da Clínica Veterinária Caroline Keffer vista de frente, com a entrada e as plantas na calçada",
-    posicao: "22% 50%",
+    posicao: "6% 50%",
   },
 } as const;
 
