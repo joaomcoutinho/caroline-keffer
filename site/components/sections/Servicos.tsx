@@ -18,19 +18,21 @@ export function Servicos() {
       className="fundo-patas relative scroll-mt-24 bg-surface px-5 py-20 sm:px-8 md:py-28"
     >
       <div className="mx-auto w-full max-w-[1200px]">
-        <Revelar atraso={0.08}>
+        <div className="max-w-[34ch]">
+          <Revelar>
+            <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
+              {servicos.headline}
+            </h2>
+          </Revelar>
+          <Revelar atraso={0.06}>
+            <p className="mt-5 text-lg leading-relaxed text-text-2">
+              {servicos.subhead}
+            </p>
+          </Revelar>
+        </div>
+
+        <Revelar atraso={0.12} className="mt-12">
           <ExploradorServicos
-            rotulo="Serviços da clínica"
-            cabecalho={
-              <div className="max-w-[46rem]">
-                <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl lg:text-[2.75rem]">
-                  {servicos.headline}
-                </h2>
-                <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-text-2">
-                  {servicos.subhead}
-                </p>
-              </div>
-            }
             itens={servicos.itens.map((i) => ({
               ...i,
               cta: (
@@ -41,6 +43,7 @@ export function Servicos() {
                 />
               ),
             }))}
+            rotulo="Serviços da clínica"
           />
         </Revelar>
       </div>

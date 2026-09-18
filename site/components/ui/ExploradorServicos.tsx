@@ -59,8 +59,6 @@ type Servico = {
 type Props = {
   itens: Servico[];
   rotulo: string;
-  /** Bloco editorial da dobra (título, apoio, CTA) na MESMA coluna das abas. */
-  cabecalho?: ReactNode;
 };
 
 /**
@@ -79,18 +77,18 @@ type Props = {
  * o mouse para explorar rápido, ou navega pelas setas do teclado. Um Tab só
  * entra na lista, e as setas percorrem — que é o comportamento esperado.
  */
-export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
+export function ExploradorServicos({ itens, rotulo }: Props) {
   const [ativo, setAtivo] = useState(0);
   const botoes = useRef<(HTMLButtonElement | null)[]>([]);
   const pendente = useRef<number | null>(null);
 
   /*
-    HOVER COM INTENÇÃO.
+    HOVER COM INTENÇÃO. Trocar de serviço no primeiro pixel faz a dobra piscar
+    quando o cursor só está ATRAVESSANDO a lista. Os 90ms separam "passei por
+    cima" de "quis ver este". Clique e teclado continuam instantâneos.
 
-    Trocar de serviço no primeiro pixel de contato faz a dobra piscar quando o
-    cursor só está ATRAVESSANDO a lista para chegar em outro lugar. Os 90ms de
-    espera separam "passei por cima" de "quis ver este". Clique e teclado
-    continuam instantâneos.
+    Não existe indicador que viaja entre as abas (18/09/2026, JM): cada aba
+    acende a própria marcação e apaga sozinha quando o cursor sai.
   */
   const cancelar = () => {
     if (pendente.current !== null) {
@@ -132,19 +130,21 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
 
   return (
     /*
-      18/09/2026 (JM escolheu a opção S3 entre três protótipos): cabeçalho,
-      SEIS PÍLULAS numa linha e um painel largo embaixo. A grade de duas
-      colunas (abas altas à esquerda, painel à direita) desalinhava foto e
-      texto e deixava espaço ocioso no topo da dobra.
-    */
-    <div className="flex flex-col gap-8">
-      {cabecalho}
+      `items-stretch` + a lista virando coluna com `justify-between` resolvem o
+      vão morto que sobrava embaixo dos seletores (JM, 11/09/2026).
 
+      A causa: a lista de abas tem altura própria (5 nomes), o painel tem outra
+      (foto 4:5 com o texto ao lado), e a do painel é bem maior. Com as
+      duas coladas no topo, a diferença virava buraco no pé da coluna esquerda.
+      Agora as abas se distribuem na altura inteira da fileira, e os fios entre
+      elas passam a dividir o espaço em vez de amontoar no topo.
+    */
+    <div className="grid items-stretch gap-8 lg:grid-cols-[17.5rem_minmax(0,1fr)] lg:gap-12">
       <div
         role="tablist"
         aria-label={rotulo}
-        aria-orientation="horizontal"
-        className="trilho-abas relative -mx-5 flex snap-x scroll-pl-5 flex-nowrap gap-1.5 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:mx-0 lg:justify-between lg:gap-2 lg:overflow-visible lg:px-0 lg:pb-0"
+        aria-orientation="vertical"
+        className="trilho-abas relative -mx-5 flex snap-x scroll-pl-5 gap-2 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:-mx-3 lg:h-full lg:flex-col lg:justify-between lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0"
       >
         {itens.map((item, i) => {
           const selecionado = i === ativo;
@@ -167,27 +167,29 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
               onMouseEnter={() => aoPassar(i)}
               onMouseLeave={cancelar}
               onKeyDown={(e) => aoTeclar(e, i)}
-              /*
-                CADA PÍLULA TEM O PRÓPRIO REALCE (JM, 18/09/2026: "hover
-                independente, sem acompanhar de um card para o outro"). Saiu a
-                lâmina que deslizava entre as abas: ela criava a impressão de
-                um realce que "escapava" do card quando o cursor saía.
-              */
-              className={`servico-aba group relative flex shrink-0 snap-start items-center gap-2 rounded-full border px-3.5 py-2.5 text-left whitespace-nowrap transition-[color,background-color,border-color] duration-250 ease-[var(--ease-soft)] lg:px-4 ${
+              className={`servico-aba group relative z-[1] flex shrink-0 snap-start items-center gap-3 rounded-full border px-5 py-3 text-left whitespace-nowrap transition-[color,border-color,background-color] duration-300 ease-[var(--ease-soft)] lg:w-full lg:flex-1 lg:shrink lg:rounded-none lg:border-0 lg:border-b lg:border-hairline lg:px-3 lg:py-5 lg:whitespace-normal ${
+                /*
+                  O rótulo da aba selecionada usa `text-text`, não `text-brand`.
+                  Com as superfícies mais claras, o teal da marca sobre a
+                  pílula tingida caía para 3,56 — reprovado em AA. Reduzir a
+                  tinta não resolvia (nem a 5% passava de 4,49). A seleção já é
+                  sinalizada pela borda, pelo preenchimento e, no desktop, pelo
+                  traço; a cor no texto era redundante e era o elo fraco.
+                */
                 selecionado
-                  ? "border-brand bg-brand/12 text-text"
-                  : "border-hairline text-text-2 hover:border-brand/45 hover:bg-brand/6 hover:text-acao-texto"
+                  ? "servico-aba--ativa border-brand bg-brand/10 text-text"
+                  : "border-hairline text-text-2 hover:bg-brand/6 hover:text-acao-texto"
               }`}
             >
               <Icone
-                size={18}
+                size={22}
                 weight="light"
                 className={`servico-icone shrink-0 transition-colors duration-300 ease-[var(--ease-soft)] ${
                   selecionado ? "text-brand" : "text-text-3 group-hover:text-acao-texto"
                 }`}
                 aria-hidden
               />
-              <span className="font-display text-[0.9rem] font-bold lg:text-[0.95rem]">
+              <span className="font-display text-base font-bold lg:text-lg">
                 {item.nome}
               </span>
             </button>
@@ -210,7 +212,7 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
         id="servico-painel"
         aria-labelledby={`servico-aba-${ativo}`}
         tabIndex={0}
-        className="servico-painel sm:grid sm:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] sm:items-center sm:gap-8 lg:gap-14"
+        className="sm:grid sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:items-center sm:gap-8 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-stretch lg:gap-12"
       >
         {/*
           AS MÍDIAS FICAM TODAS MONTADAS, empilhadas, e só a ativa aparece.
@@ -230,7 +232,7 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
           de cara de um serviço para outro. Agora é um formato só, sangrado, e o
           texto vai ao lado da foto em vez de embaixo.
         */}
-        <div className="servico-pilha relative aspect-4/3 w-full sm:aspect-4/5 lg:aspect-[5/4]">
+        <div className="servico-pilha relative aspect-4/5 w-full">
           {itens.map((item, i) => (
             <div
               key={item.nome}
@@ -259,7 +261,7 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
           são UM bloco, centrado na altura da foto, com o texto maior
           ocupando o espaço.
         */}
-        <div key={atual.nome} className="servico-texto flex flex-col lg:justify-center">
+        <div key={atual.nome} className="servico-painel flex flex-col lg:justify-center">
           <p className="mt-6 text-sm font-semibold tracking-[0.08em] text-brand tabular-nums sm:mt-0">
             {String(ativo + 1).padStart(2, "0")}
             <span className="text-text-3"> / {String(itens.length).padStart(2, "0")}</span>
