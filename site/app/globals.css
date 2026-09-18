@@ -2414,6 +2414,47 @@ html:has(.visor[open]) {
   outline-offset: 3px;
 }
 
+/* Botão de rota da seção Onde ficamos: peso de CTA, cor da marca. */
+.botao-mapa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  background-color: var(--action);
+  color: var(--on-action);
+  padding: 0.95rem 1.6rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 14px 28px -16px rgb(4 30 40 / 0.6);
+  transition:
+    background-color 0.25s var(--ease-soft),
+    box-shadow 0.25s var(--ease-soft);
+}
+
+.botao-mapa-seta {
+  transition: translate 0.3s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .botao-mapa:hover {
+    background-color: var(--action-hover);
+  }
+
+  .botao-mapa:hover .botao-mapa-seta {
+    translate: 4px 0;
+  }
+
+  .botao-mapa:hover svg {
+    animation: pino-cai 0.7s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+}
+
+.botao-mapa:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
 /*
   SELETOR DE SERVIÇO (lista vertical). Cada aba acende a própria marcação:
   tingido leve e, no desktop, um fio da marca na borda esquerda. Sem

@@ -34,11 +34,25 @@ export function OndeFicamos() {
                 <span className="block text-base text-text-3">
                   {contato.bairro} · {contato.cep}
                 </span>
-                <span className="casa-link mt-2">
-                  Como chegar pelo Google Maps
-                  <span aria-hidden>→</span>
-                </span>
               </span>
+            </a>
+          </Revelar>
+
+          {/*
+            Botão de rota em destaque (18/09/2026, JM: "fácil e atrativo de ver e
+            clicar"). É o pedido principal desta dobra, então ganha o peso de
+            botão, com o pino da marca, e não de link de texto.
+          */}
+          <Revelar atraso={0.08}>
+            <a
+              href={contato.mapa}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="botao-mapa mt-6"
+            >
+              <MapPinIcon size={20} weight="fill" aria-hidden />
+              Como chegar pelo Google Maps
+              <span aria-hidden className="botao-mapa-seta">→</span>
             </a>
           </Revelar>
 

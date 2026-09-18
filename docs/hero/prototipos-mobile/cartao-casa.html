@@ -1,0 +1,47 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cartão "Como chegar" · opções de hover</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--marca:#2e7a94;--acao:#1f6e88;--claro:#7ec0dc}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#cce4f0;color:#081c24;font-family:'Nunito Sans',sans-serif;padding:36px 28px 90px}
+h1{font-family:Nunito;font-size:25px}p.intro{color:#2c4450;margin:6px 0 24px;max-width:70ch}
+h2{font-family:Nunito;font-size:17px;margin:30px 0 4px}.nota{font-size:13.5px;color:#3d5866;max-width:70ch;margin-bottom:14px}
+.card{position:relative;display:flex;align-items:stretch;gap:6px;width:420px;border-radius:22px;background:rgba(255,255,255,.6);border:1px solid rgba(46,122,148,.22);overflow:hidden;text-decoration:none;color:inherit;cursor:pointer}
+.foto{width:140px;min-height:96px;flex:none;background:url(fachada_ceu.webp) 18% 44%/cover;-webkit-mask-image:linear-gradient(90deg,#000 55%,transparent);mask-image:linear-gradient(90deg,#000 55%,transparent)}
+.txt{display:grid;align-content:center;gap:3px;padding:14px 22px 14px 0}
+.txt b{font-family:Nunito;font-size:17px}.txt span{font-size:14px;color:#2c4450}.txt em{font-style:normal;font-weight:700;font-size:13px;color:#124355}
+
+/* H1 · borda que se desenha e segue correndo */
+@property --v{syntax:'<angle>';inherits:false;initial-value:0deg}
+.h1{border-color:transparent}
+.h1::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;background:conic-gradient(from var(--v),var(--acao) 0deg,var(--claro) 90deg,transparent 160deg,transparent 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s}
+.h1:hover::before{opacity:1;animation:vira 2.4s linear infinite}
+@keyframes vira{to{--v:360deg}}
+
+/* H2 · contorno traçado a partir do pino, como rota */
+.h2 svg.contorno{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.h2 svg.contorno rect{fill:none;stroke:var(--acao);stroke-width:2;stroke-dasharray:1100;stroke-dashoffset:1100;transition:stroke-dashoffset 1.2s cubic-bezier(.65,0,.35,1)}
+.h2:hover svg.contorno rect{stroke-dashoffset:0}
+
+/* H3 · pegadas andando até a porta */
+.h3 .passo{position:absolute;width:14px;height:14px;opacity:0;background:var(--acao);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5'/%3E%3C/svg%3E") center/contain no-repeat;rotate:-90deg}
+.h3 .passo:nth-child(1){right:22px;bottom:12px}.h3 .passo:nth-child(2){right:62px;bottom:20px}.h3 .passo:nth-child(3){right:102px;bottom:12px}.h3 .passo:nth-child(4){right:142px;bottom:20px}.h3 .passo:nth-child(5){right:182px;bottom:12px}
+.h3:hover .passo{animation:pisa 1.6s ease-out forwards}
+.h3:hover .passo:nth-child(2){animation-delay:.18s}.h3:hover .passo:nth-child(3){animation-delay:.36s}.h3:hover .passo:nth-child(4){animation-delay:.54s}.h3:hover .passo:nth-child(5){animation-delay:.72s}
+@keyframes pisa{0%{opacity:0;scale:.6}30%{opacity:.55;scale:1}100%{opacity:.35}}
+</style>
+<h1>Cartão "Como chegar" · três hovers</h1>
+<p class="intro">Passe o mouse em cada cartão. Nenhum usa zoom nem brilho.</p>
+
+<h2>H1 · Borda que corre (sua ideia)</h2>
+<p class="nota">No hover, um fio da marca aparece e fica correndo em volta do cartão, sem parar, enquanto o cursor estiver ali. É o "border beam" dos componentes do 21st.dev, na paleta da clínica.</p>
+<a class="card h1"><span class="foto"></span><span class="txt"><b>Tudo na mesma casa</b><span>📍 Rua Araguatins, 63 · Torre, Recife</span><em>Como chegar →</em></span></a>
+
+<h2>H2 · Contorno traçado como rota</h2>
+<p class="nota">A borda é desenhada uma vez, do começo ao fim, como a linha de uma rota no mapa sendo traçada. Acaba fechada em volta do cartão.</p>
+<a class="card h2"><svg class="contorno" viewBox="0 0 420 96" preserveAspectRatio="none"><rect x="1" y="1" width="418" height="94" rx="21"/></svg><span class="foto"></span><span class="txt"><b>Tudo na mesma casa</b><span>📍 Rua Araguatins, 63 · Torre, Recife</span><em>Como chegar →</em></span></a>
+
+<h2>H3 · Pegadas até a porta</h2>
+<p class="nota">Cinco pegadas aparecem uma atrás da outra, andando em direção à foto da fachada. É a marca levando a pessoa até a clínica.</p>
+<a class="card h3"><span class="passo"></span><span class="passo"></span><span class="passo"></span><span class="passo"></span><span class="passo"></span><span class="foto"></span><span class="txt"><b>Tudo na mesma casa</b><span>📍 Rua Araguatins, 63 · Torre, Recife</span><em>Como chegar →</em></span></a>
