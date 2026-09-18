@@ -932,10 +932,16 @@
   color: #7ec0dc;
 }
 
-.hero-cta-servicos:hover,
 .hero-cta-servicos:focus-visible {
   border-color: #ffffff;
   background: rgb(255 255 255 / 0.12);
+}
+
+@media (hover: hover) {
+  .hero-cta-servicos:hover {
+    border-color: #ffffff;
+    background: rgb(255 255 255 / 0.12);
+  }
 }
 
 /* O título quebra por sentido em qualquer largura. */
@@ -1176,11 +1182,17 @@
     filter 0.45s var(--ease-soft);
 }
 
-.assinatura-mxc:hover {
-  color: var(--text-2);
+@media (hover: hover) {
+  .assinatura-mxc:hover {
+    color: var(--text-2);
+  }
+
+  .assinatura-mxc:hover .assinatura-marca {
+    opacity: 1;
+    filter: brightness(1.28) saturate(1.15);
+  }
 }
 
-.assinatura-mxc:hover .assinatura-marca,
 .assinatura-mxc:focus-visible .assinatura-marca {
   opacity: 1;
   filter: brightness(1.28) saturate(1.15);
@@ -1190,6 +1202,28 @@
   outline: 2px solid var(--brand);
   outline-offset: 4px;
   border-radius: 8px;
+}
+
+/*
+  TOQUE = SÓ REDIRECIONA (18/09/2026, JM: "no mobile não deve ter animação de
+  hover nem de clique; só clicar e ir"). Todo efeito de hover do site está
+  atrás de `@media (hover: hover)`, que no celular é falso. Aqui somem os dois
+  últimos rastros do toque: o flash cinza que o navegador pinta ao tocar num
+  link e o "afundar" dos botões no clique. Os seletores (abas de serviço,
+  pílulas de plano, perguntas) continuam marcando qual está ativo — isso é
+  estado, não animação de clique.
+*/
+a,
+button,
+[role="tab"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) {
+  a:active,
+  button:not([role="tab"]):active {
+    scale: none;
+  }
 }
 
 /*
@@ -1322,8 +1356,10 @@
   isolation: isolate;
 }
 
-.botao-flutuante:hover {
-  background-color: #1fb457;
+@media (hover: hover) {
+  .botao-flutuante:hover {
+    background-color: #1fb457;
+  }
 }
 
 /*
@@ -1393,9 +1429,11 @@
     animation: cta-respira 4.2s ease-in-out infinite;
   }
 
-  /* Com o cursor em cima o ciclo para: a sombra fica na posição alta. */
-  .cta-brilho:hover {
-    animation-play-state: paused;
+  /* Com o cursor em cima o ciclo para (só com mouse: no toque não há hover). */
+  @media (hover: hover) {
+    .cta-brilho:hover {
+      animation-play-state: paused;
+    }
   }
 }
 
@@ -1814,9 +1852,14 @@
     para foco de teclado, e o ParedeAtendimentos ainda solta o foco devolvido
     quando a foto foi aberta com o mouse.
   */
-  .parede:hover .parede-trilho,
   .parede:has(.parede-foto:focus-visible) .parede-trilho {
     animation-play-state: paused;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .parede:hover .parede-trilho {
+      animation-play-state: paused;
+    }
   }
 }
 

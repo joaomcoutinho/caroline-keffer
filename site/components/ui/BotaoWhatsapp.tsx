@@ -63,7 +63,7 @@ export function BotaoWhatsapp({
   const t = tamanhos[tamanho];
 
   // `relative` e `cta-brilho` dão o feixe de luz que atravessa o botão; ver globals.css.
-  const base = `cta-brilho relative inline-flex items-center justify-center rounded-full font-semibold whitespace-nowrap transition-[transform,background-color] duration-200 ease-[var(--ease-soft)] active:scale-[0.98] ${t.caixa} ${t.texto}`;
+  const base = `cta-brilho relative inline-flex items-center justify-center rounded-full font-semibold whitespace-nowrap transition-[transform,background-color] duration-200 ease-[var(--ease-soft)] [@media(hover:hover)]:active:scale-[0.98] ${t.caixa} ${t.texto}`;
 
   const estilo = "bg-action text-on-action hover:bg-action-hover";
 
