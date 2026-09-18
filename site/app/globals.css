@@ -1422,16 +1422,38 @@ button,
 */
 .cta-brilho {
   isolation: isolate;
+  box-shadow: 0 10px 22px -16px rgb(4 30 40 / 0.55);
+}
+
+/*
+  18/09/2026 (JM: "o FAQ ainda trava no Safari"). A respiração animava o
+  `box-shadow` do próprio botão, e sombra não é animável no compositor: cada
+  quadro, para sempre, repintava o botão. No celular um desses botões mora na
+  barra fixa de vidro, então o Safari refazia o desfoque da barra 60 vezes por
+  segundo, e qualquer outra animação (o FAQ abrindo) disputava a mesma thread.
+
+  Agora a sombra da marca é ESTÁTICA, numa camada atrás do botão, e o que
+  respira é só a opacidade dela, que a GPU faz sozinha. O desenho é o mesmo.
+*/
+.cta-brilho::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: 0 16px 38px -14px color-mix(in srgb, var(--action) 70%, transparent);
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .cta-brilho {
+  .cta-brilho::after {
     animation: cta-respira 4.2s ease-in-out infinite;
   }
 
   /* Com o cursor em cima o ciclo para (só com mouse: no toque não há hover). */
   @media (hover: hover) {
-    .cta-brilho:hover {
+    .cta-brilho:hover::after {
       animation-play-state: paused;
     }
   }
@@ -1440,10 +1462,42 @@ button,
 @keyframes cta-respira {
   0%,
   100% {
-    box-shadow: 0 10px 22px -16px rgb(4 30 40 / 0.55);
+    opacity: 0;
   }
   50% {
-    box-shadow: 0 16px 38px -14px color-mix(in srgb, var(--action) 70%, transparent);
+    opacity: 1;
+  }
+}
+
+/*
+  Barras fixas no toque: sem desfoque de fundo. No iPhone o `backdrop-filter`
+  refaz o desfoque a cada quadro em que o conteúdo passa por baixo (rolagem,
+  FAQ abrindo), e era o maior custo por quadro da página. A lâmina fica quase
+  opaca na mesma tinta, então o desenho não muda.
+*/
+@media (hover: none) {
+  .barra-agendamento .vidro {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--brand) 8%, transparent),
+        transparent 60%
+      ),
+      color-mix(in srgb, var(--surface) 95%, transparent);
+  }
+
+  .cabecalho-escuro {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, #7ec0dc 12%, transparent),
+        transparent 62%
+      ),
+      color-mix(in srgb, #0f3644 96%, transparent);
   }
 }
 
