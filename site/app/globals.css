@@ -2990,9 +2990,7 @@ html:has(.visor[open]) {
   como marca d'água: é a mesma linguagem dos cards de plano e de depoimento.
 */
 .membro-card {
-  transition:
-    opacity 0.4s var(--ease-soft),
-    scale 0.4s var(--ease-soft);
+  transition: opacity 0.4s var(--ease-soft);
 }
 
 .membro-foto {
@@ -3002,10 +3000,6 @@ html:has(.visor[open]) {
   border: 1px solid color-mix(in srgb, var(--brand) 26%, transparent);
   aspect-ratio: 3 / 4;
   box-shadow: 0 20px 40px -30px rgb(4 30 40 / 0.6);
-}
-
-.membro-foto img {
-  transition: scale 0.9s var(--ease-soft);
 }
 
 /* Véu curto do pé, só para o nome ler em repouso. */
@@ -3114,11 +3108,8 @@ html:has(.visor[open]) {
 }
 
 @media (hover: hover) {
-  .membro-card:hover .membro-foto img,
-  .membro-card:focus-within .membro-foto img {
-    scale: 1.05;
-  }
-
+  /* 18/09/2026 (JM): sem zoom. A foto fica parada na posição original; o
+     destaque vem só da luz (véu que clareia) e do recuo dos outros. */
   .membro-card:hover .membro-abre,
   .membro-card:focus-within .membro-abre {
     translate: 0 0;
@@ -3139,7 +3130,6 @@ html:has(.visor[open]) {
   .equipe-grade:has(.membro-card:hover) .membro-card:not(:hover),
   .equipe-grade:has(.membro-card:focus-within) .membro-card:not(:focus-within) {
     opacity: 0.62;
-    scale: 0.99;
   }
 }
 
