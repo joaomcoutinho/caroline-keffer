@@ -40,7 +40,10 @@ export const contato = {
   endereco: "Rua Araguatins, 63",
   bairro: "Torre, Recife - PE",
   cep: "50710-060",
-  mapa: "https://maps.google.com/?q=Rua+Araguatins,+63+-+Torre,+Recife+-+PE,+50710-060",
+  /* Abre direto a clínica no Google Maps (nome + endereço acham a ficha dela). */
+  mapa: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    "Clínica Veterinária Caroline Keffer, Rua Araguatins, 63 - Torre, Recife - PE, 50710-060",
+  )}`,
 } as const;
 
 /** Um único rótulo por intenção, usado no site inteiro. */

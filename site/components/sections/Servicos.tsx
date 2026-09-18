@@ -42,7 +42,7 @@ export function Servicos() {
             </Revelar>
 
             <Revelar atraso={0.12}>
-              <a href="#onde-ficamos" className="casa-cartao">
+              <a href={contato.mapa} target="_blank" rel="noopener noreferrer" className="casa-cartao">
                 <span className="casa-cupula">
                   <Image
                     src={caminhoPublico("/images/fachada_ceu.webp")}

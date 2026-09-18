@@ -34,6 +34,10 @@ export function OndeFicamos() {
                 <span className="block text-base text-text-3">
                   {contato.bairro} · {contato.cep}
                 </span>
+                <span className="casa-link mt-2">
+                  Como chegar pelo Google Maps
+                  <span aria-hidden>→</span>
+                </span>
               </span>
             </a>
           </Revelar>
@@ -83,6 +87,14 @@ export function OndeFicamos() {
         </div>
 
         <Revelar atraso={0.1}>
+          {/* A foto da fachada também leva ao Google Maps. */}
+          <a
+            href={contato.mapa}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Abrir a clínica no Google Maps"
+            className="block"
+          >
           <Midia
             src={ondeFicamos.foto.src}
             posicao={ondeFicamos.foto.posicao}
@@ -92,6 +104,7 @@ export function OndeFicamos() {
             realce
             className="w-full"
           />
+          </a>
         </Revelar>
       </div>
     </Secao>
