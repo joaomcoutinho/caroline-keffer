@@ -1,4 +1,4 @@
-// Gera site/public/og.png (1200x630), o card de compartilhamento.
+// Gera site/public/og.jpg (1200x630), o card de compartilhamento.
 //
 // 15/09/2026: o card acompanha o hero atual. A foto passou a ser a FACHADA (a
 // mesma do hero) e a copy é a headline do site, não mais o retrato da Dra.
@@ -88,22 +88,22 @@ const html = `<!doctype html><html><head><meta charset="utf-8">
   }
   /* Poucas patinhas, espalhadas à mão: capricho de fundo, não textura. */
   .pata { position: absolute; fill: #a8d6e8; opacity: 0.1; }
-  .copy { position: absolute; left: 72px; top: 52px; bottom: 52px; width: 648px; display: flex; flex-direction: column; text-align: center; }
-  .marca { display: flex; align-items: center; gap: 18px; text-align: left; }
+  .copy { position: absolute; left: 72px; top: 52px; bottom: 52px; width: 648px; display: flex; flex-direction: column; }
+  .marca { display: flex; align-items: center; gap: 18px; }
   .marca img { width: 62px; height: 62px; border-radius: 50%; border: 2px solid #fff; }
   .marca b { display: block; font-weight: 700; font-size: 25px; line-height: 1.1; }
   .marca span { display: block; margin-top: 4px; font-weight: 700; font-size: 13px; letter-spacing: 0.12em; color: #a8d6e8; }
   .corpo { margin-top: auto; margin-bottom: auto; padding-top: 28px; }
   h1 { font-family: "Nunito", sans-serif; font-weight: 800; font-size: 54px; line-height: 1.02; letter-spacing: -0.025em; color: #fff; text-shadow: 0 2px 18px rgba(4, 30, 40, 0.45); }
   h1 em { font-style: normal; color: #a8d6e8; }
-  .cats { margin-top: 26px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .cats { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
   .cats span {
     display: inline-flex; align-items: center; height: 42px; padding: 0 17px;
     border-radius: 999px; border: 1.5px solid rgba(168, 214, 232, 0.55);
     background: rgba(168, 214, 232, 0.12);
     font-size: 18px; font-weight: 600; color: #e3f2f7; white-space: nowrap;
   }
-  .rodape { margin-top: 30px; display: flex; justify-content: center; }
+  .rodape { margin-top: 30px; display: flex; }
   .cta { display: inline-flex; align-items: center; gap: 12px; height: 64px; padding: 0 34px; border-radius: 999px; background: #7ec0dc; color: #07222c; font-weight: 700; font-size: 24px; white-space: nowrap; box-shadow: 0 18px 40px -18px rgba(4, 30, 40, 0.9); }
   .cta svg { width: 26px; height: 26px; }
 </style></head><body>
@@ -177,10 +177,15 @@ try {
   });
   console.log("fontes carregadas:", fontes.result?.result?.value || "(nenhuma, confira a rede)");
 
-  const r = await cmd("Page.captureScreenshot", { format: "png", clip: { x: 0, y: 0, width: W, height: H, scale: 1 } });
-  const destino = path.join(RAIZ_SITE, "public/og.png");
+  /*
+    JPEG, e não PNG: a foto da fachada em PNG dava mais de 500 KB, e prévia de
+    link pesada demora (ou nem aparece) em app de mensagem. Em JPEG 88 o mesmo
+    card fica em torno de 150 KB, sem diferença visível nesse tamanho.
+  */
+  const r = await cmd("Page.captureScreenshot", { format: "jpeg", quality: 88, clip: { x: 0, y: 0, width: W, height: H, scale: 1 } });
+  const destino = path.join(RAIZ_SITE, "public/og.jpg");
   writeFileSync(destino, Buffer.from(r.result.data, "base64"));
-  console.log(`og.png gerado: ${destino}`);
+  console.log(`og.jpg gerado: ${destino}`);
   ws.close();
 } finally {
   chrome.kill();

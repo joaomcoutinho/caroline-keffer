@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${meta.url}/og.png`,
+        url: `${meta.url}/og.jpg`,
         width: 1200,
         height: 630,
         alt: "Fachada da Clínica Veterinária Caroline Keffer, na Torre, ao lado da chamada do site",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: meta.titulo,
     description: meta.descricao,
-    images: [`${meta.url}/og.png`],
+    images: [`${meta.url}/og.jpg`],
   },
 };
 
