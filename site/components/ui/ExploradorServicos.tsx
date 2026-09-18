@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import {
   StethoscopeIcon,
   FirstAidKitIcon,
@@ -85,46 +85,12 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
   const pendente = useRef<number | null>(null);
 
   /*
-    INDICADOR DESLIZANTE (14/09/2026, JM: "melhora o card seletor quando passa o
-    mouse").
-
-    Antes cada aba acendia a própria lâmina no hover, e trocar de aba era uma
-    apagar e outra acender em lugares diferentes. Agora existe UMA lâmina só,
-    que DESLIZA até a aba sob o cursor. O olho acompanha o movimento em vez de
-    procurar onde acendeu, e é esse deslocamento contínuo que dá a sensação de
-    interface fluida.
-
-    Duas velocidades de propósito:
-      - a LÂMINA vai para a aba sob o cursor na hora (sem espera), então o
-        retorno visual é imediato;
-      - o PAINEL só troca depois dos 90ms de intenção (ver abaixo), então passar
-        o mouse por cima não faz o conteúdo piscar.
-    Ao sair da lista, a lâmina volta para a aba ativa.
-
-    A posição é MEDIDA (`offsetTop`/`offsetHeight`) e aplicada por `transform`,
-    que o compositor anima sem recalcular layout.
-  */
-  const lista = useRef<HTMLDivElement>(null);
-  const [destaque, setDestaque] = useState<number | null>(null);
-  const [lamina, setLamina] = useState<{ x: number; y: number; l: number; a: number } | null>(
-    null,
-  );
-
-  const medir = useCallback((i: number) => {
-    const b = botoes.current[i];
-    if (!b) return;
-    // As pílulas quebram em duas linhas: a posição precisa dos dois eixos.
-    setLamina({ x: b.offsetLeft, y: b.offsetTop, l: b.offsetWidth, a: b.offsetHeight });
-  }, []);
-
-  /*
     HOVER COM INTENÇÃO.
 
     Trocar de serviço no primeiro pixel de contato faz a dobra piscar quando o
-    cursor só está ATRAVESSANDO a lista para chegar em outro lugar: seis
-    serviços trocam em sequência em poucos milissegundos. Os 90ms de espera
-    separam "passei por cima" de "quis ver este". Clique e teclado continuam
-    instantâneos, porque ali a intenção já está declarada.
+    cursor só está ATRAVESSANDO a lista para chegar em outro lugar. Os 90ms de
+    espera separam "passei por cima" de "quis ver este". Clique e teclado
+    continuam instantâneos.
   */
   const cancelar = () => {
     if (pendente.current !== null) {
@@ -139,41 +105,6 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
   };
 
   useEffect(() => cancelar, []);
-
-  const alvoLamina = destaque ?? ativo;
-  // Lido pelo ResizeObserver, que vive fora do ciclo de render. Escrito só
-  // dentro do efeito: escrever em ref durante o render é proibido no React 19.
-  const alvoRef = useRef(alvoLamina);
-
-  /*
-    Depende de `ativo` TAMBÉM, e não só do alvo. Trocar de serviço muda a altura
-    do painel, e a lista, esticada junto, redistribui as abas. Com o cursor
-    parado na mesma aba o alvo não muda, então sem `ativo` aqui a lâmina ficava
-    na posição de antes da troca: medido, 69px fora da aba de Banho e tosa.
-
-    `useLayoutEffect` roda depois que o DOM novo já foi aplicado e antes da
-    pintura, e ler `offsetTop` ali força o layout na hora. A posição lida é a
-    definitiva, sem depender de o navegador estar pintando a página.
-  */
-  useLayoutEffect(() => {
-    alvoRef.current = alvoLamina;
-    medir(alvoLamina);
-  }, [alvoLamina, ativo, medir]);
-
-  /*
-    Rede de segurança para mudanças de tamanho que NÃO vêm de trocar de
-    serviço: redimensionar a janela, a fonte terminar de carregar e mudar a
-    quebra de linha. A troca de serviço é coberta pelo efeito acima, de forma
-    síncrona; o ResizeObserver só entrega aviso quando a página está sendo
-    pintada, então ele não serve de única garantia.
-  */
-  useEffect(() => {
-    const el = lista.current;
-    if (!el) return;
-    const obs = new ResizeObserver(() => medir(alvoRef.current));
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [medir]);
 
   const irPara = (i: number) => {
     cancelar();
@@ -210,33 +141,11 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
       {cabecalho}
 
       <div
-        ref={lista}
         role="tablist"
         aria-label={rotulo}
         aria-orientation="horizontal"
-        onMouseLeave={() => setDestaque(null)}
         className="trilho-abas relative -mx-5 flex snap-x scroll-pl-5 flex-nowrap gap-1.5 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:mx-0 lg:justify-between lg:gap-2 lg:overflow-visible lg:px-0 lg:pb-0"
       >
-        {/*
-          A pílula que DESLIZA até a aba sob o cursor (antes era uma lâmina
-          vertical). Existe sempre no HTML e fica invisível até a primeira
-          medida, para não aparecer de estalo depois da hidratação.
-        */}
-        <span
-          aria-hidden
-          className="servico-lamina"
-          data-pronta={lamina !== null}
-          data-hover={destaque !== null && destaque !== ativo}
-          style={
-            lamina
-              ? {
-                  transform: `translate(${lamina.x}px, ${lamina.y}px)`,
-                  width: `${lamina.l}px`,
-                  height: `${lamina.a}px`,
-                }
-              : undefined
-          }
-        />
         {itens.map((item, i) => {
           const selecionado = i === ativo;
           const Icone = icones[item.icone];
@@ -255,21 +164,19 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
                 cancelar();
                 setAtivo(i);
               }}
-              onMouseEnter={() => {
-                setDestaque(i);
-                aoPassar(i);
-              }}
+              onMouseEnter={() => aoPassar(i)}
               onMouseLeave={cancelar}
               onKeyDown={(e) => aoTeclar(e, i)}
               /*
-                A marcação de seleção é SÓ a pílula que desliza por baixo. Antes
-                a borda também mudava de cor, e como a borda segue o `ativo`
-                (que espera 90ms de intenção) e a pílula segue o cursor na hora,
-                as duas marcavam abas diferentes no meio do caminho — era isso
-                que parecia bug (JM, 18/09/2026).
+                CADA PÍLULA TEM O PRÓPRIO REALCE (JM, 18/09/2026: "hover
+                independente, sem acompanhar de um card para o outro"). Saiu a
+                lâmina que deslizava entre as abas: ela criava a impressão de
+                um realce que "escapava" do card quando o cursor saía.
               */
-              className={`servico-aba group relative z-[1] flex shrink-0 snap-start items-center gap-2 rounded-full border border-hairline px-3.5 py-2.5 text-left whitespace-nowrap transition-[color] duration-300 ease-[var(--ease-soft)] lg:px-4 ${
-                selecionado ? "text-text" : "text-text-2 hover:text-acao-texto"
+              className={`servico-aba group relative flex shrink-0 snap-start items-center gap-2 rounded-full border px-3.5 py-2.5 text-left whitespace-nowrap transition-[color,background-color,border-color] duration-250 ease-[var(--ease-soft)] lg:px-4 ${
+                selecionado
+                  ? "border-brand bg-brand/12 text-text"
+                  : "border-hairline text-text-2 hover:border-brand/45 hover:bg-brand/6 hover:text-acao-texto"
               }`}
             >
               <Icone

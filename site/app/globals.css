@@ -2282,48 +2282,6 @@ html:has(.visor[open]) {
 
   Só no desktop. No celular as abas são pílulas num trilho horizontal.
 */
-.servico-lamina {
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  /* A pílula que desliza por baixo das abas (S3, 18/09/2026). */
-  .servico-lamina {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    display: block;
-    pointer-events: none;
-    border-radius: 999px;
-    background-color: color-mix(in srgb, var(--brand) 12%, transparent);
-    transition:
-      transform 0.38s var(--ease-soft),
-      width 0.38s var(--ease-soft),
-      height 0.38s var(--ease-soft),
-      background-color 0.25s var(--ease-soft),
-      opacity 0.25s var(--ease-soft);
-  }
-
-  .servico-lamina[data-hover="true"] {
-    background-color: color-mix(in srgb, var(--brand) 16%, transparent);
-  }
-
-  /* Contorno da pílula ativa vive na PRÓPRIA lâmina: um marcador só. */
-  .servico-lamina::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    border: 1px solid color-mix(in srgb, var(--brand) 55%, transparent);
-  }
-
-  .servico-lamina[data-pronta="false"] {
-    opacity: 0;
-    transition: none;
-  }
-}
-
 /* As fotos ficam empilhadas: só a ativa aparece, e a troca é só opacidade. */
 .servico-quadro {
   opacity: 0;
