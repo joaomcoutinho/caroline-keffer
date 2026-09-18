@@ -84,8 +84,18 @@ export function Planos() {
                   className="plano-chip"
                   style={{ ["--plano-cor" as string]: plano.cor }}
                 >
-                  <span aria-hidden className="plano-ponto" />
-                  {plano.nome}
+                  {/* A marca do plano dentro da pílula: reconhecimento na hora. */}
+                  <span aria-hidden className="plano-chip-marca">
+                    <Image
+                      src={caminhoPublico(plano.logo)}
+                      alt=""
+                      width={240}
+                      height={110}
+                      sizes="96px"
+                      className="max-h-full w-auto max-w-full object-contain"
+                    />
+                  </span>
+                  <span className="plano-chip-nome">{plano.nome}</span>
                 </a>
               </li>
             ))}

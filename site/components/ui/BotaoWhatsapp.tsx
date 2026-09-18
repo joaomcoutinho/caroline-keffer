@@ -75,8 +75,11 @@ export function BotaoWhatsapp({
       aria-label={nomeAcessivel ?? undefined}
       className={`${base} ${estilo} ${className}`}
     >
-      {/* Verde oficial do WhatsApp (JM, 17/09/2026): o ícone vira o destaque do botão. */}
-      <LogoWhatsapp size={t.icone} className="text-[#25D366]" />
+      {/*
+        O glifo é o OFICIAL, na tinta da Caroline (JM, 18/09/2026). Verde
+        original só no botão flutuante.
+      */}
+      <LogoWhatsapp size={t.icone} />
       {rotulo}
     </a>
   );

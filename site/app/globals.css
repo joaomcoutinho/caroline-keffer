@@ -764,13 +764,24 @@
   `scale` é propriedade separada, então soma com o `rotate` de cada dedo.
 */
 .hero-dedo {
-  transition: scale 0.45s var(--ease-soft);
+  /*
+    O crescimento roda numa camada própria (`will-change`), com curva longa de
+    saída: sem isso o navegador rasterizava a foto de novo a cada quadro e o
+    movimento saía aos pulos (JM, 18/09/2026: "tem que ser fluido, contínuo").
+  */
+  will-change: transform, scale;
+  transition: scale 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-dedo-foto,
+.hero-dedo-foto img {
+  backface-visibility: hidden;
 }
 
 @media (hover: hover) and (min-width: 1024px) {
   .hero-dedo:hover {
     z-index: 2;
-    scale: 1.07;
+    scale: 1.08;
   }
 }
 
@@ -1407,12 +1418,8 @@
 }
 
 .cartaz-foto {
-  filter: saturate(0.25);
-  transition: filter 1.2s var(--ease-soft);
-}
-
-[data-revelar]:not(.revelar-oculto) .cartaz-foto {
-  filter: saturate(1);
+  /* Cor original desde o primeiro quadro (JM, 18/09/2026). */
+  transform: scale(1.02);
 }
 
 .cartaz-texto {
@@ -1919,15 +1926,7 @@
 }
 
 @media (hover: hover) {
-  /* 17/09/2026: nada de salto. A foto acende em cor e o fio interno aparece. */
-  .parede-foto img {
-    filter: saturate(0.4);
-    transition: filter 0.6s var(--ease-soft);
-  }
-
-  .parede-foto:hover img {
-    filter: saturate(1.05);
-  }
+  /* 18/09/2026: foto sempre na cor original; o hover só acende o fio interno. */
 
   .parede-foto:hover::after {
     opacity: 1;
@@ -2111,35 +2110,10 @@ html:has(.visor[open]) {
   transition: border-color 0.5s var(--ease-soft);
 }
 
-.midia-realce::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    0deg,
-    color-mix(in srgb, var(--brand) 55%, transparent) 0%,
-    color-mix(in srgb, var(--brand) 40%, transparent) 100%
-  );
-  mix-blend-mode: color;
-  opacity: 0.55;
-  transition: opacity 0.7s var(--ease-soft);
-}
-
+/* 18/09/2026 (JM): as fotos ficam SEMPRE na cor original. Sem véu, sem tingido. */
 @media (hover: hover) {
   .midia-realce:hover {
     border-color: color-mix(in srgb, var(--brand) 55%, transparent);
-  }
-
-  .midia-realce:hover::after {
-    opacity: 0;
-  }
-}
-
-@media (hover: none) {
-  .midia-realce::after {
-    opacity: 0;
   }
 }
 
@@ -2792,14 +2766,40 @@ html:has(.visor[open]) {
   height: 3.25rem;
   align-items: center;
   justify-content: center;
-  filter: grayscale(1);
-  opacity: 0.38;
 }
 
 @media (min-width: 640px) {
   .marca-dagua {
     height: 4.5rem;
   }
+}
+
+/* Índice dos serviços no topo da dobra: nomes em duas colunas, só leitura. */
+.servicos-indice {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+  font-size: 0.9375rem;
+  color: var(--text-2);
+}
+
+.servicos-indice li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-top: 1px solid var(--hairline);
+  padding-top: 0.5rem;
+}
+
+.servicos-indice li::before {
+  content: "";
+  height: 0.4rem;
+  width: 0.4rem;
+  flex: none;
+  border-radius: 999px;
+  background-color: var(--brand);
 }
 
 /* ESCOLHA DO PLANO: pílulas, todas na tela, sem esperar o loop passar. */
@@ -2837,13 +2837,34 @@ html:has(.visor[open]) {
     color 0.3s var(--ease-soft);
 }
 
-.plano-ponto {
-  display: block;
-  height: 0.55rem;
-  width: 0.55rem;
+/*
+  A pílula traz a MARCA do plano, não um pontinho colorido (JM, 18/09/2026:
+  "badge de cor é genérico demais"). A cor da marca só aparece no fio de baixo,
+  que cresce quando o cursor chega.
+*/
+.plano-chip-marca {
+  display: flex;
+  height: 1.6rem;
+  width: 3.6rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.plano-chip-nome {
+  position: relative;
+  padding-bottom: 0.15rem;
+}
+
+.plano-chip-nome::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
   border-radius: 999px;
   background-color: var(--plano-cor, var(--brand));
-  transition: scale 0.3s var(--ease-soft);
+  transition: width 0.35s var(--ease-soft);
 }
 
 @media (hover: hover) {
@@ -2853,9 +2874,13 @@ html:has(.visor[open]) {
     background-color: color-mix(in srgb, var(--plano-cor, var(--brand)) 12%, var(--surface));
   }
 
-  .plano-chip:hover .plano-ponto {
-    scale: 1.5;
+  .plano-chip:hover .plano-chip-nome::after {
+    width: 100%;
   }
+}
+
+.plano-chip:focus-visible .plano-chip-nome::after {
+  width: 100%;
 }
 
 .plano-chip:focus-visible {
@@ -2939,15 +2964,7 @@ html:has(.visor[open]) {
 }
 
 .membro-foto img {
-  /* Em repouso a cor fica puxada para o azul da marca; o cursor devolve a cor. */
-  filter: saturate(0.3);
-  transition: filter 0.7s var(--ease-soft);
-}
-
-@media (hover: none) {
-  .membro-foto img {
-    filter: saturate(1);
-  }
+  transition: transform 0.7s var(--ease-soft);
 }
 
 /* Véu ciano da foto. Fica em ::after para não custar um elemento no DOM. */
@@ -2965,6 +2982,33 @@ html:has(.visor[open]) {
     transparent
   );
   transition: opacity 0.4s var(--ease-soft);
+}
+
+/*
+  CARIMBO DE PATA (18/09/2026, JM: "melhora esse hover, mais autêntico"). Uma
+  patinha da marca entra girando no canto do retrato quando o cursor chega.
+  É o mesmo desenho da textura do site, então a interação fala a língua da
+  marca em vez de acender um halo genérico.
+*/
+.membro-foto::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0.6rem;
+  right: 0.6rem;
+  height: 2.1rem;
+  width: 2.1rem;
+  pointer-events: none;
+  opacity: 0;
+  rotate: -18deg;
+  scale: 0.6;
+  background-color: #ffffff;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5' transform='rotate(-20 8 17)'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5' transform='rotate(20 32 17)'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5' transform='rotate(-20 8 17)'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5' transform='rotate(20 32 17)'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition:
+    opacity 0.45s var(--ease-soft),
+    rotate 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    scale 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* CTA que sobe sobre a foto. Só existe onde há hover ou foco. */
@@ -3022,14 +3066,22 @@ html:has(.visor[open]) {
     border-color: color-mix(in srgb, var(--brand) 62%, transparent);
   }
 
+  /* O retrato aproxima de leve, devagar: nada de tingido nem de salto. */
   .membro-card:hover .membro-foto img,
   .membro-card:focus-within .membro-foto img {
-    filter: saturate(1.05);
+    transform: scale(1.04);
   }
 
   .membro-card:hover .membro-foto::after,
   .membro-card:focus-within .membro-foto::after {
     opacity: 1;
+  }
+
+  .membro-card:hover .membro-foto::before,
+  .membro-card:focus-within .membro-foto::before {
+    opacity: 0.9;
+    rotate: 0deg;
+    scale: 1;
   }
 
   .membro-card:hover .membro-cta,
