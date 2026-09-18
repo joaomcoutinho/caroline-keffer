@@ -215,7 +215,7 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
         aria-label={rotulo}
         aria-orientation="horizontal"
         onMouseLeave={() => setDestaque(null)}
-        className="trilho-abas relative -mx-5 flex snap-x scroll-pl-5 gap-2 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0 lg:pb-0"
+        className="trilho-abas relative -mx-5 flex snap-x scroll-pl-5 flex-nowrap gap-1.5 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:mx-0 lg:justify-between lg:gap-2 lg:overflow-visible lg:px-0 lg:pb-0"
       >
         {/*
           A pílula que DESLIZA até a aba sob o cursor (antes era uma lâmina
@@ -261,21 +261,26 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
               }}
               onMouseLeave={cancelar}
               onKeyDown={(e) => aoTeclar(e, i)}
-              className={`servico-aba group relative z-[1] flex shrink-0 snap-start items-center gap-2.5 rounded-full border px-5 py-3 text-left whitespace-nowrap transition-[color,border-color,background-color] duration-300 ease-[var(--ease-soft)] ${
-                selecionado
-                  ? "border-brand text-text"
-                  : "border-hairline text-text-2 hover:text-acao-texto"
+              /*
+                A marcação de seleção é SÓ a pílula que desliza por baixo. Antes
+                a borda também mudava de cor, e como a borda segue o `ativo`
+                (que espera 90ms de intenção) e a pílula segue o cursor na hora,
+                as duas marcavam abas diferentes no meio do caminho — era isso
+                que parecia bug (JM, 18/09/2026).
+              */
+              className={`servico-aba group relative z-[1] flex shrink-0 snap-start items-center gap-2 rounded-full border border-hairline px-3.5 py-2.5 text-left whitespace-nowrap transition-[color] duration-300 ease-[var(--ease-soft)] lg:px-4 ${
+                selecionado ? "text-text" : "text-text-2 hover:text-acao-texto"
               }`}
             >
               <Icone
-                size={20}
+                size={18}
                 weight="light"
                 className={`servico-icone shrink-0 transition-colors duration-300 ease-[var(--ease-soft)] ${
                   selecionado ? "text-brand" : "text-text-3 group-hover:text-acao-texto"
                 }`}
                 aria-hidden
               />
-              <span className="font-display text-[0.95rem] font-bold lg:text-base">
+              <span className="font-display text-[0.9rem] font-bold lg:text-[0.95rem]">
                 {item.nome}
               </span>
             </button>

@@ -184,7 +184,7 @@ export function Hero() {
               className="mx-auto mt-6 flex w-fit flex-col items-stretch gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:items-center sm:justify-center lg:mt-6 xl:mt-8"
             >
               <BotaoWhatsapp rotulo={hero.cta} />
-              <a href={hero.ctaServicos.href} className="hero-cta-servicos">
+              <a href={hero.ctaServicos.href} className="hero-cta-servicos cta-brilho relative">
                 {hero.ctaServicos.rotulo}
                 <svg aria-hidden viewBox="0 0 20 20" width="18" height="18" fill="none">
                   <path d="M10 4v12m0 0-5-5m5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

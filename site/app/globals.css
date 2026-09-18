@@ -1398,27 +1398,63 @@
   estática, então não há repintura a cada quadro.
 */
 /*
-  17/09/2026 (JM: "o site não pode ter esse glow que parece tech"). O halo
-  pulsante dos CTAs saiu. A classe `cta-brilho` continua nos botões só como
-  gancho de posição; quem dá peso agora é a cor e a sombra de elevação.
+  FEIXE DE LUZ NOS CTAs (18/09/2026, JM: "algo chamativo, sem ser glow
+  genérico"). Referência: o "shine" que Stripe e Vercel usam em botões de
+  destaque — uma faixa de luz diagonal que ATRAVESSA o botão e some, em vez de
+  um halo aceso o tempo todo.
+
+  Três decisões que tiram o ar de template:
+  - a faixa é estreita e inclinada, e passa RÁPIDO (0,9s), com espera longa
+    entre uma passada e outra: o olho pega o movimento, não o brilho;
+  - ela é recortada pelo próprio botão (`overflow: hidden` + raio herdado),
+    então nada vaza para fora da pílula;
+  - no hover ela passa de novo, na hora, e é o único retorno visual.
 */
+.cta-brilho {
+  overflow: hidden;
+  isolation: isolate;
+}
+
 .cta-brilho::after {
-  content: none;
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -60%;
+  bottom: -60%;
+  left: -40%;
+  width: 34%;
+  pointer-events: none;
+  rotate: 16deg;
+  translate: -220% 0;
+  background: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0) 0%,
+    rgb(255 255 255 / 0.45) 42%,
+    rgb(255 255 255 / 0.9) 50%,
+    rgb(255 255 255 / 0.45) 58%,
+    rgb(255 255 255 / 0) 100%
+  );
+  mix-blend-mode: overlay;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .cta-brilho::after {
-    animation: cta-respira 2.8s ease-in-out infinite;
+    animation: feixe 7s cubic-bezier(0.32, 0.72, 0, 1) 1.4s infinite;
+  }
+
+  .cta-brilho:hover::after {
+    animation: feixe 0.9s cubic-bezier(0.32, 0.72, 0, 1);
   }
 }
 
-@keyframes cta-respira {
-  0%,
-  100% {
-    opacity: 0;
+@keyframes feixe {
+  0% {
+    translate: -220% 0;
   }
-  50% {
-    opacity: 1;
+  /* 13% de 7s = 0,9s de passada; o resto do ciclo é espera. */
+  13%,
+  100% {
+    translate: 420% 0;
   }
 }
 
@@ -2270,7 +2306,16 @@ html:has(.visor[open]) {
   }
 
   .servico-lamina[data-hover="true"] {
-    background-color: color-mix(in srgb, var(--brand) 18%, transparent);
+    background-color: color-mix(in srgb, var(--brand) 16%, transparent);
+  }
+
+  /* Contorno da pílula ativa vive na PRÓPRIA lâmina: um marcador só. */
+  .servico-lamina::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid color-mix(in srgb, var(--brand) 55%, transparent);
   }
 
   .servico-lamina[data-pronta="false"] {
@@ -3241,21 +3286,30 @@ html:has(.visor[open]) {
   transition: transform 0.55s var(--ease-soft);
 }
 
+/*
+  As aspas ficam INTEIRAS dentro do card (18/09/2026, JM: "quase não aparece e
+  o surgimento está bugado"). Antes o glifo nascia 22px acima da borda e o
+  `overflow: hidden` cortava o topo dele: o que aparecia era meia aspa.
+*/
 .depoimento-card::after {
   content: "\201D";
   position: absolute;
   z-index: 0;
-  top: -1.4rem;
-  right: 0.6rem;
+  top: 0.9rem;
+  right: 1.1rem;
   font-family: var(--font-display);
-  font-size: 7rem;
-  line-height: 1;
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 0.8;
   color: var(--brand);
-  opacity: 0.08;
+  opacity: 0.16;
   pointer-events: none;
+  transform-origin: 80% 20%;
   transition:
-    opacity 0.35s var(--ease-soft),
-    transform 0.55s var(--ease-soft);
+    opacity 0.4s var(--ease-soft),
+    rotate 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    scale 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    translate 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .depoimento-card > * {
@@ -3279,8 +3333,10 @@ html:has(.visor[open]) {
   }
 
   .depoimento-card:hover::after {
-    opacity: 0.18;
-    transform: translateY(4px) rotate(-4deg);
+    opacity: 0.34;
+    translate: -0.15rem 0.25rem;
+    rotate: -5deg;
+    scale: 1.08;
   }
 
   .depoimento-card:hover .depoimento-estrelas span {
