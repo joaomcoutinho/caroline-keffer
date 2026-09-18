@@ -3239,6 +3239,53 @@ html:has(.visor[open]) {
   }
 }
 
+/*
+  CELULAR E TABLET (18/09/2026, JM): duas linhas de três, todos à mostra e do
+  mesmo tamanho. Sai a fileira rolável: o contêiner com rolagem cortava a
+  borda de baixo das pílulas, que era a falha que aparecia no pé delas. Na
+  grade não há recorte, então o contorno fecha inteiro.
+*/
+@media (max-width: 1023px) {
+  .plano-escolhas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+    overflow: visible;
+    padding: 0;
+    margin-inline: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .plano-escolhas > li {
+    display: flex;
+  }
+
+  .plano-escolhas .plano-chip {
+    width: 100%;
+    min-height: 4.6rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+    border-radius: 1rem;
+    padding: 0.65rem 0.4rem;
+    text-align: center;
+    white-space: normal;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+  }
+
+  .plano-escolhas .plano-chip-marca {
+    width: 3.6rem;
+    height: 1.55rem;
+    justify-content: center;
+  }
+
+  .plano-escolhas .plano-chip--outro {
+    font-size: 0.875rem;
+  }
+}
+
 .plano-chip {
   display: inline-flex;
   align-items: center;
