@@ -799,88 +799,91 @@
 }
 
 /*
-  PONTAS DA PATA · ABRE EM CARTÃO E EMPURRA OS VIZINHOS (18/09/2026, JM
-  escolheu a opção P2 entre três protótipos).
+  PONTAS DA PATA · ABRE EM CARTÃO E EMPURRA OS VIZINHOS (P2, refeita em
+  18/09/2026 — JM: "mais fluida, sem travar, expansão menor, tag maior").
 
-  Ao chegar o cursor, o dedo ENDIREITA e cresce bastante, como um cartão que se
-  abre; os vizinhos deslizam para o lado, dando passagem. O movimento é
-  coletivo: quem olha entende que a pata é uma peça só, não quatro fotos soltas.
-  A etiqueta continua saindo de trás, e a atração magnética do ponteiro
-  (PataViva.tsx) segue por cima de tudo.
+  O TRAVAMENTO vinha de a área de hover mudar enquanto o dedo crescia: o dedo
+  inteiro escalava e endireitava, a borda passava por baixo do cursor, o hover
+  caía, o dedo encolhia, o hover voltava — um pisca-pisca. Agora a caixa que
+  RECEBE o cursor (`.hero-dedo`) não muda de tamanho nem de giro; quem cresce
+  e endireita é a foto DENTRO dela. O movimento é o mesmo, sem o pisca.
 
-  O EMPURRÃO vai no `transform` e o ímã no `translate`: são propriedades
-  diferentes, então um não atropela o outro (o ímã é escrito quadro a quadro
-  pelo JavaScript e não pode ter transição).
+  - expansão menor: 1,16 (era 1,32);
+  - a etiqueta, maior, sai de trás do dedo e fica sempre na horizontal;
+  - os vizinhos só deslizam para o lado e recuam um tom, na mesma curva;
+  - enquanto um dedo está aberto, o ímã do ponteiro descansa (PataViva).
 */
 @media (hover: hover) and (min-width: 1024px) {
   .hero-dedo {
     transition:
-      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-      scale 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-      rotate 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-      translate 0.3s var(--ease-soft),
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
       filter 0.5s var(--ease-soft);
   }
 
   .hero-dedo-foto {
-    transition: box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+      scale 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      rotate 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* Sem etiqueta em repouso: ela é a recompensa de chegar perto. */
+  /* Etiqueta maior, escondida atrás do dedo em repouso. */
   .hero-dedo .hero-dedo-rotulo {
+    padding: 0.35rem 0.85rem;
+    font-size: 0.875rem;
+    bottom: -0.9rem;
     opacity: 0;
-    translate: 0 -0.9rem;
-    scale: 0.55;
+    translate: 0 -0.8rem;
+    scale: 0.7;
     transition:
-      opacity 0.3s var(--ease-soft),
-      translate 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-      scale 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+      opacity 0.35s var(--ease-soft),
+      translate 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      scale 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .hero-dedo:hover {
     z-index: 3;
-    scale: 1.32;
-    /* Cancela o giro de repouso: o cartão fica de frente. */
-    rotate: calc(var(--giro) * -1);
-    /* Aberto, o cartão para: o ímã do ponteiro não o arrasta mais. */
-    translate: 0 0;
   }
 
+  /* Quem cresce e endireita é a FOTO: a área do cursor fica estável. */
   .hero-dedo:hover .hero-dedo-foto {
-    box-shadow: 0 30px 50px -26px rgb(4 30 40 / 0.75);
+    scale: 1.16;
+    rotate: calc(var(--giro) * -1);
+    box-shadow: 0 26px 44px -24px rgb(4 30 40 / 0.7);
   }
 
-  .hero-dedo:hover .hero-dedo-foto img {
-    scale: 1.04;
-  }
-
-  /* O dedo já está de frente: a etiqueta não precisa mais compensar o giro. */
-  .hero-palco .hero-dedo:hover .hero-dedo-rotulo {
+  .hero-dedo:hover .hero-dedo-rotulo {
     opacity: 1;
-    transform: translateX(-50%);
-    translate: 0 0.55rem;
+    translate: 0 0.35rem;
     scale: 1;
   }
 
-  /* Quem não está sob o cursor recua em cor e abre espaço. */
+  /* Vizinhos: deslizam para o lado e recuam um tom. Sem mudar de tamanho. */
   .hero-palco:has(.hero-dedo:hover) .hero-dedo:not(:hover) {
-    scale: 0.94;
     filter: saturate(0.9) brightness(0.95);
   }
 
-  .hero-palco:has(.hero-dedo:nth-of-type(1):hover) .hero-dedo:nth-of-type(2) { --empurra: 30px; }
-  .hero-palco:has(.hero-dedo:nth-of-type(1):hover) .hero-dedo:nth-of-type(3) { --empurra: 14px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(1):hover) .hero-dedo:nth-of-type(2) { --empurra: 18px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(1):hover) .hero-dedo:nth-of-type(3) { --empurra: 8px; }
 
-  .hero-palco:has(.hero-dedo:nth-of-type(2):hover) .hero-dedo:nth-of-type(1) { --empurra: -34px; }
-  .hero-palco:has(.hero-dedo:nth-of-type(2):hover) .hero-dedo:nth-of-type(3) { --empurra: 34px; }
-  .hero-palco:has(.hero-dedo:nth-of-type(2):hover) .hero-dedo:nth-of-type(4) { --empurra: 16px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(2):hover) .hero-dedo:nth-of-type(1) { --empurra: -20px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(2):hover) .hero-dedo:nth-of-type(3) { --empurra: 20px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(2):hover) .hero-dedo:nth-of-type(4) { --empurra: 10px; }
 
-  .hero-palco:has(.hero-dedo:nth-of-type(3):hover) .hero-dedo:nth-of-type(4) { --empurra: 34px; }
-  .hero-palco:has(.hero-dedo:nth-of-type(3):hover) .hero-dedo:nth-of-type(2) { --empurra: -34px; }
-  .hero-palco:has(.hero-dedo:nth-of-type(3):hover) .hero-dedo:nth-of-type(1) { --empurra: -16px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(3):hover) .hero-dedo:nth-of-type(4) { --empurra: 20px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(3):hover) .hero-dedo:nth-of-type(2) { --empurra: -20px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(3):hover) .hero-dedo:nth-of-type(1) { --empurra: -10px; }
 
-  .hero-palco:has(.hero-dedo:nth-of-type(4):hover) .hero-dedo:nth-of-type(3) { --empurra: -30px; }
-  .hero-palco:has(.hero-dedo:nth-of-type(4):hover) .hero-dedo:nth-of-type(2) { --empurra: -14px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(4):hover) .hero-dedo:nth-of-type(3) { --empurra: -18px; }
+  .hero-palco:has(.hero-dedo:nth-of-type(4):hover) .hero-dedo:nth-of-type(2) { --empurra: -8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-dedo,
+  .hero-dedo-foto,
+  .hero-dedo .hero-dedo-rotulo {
+    transition: none;
+  }
 }
 
 /* ── A COPY ───────────────────────────────────────────────────────────── */

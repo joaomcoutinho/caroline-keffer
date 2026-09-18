@@ -61,6 +61,18 @@ export function PataViva() {
     };
 
     const aoMover = (ev: PointerEvent) => {
+      /*
+        Com um dedo aberto (hover), o ímã descansa: os vizinhos já estão se
+        afastando pelo CSS, e dois movimentos ao mesmo tempo liam como tremor.
+      */
+      if (dedos.some((d) => d.matches(":hover"))) {
+        estado.forEach((e) => {
+          e.ax = 0;
+          e.ay = 0;
+        });
+        acordar();
+        return;
+      }
       dedos.forEach((dedo, i) => {
         const r = dedo.getBoundingClientRect();
         const cx = r.left + r.width / 2;
