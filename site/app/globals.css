@@ -2300,8 +2300,9 @@ html:has(.visor[open]) {
   mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
 }
 
-.casa-cupula img {
-  transition: scale 0.8s var(--ease-soft);
+/* A foto "abre" no hover: a borda que dissolve avança e mostra mais da casa. */
+.casa-cupula {
+  transition: width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .casa-texto {
@@ -2330,31 +2331,81 @@ html:has(.visor[open]) {
 }
 
 .casa-link {
+  position: relative;
   display: inline-flex;
+  width: fit-content;
   align-items: center;
   gap: 0.3rem;
   margin-top: 0.2rem;
+  padding-bottom: 0.2rem;
   font-size: 0.8125rem;
   font-weight: 700;
   color: var(--acao-texto);
+}
+
+/* O trajeto: um tracejado de mapa que se desenha sob "Como chegar". */
+.casa-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    currentColor 0 5px,
+    transparent 5px 9px
+  );
+  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
 }
 
 .casa-link svg {
   transition: translate 0.3s var(--ease-soft);
 }
 
+@keyframes pino-cai {
+  0% {
+    translate: 0 -0.7rem;
+    opacity: 0;
+  }
+  55% {
+    translate: 0 0.12rem;
+    opacity: 1;
+  }
+  75% {
+    translate: 0 -0.12rem;
+  }
+  100% {
+    translate: 0 0;
+  }
+}
+
 @media (hover: hover) {
   .casa-cartao:hover {
     border-color: color-mix(in srgb, var(--brand) 50%, transparent);
-    background-color: color-mix(in srgb, #ffffff 75%, transparent);
   }
 
   .casa-cartao:hover .casa-link svg {
     translate: 3px 0;
   }
 
-  .casa-cartao:hover .casa-cupula img {
-    scale: 1.05;
+  /*
+    HOVER DO CARTÃO DA CASA (18/09/2026, JM: "sem zoom nem glow de site de
+    IA"). A referência é o próprio gesto de pedir direção num app de mapa:
+    o pino CAI e quica no endereço, o trajeto tracejado se desenha sob "Como
+    chegar" e a foto abre um pouco mais da fachada, como quem chega mais
+    perto da porta. Nada cresce, nada acende.
+  */
+  .casa-cartao:hover .casa-cupula {
+    width: 10.5rem;
+  }
+
+  .casa-cartao:hover .casa-endereco svg {
+    animation: pino-cai 0.7s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+
+  .casa-cartao:hover .casa-link::after {
+    width: 100%;
   }
 }
 
