@@ -2300,6 +2300,57 @@ html:has(.visor[open]) {
   mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
 }
 
+/*
+  BORDA QUE CORRE (18/09/2026, opção H1 escolhida pelo JM). No hover, um fio
+  da marca aparece e fica circulando pela borda do cartão enquanto o cursor
+  estiver ali. O ângulo é registrado com `@property` para o degradê cônico
+  girar de verdade, e a máscara em duas camadas deixa só o contorno.
+*/
+@property --casa-volta {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.casa-cartao::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  pointer-events: none;
+  opacity: 0;
+  background: conic-gradient(
+    from var(--casa-volta),
+    var(--action) 0deg,
+    var(--brand-soft) 80deg,
+    transparent 150deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  transition: opacity 0.4s var(--ease-soft);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .casa-cartao:hover::before {
+    opacity: 1;
+    animation: casa-borda 2.6s linear infinite;
+  }
+}
+
+@keyframes casa-borda {
+  to {
+    --casa-volta: 360deg;
+  }
+}
+
 /* A foto "abre" no hover: a borda que dissolve avança e mostra mais da casa. */
 .casa-cupula {
   transition: width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
@@ -2350,17 +2401,25 @@ html:has(.visor[open]) {
   left: 0;
   bottom: 0;
   height: 2px;
-  width: 0;
+  width: 100%;
+  opacity: 0.35;
   background-image: repeating-linear-gradient(
     90deg,
-    currentColor 0 5px,
-    transparent 5px 9px
+    currentColor 0 6px,
+    transparent 6px 10px
   );
-  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+  background-size: 200% 100%;
+  transition: opacity 0.35s var(--ease-soft);
 }
 
 .casa-link svg {
   transition: translate 0.3s var(--ease-soft);
+}
+
+@keyframes rota-anda {
+  to {
+    background-position: -20px 0;
+  }
 }
 
 @keyframes pino-cai {
@@ -2404,8 +2463,10 @@ html:has(.visor[open]) {
     animation: pino-cai 0.7s cubic-bezier(0.34, 1.4, 0.64, 1);
   }
 
+  /* No hover o tracejado acende e passa a andar, como rota em navegação. */
   .casa-cartao:hover .casa-link::after {
-    width: 100%;
+    opacity: 1;
+    animation: rota-anda 0.9s linear infinite;
   }
 }
 
