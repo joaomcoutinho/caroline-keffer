@@ -82,14 +82,18 @@ export function Equipe() {
                     </h3>
                     <p className="membro-papel">{membro.papel}</p>
 
-                    <div className="membro-abre">
-                      <div className="membro-abre-interno">
-                        {membro.detalhe ? (
-                          <p className="membro-detalhe">{membro.detalhe}</p>
-                        ) : null}
-                        <div className="membro-cta">
-                          <BotaoWhatsapp rotulo={CTA_PRIMARIO} tamanho="compacto" />
-                        </div>
+                  </div>
+
+                  {/* A ficha sobe do pé do card e ocupa 46% da altura. */}
+                  <div className="membro-abre">
+                    <div className="membro-abre-interno">
+                      <p className="membro-ficha-nome">{membro.nome}</p>
+                      <p className="membro-ficha-papel">{membro.papel}</p>
+                      {membro.detalhe ? (
+                        <p className="membro-detalhe">{membro.detalhe}</p>
+                      ) : null}
+                      <div className="membro-cta">
+                        <BotaoWhatsapp rotulo={CTA_PRIMARIO} tamanho="compacto" />
                       </div>
                     </div>
                   </div>
