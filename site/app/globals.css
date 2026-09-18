@@ -1713,6 +1713,23 @@ button,
 .faq-secao::before {
   bottom: auto;
   height: 2400px;
+  /*
+    Camada própria: a textura é rasterizada UMA vez e, quando a seção cresce,
+    o navegador só recorta de novo, sem repintar a máscara. No Safari do
+    iPhone era essa repintura que engasgava a abertura (18/09/2026, JM).
+  */
+  transform: translateZ(0);
+}
+
+/*
+  Tudo o que vem DEPOIS do FAQ desce e sobe junto com a pergunta que abre.
+  Em camada própria, cada quadro só reposiciona essas seções em vez de
+  repintá-las (textura de patas, fachada, rodapé): no iOS é a diferença entre
+  deslizar e engasgar. São poucas seções, então o custo de memória é baixo.
+*/
+.faq-secao ~ *,
+main:has(.faq-secao) ~ .bloco-escuro {
+  transform: translateZ(0);
 }
 
 .faq-item {

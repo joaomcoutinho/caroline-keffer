@@ -52,6 +52,7 @@ export function ItemFaq({ pergunta, resposta, aberto, aoAlternar }: Props) {
   const sumario = useRef<HTMLElement>(null);
   const corpo = useRef<HTMLDivElement>(null);
   const animacao = useRef<Animation | null>(null);
+  const animacaoCorpo = useRef<Animation | null>(null);
   const montado = useRef(false);
 
   useLayoutEffect(() => {
@@ -78,6 +79,7 @@ export function ItemFaq({ pergunta, resposta, aberto, aoAlternar }: Props) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
       animacao.current?.cancel();
+      animacaoCorpo.current?.cancel();
       d.style.overflow = "";
       d.open = aberto;
       return;
@@ -98,18 +100,28 @@ export function ItemFaq({ pergunta, resposta, aberto, aoAlternar }: Props) {
 
     d.style.overflow = "hidden";
     /*
-      `will-change` só DURANTE o movimento: avisa o navegador para preparar a
-      camada antes do primeiro quadro, e sai no fim para não segurar memória.
+      18/09/2026 (JM: "no Safari do iPhone está travando"). Saiu o
+      `will-change: height`: altura não tem camada para preparar, e no WebKit a
+      dica criava e destruía uma camada a cada clique, o que custava justamente
+      o primeiro quadro. O custo real de cada quadro é repintar o que se move;
+      por isso o que fica ABAIXO do FAQ é composto em camada própria (ver
+      .faq-secao no CSS) e só é reposicionado, sem repintar.
     */
-    d.style.willChange = "height";
     const anim = d.animate(
       { height: [`${de}px`, `${para}px`] },
       { duration: DURACAO, easing: CURVA },
     );
     animacao.current = anim;
 
-    // A resposta desliza um pouco depois da altura começar a abrir.
-    c.animate(
+    /*
+      A resposta desliza um pouco depois da altura começar a abrir. Só
+      opacidade e transform, que o compositor faz sozinho. A anterior é
+      cancelada, e esta sai quando a altura termina: com `fill: both` ela
+      ficava presa no elemento, e a cada clique o Safari empilhava mais uma
+      animação para recalcular.
+    */
+    animacaoCorpo.current?.cancel();
+    animacaoCorpo.current = c.animate(
       aberto
         ? [
             { opacity: 0, transform: "translateY(-4px)" },
@@ -130,8 +142,9 @@ export function ItemFaq({ pergunta, resposta, aberto, aoAlternar }: Props) {
     anim.finished
       .then(() => {
         d.style.overflow = "";
-        d.style.willChange = "";
         if (!aberto) d.open = false;
+        animacaoCorpo.current?.cancel();
+        animacaoCorpo.current = null;
         if (animacao.current === anim) animacao.current = null;
       })
       .catch(() => {

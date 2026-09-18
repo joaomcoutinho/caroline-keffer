@@ -52,7 +52,7 @@ export const CTA_PRIMARIO = "Agendar pelo WhatsApp";
 export const meta = {
   titulo: "Clínica Pet Caroline Keffer | Veterinária na Torre, Recife",
   descricao:
-    "Clínica veterinária na Torre, Recife, há mais de 20 anos. Clínica geral, cirurgia (inclusive odontológica e ortopédica), cinco especialidades, exames e banho e tosa para cães e gatos, com a Dra. Carol. Agende pelo WhatsApp.",
+    "Veterinária na Torre, Recife, há mais de 20 anos. Consulta, cirurgia, exames e banho e tosa. Agende pelo WhatsApp.",
   /*
    * Endereço real de onde o site está publicado. O card de compartilhamento
    * exige URL ABSOLUTA de imagem: sem isto o WhatsApp monta o link com o
