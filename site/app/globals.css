@@ -2251,72 +2251,35 @@ html:has(.visor[open]) {
 }
 
 @media (min-width: 1024px) {
+  /* A pílula que desliza por baixo das abas (S3, 18/09/2026). */
   .servico-lamina {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
     z-index: 0;
     display: block;
     pointer-events: none;
-    border-radius: 0.6rem;
-    background-color: color-mix(in srgb, var(--brand) 7%, transparent);
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--brand) 12%, transparent);
     transition:
       transform 0.38s var(--ease-soft),
+      width 0.38s var(--ease-soft),
       height 0.38s var(--ease-soft),
       background-color 0.25s var(--ease-soft),
       opacity 0.25s var(--ease-soft);
   }
 
-  /* O fio: é ele que marca a aba. */
-  .servico-lamina::before {
-    content: "";
-    position: absolute;
-    top: 26%;
-    bottom: 26%;
-    left: 0;
-    width: 2px;
-    border-radius: 999px;
-    background-color: var(--brand);
-    transition: opacity 0.25s var(--ease-soft);
+  .servico-lamina[data-hover="true"] {
+    background-color: color-mix(in srgb, var(--brand) 18%, transparent);
   }
 
   .servico-lamina[data-pronta="false"] {
     opacity: 0;
     transition: none;
   }
-
-  .servico-lamina[data-hover="true"] {
-    background-color: transparent;
-  }
-
-  .servico-lamina[data-hover="true"]::before {
-    opacity: 0.4;
-  }
-
-  /* Texto: a aba ativa em tinta cheia, as outras um degrau abaixo. */
-  .servico-aba[aria-selected="true"] {
-    color: var(--text);
-  }
-
-  .servico-aba:focus-visible {
-    outline: 2px solid var(--brand);
-    outline-offset: -2px;
-    border-radius: 0.6rem;
-  }
 }
 
-/*
-  PILHA DE MÍDIAS do painel. Todas montadas, só a ativa visível.
-
-  Ver o comentário em ExploradorServicos.tsx para o porquê: remontar a mídia a
-  cada hover obrigava o navegador a decodificar a foto de novo, e era isso que
-  travava a troca entre um card e outro. Aqui a troca é só opacidade, resolvida
-  pelo compositor.
-
-  `pointer-events: none` nos inativos para que a foto de baixo nunca receba o
-  cursor, e `visibility` junto da opacidade para elas saírem da ordem de foco.
-*/
+/* As fotos ficam empilhadas: só a ativa aparece, e a troca é só opacidade. */
 .servico-quadro {
   opacity: 0;
   visibility: hidden;

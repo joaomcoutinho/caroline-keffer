@@ -22,14 +22,13 @@ export function Servicos() {
           <ExploradorServicos
             rotulo="Serviços da clínica"
             cabecalho={
-              <div>
-                <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
+              <div className="max-w-[46rem]">
+                <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl lg:text-[2.75rem]">
                   {servicos.headline}
                 </h2>
-                <p className="mt-5 text-lg leading-relaxed text-text-2">{servicos.subhead}</p>
-                <div className="mt-7">
-                  <BotaoWhatsapp rotulo={CTA_PRIMARIO} />
-                </div>
+                <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-text-2">
+                  {servicos.subhead}
+                </p>
               </div>
             }
             itens={servicos.itens.map((i) => ({

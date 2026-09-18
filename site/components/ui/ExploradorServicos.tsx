@@ -106,12 +106,15 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
   */
   const lista = useRef<HTMLDivElement>(null);
   const [destaque, setDestaque] = useState<number | null>(null);
-  const [lamina, setLamina] = useState<{ y: number; h: number } | null>(null);
+  const [lamina, setLamina] = useState<{ x: number; y: number; l: number; a: number } | null>(
+    null,
+  );
 
   const medir = useCallback((i: number) => {
     const b = botoes.current[i];
     if (!b) return;
-    setLamina({ y: b.offsetTop, h: b.offsetHeight });
+    // As pílulas quebram em duas linhas: a posição precisa dos dois eixos.
+    setLamina({ x: b.offsetLeft, y: b.offsetTop, l: b.offsetWidth, a: b.offsetHeight });
   }, []);
 
   /*
@@ -198,41 +201,26 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
 
   return (
     /*
-      `items-stretch` + a lista virando coluna com `justify-between` resolvem o
-      vão morto que sobrava embaixo dos seletores (JM, 11/09/2026).
-
-      A causa: a lista de abas tem altura própria (5 nomes), o painel tem outra
-      (foto 4:5 com o texto ao lado), e a do painel é bem maior. Com as
-      duas coladas no topo, a diferença virava buraco no pé da coluna esquerda.
-      Agora as abas se distribuem na altura inteira da fileira, e os fios entre
-      elas passam a dividir o espaço em vez de amontoar no topo.
+      18/09/2026 (JM escolheu a opção S3 entre três protótipos): cabeçalho,
+      SEIS PÍLULAS numa linha e um painel largo embaixo. A grade de duas
+      colunas (abas altas à esquerda, painel à direita) desalinhava foto e
+      texto e deixava espaço ocioso no topo da dobra.
     */
-    <div className="grid items-stretch gap-8 lg:grid-cols-[21rem_minmax(0,1fr)] lg:gap-12">
-      {/*
-        18/09/2026 (JM: "o topo ficou com cara de IA, com lista de categorias").
-        O título e o apoio deixaram de ser uma faixa solta em cima e entraram
-        NESTA coluna, acima das abas: a foto do painel passa a ocupar a altura
-        inteira da dobra, incluindo o espaço que sobrava logo abaixo do hero.
-      */}
-      <div className="flex flex-col gap-7 lg:h-full">
-        {cabecalho}
+    <div className="flex flex-col gap-8">
+      {cabecalho}
 
       <div
         ref={lista}
         role="tablist"
         aria-label={rotulo}
-        aria-orientation="vertical"
+        aria-orientation="horizontal"
         onMouseLeave={() => setDestaque(null)}
-        className="trilho-abas relative -mx-5 flex snap-x scroll-pl-5 gap-2 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:-mx-3 lg:min-h-0 lg:flex-1 lg:flex-col lg:justify-between lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0"
+        className="trilho-abas relative -mx-5 flex snap-x scroll-pl-5 gap-2 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0 lg:pb-0"
       >
         {/*
-          A lâmina que desliza. Só no desktop; no celular as abas são pílulas.
-
-          Existe SEMPRE no HTML, mesmo antes de medir. Quando ela era condicional
-          (`lamina ? <span/> : null`), o servidor mandava a lista sem lâmina e
-          ela só nascia depois da hidratação: a aba ativa carregava sem
-          destaque e o realce aparecia de estalo. Agora ela fica invisível até a
-          primeira medida (`data-pronta`) e entra com fade, sem pulo.
+          A pílula que DESLIZA até a aba sob o cursor (antes era uma lâmina
+          vertical). Existe sempre no HTML e fica invisível até a primeira
+          medida, para não aparecer de estalo depois da hidratação.
         */}
         <span
           aria-hidden
@@ -241,7 +229,11 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
           data-hover={destaque !== null && destaque !== ativo}
           style={
             lamina
-              ? { transform: `translateY(${lamina.y}px)`, height: `${lamina.h}px` }
+              ? {
+                  transform: `translate(${lamina.x}px, ${lamina.y}px)`,
+                  width: `${lamina.l}px`,
+                  height: `${lamina.a}px`,
+                }
               : undefined
           }
         />
@@ -269,35 +261,26 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
               }}
               onMouseLeave={cancelar}
               onKeyDown={(e) => aoTeclar(e, i)}
-              className={`servico-aba group relative z-[1] flex shrink-0 snap-start items-center gap-3 rounded-full border px-5 py-3 text-left whitespace-nowrap transition-[color,border-color,background-color] duration-300 ease-[var(--ease-soft)] lg:w-full lg:flex-1 lg:shrink lg:rounded-none lg:border-0 lg:border-b lg:border-hairline lg:px-3 lg:py-5 lg:whitespace-normal ${
-                /*
-                  O rótulo da aba selecionada usa `text-text`, não `text-brand`.
-                  Com as superfícies mais claras, o teal da marca sobre a
-                  pílula tingida caía para 3,56 — reprovado em AA. Reduzir a
-                  tinta não resolvia (nem a 5% passava de 4,49). A seleção já é
-                  sinalizada pela borda, pelo preenchimento e, no desktop, pelo
-                  traço; a cor no texto era redundante e era o elo fraco.
-                */
+              className={`servico-aba group relative z-[1] flex shrink-0 snap-start items-center gap-2.5 rounded-full border px-5 py-3 text-left whitespace-nowrap transition-[color,border-color,background-color] duration-300 ease-[var(--ease-soft)] ${
                 selecionado
-                  ? "border-brand bg-brand/10 text-text lg:bg-transparent"
+                  ? "border-brand text-text"
                   : "border-hairline text-text-2 hover:text-acao-texto"
               }`}
             >
               <Icone
-                size={22}
+                size={20}
                 weight="light"
                 className={`servico-icone shrink-0 transition-colors duration-300 ease-[var(--ease-soft)] ${
                   selecionado ? "text-brand" : "text-text-3 group-hover:text-acao-texto"
                 }`}
                 aria-hidden
               />
-              <span className="font-display text-base font-bold lg:text-lg">
+              <span className="font-display text-[0.95rem] font-bold lg:text-base">
                 {item.nome}
               </span>
             </button>
           );
         })}
-      </div>
       </div>
 
       <p className="mt-3 flex items-center gap-2 text-sm text-text-3 lg:hidden">
@@ -315,7 +298,7 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
         id="servico-painel"
         aria-labelledby={`servico-aba-${ativo}`}
         tabIndex={0}
-        className="sm:grid sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:items-center sm:gap-8 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-stretch lg:gap-12"
+        className="servico-painel sm:grid sm:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] sm:items-center sm:gap-8 lg:gap-14"
       >
         {/*
           AS MÍDIAS FICAM TODAS MONTADAS, empilhadas, e só a ativa aparece.
@@ -335,7 +318,7 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
           de cara de um serviço para outro. Agora é um formato só, sangrado, e o
           texto vai ao lado da foto em vez de embaixo.
         */}
-        <div className="servico-pilha relative aspect-4/5 w-full">
+        <div className="servico-pilha relative aspect-4/3 w-full sm:aspect-4/5 lg:aspect-[5/4]">
           {itens.map((item, i) => (
             <div
               key={item.nome}
