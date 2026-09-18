@@ -112,6 +112,17 @@ export function ParedeAtendimentos({ fotos }: Props) {
         const foco = document.activeElement;
         if (foco instanceof HTMLElement && d.parentElement?.contains(foco)) foco.blur();
       }
+      /*
+        Safari do iPhone deixava uma LINHA ESCURA atravessando a tela depois de
+        fechar a foto (JM, 18/09/2026): uma tira do fundo escuro do visor ficava
+        pintada onde a barra do navegador mudou de altura. Um empurrão de 1px
+        na rolagem, desfeito no quadro seguinte, obriga a repintura da página
+        e apaga o resto.
+      */
+      requestAnimationFrame(() => {
+        window.scrollBy(0, 1);
+        requestAnimationFrame(() => window.scrollBy(0, -1));
+      });
     };
     const aoTeclar = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") ir(1);

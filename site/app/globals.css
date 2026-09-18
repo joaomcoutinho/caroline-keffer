@@ -2220,8 +2220,25 @@ button,
   }
 }
 
-html:has(.visor[open]) {
-  overflow: hidden;
+/*
+  Com a foto aberta, a rolagem fica presa no visor e não vaza para a página.
+  Antes o travamento era `overflow: hidden` no <html>: no Safari do iPhone isso
+  mexe na altura da tela (a barra do navegador reaparece) e deixava uma tira
+  do fundo escuro pintada ao fechar — a linha preta no meio da tela.
+*/
+.visor {
+  overscroll-behavior: contain;
+}
+
+.visor[open] {
+  touch-action: pan-y pinch-zoom;
+}
+
+/* No computador o travamento da página continua (a roda do mouse vazava). */
+@media (hover: hover) {
+  html:has(.visor[open]) {
+    overflow: hidden;
+  }
 }
 
 /*
