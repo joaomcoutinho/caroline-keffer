@@ -2232,6 +2232,119 @@ html:has(.visor[open]) {
   Só no desktop. No celular as abas são pílulas num trilho horizontal.
 */
 /*
+  TOPO DA DOBRA DE SERVIÇOS · cabeçalho dividido (O1 refinada, 18/09/2026).
+  Título à esquerda, apoio e cartão da casa à direita, as duas metades
+  centradas na mesma linha. O cartão usa o recorte em cúpula da almofada da
+  pata do logo: a fachada entra no mesmo formato do hero.
+*/
+.servicos-topo {
+  display: grid;
+  gap: 1.75rem;
+}
+
+@media (min-width: 1024px) {
+  .servicos-topo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 4.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.servicos-topo-lado {
+  display: grid;
+  gap: 1.35rem;
+}
+
+@media (min-width: 1024px) {
+  .servicos-topo-lado {
+    border-left: 1px solid var(--hairline);
+    padding-left: 2.5rem;
+  }
+}
+
+.casa-cartao {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  width: fit-content;
+  border-radius: 1.4rem;
+  border: 1px solid color-mix(in srgb, var(--brand) 22%, transparent);
+  background-color: color-mix(in srgb, #ffffff 55%, transparent);
+  padding: 0.7rem 1.4rem 0.7rem 0.7rem;
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    border-color 0.3s var(--ease-soft),
+    background-color 0.3s var(--ease-soft);
+}
+
+.casa-cupula {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 5.5rem;
+  height: 4.6rem;
+  overflow: hidden;
+  border-radius: 50% 50% 40% 40% / 64% 64% 36% 36%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 10px 22px -14px rgb(4 30 40 / 0.6);
+}
+
+.casa-texto {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.casa-rotulo {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.casa-endereco {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.875rem;
+  color: var(--text-2);
+}
+
+.casa-endereco svg {
+  color: var(--brand);
+}
+
+.casa-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--acao-texto);
+}
+
+.casa-link svg {
+  transition: translate 0.3s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .casa-cartao:hover {
+    border-color: color-mix(in srgb, var(--brand) 50%, transparent);
+    background-color: color-mix(in srgb, #ffffff 75%, transparent);
+  }
+
+  .casa-cartao:hover .casa-link svg {
+    translate: 3px 0;
+  }
+}
+
+.casa-cartao:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/*
   SELETOR DE SERVIÇO (lista vertical). Cada aba acende a própria marcação:
   tingido leve e, no desktop, um fio da marca na borda esquerda. Sem
   indicador viajando entre elas (JM, 18/09/2026).

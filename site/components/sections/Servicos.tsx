@@ -1,7 +1,10 @@
+import Image from "next/image";
+import { MapPinIcon, ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { Revelar } from "@/components/ui/Revelar";
+import { caminhoPublico } from "@/lib/caminho";
 import { ExploradorServicos } from "@/components/ui/ExploradorServicos";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
-import { servicos, linkWhatsapp, CTA_PRIMARIO } from "@/content/site";
+import { servicos, contato, linkWhatsapp, CTA_PRIMARIO } from "@/content/site";
 
 /**
  * Dobra 3 — os seis serviços em índice + painel.
@@ -18,17 +21,52 @@ export function Servicos() {
       className="fundo-patas relative scroll-mt-24 bg-surface px-5 py-20 sm:px-8 md:py-28"
     >
       <div className="mx-auto w-full max-w-[1200px]">
-        <div className="max-w-[34ch]">
+        {/*
+          CABEÇALHO EM DUAS METADES (18/09/2026, opção O1 refinada). O título
+          fica à esquerda e, à direita, o apoio e o cartão da casa — a fachada
+          no recorte em cúpula da pata do logo, com o endereço. As duas metades
+          são CENTRADAS na mesma linha, então o título deixa de flutuar num
+          vazio e ganha um par do outro lado. É o padrão de cabeçalho dividido
+          dos sites editoriais: afirmação de um lado, prova do outro.
+        */}
+        <div className="servicos-topo">
           <Revelar>
-            <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
+            <h2 className="font-display text-3xl leading-[1.08] font-bold tracking-tight text-balance sm:text-4xl lg:text-[2.85rem]">
               {servicos.headline}
             </h2>
           </Revelar>
-          <Revelar atraso={0.06}>
-            <p className="mt-5 text-lg leading-relaxed text-text-2">
-              {servicos.subhead}
-            </p>
-          </Revelar>
+
+          <div className="servicos-topo-lado">
+            <Revelar atraso={0.06}>
+              <p className="text-lg leading-relaxed text-text-2">{servicos.subhead}</p>
+            </Revelar>
+
+            <Revelar atraso={0.12}>
+              <a href="#onde-ficamos" className="casa-cartao">
+                <span className="casa-cupula">
+                  <Image
+                    src={caminhoPublico("/images/fachada_hero.webp")}
+                    alt="Fachada da Clínica Veterinária Caroline Keffer"
+                    fill
+                    sizes="120px"
+                    className="object-cover"
+                    style={{ objectPosition: "34% 55%" }}
+                  />
+                </span>
+                <span className="casa-texto">
+                  <span className="casa-rotulo">Tudo na mesma casa</span>
+                  <span className="casa-endereco">
+                    <MapPinIcon size={15} weight="fill" aria-hidden />
+                    {contato.endereco} · Torre, Recife
+                  </span>
+                  <span className="casa-link">
+                    Como chegar
+                    <ArrowRightIcon size={14} weight="bold" aria-hidden />
+                  </span>
+                </span>
+              </a>
+            </Revelar>
+          </div>
         </div>
 
         <Revelar atraso={0.12} className="mt-12">
