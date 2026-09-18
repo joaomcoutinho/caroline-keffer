@@ -973,7 +973,8 @@
     max-width: none;
     margin: 0;
     padding-top: 0;
-    padding-bottom: 1.75rem;
+    /* Sobe a copy para dentro do degradê: sem vão morto entre foto e título. */
+    padding-bottom: 4.5rem;
     text-align: left;
   }
 
@@ -1021,7 +1022,7 @@
 @media (max-width: 639px) and (max-height: 720px) {
   /* A maioria dos celulares reais cai aqui (a barra do Safari come altura). */
   .hero-m-foto {
-    height: min(112vw, 52svh);
+    height: min(122vw, 60svh);
   }
 
   .hero-titulo {
@@ -1029,7 +1030,7 @@
   }
 
   .hero-copy > div {
-    padding-bottom: 1.1rem;
+    padding-bottom: 3rem;
   }
 
   #ancora-cta-hero {
