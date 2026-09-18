@@ -4,7 +4,7 @@ import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
 import { ctaFinal, rodape, contato, navegacao } from "@/content/site";
-import { MarcaMxc } from "@/components/ui/MarcaMxc";
+
 
 /**
  * Dobras 9 e 10 — CTA final e rodapé, no mesmo bloco escuro.
@@ -45,7 +45,7 @@ export function Fechamento() {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src={caminhoPublico("/images/logo-caroline-keffer.webp")}
+                src={caminhoPublico("/images/logo-caroline-keffer.jpg")}
                 alt=""
                 width={72}
                 height={72}
@@ -116,13 +116,15 @@ export function Fechamento() {
             rel="noopener noreferrer"
             className="assinatura-mxc"
           >
-            <span aria-hidden className="assinatura-marca">
-              <MarcaMxc />
-            </span>
-            <span className="assinatura-texto">
-              {rodape.credito}
-              <strong>{rodape.agencia}</strong>
-            </span>
+            <span className="assinatura-texto">{rodape.credito}</span>
+            <Image
+              src={caminhoPublico("/images/mxc-digital.png")}
+              alt={rodape.agencia}
+              width={1046}
+              height={238}
+              sizes="150px"
+              className="assinatura-marca"
+            />
           </a>
         </div>
       </footer>

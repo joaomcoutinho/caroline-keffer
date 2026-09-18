@@ -956,5 +956,5 @@ export const rodape = {
   legal: `© ${new Date().getFullYear()} Clínica Pet Caroline Keffer. Todos os direitos reservados.`,
   credito: "Site por ",
   agencia: "MXC Digital",
-  agenciaUrl: "https://www.instagram.com/mxcdigital/",
+  agenciaUrl: "https://mxcdigital.com.br",
 } as const;

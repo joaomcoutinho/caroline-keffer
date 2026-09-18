@@ -34,7 +34,7 @@ const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const base64 = (arquivo) => readFileSync(path.join(RAIZ_SITE, arquivo)).toString("base64");
 const fachada = `data:image/webp;base64,${base64("public/images/fachada_ceu.webp")}`;
-const selo = `data:image/webp;base64,${base64("public/images/logo-caroline-keffer.webp")}`;
+const selo = `data:image/jpeg;base64,${base64("public/images/logo-caroline-keffer.jpg")}`;
 
 /*
   COMPOSIÇÃO (17/09/2026, JM: "og estético, com a foto da fachada e transição
