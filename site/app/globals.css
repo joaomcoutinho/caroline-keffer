@@ -2264,14 +2264,16 @@ html:has(.visor[open]) {
 }
 
 .casa-cartao {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: 1.1rem;
+  align-items: stretch;
+  gap: 0.4rem;
   width: fit-content;
+  overflow: hidden;
   border-radius: 1.4rem;
   border: 1px solid color-mix(in srgb, var(--brand) 22%, transparent);
   background-color: color-mix(in srgb, #ffffff 55%, transparent);
-  padding: 0.7rem 1.4rem 0.7rem 0.7rem;
+  padding: 0 1.4rem 0 0;
   color: var(--text);
   text-decoration: none;
   transition:
@@ -2279,21 +2281,31 @@ html:has(.visor[open]) {
     background-color 0.3s var(--ease-soft);
 }
 
+/*
+  A fachada ocupa a lateral inteira do cartão e SE DISSOLVE no fundo dele
+  (18/09/2026, JM: "mais natural e integrado"). Sem borda, sem sombra e sem
+  recorte: a foto é parte do cartão, não um selo colado nele.
+*/
 .casa-cupula {
   position: relative;
   display: block;
   flex: none;
-  width: 5.5rem;
-  height: 4.6rem;
+  width: 8.5rem;
+  min-height: 5.8rem;
   overflow: hidden;
-  border-radius: 50% 50% 40% 40% / 64% 64% 36% 36%;
-  border: 3px solid #ffffff;
-  box-shadow: 0 10px 22px -14px rgb(4 30 40 / 0.6);
+  -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
+}
+
+.casa-cupula img {
+  transition: scale 0.8s var(--ease-soft);
 }
 
 .casa-texto {
   display: grid;
+  align-content: center;
   gap: 0.15rem;
+  padding-block: 0.85rem;
 }
 
 .casa-rotulo {
@@ -2336,6 +2348,10 @@ html:has(.visor[open]) {
 
   .casa-cartao:hover .casa-link svg {
     translate: 3px 0;
+  }
+
+  .casa-cartao:hover .casa-cupula img {
+    scale: 1.05;
   }
 }
 

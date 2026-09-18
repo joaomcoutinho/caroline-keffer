@@ -45,12 +45,12 @@ export function Servicos() {
               <a href="#onde-ficamos" className="casa-cartao">
                 <span className="casa-cupula">
                   <Image
-                    src={caminhoPublico("/images/fachada_hero.webp")}
+                    src={caminhoPublico("/images/fachada_ceu.webp")}
                     alt="Fachada da Clínica Veterinária Caroline Keffer"
                     fill
-                    sizes="120px"
+                    sizes="160px"
                     className="object-cover"
-                    style={{ objectPosition: "34% 55%" }}
+                    style={{ objectPosition: "18% 44%" }}
                   />
                 </span>
                 <span className="casa-texto">
