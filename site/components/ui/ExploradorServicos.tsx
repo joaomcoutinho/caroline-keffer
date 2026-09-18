@@ -59,6 +59,8 @@ type Servico = {
 type Props = {
   itens: Servico[];
   rotulo: string;
+  /** Bloco editorial da dobra (título, apoio, CTA) na MESMA coluna das abas. */
+  cabecalho?: ReactNode;
 };
 
 /**
@@ -77,7 +79,7 @@ type Props = {
  * o mouse para explorar rápido, ou navega pelas setas do teclado. Um Tab só
  * entra na lista, e as setas percorrem — que é o comportamento esperado.
  */
-export function ExploradorServicos({ itens, rotulo }: Props) {
+export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
   const [ativo, setAtivo] = useState(0);
   const botoes = useRef<(HTMLButtonElement | null)[]>([]);
   const pendente = useRef<number | null>(null);
@@ -205,14 +207,23 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
       Agora as abas se distribuem na altura inteira da fileira, e os fios entre
       elas passam a dividir o espaço em vez de amontoar no topo.
     */
-    <div className="grid items-stretch gap-8 lg:grid-cols-[17.5rem_minmax(0,1fr)] lg:gap-12">
+    <div className="grid items-stretch gap-8 lg:grid-cols-[21rem_minmax(0,1fr)] lg:gap-12">
+      {/*
+        18/09/2026 (JM: "o topo ficou com cara de IA, com lista de categorias").
+        O título e o apoio deixaram de ser uma faixa solta em cima e entraram
+        NESTA coluna, acima das abas: a foto do painel passa a ocupar a altura
+        inteira da dobra, incluindo o espaço que sobrava logo abaixo do hero.
+      */}
+      <div className="flex flex-col gap-7 lg:h-full">
+        {cabecalho}
+
       <div
         ref={lista}
         role="tablist"
         aria-label={rotulo}
         aria-orientation="vertical"
         onMouseLeave={() => setDestaque(null)}
-        className="trilho-abas relative -mx-5 flex snap-x scroll-pl-5 gap-2 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:-mx-3 lg:h-full lg:flex-col lg:justify-between lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0"
+        className="trilho-abas relative -mx-5 flex snap-x scroll-pl-5 gap-2 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-pl-8 sm:px-8 lg:-mx-3 lg:min-h-0 lg:flex-1 lg:flex-col lg:justify-between lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0"
       >
         {/*
           A lâmina que desliza. Só no desktop; no celular as abas são pílulas.
@@ -286,6 +297,7 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
             </button>
           );
         })}
+      </div>
       </div>
 
       <p className="mt-3 flex items-center gap-2 text-sm text-text-3 lg:hidden">

@@ -18,44 +18,20 @@ export function Servicos() {
       className="fundo-patas relative scroll-mt-24 bg-surface px-5 py-20 sm:px-8 md:py-28"
     >
       <div className="mx-auto w-full max-w-[1200px]">
-        {/*
-          18/09/2026 (JM: "tem um espaço ocioso logo abaixo do hero"). O topo
-          da dobra vira DUAS colunas: título à esquerda, e à direita o apoio, a
-          lista dos seis nomes e o CTA. Antes o título sozinho deixava metade
-          da faixa vazia logo depois do hero.
-        */}
-        <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-16">
-          <Revelar>
-            <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl lg:text-[2.75rem]">
-              {servicos.headline}
-            </h2>
-          </Revelar>
-
-          <div>
-            <Revelar atraso={0.06}>
-              <p className="max-w-[46ch] text-lg leading-relaxed text-text-2">
-                {servicos.subhead}
-              </p>
-            </Revelar>
-
-            <Revelar atraso={0.1}>
-              <ul className="servicos-indice">
-                {servicos.itens.map((item) => (
-                  <li key={item.nome}>{item.nome}</li>
-                ))}
-              </ul>
-            </Revelar>
-
-            <Revelar atraso={0.14}>
-              <div className="mt-7">
-                <BotaoWhatsapp rotulo={CTA_PRIMARIO} />
-              </div>
-            </Revelar>
-          </div>
-        </div>
-
-        <Revelar atraso={0.12} className="mt-12">
+        <Revelar atraso={0.08}>
           <ExploradorServicos
+            rotulo="Serviços da clínica"
+            cabecalho={
+              <div>
+                <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
+                  {servicos.headline}
+                </h2>
+                <p className="mt-5 text-lg leading-relaxed text-text-2">{servicos.subhead}</p>
+                <div className="mt-7">
+                  <BotaoWhatsapp rotulo={CTA_PRIMARIO} />
+                </div>
+              </div>
+            }
             itens={servicos.itens.map((i) => ({
               ...i,
               cta: (
@@ -66,7 +42,6 @@ export function Servicos() {
                 />
               ),
             }))}
-            rotulo="Serviços da clínica"
           />
         </Revelar>
       </div>

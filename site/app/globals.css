@@ -1229,14 +1229,15 @@
   Era o verde oficial #25D366, a única cor fora da paleta no site inteiro. Quem
   faz o reconhecimento agora é o glifo oficial, que continua intacto.
 */
+/* Verde oficial do WhatsApp: é a marca deles, inteira, só aqui. */
 .botao-flutuante {
-  background-color: var(--action);
+  background-color: #25d366;
   /* Prende os anéis dentro do próprio botão: sem isto o z-index -1 escaparia. */
   isolation: isolate;
 }
 
 .botao-flutuante:hover {
-  background-color: var(--action-hover);
+  background-color: #1fb457;
 }
 
 /*
@@ -1253,7 +1254,7 @@
   inset: 0;
   z-index: -1;
   border-radius: 9999px;
-  background-color: var(--action);
+  background-color: #25d366;
   pointer-events: none;
 }
 
