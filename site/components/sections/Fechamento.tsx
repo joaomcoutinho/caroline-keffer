@@ -4,6 +4,7 @@ import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
 import { ctaFinal, rodape, contato, navegacao } from "@/content/site";
+import { MarcaMxc } from "@/components/ui/MarcaMxc";
 
 /**
  * Dobras 9 e 10 — CTA final e rodapé, no mesmo bloco escuro.
@@ -44,7 +45,7 @@ export function Fechamento() {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src={caminhoPublico("/images/logo-caroline-keffer.jpg")}
+                src={caminhoPublico("/images/logo-caroline-keffer.webp")}
                 alt=""
                 width={72}
                 height={72}
@@ -101,9 +102,28 @@ export function Fechamento() {
           </div>
         </div>
 
-        <div className="mx-auto mt-12 flex w-full max-w-[1200px] flex-col gap-2 border-t border-hairline pt-6 text-xs text-text-3 sm:flex-row sm:justify-between">
+        <div className="mx-auto mt-12 flex w-full max-w-[1200px] flex-col gap-4 border-t border-hairline pt-6 text-xs text-text-3 sm:flex-row sm:items-center sm:justify-between">
           <p>{rodape.legal}</p>
-          <p>{rodape.credito}</p>
+
+          {/*
+            Assinatura da MXC Digital (JM, 17/09/2026). A marca d'água atrás do
+            crédito é o mesmo planeta do símbolo, em escala grande e quase
+            invisível — assinatura, não anúncio.
+          */}
+          <a
+            href={rodape.agenciaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="assinatura-mxc"
+          >
+            <span aria-hidden className="assinatura-marca">
+              <MarcaMxc />
+            </span>
+            <span className="assinatura-texto">
+              {rodape.credito}
+              <strong>{rodape.agencia}</strong>
+            </span>
+          </a>
         </div>
       </footer>
     </div>

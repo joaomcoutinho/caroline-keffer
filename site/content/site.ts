@@ -159,7 +159,9 @@ export const prova = {
       sufixo: "",
       rotulo: "de nota nas avaliações do Google",
       nota: "média de 130 tutores",
-      icone: "estrela",
+      foto: "/images/galeria/atendimento-03.webp",
+      fotoPosicao: "50% 30%",
+      fotoAlt: "Colaboradora da clínica sorrindo com um cocker spaniel no colo",
       /** Só a nota é proporção, então só ela ganha as cinco estrelas embaixo. */
       estrelas: 4.8,
     },
@@ -169,7 +171,9 @@ export const prova = {
       sufixo: "+",
       rotulo: "anos cuidando dos pets da Torre",
       nota: "sempre na Rua Araguatins, na Torre",
-      icone: "relogio",
+      foto: "/images/fachada_hero.webp",
+      fotoPosicao: "42% 54%",
+      fotoAlt: "Fachada da clínica vista de frente, com a entrada e as plantas",
     },
     {
       /*
@@ -183,7 +187,9 @@ export const prova = {
       sufixo: "",
       rotulo: "especialidades atendendo aqui",
       nota: "da clínica geral à cirurgia ortopédica",
-      icone: "estetoscopio",
+      foto: "/images/servico_especialista.webp",
+      fotoPosicao: "58% 22%",
+      fotoAlt: "Veterinário especialista ao lado de um golden retriever na mesa de exame",
     },
   ],
 } as const;
@@ -503,7 +509,8 @@ export const equipe = {
 export const planos = {
   headline: "Seu plano de saúde pet é aceito aqui.",
   subhead:
-    "Cinco planos credenciados. Clique no seu e já pergunte pela cobertura no WhatsApp. Leva um minuto e evita surpresa no caixa.",
+    "Cinco planos credenciados. Escolha o seu e já pergunte pela cobertura no WhatsApp: leva um minuto e evita surpresa no caixa.",
+  escolha: "Qual é o plano do seu pet?",
   /* Ordem = a da arte "Aqui aceitamos seu plano" da própria clínica. */
   itens: [
     { nome: "PetHealth", detalhe: "", logo: "/images/planos/pethealth.webp", cor: "#f89800" },
@@ -938,5 +945,7 @@ export const ctaFinal = {
 
 export const rodape = {
   legal: `© ${new Date().getFullYear()} Clínica Pet Caroline Keffer. Todos os direitos reservados.`,
-  credito: "Site por MXC Digital",
+  credito: "Site por ",
+  agencia: "MXC Digital",
+  agenciaUrl: "https://www.instagram.com/mxcdigital/",
 } as const;

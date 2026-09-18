@@ -623,10 +623,7 @@
     height: calc(var(--domo) * 0.84);
     translate: -50% 0;
     border-width: 6px;
-    box-shadow:
-      0 0 0 12px rgb(126 192 220 / 0.16),
-      0 0 90px 10px rgb(126 192 220 / 0.28),
-      0 30px 60px -24px rgb(4 30 40 / 0.8);
+    box-shadow: 0 30px 60px -24px rgb(4 30 40 / 0.8);
   }
 
   /* Enquadra letreiro e porta sem cortar o nome da clínica. */
@@ -651,9 +648,7 @@
   .hero-dedo--destaque .hero-dedo-foto {
     outline: 2.5px solid #7ec0dc;
     outline-offset: 4px;
-    box-shadow:
-      0 0 16px 3px rgb(126 192 220 / 0.45),
-      0 22px 44px -24px rgb(4 30 40 / 0.65);
+    box-shadow: 0 22px 44px -24px rgb(4 30 40 / 0.65);
     transition: none;
     -webkit-tap-highlight-color: transparent;
   }
@@ -764,22 +759,23 @@
   HOVER (só com mouse de verdade) = brilho, nunca crescer nem deslocar.
 */
 /*
-  HOVER (só com mouse, desktop): a FOTO aproxima dentro do dedo, suave. Sem
-  brilho e sem mexer no contorno (JM, 16/09/2026). `scale` é propriedade
-  separada, então soma com o zoom de enquadramento que vem inline.
+  HOVER (só com mouse, desktop) — 17/09/2026 (JM): cresce a PONTA DA PATA
+  inteira, devagar, em vez de aproximar a foto dentro da moldura. Sem brilho.
+  `scale` é propriedade separada, então soma com o `rotate` de cada dedo.
 */
-.hero-dedo-foto img {
-  transition: scale 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+.hero-dedo {
+  transition: scale 0.45s var(--ease-soft);
 }
 
 @media (hover: hover) and (min-width: 1024px) {
-  .hero-dedo:hover .hero-dedo-foto img {
-    scale: 1.14;
+  .hero-dedo:hover {
+    z-index: 2;
+    scale: 1.07;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-dedo-foto img {
+  .hero-dedo {
     transition: none;
   }
 }
@@ -833,8 +829,7 @@
 .hero-cta-servicos:hover,
 .hero-cta-servicos:focus-visible {
   border-color: #ffffff;
-  background: rgb(255 255 255 / 0.08);
-  box-shadow: 0 0 22px 2px rgb(126 192 220 / 0.35);
+  background: rgb(255 255 255 / 0.12);
 }
 
 /* O título quebra por sentido em qualquer largura. */
@@ -864,7 +859,7 @@
   }
 
   .hero-copy .cta-brilho {
-    box-shadow: 0 16px 34px -14px rgb(2 20 28 / 0.9);
+    box-shadow: 0 16px 34px -14px rgb(2 20 28 / 0.55);
   }
 
   .hero-copy > div {
@@ -1044,6 +1039,60 @@
   .hero-m-foto img {
     transform: scale(1.34) translateY(15%);
   }
+}
+
+/*
+  ASSINATURA DA MXC no rodapé (17/09/2026). O símbolo em escala pequena ao
+  lado do crédito, e o MESMO símbolo gigante e quase invisível atrás, como
+  marca d'água. Nada acende no hover: só o texto clareia.
+*/
+.assinatura-mxc {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.1rem;
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color 0.3s var(--ease-soft);
+}
+
+.assinatura-mxc:hover {
+  color: var(--text);
+}
+
+.assinatura-marca {
+  display: block;
+  width: 1.6rem;
+  color: var(--brand);
+}
+
+.assinatura-marca svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.assinatura-texto strong {
+  margin-left: 0.28rem;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+/* A marca d'água: o mesmo símbolo, grande, no canto do rodapé. */
+.assinatura-mxc::before {
+  content: "";
+  position: absolute;
+  right: -0.5rem;
+  bottom: -2.2rem;
+  z-index: -1;
+  width: 9rem;
+  height: 9rem;
+  pointer-events: none;
+  opacity: 0.05;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='black' stroke-width='3'><circle cx='32' cy='30' r='15'/><ellipse cx='32' cy='30' rx='28' ry='9' transform='rotate(-24 32 30)'/><path d='M24 37V23l8 8 8-8v14' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='black' stroke-width='3'><circle cx='32' cy='30' r='15'/><ellipse cx='32' cy='30' rx='28' ry='9' transform='rotate(-24 32 30)'/><path d='M24 37V23l8 8 8-8v14' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
 }
 
 /*
@@ -1229,17 +1278,13 @@
   brigaria com o registro sóbrio do site. Só `opacity` anima; a sombra em si é
   estática, então não há repintura a cada quadro.
 */
+/*
+  17/09/2026 (JM: "o site não pode ter esse glow que parece tech"). O halo
+  pulsante dos CTAs saiu. A classe `cta-brilho` continua nos botões só como
+  gancho de posição; quem dá peso agora é a cor e a sombra de elevação.
+*/
 .cta-brilho::after {
-  content: "";
-  position: absolute;
-  /* inset 0: com -3px sobrava uma faixa escura entre o botão e o brilho. */
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  /* Só brilho difuso: o anel sólido de 3px lia como borda dupla ou foco de
-     teclado nos prints (council do hero, 16/09/2026). */
-  box-shadow: 0 0 26px 4px color-mix(in srgb, var(--action) 55%, transparent);
-  opacity: 0;
+  content: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1338,30 +1383,94 @@
   }
 }
 
-/* Duas linhas reservadas: os três rótulos terminam na mesma altura. */
-.numero-rotulo {
-  min-height: calc(2 * 1.375em);
-}
-
 /*
-  A faixa de números fica entre duas ondas: o respiro de baixo cresce a altura
-  da onda seguinte, senão os cartões ficam colados na curva de baixo.
+  CARTAZ DE NÚMERO (17/09/2026). A foto real ocupa o card, o número entra por
+  cima no pé e o véu garante a leitura. Sem ícone, sem halo, sem hover: o card
+  não é clicável.
 */
-.faixa-numeros {
-  padding-bottom: calc(2rem + var(--onda-a));
+.cartaz-numero {
+  position: relative;
+  display: block;
+  height: 100%;
+  min-height: 11.5rem;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background-color: color-mix(in srgb, var(--brand) 18%, var(--surface));
+  box-shadow: 0 18px 34px -24px rgb(4 30 40 / 0.55);
 }
 
 @media (min-width: 640px) {
-  .faixa-numeros {
-    padding-bottom: calc(3.5rem + var(--onda-a));
+  .cartaz-numero {
+    min-height: 17rem;
   }
 }
 
-@media (min-width: 768px) {
-  .faixa-numeros {
-    padding-bottom: calc(4rem + var(--onda-a));
+.cartaz-foto {
+  filter: saturate(0.25);
+  transition: filter 1.2s var(--ease-soft);
+}
+
+[data-revelar]:not(.revelar-oculto) .cartaz-foto {
+  filter: saturate(1);
+}
+
+.cartaz-texto {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  padding: 0.75rem 0.7rem 0.85rem;
+  background: linear-gradient(
+    180deg,
+    rgb(7 34 44 / 0) 0%,
+    rgb(7 34 44 / 0.72) 42%,
+    rgb(7 34 44 / 0.93) 100%
+  );
+  color: #ffffff;
+}
+
+@media (min-width: 640px) {
+  .cartaz-texto {
+    padding: 1.5rem 1.25rem 1.35rem;
   }
 }
+
+.cartaz-valor {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.cartaz-rotulo {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.cartaz-nota {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .cartaz-valor {
+    font-size: 3.5rem;
+  }
+
+  .cartaz-rotulo {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .cartaz-nota {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.875rem;
+    color: #cfe3ea;
+  }
+}
+
 
 /*
   DIVISAS · a curva da parede do consultório (ver components/ui/Onda.tsx).
@@ -1810,8 +1919,14 @@
 }
 
 @media (hover: hover) {
-  .parede-foto:hover {
-    transform: translateY(-4px);
+  /* 17/09/2026: nada de salto. A foto acende em cor e o fio interno aparece. */
+  .parede-foto img {
+    filter: saturate(0.4);
+    transition: filter 0.6s var(--ease-soft);
+  }
+
+  .parede-foto:hover img {
+    filter: saturate(1.05);
   }
 
   .parede-foto:hover::after {
@@ -1983,22 +2098,48 @@ html:has(.visor[open]) {
   Não é aplicado na foto do hero: lá a imagem dissolve no fundo por máscara, e
   qualquer contorno cancelaria esse efeito.
 */
+/*
+  FOTO EM DESTAQUE. 17/09/2026 (JM: "tira o glow; coloca animação de
+  preenchimento que muda de cor nas imagens"). Em repouso a foto fica com a
+  cor puxada para o azul da marca; com o cursor, a cor real PREENCHE a foto de
+  baixo para cima e o tingido sai. Nada sobe, nada acende.
+*/
 .midia-realce {
+  position: relative;
   border: 1px solid color-mix(in srgb, var(--brand) 24%, transparent);
-  box-shadow: 0 18px 45px -30px color-mix(in srgb, var(--brand) 65%, transparent);
-  transition:
-    border-color 0.4s var(--ease-soft),
-    box-shadow 0.4s var(--ease-soft),
-    transform 0.4s var(--ease-soft);
+  box-shadow: 0 18px 45px -30px rgb(4 30 40 / 0.55);
+  transition: border-color 0.5s var(--ease-soft);
+}
+
+.midia-realce::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--brand) 55%, transparent) 0%,
+    color-mix(in srgb, var(--brand) 40%, transparent) 100%
+  );
+  mix-blend-mode: color;
+  opacity: 0.55;
+  transition: opacity 0.7s var(--ease-soft);
 }
 
 @media (hover: hover) {
   .midia-realce:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in srgb, var(--brand) 60%, transparent);
-    box-shadow:
-      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
-      0 26px 60px -26px color-mix(in srgb, var(--brand) 80%, transparent);
+    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+  }
+
+  .midia-realce:hover::after {
+    opacity: 0;
+  }
+}
+
+@media (hover: none) {
+  .midia-realce::after {
+    opacity: 0;
   }
 }
 
@@ -2378,7 +2519,7 @@ html:has(.visor[open]) {
 @media (hover: hover) {
   .fase-cartao:not([data-ativo="true"]):hover {
     border-color: var(--brand);
-    transform: translateY(-3px);
+    background-color: color-mix(in srgb, var(--brand) 10%, transparent);
   }
 }
 
@@ -2537,128 +2678,28 @@ html:has(.visor[open]) {
   Peça de número (dobra de prova). Em repouso é só texto separado por fio; o
   hover materializa uma borda e um halo teal atrás, sem empurrar o layout.
 */
-.numero-card {
-  transition:
-    transform 0.35s var(--ease-soft),
-    border-color 0.35s var(--ease-soft),
-    box-shadow 0.35s var(--ease-soft);
-}
 
-/*
-  Card que responde ao cursor com uma inclinação mínima.
-
-  A perspectiva fica no PAI e a rotação no filho: aplicar as duas no mesmo
-  elemento achata o efeito. A transição é curta o bastante para o card parecer
-  colado no cursor, e não perseguindo ele com atraso.
-
-  Gate por CSS, não por JS: em toque (`hover: none`) e sob reduced-motion as
-  variáveis simplesmente não são usadas, e o card fica parado.
-*/
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .cartao-inclinavel {
-    perspective: 900px;
+@media (prefers-reduced-motion: reduce) {
+  .faixa-loop {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-inline: 1.25rem;
   }
 
-  .cartao-inclinavel > * {
-    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-    transform-style: preserve-3d;
-    transition: transform 0.25s var(--ease-soft);
+  .faixa-loop-trilho > li {
+    scroll-snap-align: start;
   }
 
-  /* Reflexo que acompanha o cursor, dando espessura ao vidro. */
-  .cartao-inclinavel .numero-card {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cartao-inclinavel .numero-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0;
-    /* Ancorado nos dois eixos: o halo fica sob o cursor em qualquer ponto do
-       card, e não preso na aresta de cima. */
-    background: radial-gradient(
-      42% 42% at var(--brilho-x, 50%) var(--brilho-y, 50%),
-      color-mix(in srgb, var(--brand) 30%, transparent),
-      transparent 72%
-    );
-    transition: opacity 0.35s var(--ease-soft);
-  }
-
-  .cartao-inclinavel:hover .numero-card::after {
-    opacity: 1;
+  .faixa-loop-trilho > li[aria-hidden="true"] {
+    display: none;
   }
 }
 
-/* Halo pulsante do selo "aberto agora". */
-@media (prefers-reduced-motion: no-preference) {
-  .pulso-status {
-    animation: pulso-selo 2.2s ease-out infinite;
-  }
-}
-
-@keyframes pulso-selo {
-  0% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-  70%,
-  100% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
-}
-
-/* Traço que se desenha sob o número no hover. */
-.numero-valor {
-  position: relative;
-}
-
-.numero-valor::after {
-  content: "";
-  position: absolute;
-  bottom: -0.4rem;
-  left: 50%;
-  height: 2px;
-  width: 0;
-  border-radius: 999px;
-  background-color: var(--brand);
-  transform: translateX(-50%);
-  transition: width 0.4s var(--ease-soft);
-}
-
-@media (hover: hover) {
-  .numero-card:hover {
-    transform: translateY(-4px);
-    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
-    box-shadow:
-      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
-      0 18px 40px -20px color-mix(in srgb, var(--brand) 70%, transparent);
-  }
-
-  .numero-card:hover .numero-valor::after {
-    width: 2.5rem;
-  }
-}
-
-/*
-  CARTÃO DE PLANO DE SAÚDE.
-
-  O cartão inteiro é um link de WhatsApp, então o hover precisa dizer "isto
-  clica" — e não só "isto é bonito". Por isso três coisas acontecem juntas:
-  o cartão sobe, o fio da marca do plano ALARGA (é o único elemento que carrega
-  a identidade enquanto não há logo), e o "Perguntar" sai da sombra.
-
-  `Perguntar` fica em opacidade baixa em repouso de propósito: cinco cartões
-  gritando o mesmo verbo viram ruído. Ele acende no que está sob o cursor.
-*/
 /*
   FAIXA EM LOOP: planos de saúde e, no celular, os depoimentos (15/09/2026).
   Lista duplicada, trilho até -50% (onde a cópia começa), espaço entre itens
   como `padding-right` de cada um para o loop não ter emenda. `padding-block`
-  dá folga para o cartão subir no hover sem ser cortado; as bordas esfumam.
+  dá folga nas pontas; as bordas esfumam.
 
   O loop NUNCA pausa (JM: "clicando ou não, não deve parar"). A pausa no hover
   travava a faixa no celular: depois de um toque o navegador mantém o `:hover`
@@ -2727,15 +2768,104 @@ html:has(.visor[open]) {
   }
 }
 
-.planos-faixa {
-  --faixa-item: 10.5rem;
+/*
+  FAIXA DE MARCAS D'ÁGUA (17/09/2026). As marcas dos planos passam só como
+  prova de credenciamento: sem cartão, sem link, sem hover. O logo entra
+  dessaturado e apagado, do jeito que marca d'água se comporta.
+*/
+.faixa-marcas {
+  --faixa-item: 9rem;
+  --faixa-vao: 1.5rem;
+  --duracao: 26s;
+  padding-block: 0.5rem;
 }
 
 @media (min-width: 640px) {
-  .planos-faixa {
-    --faixa-item: 15rem;
-    --faixa-vao: 1.25rem;
+  .faixa-marcas {
+    --faixa-item: 12.5rem;
+    --faixa-vao: 2.5rem;
   }
+}
+
+.marca-dagua {
+  display: flex;
+  height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  filter: grayscale(1);
+  opacity: 0.38;
+}
+
+@media (min-width: 640px) {
+  .marca-dagua {
+    height: 4.5rem;
+  }
+}
+
+/* ESCOLHA DO PLANO: pílulas, todas na tela, sem esperar o loop passar. */
+.plano-pergunta {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.plano-escolhas {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.plano-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background-color: var(--surface);
+  padding: 0.65rem 1.1rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    border-color 0.3s var(--ease-soft),
+    background-color 0.3s var(--ease-soft),
+    color 0.3s var(--ease-soft);
+}
+
+.plano-ponto {
+  display: block;
+  height: 0.55rem;
+  width: 0.55rem;
+  border-radius: 999px;
+  background-color: var(--plano-cor, var(--brand));
+  transition: scale 0.3s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  /* Preenche com a cor da marca do plano. Sem halo, sem deslocamento. */
+  .plano-chip:hover {
+    border-color: color-mix(in srgb, var(--plano-cor, var(--brand)) 60%, transparent);
+    background-color: color-mix(in srgb, var(--plano-cor, var(--brand)) 12%, var(--surface));
+  }
+
+  .plano-chip:hover .plano-ponto {
+    scale: 1.5;
+  }
+}
+
+.plano-chip:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+.plano-chip--outro {
+  border-style: dashed;
+  color: var(--text-2);
 }
 
 .depoimentos-faixa {
@@ -2773,55 +2903,6 @@ html:has(.visor[open]) {
   }
 }
 
-.cartao-plano {
-  transition:
-    transform 0.35s var(--ease-soft),
-    border-color 0.35s var(--ease-soft),
-    box-shadow 0.35s var(--ease-soft);
-}
-
-.plano-traco {
-  transition: width 0.4s var(--ease-soft);
-}
-
-.plano-acao {
-  opacity: 0.45;
-  transition: opacity 0.35s var(--ease-soft);
-}
-
-@media (hover: hover) {
-  /*
-    GLOW RENTE À BORDA (15/09/2026). Era um anel de 5px mais uma sombra de 44px
-    deslocada para baixo, e dentro da faixa com `overflow: hidden` essa sombra
-    saía cortada numa caixa reta atrás do cartão. Agora é um contorno de 1,5px
-    e um halo simétrico e curto, que segue o raio do cartão por igual nos
-    quatro lados e cabe na folga da faixa.
-  */
-  .cartao-plano:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in srgb, var(--brand) 70%, transparent);
-    box-shadow:
-      0 0 0 1.5px color-mix(in srgb, var(--brand) 55%, transparent),
-      0 0 14px 1px color-mix(in srgb, var(--brand) 40%, transparent);
-  }
-
-  .cartao-plano:hover .plano-traco {
-    width: 3.5rem;
-  }
-
-  .cartao-plano:hover .plano-acao {
-    opacity: 1;
-  }
-}
-
-/* No teclado o cartão precisa reagir igual, senão só quem usa mouse percebe. */
-.cartao-plano:focus-visible .plano-traco {
-  width: 3.5rem;
-}
-
-.cartao-plano:focus-visible .plano-acao {
-  opacity: 1;
-}
 
 /*
   Card de membro da equipe: grade rígida + HOLOFOTE.
@@ -2858,7 +2939,15 @@ html:has(.visor[open]) {
 }
 
 .membro-foto img {
-  transition: transform 0.6s var(--ease-soft);
+  /* Em repouso a cor fica puxada para o azul da marca; o cursor devolve a cor. */
+  filter: saturate(0.3);
+  transition: filter 0.7s var(--ease-soft);
+}
+
+@media (hover: none) {
+  .membro-foto img {
+    filter: saturate(1);
+  }
 }
 
 /* Véu ciano da foto. Fica em ::after para não custar um elemento no DOM. */
@@ -2927,18 +3016,15 @@ html:has(.visor[open]) {
     transform: scale(0.985);
   }
 
+  /* 17/09/2026: sem salto e sem halo. O retrato é que ganha cor. */
   .membro-card:hover .membro-foto,
   .membro-card:focus-within .membro-foto {
-    transform: translateY(-8px);
     border-color: color-mix(in srgb, var(--brand) 62%, transparent);
-    box-shadow:
-      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
-      0 28px 58px -26px color-mix(in srgb, var(--brand) 80%, transparent);
   }
 
   .membro-card:hover .membro-foto img,
   .membro-card:focus-within .membro-foto img {
-    transform: scale(1.05);
+    filter: saturate(1.05);
   }
 
   .membro-card:hover .membro-foto::after,

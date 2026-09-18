@@ -47,11 +47,11 @@ export default function Home() {
       <main>
         <Hero />
         {/* Divisas com a curva da parede do consultório: cor = seção de baixo. */}
-        <Onda cor="var(--surface-2)" />
-        <Prova />
-        <Onda cor="var(--surface)" espelhar />
+        {/* 17/09/2026 (JM): serviços antes dos números — a segunda dobra diz o que a clínica faz. */}
+        <Onda cor="var(--surface)" />
         <Servicos />
-        <Onda cor="var(--surface-2)" />
+        <Onda cor="var(--surface-2)" espelhar />
+        <Prova />
         <Planos />
         <Onda cor="var(--surface-3)" espelhar />
         <SemEstresse />

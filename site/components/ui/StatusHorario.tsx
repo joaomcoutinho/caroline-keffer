@@ -142,9 +142,7 @@ export function StatusHorario({ className = "" }: Props) {
           aberto ? "bg-emerald-400" : "bg-text-3"
         }`}
       >
-        {aberto ? (
-          <span className="pulso-status absolute inset-0 rounded-full bg-emerald-400" />
-        ) : null}
+        {/* O ponto verde não pulsa mais (JM, 17/09/2026: nada de halo). */}
       </span>
 
       {/*

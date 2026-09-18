@@ -24,7 +24,8 @@ type Props = {
 export function LogoWhatsapp({ size = 22, className = "" }: Props) {
   return (
     <svg
-      viewBox="0 0 24 24"
+      /* viewBox com folga: no 0 0 24 24 o balão encostava na borda e saía cortado. */
+      viewBox="-1.2 -1.2 26.4 26.4"
       width={size}
       height={size}
       fill="currentColor"

@@ -75,7 +75,8 @@ export function BotaoWhatsapp({
       aria-label={nomeAcessivel ?? undefined}
       className={`${base} ${estilo} ${className}`}
     >
-      <LogoWhatsapp size={t.icone} />
+      {/* Verde oficial do WhatsApp (JM, 17/09/2026): o ícone vira o destaque do botão. */}
+      <LogoWhatsapp size={t.icone} className="text-[#25D366]" />
       {rotulo}
     </a>
   );
