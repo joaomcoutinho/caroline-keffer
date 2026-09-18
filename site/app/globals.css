@@ -637,12 +637,10 @@
   }
 }
 
-/* O dedo da Dra. Carol é o destaque (BRIEF): anel ciano fixo. */
-.hero-dedo--destaque .hero-dedo-foto {
-  outline: 3px solid #7ec0dc;
-  outline-offset: 5px;
-}
-
+/*
+  O dedo da Dra. Carol não tem mais anel próprio (JM, 17/09/2026: "deixa igual
+  aos outros"). O destaque dela ficou só no rótulo.
+*/
 /*
   Celular e tablet (JM, 16/09/2026): sem hover, e os quatro dedos iguais, com
   o mesmo anel ciano e o mesmo brilho em volta. O destaque da Dra. Carol fica
@@ -679,17 +677,10 @@
   transition: box-shadow 0.3s ease;
 }
 
-/*
-  Rótulo da Dra. Carol: branco como os outros, com o anel ciano do dedo em
-  volta. Em ciano chapado ele parecia um segundo botão e sumia no fundo.
-*/
+/* Rótulo da Dra. Carol: igual aos outros, só com a letra um pouco mais forte. */
 .hero-dedo--destaque .hero-dedo-rotulo {
-  background: #ffffff;
   color: #0d4658;
   font-weight: 800;
-  box-shadow:
-    0 0 0 2px #7ec0dc,
-    0 8px 18px -8px rgb(4 30 40 / 0.7);
 }
 
 /* No celular só a Dra. Carol tem rótulo: quatro pílulas lotariam a pata pequena. */
