@@ -1,0 +1,112 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Equipe e pata · opções de interação</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--marca:#2e7a94;--acao:#7ec0dc;--claro:#a8d6e8;--tinta:#07222c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f4a5e;color:#e3f2f7;font-family:'Nunito Sans',sans-serif;padding:36px 24px 90px}
+h1{font-family:Nunito;font-size:26px;margin-bottom:4px}
+h2{font-family:Nunito;font-size:20px;margin:38px 0 6px}
+p.intro{color:#bcdcea;max-width:74ch;font-size:14.5px;line-height:1.55}
+.grade{display:flex;flex-wrap:wrap;gap:26px;margin-top:20px}
+.item{width:260px}
+.item .titulo{font-family:Nunito;font-weight:800;font-size:15px;margin-bottom:4px}
+.item .nota{font-size:12.5px;color:#a8c9d8;line-height:1.45;margin-bottom:12px;min-height:54px}
+
+/* ───────── EQUIPE ───────── */
+.cardE{position:relative;width:260px;aspect-ratio:3/4;border-radius:20px;overflow:hidden;background:#123d4d;box-shadow:0 20px 40px -30px rgba(0,0,0,.7)}
+.cardE .foto{position:absolute;inset:0;background-size:cover;background-position:center 15%;transition:translate .55s cubic-bezier(.22,1,.36,1)}
+.cardE .veu{position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,34,44,.94),rgba(7,34,44,.55) 32%,transparent 62%)}
+.cardE .base{position:absolute;left:0;right:0;bottom:0;padding:14px 16px 16px}
+.cardE b{font-family:Nunito;font-size:16px;display:block}
+.cardE span{font-size:12.5px;color:#cfe3ea}
+
+/* E-A · prontuário que entra pelo lado */
+.eA .ficha{position:absolute;inset:0 0 0 auto;width:62%;background:#f4f7f5;color:#12333f;padding:16px 14px;translate:101% 0;transition:translate .55s cubic-bezier(.22,1,.36,1);border-left:3px solid var(--acao)}
+.eA .ficha h3{font-family:Nunito;font-size:15px;margin-bottom:2px}
+.eA .ficha em{font-style:normal;font-size:12px;color:#4a6675;display:block;margin-bottom:10px}
+.eA .ficha p{font-size:12.5px;line-height:1.45;color:#2c4450;border-top:1px dashed #b9cfd8;padding-top:9px}
+.eA:hover .ficha{translate:0 0}
+.eA:hover .foto{translate:-22% 0}
+
+/* E-B · instantânea de plantão (troca de foto com círculo abrindo) */
+.eB .troca{position:absolute;inset:0;background-size:cover;background-position:center 20%;clip-path:circle(0% at 50% 45%);transition:clip-path .6s cubic-bezier(.22,1,.36,1)}
+.eB:hover .troca{clip-path:circle(120% at 50% 45%)}
+
+/* E-C · assinatura escrita */
+.eC .assina{position:absolute;left:16px;bottom:58px;width:150px;height:44px}
+.eC .assina path{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-dasharray:360;stroke-dashoffset:360;transition:stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1)}
+.eC:hover .assina path{stroke-dashoffset:0}
+.eC:hover b{opacity:0;transition:opacity .25s}
+.eC b{transition:opacity .3s .5s}
+
+/* E-D · plaquinha de coleira descendo */
+.eD .fita{position:absolute;left:50%;top:0;width:2px;height:0;background:rgba(255,255,255,.55);transition:height .35s cubic-bezier(.22,1,.36,1)}
+.eD .plaq{position:absolute;left:50%;top:0;translate:-50% -140%;background:#fff;color:#0d4658;font-weight:800;font-size:12px;padding:7px 13px;border-radius:999px;box-shadow:0 8px 18px -10px rgba(0,0,0,.6);transform-origin:50% -18px;transition:translate .5s cubic-bezier(.22,1,.36,1)}
+.eD:hover .fita{height:34px}
+.eD:hover .plaq{translate:-50% 34px;animation:balanca 1.1s cubic-bezier(.34,1.2,.64,1) .35s}
+@keyframes balanca{0%{rotate:0}25%{rotate:-7deg}50%{rotate:4deg}75%{rotate:-2deg}100%{rotate:0}}
+
+/* ───────── PATA ───────── */
+.palco{position:relative;width:260px;height:300px}
+.dedo{position:absolute;left:50%;top:18px;translate:-50% 0;width:120px;height:136px}
+.dedo .oval{width:100%;height:100%;border-radius:50%;overflow:hidden;border:4px solid rgba(255,255,255,.92);background-size:cover;background-position:50% 30%;box-shadow:0 16px 34px -20px rgba(0,0,0,.7)}
+.dedo .tag{position:absolute;left:50%;bottom:-11px;translate:-50% 0;background:#fff;color:#0d4658;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px}
+.almofada{position:absolute;left:50%;bottom:6px;translate:-50% 0;width:170px;height:120px;border-radius:50% 50% 40% 40%/64% 64% 36% 36%;overflow:hidden;border:3px solid rgba(255,255,255,.9);background:url(fachada_ceu.webp) center 55%/cover}
+
+/* P-A · carimbo na fachada */
+.pA .marca{position:absolute;left:54%;bottom:44px;width:34px;height:34px;opacity:0;rotate:-18deg;background:#0d4658;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5'/%3E%3C/svg%3E") center/contain no-repeat;transition:opacity .45s,rotate .6s,scale .6s;scale:.5}
+.pA .dedo:hover ~ .marca,.pA:hover .marca{opacity:.75;rotate:6deg;scale:1}
+
+/* P-B · trilha pontilhada até a clínica */
+.pB svg.linha{position:absolute;inset:0;pointer-events:none}
+.pB svg.linha path{fill:none;stroke:#fff;stroke-width:2.5;stroke-dasharray:5 9;stroke-linecap:round;stroke-dashoffset:170;opacity:0;transition:stroke-dashoffset .8s cubic-bezier(.22,1,.36,1),opacity .3s}
+.pB:hover svg.linha path{stroke-dashoffset:0;opacity:.85}
+
+/* P-C · foto respirando dentro da moldura */
+.pC .oval{background-position:50% 30%}
+.pC:hover .oval{animation:respirafoto 3.4s ease-in-out infinite}
+@keyframes respirafoto{0%,100%{background-size:cover}50%{background-size:118%}}
+
+/* P-D · etiqueta que sai de trás do dedo */
+.pD .tag{translate:-50% -14px;opacity:0;rotate:-8deg;transition:translate .5s cubic-bezier(.22,1,.36,1),opacity .35s,rotate .5s}
+.pD:hover .tag{translate:-50% 0;opacity:1;rotate:0deg}
+.pD:hover .oval{border-color:#fff}
+</style>
+
+<h1>Equipe e pata · opções de interação</h1>
+<p class="intro">Passe o mouse em cada card e em cada ponta da pata. Tudo aqui é protótipo: serve para escolher a direção, não o acabamento.</p>
+
+<h2>Equipe</h2>
+<div class="grade">
+  <div class="item"><div class="titulo">A · Prontuário pelo lado</div><div class="nota">O retrato desliza e entra uma ficha em papel, como a que fica pendurada na porta do consultório.</div>
+    <div class="cardE eA"><div class="foto" style="background-image:url(equipe-caroline-keffer.webp)"></div><div class="veu"></div><div class="base"><b>Dra. Caroline Keffer</b><span>Médica Veterinária</span></div>
+      <div class="ficha"><h3>Dra. Caroline Keffer</h3><em>Médica Veterinária</em><p>Responsável técnica, há mais de 20 anos na Torre.</p></div></div></div>
+
+  <div class="item"><div class="titulo">B · Instantânea de plantão</div><div class="nota">A foto posada dá lugar a uma foto real de atendimento, com o corte circular abrindo do centro.</div>
+    <div class="cardE eB"><div class="foto" style="background-image:url(equipe-isa-lopes.webp)"></div><div class="troca" style="background-image:url(atendimento-03.webp)"></div><div class="veu"></div><div class="base"><b>Dra. Isa Lopes</b><span>Médica Veterinária</span></div></div></div>
+
+  <div class="item"><div class="titulo">C · Assinatura escrita</div><div class="nota">O nome é escrito à mão, traço por traço. É a única peça manuscrita do site, como a frase da parede.</div>
+    <div class="cardE eC"><div class="foto" style="background-image:url(equipe-camila-amaral.webp)"></div><div class="veu"></div>
+      <svg class="assina" viewBox="0 0 150 44"><path d="M6 30c8-16 14-18 17-8s-2 16 3 16 9-12 13-18 7-6 8 2 2 12 6 9 6-12 10-16 8-2 8 6 3 12 8 8 10-12 14-14 8 0 9 6"/></svg>
+      <div class="base"><b>Camila Amaral</b><span>Gerente</span></div></div></div>
+
+  <div class="item"><div class="titulo">D · Plaquinha de coleira</div><div class="nota">Uma plaquinha desce por uma fita, balança e para, trazendo a função da pessoa.</div>
+    <div class="cardE eD"><div class="foto" style="background-image:url(equipe-lucas-leal.webp)"></div><div class="veu"></div><span class="fita"></span><span class="plaq">Pet Groomer</span><div class="base"><b>Lucas Leal</b><span>Pet Groomer</span></div></div></div>
+</div>
+
+<h2>Pontas da pata (hero)</h2>
+<div class="grade">
+  <div class="item"><div class="titulo">A · Carimbo na fachada</div><div class="nota">Passar o mouse no dedo carimba uma pegada na fachada, como se a pessoa tivesse pisado ali.</div>
+    <div class="palco pA"><div class="dedo"><div class="oval" style="background-image:url(hero_dra_lulu.webp)"></div><span class="tag">Dra. Carol</span></div><span class="marca"></span><div class="almofada"></div></div></div>
+
+  <div class="item"><div class="titulo">B · Trilha até a clínica</div><div class="nota">Uma linha pontilhada corre do dedo até a fachada: "essa pessoa te atende aqui".</div>
+    <div class="palco pB"><div class="dedo"><div class="oval" style="background-image:url(atendimento-03.webp)"></div><span class="tag">Atendimento</span></div>
+      <svg class="linha" viewBox="0 0 260 300"><path d="M130 160 C 130 195, 128 205, 130 226"/></svg><div class="almofada"></div></div></div>
+
+  <div class="item"><div class="titulo">C · Foto que respira</div><div class="nota">A moldura fica parada; só a foto por dentro aproxima e recua devagar, sem parar, enquanto o cursor está lá.</div>
+    <div class="palco pC"><div class="dedo"><div class="oval" style="background-image:url(servico_especialista.webp)"></div><span class="tag">Especialidades</span></div><div class="almofada"></div></div></div>
+
+  <div class="item"><div class="titulo">D · Etiqueta que sai de trás</div><div class="nota">Em repouso o dedo não tem etiqueta. Ela sai de trás dele, girando até assentar, e a moldura clareia.</div>
+    <div class="palco pD"><div class="dedo"><div class="oval" style="background-image:url(atendimento-05.webp)"></div><span class="tag">Equipe</span></div><div class="almofada"></div></div></div>
+</div>

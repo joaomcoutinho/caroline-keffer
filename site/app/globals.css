@@ -2246,6 +2246,18 @@ html:has(.visor[open]) {
 
   Só no desktop. No celular as abas são pílulas num trilho horizontal.
 */
+/*
+  A coluna de texto tem altura MÍNIMA (18/09/2026, JM: "a troca tem que ser
+  fluida, sem travar"). Sem ela, o serviço com mais texto esticava o painel e a
+  dobra inteira pulava ao trocar de aba — o que lia como travada, não como
+  animação.
+*/
+@media (min-width: 640px) {
+  .servico-texto {
+    min-height: 26rem;
+  }
+}
+
 /* As fotos ficam empilhadas: só a ativa aparece, e a troca é só opacidade. */
 .servico-quadro {
   opacity: 0;

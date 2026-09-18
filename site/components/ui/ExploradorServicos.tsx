@@ -259,7 +259,7 @@ export function ExploradorServicos({ itens, rotulo, cabecalho }: Props) {
           são UM bloco, centrado na altura da foto, com o texto maior
           ocupando o espaço.
         */}
-        <div key={atual.nome} className="servico-painel flex flex-col lg:justify-center">
+        <div key={atual.nome} className="servico-texto flex flex-col lg:justify-center">
           <p className="mt-6 text-sm font-semibold tracking-[0.08em] text-brand tabular-nums sm:mt-0">
             {String(ativo + 1).padStart(2, "0")}
             <span className="text-text-3"> / {String(itens.length).padStart(2, "0")}</span>
