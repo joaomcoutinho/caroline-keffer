@@ -46,13 +46,13 @@ export function Fechamento() {
               <Image
                 src={caminhoPublico("/images/logo-caroline-keffer.jpg")}
                 alt=""
-                width={44}
-                height={44}
-                className="h-11 w-11 rounded-full object-cover"
+                width={72}
+                height={72}
+                className="h-16 w-16 rounded-full object-cover sm:h-[72px] sm:w-[72px]"
               />
-              <span className="font-display text-[15px] leading-tight font-bold">
+              <span className="font-display text-[17px] leading-tight font-bold">
                 Caroline Keffer
-                <span className="block text-[12px] font-normal text-text-3">
+                <span className="block text-[13px] font-normal text-text-3">
                   Clínica Veterinária
                 </span>
               </span>

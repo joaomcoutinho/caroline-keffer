@@ -11,6 +11,8 @@ import { Preventivo } from "@/components/sections/Preventivo";
 import { Faq } from "@/components/sections/Faq";
 import { OndeFicamos } from "@/components/sections/OndeFicamos";
 import { Fechamento } from "@/components/sections/Fechamento";
+import { Lema } from "@/components/sections/Lema";
+import { Onda } from "@/components/ui/Onda";
 import { DadosEstruturados } from "@/components/DadosEstruturados";
 import { BotaoFlutuante } from "@/components/ui/BotaoFlutuante";
 import { BarraAgendamento } from "@/components/ui/BarraAgendamento";
@@ -44,16 +46,28 @@ export default function Home() {
       <Cabecalho />
       <main>
         <Hero />
+        {/* Divisas com a curva da parede do consultório: cor = seção de baixo. */}
+        <Onda cor="var(--surface-2)" />
         <Prova />
+        <Onda cor="var(--surface)" espelhar />
         <Servicos />
+        <Onda cor="var(--surface-2)" />
         <Planos />
+        <Onda cor="var(--surface-3)" espelhar />
         <SemEstresse />
+        <Onda cor="var(--surface)" />
         <DraCarol />
+        <Lema />
+        <Onda cor="var(--surface-3)" espelhar />
         <Equipe />
+        <Onda cor="var(--surface-2)" />
         <Pets />
+        <Onda cor="var(--surface)" espelhar />
         <Preventivo />
         <Faq />
+        <Onda cor="var(--surface-2)" />
         <OndeFicamos />
+        <Onda cor="#0b2129" espelhar />
       </main>
       <Fechamento />
       <BotaoFlutuante />

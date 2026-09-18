@@ -82,8 +82,8 @@ export const hero = {
   headlineDestaque: "em casa.",
   subhead:
     "Clínica geral, cirurgia, especialidades, exames e banho e tosa na Torre, com a Dra. Carol.",
-  /** No celular a copy fica sobre a foto: só o essencial. */
-  subheadCurta: "Clínica, cirurgia, exames, banho e tosa, com a Dra. Carol.",
+  /** No celular a copy fica sobre a foto: só o essencial. A Dra. Carol já aparece na fileira de rostos. */
+  subheadCurta: "Clínica, cirurgia, exames, banho e tosa, na Torre.",
   /**
    * Os quatro DEDOS da pata do hero no desktop (a almofada é a fachada).
    * Fotos reais: atendimentos da galeria, o especialista e o consultório.
@@ -119,6 +119,32 @@ export const hero = {
     /** O letreiro fica no terço de cima do quadro. */
     posicao: "center 42%",
   },
+  /*
+   * CELULAR (17/09/2026, JM: "quero ver boa parte da fachada"): a foto FRONTAL
+   * (4:3). Na faixa alta do celular a foto de céu só cabia com o letreiro
+   * gigante e a entrada fora do quadro; esta mostra letreiro, porta, as
+   * plantas e a calçada de uma vez.
+   */
+  fotoMobile: {
+    src: "/images/fachada_hero.webp",
+    alt: "Fachada da Clínica Veterinária Caroline Keffer vista de frente, com a entrada e as plantas na calçada",
+    posicao: "22% 50%",
+  },
+} as const;
+
+/**
+ * Lema da clínica, escrito na parede do consultório (foto enviada pelo JM em
+ * 17/09/2026). Frase real, reproduzida como está na parede.
+ */
+export const lema = {
+  rotulo: "Nosso jeito de cuidar",
+  frase: "Cuidamos com o coração, tratamos com afeto",
+  /**
+   * Missão, montada só com fatos que o site já afirma (20+ anos na Torre,
+   * equipe fixa, acompanhamento do filhote ao idoso). VALIDAR com a Dra. Carol.
+   */
+  missao:
+    "É o que guia a clínica há mais de 20 anos na Torre: a mesma equipe acompanhando seu pet em cada fase da vida, de filhote a idoso.",
 } as const;
 
 /**
@@ -131,8 +157,8 @@ export const prova = {
       alvo: 4.8,
       casas: 1,
       sufixo: "",
-      rotulo: "de nota no Google",
-      nota: "média de 130 avaliações",
+      rotulo: "de nota nas avaliações do Google",
+      nota: "média de 130 tutores",
       icone: "estrela",
       /** Só a nota é proporção, então só ela ganha as cinco estrelas embaixo. */
       estrelas: 4.8,
@@ -426,7 +452,7 @@ export const draCarol = {
 export const equipe = {
   headline: "Sempre os mesmos rostos cuidando do seu pet.",
   subhead:
-    "Da recepção à cirurgia, é sempre a mesma equipe. Na segunda visita seu cachorro já reconhece quem cuidou dele na primeira, e isso muda o jeito que ele entra aqui.",
+    "Da recepção à cirurgia, é sempre a mesma equipe. Na segunda visita seu pet já reconhece quem cuidou dele.",
   membros: [
     {
       nome: "Dra. Caroline Keffer",
@@ -528,7 +554,7 @@ export const depoimentos = {
 export const pets = {
   headline: "Cada consulta termina em colo.",
   subhead:
-    "Esses são alguns dos cães e gatos que a nossa equipe atendeu. Muitos chegaram com medo e hoje entram como quem chega em casa.",
+    "Alguns dos cães e gatos que a nossa equipe atendeu.",
   itens: [
     { src: "/images/galeria/atendimento-01.webp", alt: "Colaboradora sorrindo e abraçando um buldogue francês preto e branco", largura: 720, altura: 1125 },
     { src: "/images/galeria/atendimento-02.webp", alt: "Veterinária sentada no chão do consultório com dois cães dinamarqueses", largura: 720, altura: 960 },
@@ -825,7 +851,7 @@ export const comparativo = {
 export const preventivo = {
   headline: "Seu pet precisa de quê, e de quanto em quanto tempo?",
   subhead:
-    "O calendário de cuidado que faz um problema barato ser encontrado antes de virar um problema caro.",
+    "O calendário de cuidado que acompanha cada fase da vida do seu pet e ajuda a perceber cedo o que ele ainda não sabe mostrar.",
   aviso:
     "Orientação geral, com base nas diretrizes de cuidado preventivo da AAHA e da AVMA. O intervalo certo para o seu pet é definido na consulta, conforme idade, porte, raça e histórico.",
   etapas: [

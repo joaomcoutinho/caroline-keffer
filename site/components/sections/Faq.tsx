@@ -21,7 +21,7 @@ import { faq } from "@/content/site";
  */
 export function Faq() {
   return (
-    <Secao id="duvidas" tom="base">
+    <Secao id="duvidas" tom="base" className="faq-secao">
       <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div>
           <Revelar>

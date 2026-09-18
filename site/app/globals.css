@@ -228,6 +228,12 @@
 .hero {
   --patas-cor: #ffffff;
   --patas-opacidade: 0.14;
+  /*
+    A dobra é mais alta que a tela exatamente a altura da onda seguinte: a
+    primeira tela mostra só o hero, e a divisa aparece ao rolar (JM, 17/09).
+  */
+  min-height: calc(100svh + var(--onda-a));
+  padding-bottom: var(--onda-a);
   background:
     radial-gradient(90% 45% at 50% 28%, #3a97b4 0%, rgb(58 151 180 / 0) 70%),
     linear-gradient(180deg, #1c6c87 0%, #135a72 44%, #0d4658 56%);
@@ -473,14 +479,18 @@
 @media (min-width: 1024px) {
   .hero {
     --largura: min(92vw, 82.5rem);
-    --tit: clamp(2.5rem, min(3.7vw, 6.4vh), 4rem);
-    --sub: clamp(1rem, min(1.3vw, 2.3vh), 1.25rem);
-    --copy-topo: calc(5.5rem + 3vh);
+    --tit: clamp(2.4rem, min(3.4vw, 5.8vh), 3.9rem);
+    --sub: clamp(1rem, min(1.25vw, 2.2vh), 1.2rem);
+    --copy-topo: calc(5.25rem + 2vh);
     --copy-fim: calc(var(--copy-topo) + var(--tit) * 3.41 + var(--sub) * 3 + 5.25rem);
-    --domo-top: calc(var(--copy-fim) + 1.75rem);
+    --domo-top: calc(var(--copy-fim) + 1.5rem);
     --domo: min(40vw, 44rem);
     display: block;
-    min-height: max(100dvh, 40rem);
+    /* A almofada cabe INTEIRA na dobra, com folga antes da onda. */
+    min-height: max(
+      calc(100svh + var(--onda-a)),
+      calc(var(--domo-top) + var(--domo) * 0.84 + var(--onda-a) + 2rem)
+    );
   }
 
   .hero-palco {
@@ -866,6 +876,10 @@
     box-shadow: 0 16px 34px -14px rgb(2 20 28 / 0.9);
   }
 
+  .hero-copy > div {
+    padding-bottom: 0;
+  }
+
   .hero-titulo {
     margin-top: 0;
     font-size: var(--tit);
@@ -885,28 +899,154 @@
 }
 
 /*
-  Celular de tela BAIXA (iPhone SE e afins, ~667px): pata menor, para os
-  botões caberem na primeira tela.
+  CELULAR · "M2 tela cheia" (17/09/2026, escolhida pelo JM entre três
+  prévias). A fachada ocupa a tela; a copy fica embaixo, alinhada à
+  esquerda, na zona do polegar, e sobe sobre a base da foto com um véu na cor
+  da marca. A pata (palco, anéis, luz ambiente) fica para tablet e desktop.
+
+  A caixa da foto tem no máximo 1,5 × a largura: mais alta que isso, o
+  recorte lateral cortava o letreiro ("ica Veterinária").
 */
-@media (max-width: 639px) and (max-height: 720px) {
-  /* Pata menor e com respiro de 20px abaixo da navbar; o espaço sai do vão
-     entre a pata e a copy. */
-  .hero-palco {
-    width: min(52vw, 12.25rem);
-    margin-top: 5.75rem;
+.hero-m-foto {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  .hero {
+    justify-content: flex-end;
+    background: #0d4658;
+  }
+
+  .hero.fundo-patas::before,
+  .hero-palco,
+  .hero-orbitas,
+  .hero-ambiente {
+    display: none;
+  }
+
+  /*
+    A caixa da foto tem a altura da própria foto (4:3) e o degradê fecha
+    dentro dela, na cor do fundo da dobra: não existe emenda entre foto e
+    fundo, e nada se mexe quando a barra do navegador some no scroll.
+
+    A ALTURA vai no contêiner, nunca na <img>: o next/image escreve
+    `height:100%` em atributo de estilo, que ganharia da folha.
+  */
+  .hero-m-foto {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    inset: 0 0 auto;
+    height: min(108vw, 62svh);
+    overflow: hidden;
+  }
+
+  /* Desce a foto dentro da caixa: o letreiro sai de baixo da navbar. */
+  .hero-m-foto img {
+    transform: scale(1.08) translateY(11%);
+  }
+
+  .hero-m-foto::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgb(13 70 88 / 0) 0%,
+      rgb(13 70 88 / 0) 58%,
+      rgb(13 70 88 / 0.72) 82%,
+      rgb(13 70 88 / 0.95) 92%,
+      #0d4658 100%
+    );
+  }
+
+  /* Véu de cima: dá contraste à navbar sobre o céu. */
+  .hero-m-foto::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(13 70 88 / 0.5) 0%, rgb(13 70 88 / 0) 22%);
+  }
+
+  .hero-copy {
+    z-index: 1;
   }
 
   .hero-copy > div {
-    padding-top: 1rem;
-  }
-
-  .hero-dedo-rotulo {
-    font-size: 0.5625rem;
-    padding: 0.15rem 0.4rem;
+    max-width: none;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 1.75rem;
+    text-align: left;
   }
 
   .hero-titulo {
-    font-size: 1.85rem;
+    font-size: min(2.5rem, 10.2vw);
+    font-weight: 800;
+    line-height: 1.03;
+    /* A copy agora nasce sobre a foto: sombra curta garante a leitura. */
+    text-shadow: 0 2px 14px rgb(4 30 40 / 0.55);
+  }
+
+  .hero-sub {
+    text-shadow: 0 2px 10px rgb(4 30 40 / 0.5);
+  }
+
+  .hero-sub {
+    margin-inline: 0;
+    margin-top: 0.6rem;
+    max-width: none;
+  }
+
+  #ancora-cta-hero {
+    width: 100%;
+    margin-top: 1.25rem;
+  }
+
+  /* Zoom lento na fachada: a tela respira sem distrair. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-m-foto img {
+      animation: fachada-respira 18s ease-in-out infinite alternate;
+    }
+  }
+}
+
+@keyframes fachada-respira {
+  to {
+    scale: 1.08;
+  }
+}
+
+/*
+  Celular de tela BAIXA (iPhone SE e afins): tudo um passo menor, e a foto
+  mais baixa, para o letreiro subir e ficar acima do véu.
+*/
+@media (max-width: 639px) and (max-height: 720px) {
+  /* A maioria dos celulares reais cai aqui (a barra do Safari come altura). */
+  .hero-m-foto {
+    height: min(112vw, 52svh);
+  }
+
+  .hero-titulo {
+    font-size: 2.05rem;
+  }
+
+  .hero-copy > div {
+    padding-bottom: 1.1rem;
+  }
+
+  #ancora-cta-hero {
+    margin-top: 1rem;
+    gap: 0.6rem;
+  }
+}
+
+/* Tela muito baixa (SE com a barra do Safari aberta): a foto desce mais. */
+@media (max-width: 639px) and (max-height: 600px) {
+  .hero-m-foto img {
+    transform: scale(1.1) translateY(15%);
   }
 }
 
@@ -1180,28 +1320,118 @@
 */
 .fechamento-patas {
   --patas-cor: #a8d6e8;
-  --patas-opacidade: 0.12;
+  --patas-opacidade: 0.1;
 }
 
+/*
+  Uma camada só de máscara: no Safari do iPhone a composição de duas camadas
+  pintava uma faixa clara na metade direita da dobra (bug reportado pelo JM
+  em 17/09/2026).
+*/
 .fechamento-patas::before {
-  -webkit-mask-image:
-    var(--textura-patas),
-    radial-gradient(ellipse 34% 60% at 50% 50%, rgb(0 0 0 / 0.25) 0%, #000 100%);
-  mask-image:
-    var(--textura-patas),
-    radial-gradient(ellipse 34% 60% at 50% 50%, rgb(0 0 0 / 0.25) 0%, #000 100%);
-  -webkit-mask-size: 420px 420px, 100% 100%;
-  mask-size: 420px 420px, 100% 100%;
-  -webkit-mask-repeat: space, no-repeat;
-  mask-repeat: space, no-repeat;
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  -webkit-mask-image: var(--textura-patas);
+  mask-image: var(--textura-patas);
+  -webkit-mask-size: 420px 420px;
+  mask-size: 420px 420px;
 }
 
 @media (max-width: 639px) {
   .fechamento-patas::before {
-    -webkit-mask-size: 240px 240px, 100% 100%;
-    mask-size: 240px 240px, 100% 100%;
+    -webkit-mask-size: 240px 240px;
+    mask-size: 240px 240px;
+  }
+}
+
+/* Duas linhas reservadas: os três rótulos terminam na mesma altura. */
+.numero-rotulo {
+  min-height: calc(2 * 1.375em);
+}
+
+/*
+  A faixa de números fica entre duas ondas: o respiro de baixo cresce a altura
+  da onda seguinte, senão os cartões ficam colados na curva de baixo.
+*/
+.faixa-numeros {
+  padding-bottom: calc(2rem + var(--onda-a));
+}
+
+@media (min-width: 640px) {
+  .faixa-numeros {
+    padding-bottom: calc(3.5rem + var(--onda-a));
+  }
+}
+
+@media (min-width: 768px) {
+  .faixa-numeros {
+    padding-bottom: calc(4rem + var(--onda-a));
+  }
+}
+
+/*
+  DIVISAS · a curva da parede do consultório (ver components/ui/Onda.tsx).
+  Altura pela largura da tela; nunca maior que o respiro de baixo das seções.
+*/
+:root {
+  --onda-a: clamp(1.75rem, 4.6vw, 4rem);
+}
+
+.onda {
+  position: relative;
+  z-index: 1;
+  height: var(--onda-a);
+  margin-top: calc(var(--onda-a) * -1);
+  margin-bottom: -1px;
+  pointer-events: none;
+}
+
+.onda svg {
+  display: block;
+  width: 100%;
+  height: calc(100% + 1px);
+}
+
+/* LEMA · a frase da parede, grande, com o coração vermelho no fim. */
+.lema-frase {
+  font-size: clamp(1.75rem, 3.4vw, 2.875rem);
+  line-height: 1.12;
+  color: var(--text);
+}
+
+/* Sobe para perto da dobra da Dra. Carol: o respiro dela já separa as duas. */
+.lema {
+  margin-top: -2rem;
+}
+
+@media (min-width: 768px) {
+  .lema {
+    margin-top: -4rem;
+  }
+}
+
+.lema-fio {
+  display: block;
+  width: 3rem;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--brand);
+  opacity: 0.6;
+}
+
+.lema-aspas {
+  color: var(--brand);
+}
+
+.lema-coracao {
+  display: inline-block;
+  width: 0.62em;
+  margin-left: 0.18em;
+  vertical-align: -0.02em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lema-coracao {
+    transform-origin: center;
+    animation: coracao-bate 2.6s ease-in-out 1s infinite;
   }
 }
 
@@ -1225,7 +1455,23 @@
   overflow-anchor: none;
 }
 
+/*
+  A camada de patinhas da dobra tem tamanho FIXO e a seção recorta o excesso.
+  Presa ao tamanho da seção, ela era repintada (máscara inteira) a cada quadro
+  da abertura, e era isso que travava a animação no celular (17/09/2026, JM).
+*/
+.faq-secao {
+  overflow: hidden;
+}
+
+.faq-secao::before {
+  bottom: auto;
+  height: 2400px;
+}
+
 .faq-item {
+  /* O movimento de altura não obriga o resto da dobra a recalcular layout. */
+  contain: layout style;
   overflow-anchor: none;
   border-radius: var(--radius-card);
   border: 1px solid var(--hairline);
@@ -2422,8 +2668,9 @@ html:has(.visor[open]) {
   travava a faixa no celular: depois de um toque o navegador mantém o `:hover`
   no cartão tocado, e a faixa ficava parada até tocar em outro lugar.
 
-  As duas faixas andam na MESMA velocidade (~28px/s no celular): a duração é
-  proporcional à largura de uma volta.
+  A faixa dos planos anda em ~28px/s. A dos depoimentos anda mais rápido
+  (17/09/2026, JM: "mais ágil, e ver mais cartões ao mesmo tempo"): cartão
+  menor e volta em 20s.
 */
 .faixa-loop {
   overflow: hidden;
@@ -2496,8 +2743,10 @@ html:has(.visor[open]) {
 }
 
 .depoimentos-faixa {
-  --faixa-item: 18rem;
-  --faixa-vao: 1rem;
+  /* Cartões menores e loop mais rápido (JM, 17/09): mais depoimentos à vista. */
+  --faixa-item: 14.5rem;
+  --faixa-vao: 0.875rem;
+  --duracao: 20s;
 }
 
 /* Desktop: os depoimentos voltam a ser a pilha ao lado da foto. */

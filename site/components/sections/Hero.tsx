@@ -47,6 +47,23 @@ export function Hero() {
         os anéis que giram devagar e uma trilha de pegadas que caminha até a
         clínica. (O facho de luz vindo do alto foi vetado pelo JM.)
       */}
+      {/*
+        CELULAR (17/09/2026, JM escolheu a prévia "M2 · tela cheia"): a
+        fachada ocupa a tela e a copy sobe por cima da base da foto. A pata
+        some no celular; a equipe vira a fileira de rostos acima do título.
+      */}
+      <div className="hero-m-foto">
+        <Image
+          src={caminhoPublico(hero.fotoMobile.src)}
+          alt={hero.fotoMobile.alt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          style={{ objectPosition: hero.fotoMobile.posicao }}
+        />
+      </div>
+
       <div aria-hidden className="hero-ambiente">
         <Image src={caminhoPublico(hero.foto.src)} alt="" fill sizes="40vw" className="object-cover" />
       </div>

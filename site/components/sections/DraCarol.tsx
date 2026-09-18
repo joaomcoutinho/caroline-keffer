@@ -41,11 +41,11 @@ export function DraCarol() {
             `pb`/`pr` abrem o espaço onde a moldura deslocada aparece — sem eles
             ela seria cortada pelo overflow da coluna do grid.
           */}
-          <div className="relative pr-4 pb-4">
+          <div className="relative lg:pr-4 lg:pb-4">
             {/* Moldura decorativa. Puramente visual, então some dos leitores. */}
             <div
               aria-hidden
-              className="absolute inset-y-6 right-0 left-8 rounded-[var(--radius-card)] border border-brand/35 bg-brand/8"
+              className="absolute inset-y-6 right-0 left-8 hidden rounded-[var(--radius-card)] border border-brand/35 bg-brand/8 lg:block"
             />
 
             <figure className="midia-realce relative aspect-4/5 overflow-hidden rounded-[var(--radius-card)]">

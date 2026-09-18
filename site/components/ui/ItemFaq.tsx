@@ -97,6 +97,11 @@ export function ItemFaq({ pergunta, resposta, aberto, aoAlternar }: Props) {
     const para = borda + (aberto ? s.offsetHeight + c.offsetHeight : s.offsetHeight);
 
     d.style.overflow = "hidden";
+    /*
+      `will-change` só DURANTE o movimento: avisa o navegador para preparar a
+      camada antes do primeiro quadro, e sai no fim para não segurar memória.
+    */
+    d.style.willChange = "height";
     const anim = d.animate(
       { height: [`${de}px`, `${para}px`] },
       { duration: DURACAO, easing: CURVA },
@@ -125,6 +130,7 @@ export function ItemFaq({ pergunta, resposta, aberto, aoAlternar }: Props) {
     anim.finished
       .then(() => {
         d.style.overflow = "";
+        d.style.willChange = "";
         if (!aberto) d.open = false;
         if (animacao.current === anim) animacao.current = null;
       })

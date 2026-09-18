@@ -62,7 +62,8 @@ entrevista nova: tudo abaixo foi dito por ele ao longo das rodadas de hero.
 
 ## Vetos já dados (viram régua dos juízes)
 
-- Onda/ondulação na divisa com a próxima seção: vetada.
+- Onda genérica na divisa com a próxima seção: vetada em 15/09. Em 17/09 o dono pediu a curva REAL
+  da parede do consultório como divisa entre as seções (components/ui/Onda.tsx): essa vale.
 - Fontes Bricolage/Fraunces no hero: vetadas.
 - Selos de números ("4,8 no Google", "20+ anos") e cartões de nota sobre a imagem: retirados.
 - Layout "texto à esquerda, imagem à direita" exato e padronizado: ele acha genérico.

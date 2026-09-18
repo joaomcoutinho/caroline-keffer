@@ -35,15 +35,12 @@ const icones: Record<string, Icon> = {
  */
 export function Prova() {
   return (
-    <section className="fundo-patas relative isolate overflow-hidden bg-surface-2 px-4 py-8 sm:px-8 sm:py-14 md:py-16">
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(85% 150% at 50% 0%, color-mix(in srgb, var(--brand) 24%, transparent), transparent 72%)",
-        }}
-      />
+    <section className="faixa-numeros fundo-patas relative isolate overflow-hidden bg-surface-2 px-4 py-8 sm:px-8 sm:py-14 md:py-16">
+      {/*
+        Fundo liso, igual ao das ondas que abrem e fecham a faixa (17/09/2026,
+        JM: "um background só nessa seção de transição"). O brilho radial que
+        havia aqui criava uma emenda logo abaixo da onda.
+      */}
 
       <div className="mx-auto grid w-full max-w-[1100px] grid-cols-3 gap-2.5 sm:gap-6">
         {prova.itens.map((item, i) => {
@@ -64,7 +61,12 @@ export function Prova() {
                   />
                 </p>
 
-                <p className="mt-2 text-xs leading-snug font-medium text-balance text-text sm:mt-4 sm:text-base">
+                {/*
+                  `numero-rotulo` reserva DUAS linhas: o rótulo da nota cabe em
+                  uma só, e sem isso o rodapé dos três cartões desalinhava
+                  (17/09/2026, JM).
+                */}
+                <p className="numero-rotulo mt-2 text-xs leading-snug font-medium text-balance text-text sm:mt-4 sm:text-base">
                   {item.rotulo}
                 </p>
                 <p className="mt-1 hidden text-sm text-text-3 sm:block">{item.nota}</p>
