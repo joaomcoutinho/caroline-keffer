@@ -771,22 +771,20 @@
   */
   will-change: transform, scale, translate;
   translate: var(--puxao-x, 0) var(--puxao-y, 0);
-  transition:
-    scale 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.6s var(--ease-soft);
+  transition: filter 0.6s var(--ease-soft);
 }
 
 .hero-dedo-foto img {
   /* A foto anda menos que a moldura: é o que dá profundidade ao conjunto. */
   translate: calc(var(--puxao-x, 0px) * -0.35) calc(var(--puxao-y, 0px) * -0.35);
-  transition: scale 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: translate 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-dedo-rotulo {
+  transform-origin: 50% -0.6rem;
   transition:
     box-shadow 0.3s ease,
-    translate 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    scale 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.35s var(--ease-soft);
 }
 
 .hero-dedo-foto,
@@ -794,39 +792,109 @@
   backface-visibility: hidden;
 }
 
+/*
+  ANEL QUE SE DESENHA + ETIQUETA DE COLEIRA (18/09/2026, JM: "sem zoom, nada
+  genérico, fure a bolha").
+
+  Referência: a plaquinha que balança na coleira do cachorro. Ao chegar com o
+  cursor, um fio da marca é DESENHADO em volta do dedo (um traço que dá a
+  volta, não um halo que acende) e a etiqueta se solta e balança, com o
+  balanço perdendo força, como plaquinha de verdade. Nada cresce.
+
+  O traço usa `@property`: sem registrar o ângulo, o navegador não consegue
+  interpolar um `conic-gradient` e o anel apareceria de uma vez.
+*/
+@property --anel-volta {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.hero-dedo-foto::after {
+  content: "";
+  position: absolute;
+  inset: -0.6rem;
+  z-index: 2;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: conic-gradient(
+    from -90deg,
+    #ffffff 0deg,
+    #a8d6e8 var(--anel-volta),
+    transparent var(--anel-volta)
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
+  transition: opacity 0.35s var(--ease-soft);
+}
+
 @media (hover: hover) and (min-width: 1024px) {
   .hero-dedo:hover {
     z-index: 2;
-    scale: 1.12;
   }
 
-  /* Dentro da moldura a foto abre um pouco mais: o zoom acontece nas duas camadas. */
+  .hero-dedo:hover .hero-dedo-foto::after {
+    opacity: 1;
+    animation: anel-desenha 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* A foto passeia devagar dentro da moldura: movimento sem ampliar nada. */
   .hero-dedo:hover .hero-dedo-foto img {
-    scale: 1.06;
+    translate: calc(var(--puxao-x, 0px) * -0.35 - 3px) calc(var(--puxao-y, 0px) * -0.35);
   }
 
+  /* A etiqueta se solta da borda e balança, perdendo força. */
   .hero-dedo:hover .hero-dedo-rotulo {
-    translate: 0 0.15rem;
-    scale: 1.06;
+    animation: etiqueta-balanca 1.1s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
   }
 
-  /*
-    Coreografia: quando um dedo é escolhido, os outros recuam de leve e a
-    fachada esmaece um pouco. O olho entende quem está em foco sem nenhum halo.
-  */
-  .hero-palco:has(.hero-dedo:hover) .hero-dedo:not(:hover) {
-    scale: 0.965;
-    filter: saturate(0.92) brightness(0.97);
+  /* Os outros dedos não mudam de tamanho: só as etiquetas recuam. */
+  .hero-palco:has(.hero-dedo:hover) .hero-dedo:not(:hover) .hero-dedo-rotulo {
+    opacity: 0.55;
   }
+}
 
-  .hero-palco:has(.hero-dedo:hover) .hero-janela {
-    filter: brightness(0.96);
+@keyframes anel-desenha {
+  from {
+    --anel-volta: 0deg;
+  }
+  to {
+    --anel-volta: 360deg;
+  }
+}
+
+@keyframes etiqueta-balanca {
+  0% {
+    rotate: 0deg;
+    translate: 0 0;
+  }
+  22% {
+    rotate: -6deg;
+    translate: 0 0.22rem;
+  }
+  46% {
+    rotate: 4deg;
+    translate: 0 0.28rem;
+  }
+  70% {
+    rotate: -2deg;
+    translate: 0 0.24rem;
+  }
+  88% {
+    rotate: 1deg;
+    translate: 0 0.22rem;
+  }
+  100% {
+    rotate: 0deg;
+    translate: 0 0.22rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-dedo {
-    transition: none;
+  .hero-dedo:hover .hero-dedo-foto::after,
+  .hero-dedo:hover .hero-dedo-rotulo {
+    animation: none;
   }
 }
 
@@ -2850,24 +2918,54 @@ html:has(.visor[open]) {
   color: var(--text);
 }
 
+/*
+  UMA LINHA só (JM, 18/09/2026). No celular a fileira rola com o dedo, com as
+  bordas esfumadas indicando que continua; do tablet para cima cabe inteira.
+*/
 .plano-escolhas {
   margin-top: 1rem;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.6rem;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 0.5rem;
   list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-inline: 1.25rem;
+  margin-inline: -1.25rem;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+
+.plano-escolhas::-webkit-scrollbar {
+  display: none;
+}
+
+.plano-escolhas > li {
+  flex: none;
+  scroll-snap-align: center;
+}
+
+@media (min-width: 1024px) {
+  .plano-escolhas {
+    justify-content: center;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 
 .plano-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   border-radius: 999px;
   border: 1px solid var(--hairline);
   background-color: var(--surface);
-  padding: 0.65rem 1.1rem;
-  font-size: 0.9375rem;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
   font-weight: 600;
   color: var(--text);
   text-decoration: none;
@@ -2884,8 +2982,8 @@ html:has(.visor[open]) {
 */
 .plano-chip-marca {
   display: flex;
-  height: 1.6rem;
-  width: 3.6rem;
+  height: 1.45rem;
+  width: 2.9rem;
   align-items: center;
   justify-content: flex-start;
 }
@@ -3143,23 +3241,124 @@ html:has(.visor[open]) {
 }
 
 /*
-  Card de depoimento em destaque. Mesma linguagem do card de número, com o halo
-  um pouco mais forte porque aqui o hover é o convite a ler.
+  CARD DE DEPOIMENTO — coreografia trazida do protótipo da Nuvens de Desejos
+  (JM, 18/09/2026: "igual, adaptada ao contexto da Caroline"). Lá era rosa e
+  serifa; aqui é o ciano da marca e a Nunito. São quatro gestos pequenos que
+  entram juntos:
+
+  1. um fio da marca CRESCE no topo, da esquerda para a direita (sentido da
+     leitura), em vez de aparecer inteiro;
+  2. as aspas grandes, quase invisíveis em repouso, sobem de opacidade e
+     deslizam de leve;
+  3. as estrelas pipocam em cascata, 45ms de atraso entre elas — juntas seriam
+     um piscar, em sequência viram um gesto;
+  4. a foto de quem avaliou dá uma volta completa.
+
+  O card sobe 6px e ganha sombra na cor da marca: é o único lugar do site com
+  elevação no hover, e aqui ela cabe porque o card LEVA à avaliação no Google.
 */
 .depoimento-card {
+  position: relative;
+  overflow: hidden;
   transition:
     transform 0.35s var(--ease-soft),
     border-color 0.35s var(--ease-soft),
     box-shadow 0.35s var(--ease-soft);
 }
 
+.depoimento-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  height: 3px;
+  background: linear-gradient(90deg, var(--brand), var(--action), var(--brand-soft));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.55s var(--ease-soft);
+}
+
+.depoimento-card::after {
+  content: "\201D";
+  position: absolute;
+  z-index: 0;
+  top: -1.4rem;
+  right: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 7rem;
+  line-height: 1;
+  color: var(--brand);
+  opacity: 0.08;
+  pointer-events: none;
+  transition:
+    opacity 0.35s var(--ease-soft),
+    transform 0.55s var(--ease-soft);
+}
+
+.depoimento-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.depoimento-card figcaption {
+  position: static;
+}
+
 @media (hover: hover) {
   .depoimento-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     border-color: color-mix(in srgb, var(--brand) 55%, transparent);
-    box-shadow:
-      0 0 0 5px color-mix(in srgb, var(--brand) 12%, transparent),
-      0 22px 50px -22px color-mix(in srgb, var(--brand) 75%, transparent);
+    box-shadow: 0 20px 44px -20px color-mix(in srgb, var(--brand) 55%, transparent);
+  }
+
+  .depoimento-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .depoimento-card:hover::after {
+    opacity: 0.18;
+    transform: translateY(4px) rotate(-4deg);
+  }
+
+  .depoimento-card:hover .depoimento-estrelas span {
+    animation: pipoca-estrela 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+    animation-delay: calc(var(--i) * 45ms);
+  }
+
+  .depoimento-card:hover .depoimento-foto {
+    animation: gira-selo 1.1s var(--ease-soft);
+  }
+}
+
+@keyframes pipoca-estrela {
+  0% {
+    scale: 1;
+  }
+  45% {
+    scale: 1.42;
+    translate: 0 -2px;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@keyframes gira-selo {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depoimento-card,
+  .depoimento-card::before,
+  .depoimento-card::after {
+    transition: none;
+  }
+
+  .depoimento-card:hover .depoimento-estrelas span,
+  .depoimento-card:hover .depoimento-foto {
+    animation: none;
   }
 }
 

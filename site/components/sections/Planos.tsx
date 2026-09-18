@@ -69,7 +69,7 @@ export function Planos() {
       </Revelar>
 
       <Revelar atraso={0.16}>
-        <div className="mx-auto mt-8 max-w-[52rem] text-center sm:mt-10">
+        <div className="mx-auto mt-8 w-full max-w-[72rem] text-center sm:mt-10">
           <p className="plano-pergunta">{planos.escolha}</p>
 
           <ul className="plano-escolhas">

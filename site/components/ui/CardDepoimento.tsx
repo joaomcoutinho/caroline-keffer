@@ -14,6 +14,12 @@ type Props = {
 /**
  * Card de depoimento em destaque.
  *
+ * A coreografia de hover é a mesma do protótipo da Nuvens de Desejos (JM,
+ * 18/09/2026: "exatamente igual, adaptada ao contexto da Caroline"): fio da
+ * marca crescendo no topo, aspas grandes que aparecem e deslizam, estrelas
+ * pipocando em cascata e a foto de perfil dando uma volta. Ver
+ * `.depoimento-card` no globals.css.
+ *
  * Nome e foto entram quando existem; sem eles o card degrada para avatar neutro
  * e crédito da fonte, sem buraco no layout.
  */
@@ -21,12 +27,14 @@ export function CardDepoimento({ texto, nome, foto, estrelas }: Props) {
   return (
     <figure className="depoimento-card flex h-full flex-col rounded-[var(--radius-card)] border border-hairline bg-surface p-7">
       <div
-        className="flex gap-0.5 text-brand"
+        className="depoimento-estrelas flex gap-0.5 text-brand"
         role="img"
         aria-label={`${estrelas} de 5 estrelas`}
       >
         {Array.from({ length: estrelas }, (_, i) => (
-          <StarIcon key={i} size={17} weight="fill" aria-hidden />
+          <span key={i} style={{ ["--i" as string]: i }}>
+            <StarIcon size={17} weight="fill" aria-hidden />
+          </span>
         ))}
       </div>
 
@@ -41,10 +49,10 @@ export function CardDepoimento({ texto, nome, foto, estrelas }: Props) {
             alt=""
             width={40}
             height={40}
-            className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-brand/20"
+            className="depoimento-foto h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-brand/20"
           />
         ) : (
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand/12 text-brand">
+          <span className="depoimento-foto flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand/12 text-brand">
             <UserIcon size={18} weight="light" aria-hidden />
           </span>
         )}
