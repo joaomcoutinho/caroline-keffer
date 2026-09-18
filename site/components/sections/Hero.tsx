@@ -2,6 +2,7 @@ import type React from "react";
 import Image from "next/image";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
+import { PataViva } from "@/components/ui/PataViva";
 import { caminhoPublico } from "@/lib/caminho";
 import { hero } from "@/content/site";
 
@@ -81,6 +82,9 @@ export function Hero() {
           ))}
         </div>
       ))}
+
+      {/* Movimento contínuo da pata no cursor (ver PataViva). */}
+      <PataViva />
 
       <div className="hero-palco">
         {/*

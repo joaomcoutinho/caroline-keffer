@@ -765,12 +765,28 @@
 */
 .hero-dedo {
   /*
-    O crescimento roda numa camada própria (`will-change`), com curva longa de
-    saída: sem isso o navegador rasterizava a foto de novo a cada quadro e o
-    movimento saía aos pulos (JM, 18/09/2026: "tem que ser fluido, contínuo").
+    Camada própria e curva longa de saída: sem isso o navegador rasteriza a
+    foto de novo a cada quadro e o movimento sai aos pulos. O deslocamento
+    (`--puxao-*`) vem do ponteiro, quadro a quadro, em PataViva.tsx.
   */
-  will-change: transform, scale;
-  transition: scale 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, scale, translate;
+  translate: var(--puxao-x, 0) var(--puxao-y, 0);
+  transition:
+    scale 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.6s var(--ease-soft);
+}
+
+.hero-dedo-foto img {
+  /* A foto anda menos que a moldura: é o que dá profundidade ao conjunto. */
+  translate: calc(var(--puxao-x, 0px) * -0.35) calc(var(--puxao-y, 0px) * -0.35);
+  transition: scale 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-dedo-rotulo {
+  transition:
+    box-shadow 0.3s ease,
+    translate 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    scale 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-dedo-foto,
@@ -781,7 +797,30 @@
 @media (hover: hover) and (min-width: 1024px) {
   .hero-dedo:hover {
     z-index: 2;
-    scale: 1.08;
+    scale: 1.12;
+  }
+
+  /* Dentro da moldura a foto abre um pouco mais: o zoom acontece nas duas camadas. */
+  .hero-dedo:hover .hero-dedo-foto img {
+    scale: 1.06;
+  }
+
+  .hero-dedo:hover .hero-dedo-rotulo {
+    translate: 0 0.15rem;
+    scale: 1.06;
+  }
+
+  /*
+    Coreografia: quando um dedo é escolhido, os outros recuam de leve e a
+    fachada esmaece um pouco. O olho entende quem está em foco sem nenhum halo.
+  */
+  .hero-palco:has(.hero-dedo:hover) .hero-dedo:not(:hover) {
+    scale: 0.965;
+    filter: saturate(0.92) brightness(0.97);
+  }
+
+  .hero-palco:has(.hero-dedo:hover) .hero-janela {
+    filter: brightness(0.96);
   }
 }
 
