@@ -26,7 +26,7 @@
   --color-accent: #b3242a;
 
   /* Tipografia */
-  --font-display: var(--fonte-titulo), ui-rounded, ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--fonte-titulo), "Recoleta", Georgia, "Times New Roman", serif;
   --font-sans: var(--fonte-corpo), ui-sans-serif, system-ui, sans-serif;
 
   /* Forma */
@@ -174,6 +174,27 @@
     color: var(--text);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+    TÍTULOS NA "RECOLETA" (18/09/2026). A Fraunces só vira Recoleta com o eixo
+    SOFT no máximo: é ele que arredonda as gotas e os terminais. `opsz` fica
+    livre para o navegador casar o desenho com o tamanho (o padrão `auto`).
+    Sem esta regra a Fraunces sai dura e editorial — outra fonte.
+
+    Aplicado a tudo que usa a família de título, e não só aos `h*`, porque o
+    site põe a fonte de display em rótulos, números e citações também.
+  */
+  .font-display,
+  .casa-rotulo,
+  .fase-rotulo,
+  .plano-pergunta,
+  .membro-ficha-nome,
+  .depoimento-card::after,
+  h1,
+  h2,
+  h3 {
+    font-variation-settings: "SOFT" 100;
   }
 
   ::selection {
