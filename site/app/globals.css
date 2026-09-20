@@ -189,7 +189,6 @@
   .casa-rotulo,
   .fase-rotulo,
   .plano-pergunta,
-  .membro-ficha-nome,
   .depoimento-card::after,
   h1,
   h2,
@@ -1609,21 +1608,19 @@ button,
   não é clicável.
 */
 .cartaz-numero {
-  position: relative;
-  display: block;
+  display: flex;
   height: 100%;
-  min-height: 11.5rem;
+  flex-direction: column;
+  align-items: center;
   margin: 0;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-  background-color: color-mix(in srgb, var(--brand) 18%, var(--surface));
-  box-shadow: 0 18px 34px -24px rgb(4 30 40 / 0.55);
+  text-align: center;
 }
 
-@media (min-width: 640px) {
-  .cartaz-numero {
-    min-height: 17rem;
-  }
+/* O oval — quadrado, como os dedos do hero, então a elipse vira círculo. */
+.cartaz-oval {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: color-mix(in srgb, var(--brand) 18%, var(--surface));
 }
 
 .cartaz-foto {
@@ -1631,27 +1628,20 @@ button,
   transform: scale(1.02);
 }
 
+/* Fora do oval: no pé da elipse não cabe texto. */
 .cartaz-texto {
-  position: absolute;
-  inset: auto 0 0;
-  z-index: 1;
-  padding: 0.75rem 0.7rem 0.85rem;
-  background: linear-gradient(
-    180deg,
-    rgb(7 34 44 / 0) 0%,
-    rgb(7 34 44 / 0.72) 42%,
-    rgb(7 34 44 / 0.93) 100%
-  );
-  color: #ffffff;
+  margin-top: 0.85rem;
+  color: var(--text);
 }
 
 @media (min-width: 640px) {
   .cartaz-texto {
-    padding: 1.5rem 1.25rem 1.35rem;
+    margin-top: 1.15rem;
   }
 }
 
 .cartaz-valor {
+  color: var(--brand);
   font-size: 2rem;
   font-weight: 800;
   line-height: 1;
@@ -1660,9 +1650,9 @@ button,
 
 .cartaz-rotulo {
   margin-top: 0.35rem;
-  font-size: 0.75rem;
-  line-height: 1.25;
-  font-weight: 600;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  font-weight: 700;
 }
 
 .cartaz-nota {
@@ -1683,7 +1673,8 @@ button,
     display: block;
     margin-top: 0.3rem;
     font-size: 0.875rem;
-    color: #cfe3ea;
+    /* Fora do oval o texto é escuro sobre a superfície clara da seção. */
+    color: var(--text-3);
   }
 }
 
@@ -2362,6 +2353,34 @@ main:has(.faq-secao) ~ .bloco-escuro {
 @media (hover: hover) {
   .midia-realce:hover {
     border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+  }
+}
+
+/*
+  MOLDURA DE PATA (19/09/2026, JM: "replica o que tem no hero na ponta das
+  patinhas, mantendo a angulação correta").
+
+  É o MESMO dedo do hero (`.hero-dedo-foto`): oval, aro branco e sombra
+  baixa. A única diferença é o GIRO — no hero os dedos são girados, porque
+  ali eles desenham uma pata; aqui ficam retos, com o assunto centrado.
+
+  Substituiu o recorte em ondas. Consequência de projeto: dentro de uma
+  elipse o pé é estreito demais para texto, então TODA legenda que antes
+  ficava sobre a foto (nome da equipe, número dos cartazes, placa da Dra.
+  Carol) passou para baixo do oval.
+*/
+.moldura-pata {
+  position: relative;
+  overflow: hidden;
+  border: 4px solid rgb(255 255 255 / 0.92);
+  /* OVAL: a elipse acompanha a proporção da caixa, como os dedos do hero. */
+  border-radius: 50%;
+  box-shadow: 0 22px 44px -24px rgb(4 30 40 / 0.65);
+}
+
+@media (min-width: 1024px) {
+  .moldura-pata {
+    border-width: 5px;
   }
 }
 
@@ -3527,157 +3546,80 @@ main:has(.faq-secao) ~ .bloco-escuro {
   como marca d'água: é a mesma linguagem dos cards de plano e de depoimento.
 */
 .membro-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   transition: opacity 0.4s var(--ease-soft);
 }
 
+/* O retrato: oval, aro branco e sombra — o dedo do hero, sem o giro. */
 .membro-foto {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-  border: 1px solid color-mix(in srgb, var(--brand) 26%, transparent);
-  aspect-ratio: 3 / 4;
-  box-shadow: 0 20px 40px -30px rgb(4 30 40 / 0.6);
+  width: 100%;
+  aspect-ratio: 1 / 1;
 }
 
-/* Véu curto do pé, só para o nome ler em repouso. */
-.membro-foto::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    0deg,
-    rgb(7 34 44 / 0.9) 0%,
-    rgb(7 34 44 / 0.45) 22%,
-    rgb(7 34 44 / 0) 46%
-  );
-  transition: opacity 0.4s var(--ease-soft);
-}
-
+/* Nome e função vivem FORA do oval (no pé da elipse não cabe texto). */
 .membro-ficha {
-  position: absolute;
-  z-index: 2;
-  inset: auto 0 0;
-  padding: 0.9rem 1rem 1rem;
-  color: #ffffff;
-  transition:
-    opacity 0.3s var(--ease-soft),
-    translate 0.45s var(--ease-soft);
+  margin-top: 0.85rem;
 }
 
 .membro-papel {
   margin-top: 0.15rem;
   font-size: 0.8125rem;
-  color: #cfe3ea;
+  color: var(--text-3);
 }
 
-/* A ficha: sobe do pé até 46% do card. */
+/*
+  Detalhe e botão só com o cursor (ou foco do teclado) — a mesma ideia da
+  ficha que subia sobre a foto, agora embaixo, onde há espaço.
+*/
 .membro-abre {
-  position: absolute;
-  z-index: 3;
-  inset: auto 0 0;
-  /*
-    18/09/2026 (JM): a ficha era uma placa quase opaca e tampava metade do
-    retrato. Agora é um DEGRADÊ que nasce transparente, só escurece no pé,
-    onde fica o texto, e ocupa 38% do card. O rosto continua à mostra.
-  */
-  height: 38%;
-  translate: 0 101%;
-  background: linear-gradient(
-    180deg,
-    rgb(7 34 44 / 0) 0%,
-    rgb(7 34 44 / 0.55) 32%,
-    rgb(7 34 44 / 0.88) 100%
-  );
-  transition: translate 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Patinha de marca d'água no canto (o fio no topo saiu com o fundo opaco). */
-.membro-abre::before {
-  content: none;
-}
-
-.membro-abre::after {
-  content: "";
-  position: absolute;
-  right: 0.6rem;
-  bottom: 0.4rem;
-  height: 3.4rem;
-  width: 3.4rem;
-  opacity: 0.14;
-  background-color: #ffffff;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5' transform='rotate(-20 8 17)'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5' transform='rotate(20 32 17)'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='%23000'%3E%3Cellipse cx='20' cy='27' rx='10' ry='8.5'/%3E%3Cellipse cx='8' cy='17' rx='4' ry='5' transform='rotate(-20 8 17)'/%3E%3Cellipse cx='15.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='24.5' cy='9.5' rx='4' ry='5.2'/%3E%3Cellipse cx='32' cy='17' rx='4' ry='5' transform='rotate(20 32 17)'/%3E%3C/svg%3E") center / contain no-repeat;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.45s var(--ease-soft),
+    opacity 0.35s var(--ease-soft);
 }
 
 .membro-abre-interno {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 0.25rem;
-  padding: 0.9rem 1rem 1rem;
-  color: #ffffff;
-}
-
-.membro-ficha-nome {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.membro-ficha-papel {
-  font-size: 0.75rem;
-  color: #cfe3ea;
+  overflow: hidden;
 }
 
 .membro-detalhe {
-  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
   line-height: 1.35;
-  color: #e3f2f7;
+  color: var(--text-2);
 }
 
 .membro-cta {
-  margin-top: 0.35rem;
+  margin-top: 0.6rem;
+  display: flex;
+  justify-content: center;
 }
 
 @media (hover: hover) {
-  /* 18/09/2026 (JM): sem zoom. A foto fica parada na posição original; o
-     destaque vem só da luz (véu que clareia) e do recuo dos outros. */
   .membro-card:hover .membro-abre,
   .membro-card:focus-within .membro-abre {
-    translate: 0 0;
+    grid-template-rows: 1fr;
+    opacity: 1;
   }
 
-  /* O nome sobre a foto sai de cena enquanto a ficha entra. */
-  .membro-card:hover .membro-ficha,
-  .membro-card:focus-within .membro-ficha {
-    opacity: 0;
-    translate: 0 -0.5rem;
-  }
-
-  .membro-card:hover .membro-foto::after,
-  .membro-card:focus-within .membro-foto::after {
-    opacity: 0.35;
-  }
-
+  /* Os outros recuam, como antes: o destaque é de quem está sob o cursor. */
   .equipe-grade:has(.membro-card:hover) .membro-card:not(:hover),
   .equipe-grade:has(.membro-card:focus-within) .membro-card:not(:focus-within) {
     opacity: 0.62;
   }
 }
 
-/* No toque não há hover: a ficha fica fora e o nome segue sobre a foto. */
+/* No toque não há hover: fica o nome e a função; quem agenda é a barra fixa. */
 @media (hover: none) {
   .membro-abre {
     display: none;
   }
 }
-
 
 
 /*

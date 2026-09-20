@@ -19,6 +19,8 @@ type Props = {
   posicao?: string;
   /** Fio ciano em repouso e halo no hover. Não use junto com `mesclar`. */
   realce?: boolean;
+  /** Aro branco e sombra das pontas de pata do hero (ver `.moldura-pata`). */
+  moldura?: boolean;
   className?: string;
 };
 
@@ -40,12 +42,16 @@ export function Midia({
   sangrar = false,
   posicao,
   realce = false,
+  moldura = false,
   className = "",
 }: Props) {
   // Com realce quem desenha a borda é a própria classe, então o fio padrão sai.
+  // Com moldura quem desenha é `.moldura-pata`, que já traz aro e raio.
   const forma = sangrar
     ? "h-full w-full"
-    : `rounded-[var(--radius-card)] ${realce ? "midia-realce" : "border border-hairline"}`;
+    : moldura
+      ? "moldura-pata"
+      : `rounded-[var(--radius-card)] ${realce ? "midia-realce" : "border border-hairline"}`;
   const mescla = mesclar ? "midia-mesclada" : "";
   const estilo = proporcao ? { aspectRatio: proporcao } : undefined;
 

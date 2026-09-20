@@ -245,7 +245,7 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
                 alt={item.alt || `${item.nome} na Clínica Pet Caroline Keffer`}
                 briefing={item.briefing}
                 posicao={item.posicao || undefined}
-                realce
+                moldura
                 className="h-full w-full"
               />
             </div>

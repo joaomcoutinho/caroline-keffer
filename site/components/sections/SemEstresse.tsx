@@ -57,7 +57,7 @@ export function SemEstresse() {
               posicao={semEstresse.foto.posicao}
               alt={semEstresse.foto.alt}
               briefing={semEstresse.foto.briefing}
-              realce
+              moldura
               className="aspect-[4/3] w-full lg:aspect-auto lg:min-h-0 lg:flex-1"
             />
 

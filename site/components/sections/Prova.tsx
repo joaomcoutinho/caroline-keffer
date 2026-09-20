@@ -9,8 +9,9 @@ import { prova } from "@/content/site";
  *
  * 17/09/2026 (JM: "um ícone, um número grande e uma descrição está muito
  * genérico; use uma imagem da Carol ou da clínica"). Cada número virou um
- * CARTAZ: a foto real que prova aquele número ocupa o card inteiro, e o
- * número fica grande por cima, no pé, com o rótulo logo abaixo.
+ * CARTAZ: a foto real que prova aquele número. Desde 19/09/2026 ela é um
+ * OVAL — o dedo do hero sem o giro — e o número fica embaixo dela, centrado:
+ * no pé de uma elipse não cabe texto.
  *
  * - 4,8 → uma tutora com o pet no colo (quem avalia);
  * - 20+ anos → a fachada (o mesmo endereço desde sempre);
@@ -29,14 +30,16 @@ export function Prova() {
         {prova.itens.map((item, i) => (
           <Revelar key={item.rotulo} atraso={i * 0.08} className="h-full">
             <figure className="cartaz-numero">
-              <Image
-                src={caminhoPublico(item.foto)}
-                alt={item.fotoAlt}
-                fill
-                sizes="(max-width: 640px) 33vw, 360px"
-                className="cartaz-foto object-cover"
-                style={{ objectPosition: item.fotoPosicao }}
-              />
+              <div className="cartaz-oval moldura-pata">
+                <Image
+                  src={caminhoPublico(item.foto)}
+                  alt={item.fotoAlt}
+                  fill
+                  sizes="(max-width: 640px) 33vw, 360px"
+                  className="cartaz-foto object-cover"
+                  style={{ objectPosition: item.fotoPosicao }}
+                />
+              </div>
 
               <figcaption className="cartaz-texto">
                 <p className="cartaz-valor font-display">

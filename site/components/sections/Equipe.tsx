@@ -52,21 +52,21 @@ export function Equipe() {
       </div>
 
       {/*
-        FICHA QUE SOBE (18/09/2026, JM escolheu a opção E1 entre três
-        protótipos). O card é a FOTO inteira; sobre ela, no pé, uma ficha com
-        nome e função. Ao chegar o cursor (ou o foco do teclado), a ficha abre:
-        entra a linha de detalhe e o botão de falar com a pessoa, e uma patinha
-        da marca é carimbada no canto.
+        RETRATO OVAL + FICHA EMBAIXO (19/09/2026, JM: "molduras ovais, iguais
+        à ponta das patinhas do hero"). O retrato é o dedo do hero sem o giro;
+        como no pé de uma elipse não cabe texto, nome e função saíram de cima
+        da foto e foram para baixo dela. Com o cursor (ou o foco do teclado)
+        abrem ainda a linha de detalhe e o botão de falar com a pessoa.
 
-        No toque não há hover: a ficha já nasce aberta, sem o botão — lá quem
-        agenda é a barra fixa.
+        No toque não há hover: ficam o nome e a função — lá quem agenda é a
+        barra fixa.
       */}
       <ul className="equipe-grade mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
         {equipe.membros.map((membro, i) => (
           <li key={membro.nome}>
             <Revelar atraso={0.08 + i * 0.06}>
               <article className="membro-card">
-                <div className="membro-foto">
+                <div className="membro-foto moldura-pata">
                   <Image
                     src={caminhoPublico(membro.foto)}
                     alt={membro.alt}
@@ -75,26 +75,23 @@ export function Equipe() {
                     sizes="(max-width: 1024px) 45vw, 280px"
                     className="h-full w-full object-cover"
                   />
+                </div>
 
-                  <div className="membro-ficha">
-                    <h3 className="membro-nome font-display text-[1.05rem] leading-snug font-bold text-balance">
-                      {membro.nome}
-                    </h3>
-                    <p className="membro-papel">{membro.papel}</p>
+                <div className="membro-ficha">
+                  <h3 className="membro-nome font-display text-[1.05rem] leading-snug font-bold text-balance">
+                    {membro.nome}
+                  </h3>
+                  <p className="membro-papel">{membro.papel}</p>
+                </div>
 
-                  </div>
-
-                  {/* A ficha sobe do pé do card e ocupa 46% da altura. */}
-                  <div className="membro-abre">
-                    <div className="membro-abre-interno">
-                      <p className="membro-ficha-nome">{membro.nome}</p>
-                      <p className="membro-ficha-papel">{membro.papel}</p>
-                      {membro.detalhe ? (
-                        <p className="membro-detalhe">{membro.detalhe}</p>
-                      ) : null}
-                      <div className="membro-cta">
-                        <BotaoWhatsapp rotulo={CTA_PRIMARIO} tamanho="compacto" />
-                      </div>
+                {/* Detalhe e botão abrem embaixo, com o cursor ou o foco. */}
+                <div className="membro-abre">
+                  <div className="membro-abre-interno">
+                    {membro.detalhe ? (
+                      <p className="membro-detalhe">{membro.detalhe}</p>
+                    ) : null}
+                    <div className="membro-cta">
+                      <BotaoWhatsapp rotulo={CTA_PRIMARIO} tamanho="compacto" />
                     </div>
                   </div>
                 </div>

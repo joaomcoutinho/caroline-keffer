@@ -17,13 +17,16 @@ import { draCarol } from "@/content/site";
  *    ocupa a coluna inteira. Retrato tem eixo vertical: espremido em paisagem,
  *    o rosto virava um detalhe no meio do quadro.
  *
- * 2. **Placa de vidro sobre o retrato**, com nome e papel. É o vocabulário de
- *    legenda de retrato — dá a ela o mesmo tratamento que uma foto institucional
- *    recebe, e ancora o nome NO rosto em vez de deixar os dois soltos.
+ * 2. **Placa de vidro montada na base do oval**, com nome e papel. É o
+ *    vocabulário de legenda de retrato — dá a ela o mesmo tratamento que uma
+ *    foto institucional recebe, e ancora o nome NO rosto em vez de deixar os
+ *    dois soltos. Ficava sobre a foto; desde 19/09/2026 a foto é um oval, e
+ *    no pé de uma elipse não cabe texto.
  *
- * 3. **Moldura deslocada atrás da foto.** Um retângulo da cor da marca, com o
- *    mesmo raio do card, deslocado alguns pixels. Custa nada, e é o que separa
- *    "foto colada na página" de "retrato emoldurado".
+ * 3. **Aro branco das pontas de pata do hero** (`.moldura-pata`), igual ao
+ *    das outras fotos do site. Era uma moldura deslocada da cor da marca;
+ *    continua sendo o que separa "foto colada na página" de "retrato
+ *    emoldurado".
  *
  * 4. **Primeiro parágrafo em corpo maior.** A frase do filhote que virou idoso
  *    é a melhor da página inteira; ela merece entrar como abertura, não como
@@ -37,18 +40,8 @@ export function DraCarol() {
     <Secao id="a-clinica" tom="base">
       <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <Revelar>
-          {/*
-            `pb`/`pr` abrem o espaço onde a moldura deslocada aparece — sem eles
-            ela seria cortada pelo overflow da coluna do grid.
-          */}
-          <div className="relative lg:pr-4 lg:pb-4">
-            {/* Moldura decorativa. Puramente visual, então some dos leitores. */}
-            <div
-              aria-hidden
-              className="absolute inset-y-6 right-0 left-8 hidden rounded-[var(--radius-card)] border border-brand/35 bg-brand/8 lg:block"
-            />
-
-            <figure className="midia-realce relative aspect-4/5 overflow-hidden rounded-[var(--radius-card)]">
+          <figure className="relative">
+            <div className="moldura-pata relative aspect-4/5">
               <Image
                 src={caminhoPublico(draCarol.foto.src)}
                 alt={draCarol.foto.alt}
@@ -57,28 +50,20 @@ export function DraCarol() {
                 className="object-cover"
                 style={{ objectPosition: draCarol.foto.posicao }}
               />
+            </div>
 
-              {/*
-                Degradê sob a placa. Sem ele a placa de vidro flutua sobre uma
-                região clara da foto e as duas se anulam.
-              */}
-              <div
-                aria-hidden
-                className="absolute inset-x-0 bottom-0 h-2/5"
-                style={{
-                  background:
-                    "linear-gradient(to top, color-mix(in srgb, var(--text) 55%, transparent), transparent)",
-                }}
-              />
-
-              <figcaption className="vidro absolute inset-x-4 bottom-4 rounded-[var(--radius-card)] px-5 py-4">
-                <p className="font-display text-lg leading-tight font-bold">
-                  Dra. Caroline Keffer
-                </p>
-                <p className="mt-1 text-sm text-text-3">{draCarol.papel}</p>
-              </figcaption>
-            </figure>
-          </div>
+            {/*
+              A placa MONTA na base do oval, metade dentro e metade fora. É o
+              que mantém o nome ancorado no rosto agora que o pé da elipse é
+              estreito demais para texto.
+            */}
+            <figcaption className="vidro absolute inset-x-8 bottom-0 translate-y-1/3 rounded-[var(--radius-card)] px-5 py-4 text-center">
+              <p className="font-display text-lg leading-tight font-bold">
+                Dra. Caroline Keffer
+              </p>
+              <p className="mt-1 text-sm text-text-3">{draCarol.papel}</p>
+            </figcaption>
+          </figure>
         </Revelar>
 
         <div>

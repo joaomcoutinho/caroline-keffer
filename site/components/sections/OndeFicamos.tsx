@@ -109,15 +109,15 @@ export function OndeFicamos() {
             aria-label="Abrir a clínica no Google Maps"
             className="block"
           >
-          <Midia
-            src={ondeFicamos.foto.src}
-            posicao={ondeFicamos.foto.posicao}
-            alt={ondeFicamos.foto.alt}
-            briefing={ondeFicamos.foto.briefing}
-            proporcao={ondeFicamos.foto.proporcao}
-            realce
-            className="w-full"
-          />
+            <Midia
+              src={ondeFicamos.foto.src}
+              posicao={ondeFicamos.foto.posicao}
+              alt={ondeFicamos.foto.alt}
+              briefing={ondeFicamos.foto.briefing}
+              proporcao={ondeFicamos.foto.proporcao}
+              moldura
+              className="w-full"
+            />
           </a>
         </Revelar>
       </div>
