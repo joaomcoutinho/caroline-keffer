@@ -101,7 +101,11 @@ export function OndeFicamos() {
         </div>
 
         <Revelar atraso={0.1}>
-          {/* A foto da fachada também leva ao Google Maps. */}
+          {/*
+            A foto da fachada também leva ao Google Maps.
+            21/09/2026 (JM): a elipse deitada (16/10) ficava larga e estranha.
+            Agora é um oval em pé e mais estreito, como as outras molduras.
+          */}
           <a
             href={contato.mapa}
             target="_blank"
@@ -116,7 +120,7 @@ export function OndeFicamos() {
               briefing={ondeFicamos.foto.briefing}
               proporcao={ondeFicamos.foto.proporcao}
               moldura
-              className="w-full"
+              className="mx-auto w-[90%] max-w-[520px]"
             />
           </a>
         </Revelar>

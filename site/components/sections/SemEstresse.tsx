@@ -26,7 +26,7 @@ export function SemEstresse() {
   const { citacaoDestaque: citacao } = semEstresse;
 
   return (
-    <Secao tom="forte">
+    <Secao tom="forte" className="lg:pb-44">
       <div className="mx-auto max-w-[62ch] text-center">
         <Revelar>
           <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
@@ -48,20 +48,33 @@ export function SemEstresse() {
         No celular o cartão de vidro cobria metade do consultório. E no celular
         os depoimentos viram uma faixa em loop, em vez de três
         cards empilhados ocupando uma tela e meia: agora passam sozinhos.
+
+        21/09/2026 (JM): o oval estava largo demais, quase um círculo. A foto
+        não ocupa mais a coluna inteira: fica mais estreita e centrada, com a
+        mesma altura, e vira um oval em pé, como os dedos do hero.
+        No mesmo dia o oval voltou a arredondar um pouco (JM: "mais circular,
+        para dar mais visibilidade"): fica entre o círculo e o oval estreito.
+
+        22/09/2026 (JM: "mais largo" e "centraliza melhor verticalmente"): no
+        desktop a legenda sai do fluxo e fica pendurada abaixo da coluna. Assim
+        o oval ocupa a altura inteira da pilha de depoimentos e o centro dele
+        bate com o centro dela. A legenda desce para o respiro de baixo da
+        seção, que por isso é maior no desktop (`lg:pb-44`): a onda seguinte
+        sobe até 4rem sobre esse respiro e cobria a frase.
       */}
       <div className="mt-10 grid grid-cols-1 items-stretch gap-8 sm:mt-14 lg:grid-cols-[13fr_7fr] lg:gap-10">
         <Revelar atraso={0.12} className="lg:h-full">
-          <figure className="flex h-full flex-col">
+          <figure className="relative flex h-full flex-col">
             <Midia
               src={semEstresse.foto.src}
               posicao={semEstresse.foto.posicao}
               alt={semEstresse.foto.alt}
               briefing={semEstresse.foto.briefing}
               moldura
-              className="aspect-[4/3] w-full lg:aspect-auto lg:min-h-0 lg:flex-1"
+              className="mx-auto aspect-[6/7] w-[90%] lg:aspect-auto lg:min-h-0 lg:w-[84%] lg:flex-1"
             />
 
-            <figcaption className="mt-4 flex items-start gap-3 sm:mt-5">
+            <figcaption className="mt-4 flex items-start gap-3 sm:mt-5 lg:absolute lg:inset-x-0 lg:top-full lg:justify-center">
               <QuotesIcon size={22} weight="fill" className="mt-0.5 shrink-0 text-brand" aria-hidden />
               <span>
                 <blockquote className="font-display text-lg leading-snug font-bold text-balance sm:text-xl">

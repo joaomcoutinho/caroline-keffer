@@ -3573,18 +3573,17 @@ main:has(.faq-secao) ~ .bloco-escuro {
 /*
   Detalhe e botão só com o cursor (ou foco do teclado) — a mesma ideia da
   ficha que subia sobre a foto, agora embaixo, onde há espaço.
+
+  21/09/2026 (JM): o espaço já fica RESERVADO em repouso. Antes a linha abria
+  de 0 à altura cheia e empurrava a onda divisória para baixo a cada hover.
+  Agora a altura do card é fixa e o cursor só faz o conteúdo aparecer.
 */
 .membro-abre {
-  display: grid;
-  grid-template-rows: 0fr;
   opacity: 0;
+  transform: translateY(6px);
   transition:
-    grid-template-rows 0.45s var(--ease-soft),
-    opacity 0.35s var(--ease-soft);
-}
-
-.membro-abre-interno {
-  overflow: hidden;
+    opacity 0.35s var(--ease-soft),
+    transform 0.35s var(--ease-soft);
 }
 
 .membro-detalhe {
@@ -3603,8 +3602,8 @@ main:has(.faq-secao) ~ .bloco-escuro {
 @media (hover: hover) {
   .membro-card:hover .membro-abre,
   .membro-card:focus-within .membro-abre {
-    grid-template-rows: 1fr;
     opacity: 1;
+    transform: none;
   }
 
   /* Os outros recuam, como antes: o destaque é de quem está sob o cursor. */

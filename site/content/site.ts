@@ -115,7 +115,7 @@ export const hero = {
      * recorte; a frontal é 4:3 e, espremida na coluna, virava uma tira do meio
      * da calçada. O céu ainda entrega azul de verdade para a dobra.
      *
-     * A frontal foi para `ondeFicamos`, onde a caixa é deitada.
+     * 21/09/2026: `ondeFicamos` também passou a usar esta, num oval em pé.
      */
     src: "/images/fachada_ceu.webp",
     alt: "Fachada da Clínica Veterinária Caroline Keffer vista da calçada, com o céu aberto",
@@ -938,11 +938,17 @@ export const ondeFicamos = {
      * à vista. Em 1280px numa caixa de ~570px, a densidade é de sobra.
      * A do hero é a de céu aberto, que é retrato.
      */
-    src: "/images/fachada_hero.webp",
+    /*
+     * 21/09/2026 (JM): oval em pé, com as laterais mais estreitas (era 16 / 10).
+     * A frontal 4:3 cortava o letreiro nas pontas dentro do oval, então a foto
+     * passou a ser a de céu aberto, que já é 4:5 e cabe inteira.
+     */
+    src: "/images/fachada_ceu.webp",
     alt: "Fachada da Clínica Veterinária Caroline Keffer, na Rua Araguatins",
-    briefing: "Fachada da clínica, horizontal, luz do dia",
-    proporcao: "16 / 10",
-    posicao: "center 40%",
+    briefing: "Fachada da clínica, vertical, luz do dia",
+    // 21/09/2026 (JM, 2º ajuste): mais redondo que o 4 / 5, para a fachada aparecer mais.
+    proporcao: "9 / 10",
+    posicao: "center 45%",
   },
 } as const;
 
