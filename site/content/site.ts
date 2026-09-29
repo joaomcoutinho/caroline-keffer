@@ -63,13 +63,19 @@ export const meta = {
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://clinicapetcarolinekeffer.com.br",
 } as const;
 
+/*
+ * Âncoras com "/" na frente (27/09/2026): com as páginas internas, o menu
+ * precisa levar de volta à seção da HOME de qualquer página. Os componentes
+ * usam `next/link`, que soma o basePath do GitHub Pages; na própria home o
+ * link só rola até a seção.
+ */
 export const navegacao = [
-  { rotulo: "Serviços", href: "#servicos" },
-  { rotulo: "Planos", href: "#planos" },
-  { rotulo: "A clínica", href: "#a-clinica" },
-  { rotulo: "Equipe", href: "#equipe" },
-  { rotulo: "Dúvidas", href: "#duvidas" },
-  { rotulo: "Onde ficamos", href: "#onde-ficamos" },
+  { rotulo: "Serviços", href: "/#servicos" },
+  { rotulo: "Planos", href: "/#planos" },
+  { rotulo: "A clínica", href: "/#a-clinica" },
+  { rotulo: "Equipe", href: "/#equipe" },
+  { rotulo: "Dúvidas", href: "/#duvidas" },
+  { rotulo: "Onde ficamos", href: "/#onde-ficamos" },
 ] as const;
 
 export const hero = {
@@ -225,6 +231,8 @@ export const servicos = {
     },
     {
       nome: "Cirurgia",
+      /** Página interna do serviço (SEO local, 27/09/2026). */
+      pagina: "/cirurgia-veterinaria",
       /*
        * Odontológica e ortopédica vieram na lista de 11/09/2026 e NÃO estavam
        * no site. Ortopedia em clínica de bairro é incomum — era capacidade real
@@ -245,6 +253,8 @@ export const servicos = {
     },
     {
       nome: "Consulta com especialista",
+      /** Página interna do serviço (SEO local, 27/09/2026). */
+      pagina: "/especialidades",
       /*
        * ⚠️ CORREÇÃO DE FATO (11/09/2026). Aqui dizia "Encaminhamento clínico
        * quando o caso pede um olhar específico" — ou seja, o site afirmava que
@@ -288,6 +298,8 @@ export const servicos = {
       /* Modalidades confirmadas pela clínica em 11/09/2026 — o VALIDAR que
          estava aqui ("a fachada só diz de imagem") está resolvido. */
       nome: "Exames de imagem",
+      /** Página interna do serviço (SEO local, 27/09/2026). */
+      pagina: "/exames-de-imagem",
       texto:
         "Para ver o que o exame de sangue não mostra, sem precisar de outro endereço.",
       itens: ["Radiografia", "Ultrassonografia", "Eletrocardiograma"],
@@ -316,6 +328,8 @@ export const servicos = {
     },
     {
       nome: "Exames laboratoriais",
+      /** Página interna do serviço (SEO local, 27/09/2026). */
+      pagina: "/check-up-veterinario",
       texto:
         "A coleta é feita aqui mesmo, e o resultado a Dra. Carol explica pra você.",
       icone: "flask",
@@ -333,6 +347,8 @@ export const servicos = {
        * pet groomer justamente por isso.
        */
       nome: "Banho e tosa",
+      /** Página interna do serviço (SEO local, 27/09/2026). */
+      pagina: "/banho-e-tosa",
       texto: "Feito por quem conhece a pele e a saúde do seu cachorro.",
       icone: "scissors",
       /* A sala de banho e tosa, com secador e banheira. 15/09/2026: mostra bem
@@ -420,8 +436,8 @@ export const draCarol = {
     "Em mais de 20 anos na Torre, ela viu filhote virar idoso e tutor virar cliente de casa. Não é rodízio de plantonista: é a mesma veterinária acompanhando a história do seu pet.",
     "É pouco comum, e é exatamente o que faz diferença quando o diagnóstico depende de saber como ele era antes de adoecer.",
   ],
-  // VALIDAR: número do CRMV antes de publicar.
-  credencial: "CRMV-PE (validar)",
+  // Confirmado pela clínica em 29/09/2026.
+  credencial: "CRMV-PE 3053",
   /** Aparece na placa sobre o retrato. Autoridade sem depender do CRMV. */
   papel: "Médica Veterinária",
   foto: {
@@ -469,6 +485,9 @@ export const equipe = {
       /* Só a Dra. Carol tem detalhe: é o único fato que o site já afirma.
          Para as outras três, PEDIR À CLÍNICA uma linha cada (VALIDAR). */
       detalhe: "Responsável técnica, há mais de 20 anos na Torre",
+      /* CRMVs confirmados pela clínica em 29/09/2026: ficam na linha do
+         papel, visíveis sempre — é o registro que dá autoridade (YMYL). */
+      registro: "CRMV-PE 3053",
       foto: "/images/equipe-caroline-keffer.webp",
       alt: "Dra. Caroline Keffer, de jaleco branco, sorrindo",
     },
@@ -477,6 +496,7 @@ export const equipe = {
       /* VALIDAR com a clínica: uma linha curta sobre o que a pessoa faz. */
       detalhe: "",
       papel: "Médica Veterinária",
+      registro: "CRMV-PE 6871",
       foto: "/images/equipe-isa-lopes.webp",
       alt: "Dra. Isa Lopes, de uniforme verde, com os braços cruzados",
     },
@@ -489,10 +509,20 @@ export const equipe = {
       alt: "Camila Amaral, de uniforme da clínica, sorrindo",
     },
     {
+      /* Entrou na lista da clínica em 29/09/2026. ⚠️ FOTO PENDENTE: pedir no
+         mesmo padrão das outras. Sem `foto`, o card mostra o espaço reservado. */
+      nome: "Gerlane Timóteo",
+      detalhe: "",
+      papel: "Recepção",
+      foto: "",
+      alt: "Gerlane Timóteo, da recepção da clínica",
+    },
+    {
       nome: "Lucas Leal",
       /* VALIDAR com a clínica: uma linha curta sobre o que a pessoa faz. */
       detalhe: "",
-      papel: "Pet Groomer",
+      /* A clínica chama a função de "Banho e tosa" (29/09/2026). */
+      papel: "Banho e tosa",
       foto: "/images/equipe-lucas-leal.webp",
       alt: "Lucas Leal, pet groomer da clínica",
     },
@@ -732,7 +762,8 @@ export const faq = {
     {
       pergunta: "Vocês atendem emergência 24 horas?",
       resposta:
-        "Não. A clínica atende de segunda a sexta, das 9h às 19h, e no sábado das 8h às 16h. Fora desse horário, procure um plantão veterinário 24h.",
+        /* Janela de emergência confirmada pela clínica em 29/09/2026. */
+        "Não. Emergência é atendida até as 18h, nos dias de funcionamento: a equipe estabiliza o seu pet e, se ele precisar ficar internado, encaminha para um hospital 24h. Depois das 18h ou com a clínica fechada, procure um plantão veterinário 24h.",
     },
     {
       pergunta: "Preciso agendar ou posso chegar direto?",
@@ -963,7 +994,9 @@ export const ctaFinal = {
 
 export const rodape = {
   legal: `© ${new Date().getFullYear()} Clínica Pet Caroline Keffer. Todos os direitos reservados.`,
-  credito: "Site por ",
+  credito: "Feito por ",
   agencia: "MXC Digital",
-  agenciaUrl: "https://mxcdigital.com.br",
+  /* UTM fixo da MXC (skill /rodape-rastreavel). Só o utm_source muda por
+     cliente, e é o slug do case no portfólio da MXC: `caroline-keffer`. */
+  agenciaUrl: "https://mxcdigital.com.br/?utm_source=caroline-keffer&utm_medium=rodape&utm_campaign=assinatura",
 } as const;

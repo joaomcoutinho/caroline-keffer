@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opção D · Ficha do banho</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/*
+  OPÇÃO D — A FICHA DO BANHO. Em vez de explicar o que muda, a seção MOSTRA:
+  uma ficha de banho como a que existiria no balcão da clínica, preenchida,
+  com o que é conferido em cada banho. A foto do Lucas entra como o carimbo
+  de quem assinou a ficha. É o único formato que prova o argumento em vez de
+  afirmá-lo, e nenhum pet shop do bairro tem o que pôr numa ficha dessas.
+*/
+.grade{display:grid;gap:48px;align-items:center}
+@media(min-width:1024px){.grade{grid-template-columns:.9fr 1.1fr;gap:72px}}
+.texto .lead{margin-top:16px}
+.texto .nota{margin-top:22px;display:flex;gap:12px;align-items:flex-start;color:var(--text-2);line-height:1.55}
+.texto .nota svg{flex-shrink:0;width:22px;height:22px;color:var(--brand-deep);margin-top:1px}
+
+.mesa{position:relative;padding:28px 0 0 0}
+.ficha{position:relative;border-radius:18px;background:#f7fbfd;color:var(--text);padding:30px 30px 26px;
+  box-shadow:0 30px 60px -30px rgb(4 30 40/.6),0 2px 0 rgb(255 255 255/.8) inset;rotate:-1.2deg;
+  background-image:repeating-linear-gradient(0deg,transparent 0 43px,color-mix(in srgb,var(--brand) 12%,transparent) 43px 44px);background-position:0 92px}
+@media(min-width:640px){.ficha{padding:36px 40px 30px}}
+.ficha-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:14px;border-bottom:2px solid var(--brand-deep)}
+.ficha-cab h3{font-size:1.45rem}
+.ficha-cab small{display:block;margin-top:4px;font-size:.8rem;color:var(--text-3)}
+.ficha-cab img{width:46px;height:46px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--hairline)}
+.campos{display:grid;grid-template-columns:auto 1fr;column-gap:14px;margin-top:4px;font-size:.98rem}
+.campos dt,.campos dd{padding:11px 0;border-bottom:1px dashed color-mix(in srgb,var(--brand) 26%,transparent)}
+.campos dt{font-weight:700;color:var(--text-2);white-space:nowrap}
+.campos dd{color:var(--text-2);display:flex;gap:10px;align-items:center}
+.ok{display:grid;place-items:center;flex-shrink:0;width:22px;height:22px;border-radius:6px;background:var(--brand-deep);color:#fff}
+.ok svg{width:14px;height:14px}
+dd.alerta{color:var(--text);font-weight:700}
+.alerta .ok{background:#fff;border:2px solid var(--brand-deep);color:var(--brand-deep)}
+.manuscrito{font-family:'Fraunces',serif;font-style:italic;font-variation-settings:"SOFT" 100;color:var(--brand-deep);font-weight:600}
+
+/* carimbo: a foto de quem assinou, sobre o canto da ficha */
+.carimbo{position:absolute;right:-8px;bottom:-34px;display:flex;align-items:center;gap:12px;rotate:3deg;background:#fff;border-radius:999px;padding:6px 18px 6px 6px;box-shadow:0 18px 36px -18px rgb(4 30 40/.6)}
+.carimbo .oval{width:62px;height:62px;border-width:3px}
+.carimbo b{display:block;font-size:.95rem}
+.carimbo span{font-size:.8rem;color:var(--text-3)}
+@media(max-width:639px){.carimbo{position:relative;right:auto;bottom:auto;margin:18px 0 0 auto;width:max-content}}
+</style>
+<body>
+<section class="faixa">
+  <div class="caixa grade">
+    <div class="texto">
+      <p class="sobre">Banho e tosa</p>
+      <h2 class="titulo" style="margin-top:10px">O que muda quando o banho é dentro da clínica.</h2>
+      <p class="lead">Todo banho aqui termina com uma ficha. Se alguma linha acende, ela vai para a veterinária no mesmo dia.</p>
+      <p class="nota"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Pet em tratamento de pele toma banho com o produto que a dermatologia indicou.</p>
+    </div>
+
+    <div class="mesa">
+      <div class="ficha">
+        <div class="ficha-cab">
+          <div><h3>Ficha do banho</h3><small>Clínica Pet Caroline Keffer · Torre</small></div>
+          <img src="../../site/public/images/logo-caroline-keffer.jpg" alt="">
+        </div>
+        <dl class="campos">
+          <dt>Pet</dt><dd><span class="manuscrito">Mel, shih-tzu, 6 anos</span></dd>
+          <dt>Pele</dt><dd><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>Vista por inteiro, sem feridas</dd>
+          <dt>Pelagem</dt><dd><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>Sem pulga, sem falhas</dd>
+          <dt>Unhas</dt><dd><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>Cortadas no ponto certo</dd>
+          <dt class="alerta">Ouvidos</dt><dd class="alerta" style="display:flex"><span class="ok">!</span><span>Vermelhidão no esquerdo — <span class="manuscrito">avisar Dra.</span></span></dd>
+          <dt>Comportamento</dt><dd><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>Um pouco ansiosa, tudo com calma</dd>
+        </dl>
+      </div>
+      <div class="carimbo">
+        <div class="oval"><img src="../../site/public/images/equipe-lucas-leal.webp" alt="Lucas Leal" style="object-position:50% 20%"></div>
+        <div><b>Lucas Leal</b><span>Pet groomer · quem assinou</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="rotulo-opcao">Opção D · Ficha do banho <a href="index.html">← todas</a></div>
+</body>
+</html>

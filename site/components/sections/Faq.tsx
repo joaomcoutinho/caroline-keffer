@@ -1,6 +1,7 @@
 import { Secao } from "@/components/ui/Secao";
 import { Revelar } from "@/components/ui/Revelar";
 import { ListaFaq } from "@/components/ui/ListaFaq";
+import { CartaoDuvida } from "@/components/ui/CartaoDuvida";
 import { faq } from "@/content/site";
 
 /**
@@ -22,7 +23,8 @@ import { faq } from "@/content/site";
 export function Faq() {
   return (
     <Secao id="duvidas" tom="base" className="faq-secao">
-      <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      {/* As duas colunas no mesmo eixo horizontal, como nas páginas internas (28/09/2026). */}
+      <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-16">
         <div>
           <Revelar>
             <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl">
@@ -33,6 +35,12 @@ export function Faq() {
             <p className="mt-5 max-w-[42ch] text-lg leading-relaxed text-text-2">
               {faq.subhead}
             </p>
+          </Revelar>
+          {/* Mesmo cartão das páginas internas: a coluna não fica vazia (27/09/2026). */}
+          <Revelar atraso={0.12}>
+            <div className="mt-8 max-w-[440px]">
+              <CartaoDuvida />
+            </div>
           </Revelar>
         </div>
 

@@ -110,6 +110,41 @@ function snapshotServidor() {
   return "";
 }
 
+/**
+ * Só o "está aberto agora?", do mesmo relógio do selo. `null` no servidor e
+ * antes da montagem — quem usa não deve destacar nada até saber.
+ * Usado pelo painel "O que fazer agora" das páginas internas (27/09/2026).
+ */
+export function useAbertoAgora(): boolean | null {
+  const bruto = useSyncExternalStore(assinar, snapshot, snapshotServidor);
+  if (!bruto) return null;
+  return bruto.startsWith("1");
+}
+
+/**
+ * "Dá para trazer AGORA?" — dentro do expediente e antes de `limite` (HH:MM).
+ * Existe porque a emergência tem janela própria (até as 18h, JM 29/09/2026):
+ * depois disso não há tempo de estabilizar o pet e encaminhar para o
+ * internamento, mesmo com a clínica ainda aberta. `null` antes da montagem.
+ */
+function dentroDaJanela(limite: string) {
+  const { dia, minutos } = agoraEmRecife();
+  const hoje = expediente.semana[dia];
+  if (!hoje) return false;
+  const fim = Math.min(emMinutos(hoje.fecha), emMinutos(limite));
+  return minutos >= emMinutos(hoje.abre) && minutos < fim;
+}
+
+export function useDentroDaJanela(limite: string): boolean | null {
+  const bruto = useSyncExternalStore(
+    assinar,
+    () => (dentroDaJanela(limite) ? "1" : "0"),
+    () => "",
+  );
+  if (!bruto) return null;
+  return bruto === "1";
+}
+
 type Props = { className?: string };
 
 /**

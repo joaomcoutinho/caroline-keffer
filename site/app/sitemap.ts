@@ -4,14 +4,26 @@ import type { MetadataRoute } from "next";
    precisa ser assado no build. */
 export const dynamic = "force-static";
 import { meta } from "@/content/site";
+import { paginas } from "@/content/paginas";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  /* A data das páginas internas é a da última revisão do conteúdo, e não a do
+     build: `lastmod` que muda a cada deploy sem o conteúdo mudar ensina o
+     Google a ignorar o campo. */
+  const internas = Object.values(paginas).map((p) => ({
+    url: `${meta.url}${p.caminho}/`,
+    lastModified: new Date(p.revisao.data),
+    changeFrequency: "monthly" as const,
+    priority: p.pais ? 0.6 : 0.8,
+  }));
+
   return [
     {
-      url: meta.url,
+      url: `${meta.url}/`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
     },
+    ...internas,
   ];
 }

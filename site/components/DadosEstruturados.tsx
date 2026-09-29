@@ -11,10 +11,15 @@ export function DadosEstruturados() {
   const dados = {
     "@context": "https://schema.org",
     "@type": "VeterinaryCare",
+    /* Âncora da entidade: as páginas internas apontam para este @id em vez de
+       repetir o objeto inteiro (ver components/paginas/DadosPagina.tsx). */
+    "@id": `${meta.url}/#clinica`,
     name: "Clínica Pet Caroline Keffer",
     description: meta.descricao,
     url: meta.url,
-    telephone: "+558132685979",
+    /* O WhatsApp é o telefone principal (JM, 27/09/2026) — é o mesmo número que
+       vai como principal no Perfil da Empresa no Google. */
+    telephone: "+5581993037584",
     address: {
       "@type": "PostalAddress",
       streetAddress: contato.endereco,

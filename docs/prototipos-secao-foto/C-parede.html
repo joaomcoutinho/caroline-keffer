@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opção C · Parede</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/*
+  OPÇÃO C — A PAREDE. A foto da sala de banho ocupa a largura toda e é
+  recortada, em cima, pela CURVA DA PAREDE DO CONSULTÓRIO (a mesma das ondas
+  que separam as seções). O texto entra num cartão de vidro que sobe por cima
+  da foto, e a frase mais forte vira citação do Lucas, com o rosto dele.
+  Editorial: foto grande, pouco texto, uma voz.
+*/
+.painel{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:16/7;min-height:300px;
+  clip-path:path('M0 60 C 180 20, 380 8, 600 44 C 820 80, 980 128, 1160 118 C 1280 110, 1370 76, 1440 36 L 1440 9999 L 0 9999 Z');}
+.painel img{width:100%;height:100%;object-fit:cover;object-position:50% 55%}
+/* o clip-path em px vale para 1440; em telas menores, a curva vira máscara SVG proporcional */
+@supports (mask: url(#x)){
+  .painel{clip-path:none;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 630' preserveAspectRatio='none'%3E%3Cpath d='M0 60 C 180 20, 380 8, 600 44 C 820 80, 980 128, 1160 118 C 1280 110, 1370 76, 1440 36 L 1440 630 L 0 630 Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 630' preserveAspectRatio='none'%3E%3Cpath d='M0 60 C 180 20, 380 8, 600 44 C 820 80, 980 128, 1160 118 C 1280 110, 1370 76, 1440 36 L 1440 630 L 0 630 Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat}
+}
+.sobreposto{position:relative;display:grid;gap:28px;margin-top:-140px;padding:0 24px}
+@media(min-width:1024px){.sobreposto{grid-template-columns:minmax(0,560px) 1fr;align-items:start;gap:56px;padding:0 48px}
+  /* Só o cartão sobe sobre a foto; a citação começa abaixo dela, sempre legível. */
+  .citacao{margin-top:176px}}
+.cartao{border-radius:22px;padding:34px 34px 30px;background:color-mix(in srgb,var(--surface) 78%,transparent);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border:1px solid color-mix(in srgb,var(--brand) 22%,transparent);box-shadow:inset 0 1px 0 rgb(255 255 255/.6),0 24px 50px -24px rgb(4 30 40/.55)}
+.cartao .lead{margin-top:14px;font-size:1.05rem}
+.cartao ul{margin-top:20px;display:grid;gap:10px;list-style:none;color:var(--text-2)}
+.cartao li{display:flex;gap:10px;align-items:flex-start}
+.cartao li svg{flex-shrink:0;width:20px;height:20px;margin-top:2px;color:var(--brand-deep)}
+
+.citacao{padding-bottom:10px}
+.citacao blockquote{font-family:'Fraunces',serif;font-variation-settings:"SOFT" 100;font-weight:700;font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:1.2;color:var(--text);text-wrap:balance}
+.citacao blockquote::before{content:"“";display:block;font-size:4rem;line-height:.6;color:var(--brand);opacity:.45}
+.assina{display:flex;align-items:center;gap:14px;margin-top:22px}
+.assina .oval{width:58px;height:58px;border-width:3px}
+.assina b{display:block}
+.assina span{font-size:.9rem;color:var(--text-3)}
+@media(max-width:1023px){.painel{aspect-ratio:4/3}.sobreposto{margin-top:-80px;padding:0 12px}.citacao{padding:8px 8px 0}}
+</style>
+<body>
+<section class="faixa">
+  <div class="caixa">
+    <div class="painel"><img src="../../site/public/images/servico_banho_tosa.webp" alt="Sala de banho e tosa da clínica, com banheira e secador profissional"></div>
+    <div class="sobreposto">
+      <div class="cartao">
+        <p class="sobre">Banho e tosa</p>
+        <h2 class="titulo" style="margin-top:10px">O que muda quando o banho é dentro da clínica.</h2>
+        <p class="lead">O banho acontece a poucos passos do consultório. O que aparece na pele não espera a próxima consulta.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Produto indicado pela dermatologia, para pet em tratamento</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Manejo calmo, por quem está acostumado com pet ansioso</li>
+        </ul>
+      </div>
+      <figure class="citacao">
+        <blockquote>Uma vermelhidão, uma pulga, um nódulo: vai direto para a veterinária, no mesmo dia.</blockquote>
+        <figcaption class="assina">
+          <div class="oval"><img src="../../site/public/images/equipe-lucas-leal.webp" alt="" style="object-position:50% 20%"></div>
+          <div><b>Lucas Leal</b><span>Pet groomer da clínica</span></div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+<div class="rotulo-opcao">Opção C · Parede <a href="index.html">← todas</a></div>
+</body>
+</html>

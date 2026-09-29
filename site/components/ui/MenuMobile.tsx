@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -126,7 +127,7 @@ export function MenuMobile() {
 
                 <nav className="border-t border-hairline">
                   {navegacao.map((item) => (
-                    <a
+                    <Link
                       key={item.href}
                       href={item.href}
                       onClick={() => setAberto(false)}
@@ -139,7 +140,7 @@ export function MenuMobile() {
                         className="text-text-3"
                         aria-hidden
                       />
-                    </a>
+                    </Link>
                   ))}
                 </nav>
 

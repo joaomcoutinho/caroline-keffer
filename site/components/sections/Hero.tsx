@@ -146,7 +146,7 @@ export function Hero() {
       <div className="hero-copy relative mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-4 2xl:max-w-[1400px]">
         <div className="mx-auto max-w-[24rem] pt-7 pb-14 text-center sm:max-w-[34rem] sm:pt-10 lg:max-w-[36rem] lg:pb-0">
           <Revelar atraso={0.04}>
-            <h1 className="hero-titulo font-display text-[2.25rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">
+            <h1 className="hero-titulo font-display text-[2.6rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-6xl">
               {/*
                 No desktop cada trecho vira uma linha, quebrando por sentido
                 ("Tudo para seu pet," / "onde ele se sente" / "em casa.").

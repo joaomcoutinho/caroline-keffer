@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { MapPinIcon, ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { Revelar } from "@/components/ui/Revelar";
 import { caminhoPublico } from "@/lib/caminho";
@@ -74,11 +75,20 @@ export function Servicos() {
             itens={servicos.itens.map((i) => ({
               ...i,
               cta: (
-                <BotaoWhatsapp
-                  rotulo={CTA_PRIMARIO}
-                  href={linkWhatsapp(`Olá! Gostaria de agendar: ${i.nome.toLowerCase()}.`)}
-                  className="w-full"
-                />
+                <>
+                  <BotaoWhatsapp
+                    rotulo={CTA_PRIMARIO}
+                    href={linkWhatsapp(`Olá! Gostaria de agendar: ${i.nome.toLowerCase()}.`)}
+                    className="w-full"
+                  />
+                  {/* Página interna do serviço, quando existe (SEO local, 27/09/2026). */}
+                  {"pagina" in i ? (
+                    <Link href={i.pagina} className="servico-saiba-mais">
+                      Saiba mais sobre {i.nome.toLowerCase()}
+                      <ArrowRightIcon size={14} weight="bold" aria-hidden />
+                    </Link>
+                  ) : null}
+                </>
               ),
             }))}
             rotulo="Serviços da clínica"

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seção texto + foto · opções</title>
+<link rel="stylesheet" href="base.css">
+<style>
+body{background:#0b2a35;color:#e6f3f9;padding:32px 20px 60px}
+h1{font-family:'Fraunces',serif;font-variation-settings:"SOFT" 100;font-size:28px}
+.intro{margin:8px 0 28px;color:#a3c2d1;max-width:60ch;line-height:1.5}
+.grade{display:grid;gap:28px}
+@media(min-width:1100px){.grade{grid-template-columns:1fr 1fr}}
+figure{margin:0;background:#0f3644;border-radius:18px;padding:14px;border:1px solid rgb(255 255 255/.08)}
+.moldura{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border-radius:10px;background:#cce4f0}
+.moldura iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0}
+figcaption{display:flex;justify-content:space-between;gap:16px;align-items:baseline;margin-top:14px}
+figcaption b{font-size:17px}
+figcaption p{color:#a3c2d1;font-size:14px;margin-top:4px;line-height:1.45}
+figcaption a{flex-shrink:0;background:#7ec0dc;color:#07222c;font-weight:700;text-decoration:none;padding:10px 16px;border-radius:999px;font-size:14px}
+</style>
+<body>
+<h1>Seções "texto + foto" · 4 opções</h1>
+<p class="intro">Mesmo conteúdo (banho e tosa), quatro formatos para sair do "texto à esquerda, foto à direita". Clique em "Abrir" para ver em tela cheia — todas funcionam no celular.</p>
+<div class="grade">
+  <figure><div class="moldura"><iframe src="A-pata.html" loading="lazy"></iframe></div><figcaption><div><b>A · Pata</b><p>As fotos montam a pata do logo; cada dedo é um cuidado, numerado, com os pontos em volta.</p></div><a href="A-pata.html">Abrir</a></figcaption></figure>
+  <figure><div class="moldura"><iframe src="B-trajeto.html" loading="lazy"></iframe></div><figcaption><div><b>B · Trajeto</b><p>O caminho do pet do banho até a veterinária, em três paradas ligadas pela rota tracejada.</p></div><a href="B-trajeto.html">Abrir</a></figcaption></figure>
+  <figure><div class="moldura"><iframe src="C-parede.html" loading="lazy"></iframe></div><figcaption><div><b>C · Parede</b><p>Foto grande recortada pela curva da parede do consultório, cartão de vidro por cima e a frase como citação do Lucas.</p></div><a href="C-parede.html">Abrir</a></figcaption></figure>
+  <figure><div class="moldura"><iframe src="D-ficha.html" loading="lazy"></iframe></div><figcaption><div><b>D · Ficha do banho</b><p>Uma ficha de banho preenchida mostra o que é conferido; a foto do Lucas entra como quem assinou.</p></div><a href="D-ficha.html">Abrir</a></figcaption></figure>
+</div>
+<script>
+/* Reduz a prévia de 1440px para caber na moldura. */
+const ajustar=()=>document.querySelectorAll('.moldura').forEach(m=>{const f=m.querySelector('iframe');const e=m.clientWidth/1440;f.style.transform=`scale(${e})`;m.style.height=900*e+'px';m.style.aspectRatio='auto'});
+addEventListener('resize',ajustar);ajustar();
+</script>
+</body>
+</html>

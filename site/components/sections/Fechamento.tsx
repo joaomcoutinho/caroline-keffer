@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import { caminhoPublico } from "@/lib/caminho";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
 import { ctaFinal, rodape, contato, navegacao } from "@/content/site";
+import { rodapeServicos } from "@/content/paginas";
 
 
 /**
@@ -41,7 +43,7 @@ export function Fechamento() {
       </section>
 
       <footer className="border-t border-hairline px-5 py-12 sm:px-8">
-        <div className="mx-auto grid w-full max-w-[1200px] gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
+        <div className="mx-auto grid w-full max-w-[1200px] gap-10 sm:grid-cols-2 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
               <Image
@@ -63,15 +65,30 @@ export function Fechamento() {
             </p>
           </div>
 
-          <nav className="flex flex-col gap-3">
+          <nav aria-label="Seções" className="flex flex-col gap-3">
             {navegacao.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-acao-texto"
               >
                 {item.rotulo}
-              </a>
+              </Link>
+            ))}
+          </nav>
+
+          {/* As páginas internas (27/09/2026). Ficam no rodapé de TODAS as
+              páginas: é o link rastreável que tira cada uma do isolamento, e
+              o painel de serviços da home só mostra um link por vez. */}
+          <nav aria-label="Serviços" className="flex flex-col gap-3">
+            {rodapeServicos.map((item) => (
+              <Link
+                key={item.caminho}
+                href={item.caminho}
+                className="-my-2 py-2.5 text-sm text-text-2 transition-colors hover:text-acao-texto"
+              >
+                {item.rotulo}
+              </Link>
             ))}
           </nav>
 
@@ -102,19 +119,32 @@ export function Fechamento() {
           </div>
         </div>
 
-        <div className="mx-auto mt-12 flex w-full max-w-[1200px] flex-col gap-4 border-t border-hairline pt-6 text-xs text-text-3 sm:flex-row sm:items-center sm:justify-between">
-          <p>{rodape.legal}</p>
+        {/*
+          Três colunas iguais, e a assinatura na do MEIO (18/09/2026, JM): no
+          canto direito ela ficava atrás do botão flutuante do WhatsApp. A
+          terceira coluna fica vazia de propósito, para o centro ser o centro
+          da página e não o meio do espaço que sobra ao lado do texto legal.
+        */}
+        <div className="mx-auto mt-12 grid w-full max-w-[1200px] gap-4 border-t border-hairline pt-6 text-xs text-text-3 sm:grid-cols-3 sm:items-center">
+          <p className="text-center sm:text-left">{rodape.legal}</p>
 
           {/*
             Assinatura da MXC Digital (JM, 17/09/2026). A marca d'água atrás do
             crédito é o mesmo planeta do símbolo, em escala grande e quase
             invisível — assinatura, não anúncio.
           */}
+          {/*
+            ⚠️ LINK RASTREÁVEL (skill /rodape-rastreavel, 28/09/2026). O UTM em
+            `rodape.agenciaUrl` é DE PROPÓSITO — não "limpe" o link: sem ele a
+            visita cai em "direto" no GA4 da MXC e não dá para saber que veio
+            daqui. E `rel` é só "noopener", SEM "noreferrer": o noreferrer apaga
+            o referenciador, que é justamente o dado que interessa.
+          */}
           <a
             href={rodape.agenciaUrl}
             target="_blank"
-            rel="noopener noreferrer"
-            className="assinatura-mxc"
+            rel="noopener"
+            className="assinatura-mxc justify-self-center"
           >
             <span className="assinatura-texto">{rodape.credito}</span>
             <Image

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { CameraIcon } from "@phosphor-icons/react/dist/ssr";
 import { Secao } from "@/components/ui/Secao";
 import { Revelar } from "@/components/ui/Revelar";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
@@ -61,20 +62,29 @@ export function Equipe() {
         No toque não há hover: ficam o nome e a função — lá quem agenda é a
         barra fixa.
       */}
-      <ul className="equipe-grade mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+      {/* Cinco pessoas desde 29/09/2026 (entrou a Gerlane, da recepção). */}
+      <ul className="equipe-grade mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5 lg:gap-6">
         {equipe.membros.map((membro, i) => (
           <li key={membro.nome}>
             <Revelar atraso={0.08 + i * 0.06}>
               <article className="membro-card">
                 <div className="membro-foto moldura-pata">
-                  <Image
-                    src={caminhoPublico(membro.foto)}
-                    alt={membro.alt}
-                    width={640}
-                    height={854}
-                    sizes="(max-width: 1024px) 45vw, 280px"
-                    className="h-full w-full object-cover"
-                  />
+                  {membro.foto ? (
+                    <Image
+                      src={caminhoPublico(membro.foto)}
+                      alt={membro.alt}
+                      width={640}
+                      height={854}
+                      sizes="(max-width: 1024px) 45vw, 230px"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    /* Foto ainda não enviada: espaço reservado, como no Midia. */
+                    <span className="especialista-vazio" role="img" aria-label={`Foto de ${membro.nome} em breve`}>
+                      <CameraIcon size={26} weight="light" aria-hidden />
+                      <span>Foto em breve</span>
+                    </span>
+                  )}
                 </div>
 
                 <div className="membro-ficha">
@@ -82,6 +92,7 @@ export function Equipe() {
                     {membro.nome}
                   </h3>
                   <p className="membro-papel">{membro.papel}</p>
+                  {"registro" in membro ? <p className="membro-papel">{membro.registro}</p> : null}
                 </div>
 
                 {/* Detalhe e botão abrem embaixo, com o cursor ou o foco. */}

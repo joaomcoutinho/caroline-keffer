@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { caminhoPublico } from "@/lib/caminho";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { MenuMobile } from "@/components/ui/MenuMobile";
@@ -35,9 +36,10 @@ export function Cabecalho() {
     */
     <header className="cabecalho-encolhe fixed inset-x-0 top-0 z-40 px-4 pt-3 sm:px-6 sm:pt-4">
       <div className="cabecalho-pilula cabecalho-escuro mx-auto flex h-16 w-full max-w-[1200px] 2xl:max-w-[1400px] items-center justify-between gap-4 rounded-full pr-2 pl-3 sm:gap-6 sm:pr-3 sm:pl-4">
-        <a
-          href="#topo"
-          aria-label="Clínica Pet Caroline Keffer, ir para o topo"
+        {/* Link para a home, e não mais "#topo": o header também serve às páginas internas. */}
+        <Link
+          href="/"
+          aria-label="Clínica Pet Caroline Keffer, página inicial"
           className="shrink-0 transition-transform duration-200 ease-[var(--ease-soft)] hover:scale-[1.04]"
         >
           <Image
@@ -48,7 +50,7 @@ export function Cabecalho() {
             priority
             className="cabecalho-selo h-12 w-12 rounded-full object-cover ring-1 ring-white/25"
           />
-        </a>
+        </Link>
 
         {/* O centro do header no mobile ficou vazio quando o CTA saiu daqui.
             Em vez de devolver outro botão, entra INFORMAÇÃO: se a clínica está
@@ -60,13 +62,13 @@ export function Cabecalho() {
 
         <nav className="hidden items-center gap-7 lg:flex">
           {navegacao.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="text-[15px] text-text-2 transition-colors hover:text-acao-texto"
             >
               {item.rotulo}
-            </a>
+            </Link>
           ))}
         </nav>
 

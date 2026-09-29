@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opção B · Trajeto</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/*
+  OPÇÃO B — O TRAJETO. A seção conta o caminho do pet dentro da clínica,
+  do banho até a veterinária, em três paradas ligadas pela ROTA TRACEJADA —
+  o mesmo traço do cartão "Como chegar" da home. A foto deixa de ser
+  ilustração ao lado do texto e passa a ser cada parada da história.
+*/
+.cabeca{display:grid;gap:18px;align-items:end}
+@media(min-width:1024px){.cabeca{grid-template-columns:1.1fr .9fr;gap:64px}}
+.cabeca .lead{max-width:34rem}
+
+.rota{position:relative;margin-top:72px;display:grid;gap:56px}
+@media(min-width:900px){.rota{grid-template-columns:repeat(3,1fr);gap:40px}}
+.rota svg.traco{position:absolute;left:0;right:0;top:0;width:100%;height:230px;pointer-events:none;display:none}
+@media(min-width:900px){.rota svg.traco{display:block}}
+.rota svg.traco path{fill:none;stroke:var(--brand);stroke-width:2.5;stroke-dasharray:8 7;stroke-linecap:round;opacity:.7}
+
+.parada{position:relative;text-align:center}
+.parada .oval{width:min(230px,70vw);aspect-ratio:4/5;margin:0 auto}
+.parada:nth-child(3){margin-top:0}
+@media(min-width:900px){.parada:nth-child(3){margin-top:70px}}
+.etapa{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-deep)}
+.etapa i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--brand-deep);color:#fff;font:700 13px/1 'Fraunces',serif;font-style:normal}
+.parada h3{margin-top:10px;font-size:1.35rem;line-height:1.2}
+.parada p{margin:8px auto 0;max-width:30ch;color:var(--text-2);line-height:1.55}
+
+/* mobile: rota vertical tracejada ligando as paradas */
+@media(max-width:899px){
+  .parada:not(:last-of-type)::after{content:"";position:absolute;left:50%;bottom:-48px;height:40px;border-left:2.5px dashed var(--brand);opacity:.7}
+}
+.extra{margin-top:64px;display:grid;gap:14px;justify-content:center;text-align:center;color:var(--text-2)}
+@media(min-width:700px){.extra{grid-auto-flow:column;gap:40px}}
+.extra span{display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.extra svg{width:18px;height:18px;color:var(--brand-deep)}
+</style>
+<body>
+<section class="faixa">
+  <div class="caixa">
+    <div class="cabeca">
+      <div>
+        <p class="sobre">Banho e tosa</p>
+        <h2 class="titulo" style="margin-top:10px">O que muda quando o banho é dentro da clínica.</h2>
+      </div>
+      <p class="lead">Em pet shop, o banho termina na toalha. Aqui, se aparecer algo no caminho, ele tem para onde ir.</p>
+    </div>
+
+    <div class="rota">
+      <svg class="traco" viewBox="0 0 1200 230" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M200 150 C 330 60, 470 60, 600 150 S 870 250, 1000 190"/>
+      </svg>
+
+      <div class="parada">
+        <div class="oval"><img src="../../site/public/images/equipe-lucas-leal.webp" alt="Lucas Leal, pet groomer" style="object-position:50% 20%"></div>
+        <span class="etapa"><i>1</i>No banho</span>
+        <h3>O Lucas vê a pele inteira</h3>
+        <p>Quem dá o banho olha o corpo todo do seu pet, de perto, com calma.</p>
+      </div>
+      <div class="parada">
+        <div class="oval"><img src="../../site/public/images/galeria/atendimento-13.webp" alt="Dois shih-tzus de gravata no consultório" style="object-position:50% 35%"></div>
+        <span class="etapa"><i>2</i>Achou algo?</span>
+        <h3>Uma vermelhidão, uma pulga, um nódulo</h3>
+        <p>Ou um ouvido inflamado. Nada fica para depois.</p>
+      </div>
+      <div class="parada">
+        <div class="oval"><img src="../../site/public/images/equipe-caroline-keffer.webp" alt="Dra. Caroline Keffer" style="object-position:50% 20%"></div>
+        <span class="etapa"><i>3</i>A poucos passos</span>
+        <h3>A veterinária olha no mesmo dia</h3>
+        <p>E você sai sabendo o que era, sem voltar outra hora.</p>
+      </div>
+    </div>
+
+    <div class="extra">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Produto indicado pela dermatologia</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Manejo calmo para pet ansioso</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Cão e gato</span>
+    </div>
+  </div>
+</section>
+<div class="rotulo-opcao">Opção B · Trajeto <a href="index.html">← todas</a></div>
+</body>
+</html>
