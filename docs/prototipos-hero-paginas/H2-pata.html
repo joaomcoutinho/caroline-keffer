@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H2 · Pata</title>
+<link rel="stylesheet" href="../prototipos-secao-foto/base.css"><link rel="stylesheet" href="hero.css">
+<style>
+/* H2 · A PATA — o mesmo desenho do hero da home, em miniatura: a foto do
+   serviço é a almofada, e três dedos ovais mostram outros momentos daquele
+   atendimento. Autoral e reconhecível: é a marca, não uma foto qualquer. */
+.pata{position:relative;width:min(330px,86vw);aspect-ratio:1/.9;margin:96px auto 20px}
+.pata .oval{position:absolute}
+.almo{left:17%;right:17%;top:34%;bottom:0}
+.dedo{width:27%;aspect-ratio:1/1.15;border-width:4px}
+.d1{left:2%;top:20%;rotate:-22deg}.d2{left:36.5%;top:0;rotate:0deg}.d3{right:2%;top:20%;rotate:22deg}
+.selo{position:absolute;right:-4px;bottom:8%;display:grid;place-items:center;width:78px;height:78px;border-radius:50%;background:var(--brand-deep);color:#fff;text-align:center;font:700 .72rem/1.15 'Nunito Sans',sans-serif;border:3px solid #fff;box-shadow:0 12px 24px -12px rgb(4 30 40/.7)}
+.selo b{display:block;font:700 1.35rem/1 'Fraunces',serif}
+.topo{text-align:left}
+@media(min-width:1024px){
+  .palco{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:40px;max-width:1200px;margin:0 auto;padding-top:120px}
+  .pata{order:2;margin:0 auto;width:440px}
+}</style>
+<body>
+<header class="nav"><img src="../../site/public/images/logo-caroline-keffer.jpg" alt=""><span class="status"><i></i><b>Aberto agora</b><span>· até 19h</span></span><span class="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span></header>
+<div class="palco"><div class="pata">
+<div class="oval almo"><img src="../../site/public/images/servico_especialista.webp" alt="" style="object-position:55% 20%"></div>
+<div class="oval dedo d1"><img src="../../site/public/images/galeria/atendimento-04.webp" alt=""></div>
+<div class="oval dedo d2"><img src="../../site/public/images/equipe-caroline-keffer.webp" alt="" style="object-position:50% 18%"></div>
+<div class="oval dedo d3"><img src="../../site/public/images/galeria/atendimento-12.webp" alt=""></div>
+<div class="selo"><span><b>5</b>especia­lidades</span></div>
+</div>
+<section class="topo"><p class="sobre">Especialidades</p>
+<h1 style="margin-top:10px">Cinco especialidades veterinárias atendendo na Torre.</h1>
+<p class="lead">Cardiologia, dermatologia, nefrologia, pneumologia e nutrição com gastroenterologia atendem aqui dentro, na Rua Araguatins.</p>
+<a class="cta" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>Agendar pelo WhatsApp</a><div class="fatos"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>Rua Araguatins, 63 · Torre</span><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3 6.5 7 .8-5.2 4.8 1.4 7L12 17.8 5.8 21l1.4-7L2 9.3l7-.8Z"/></svg>4,8 no Google</span><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 10.4 3.5 2.1-.8 1.3L11 13V6h2Z"/></svg>Seg a sáb</span></div><p class="revisao">Conteúdo em revisão clínica pela Dra. Caroline Keffer · 27/09/2026</p></section></div>
+<div class="rotulo-opcao">H2 · Pata <a href="index.html">← todas</a></div></body></html>

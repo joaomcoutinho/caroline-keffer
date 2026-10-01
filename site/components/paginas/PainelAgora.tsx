@@ -26,40 +26,41 @@ export function PainelAgora() {
   const estado = (daVez: boolean) =>
     aberto === null ? undefined : aberto === daVez ? "sim" : "nao";
 
+  const opcoes = [
+    { ...painelAgora.aberta, ativo: estado(true) },
+    { ...painelAgora.fechada, ativo: estado(false) },
+  ];
+
   return (
     <div className="agora">
       <p className="font-display text-xl font-bold">{painelAgora.titulo}</p>
 
-      <div className="agora-opcao mt-5" data-ativo={estado(true)}>
-        <p className="agora-quando">
-          {painelAgora.aberta.quando}
-          {aberto === true ? <span className="agora-marca">{painelAgora.marcaAgora}</span> : null}
-        </p>
-        <p className="mt-1 leading-relaxed text-text-2">{painelAgora.aberta.texto}</p>
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <BotaoWhatsapp
-            rotulo={painelAgora.aberta.botao}
-            tamanho="compacto"
-            href={linkWhatsapp(painelAgora.aberta.mensagem)}
-          />
-          <a href={contato.telefoneFixoLink} className="agora-ligar">
-            {painelAgora.aberta.ligar} {contato.telefoneFixo}
-          </a>
-        </div>
+      {/* As duas saídas lado a lado (01/10/2026, JM); o resto vem embaixo. */}
+      <div className="agora-opcoes mt-5">
+        {opcoes.map((o) => (
+          <div key={o.quando} className="agora-opcao" data-ativo={o.ativo}>
+            {/* A marca "agora" reserva a linha nos dois cartões: nada desalinha
+                quando ela acende em um deles. */}
+            <span className="agora-marca" data-visivel={o.ativo === "sim" ? "" : undefined} aria-hidden={o.ativo !== "sim"}>
+              {painelAgora.marcaAgora}
+            </span>
+            <p className="agora-quando">{o.quando}</p>
+            <p className="agora-condicao">{o.condicao}</p>
+            <p className="agora-texto">{o.texto}</p>
+          </div>
+        ))}
       </div>
 
-      <div className="agora-opcao mt-3" data-ativo={estado(false)}>
-        <p className="agora-quando">
-          {painelAgora.fechada.quando}
-          {aberto === false ? <span className="agora-marca">{painelAgora.marcaAgora}</span> : null}
-        </p>
-        <p className="mt-1 leading-relaxed text-text-2">{painelAgora.fechada.texto}</p>
+      <p className="mt-5 leading-relaxed text-text-2">{painelAgora.seguir}</p>
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <BotaoWhatsapp rotulo={painelAgora.botao} tamanho="compacto" href={linkWhatsapp(painelAgora.mensagem)} />
+        <a href={contato.telefoneFixoLink} className="agora-ligar">
+          {painelAgora.ligar} {contato.telefoneFixo}
+        </a>
       </div>
 
-      <p className="mt-4 text-sm text-text-3">
-        {horario}
-        <span className="mt-1 block font-semibold text-text-2">{painelAgora.rodape}</span>
-      </p>
+      {/* Só o expediente: o limite das 18h já está nos dois cartões (01/10/2026). */}
+      <p className="agora-rodape">{horario}</p>
     </div>
   );
 }

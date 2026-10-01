@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRightIcon, CheckIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 import { caminhoPublico } from "@/lib/caminho";
 import { Revelar } from "@/components/ui/Revelar";
+import { Trilho } from "@/components/ui/Trilho";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { StatusHorario } from "@/components/ui/StatusHorario";
 import { Icone } from "@/components/paginas/Icone";
@@ -160,7 +161,7 @@ export function BlocoPerfis({ bloco }: { bloco: Extract<Bloco, { tipo: "perfis" 
       <div className="mx-auto flex max-w-[56ch] justify-center text-center">
         <Titulo intro={bloco.intro}>{bloco.titulo}</Titulo>
       </div>
-      <ul className="mt-12 grid gap-14 md:grid-cols-3 md:gap-8 lg:gap-12">
+      <Trilho className="perfis-grade mt-12 grid gap-14 md:grid-cols-3 md:gap-8 lg:gap-12">
         {bloco.itens.map((p, i) => (
           <li key={p.titulo} className="flex">
             <Revelar atraso={0.06 + i * 0.06} className="flex w-full">
@@ -187,7 +188,7 @@ export function BlocoPerfis({ bloco }: { bloco: Extract<Bloco, { tipo: "perfis" 
             </Revelar>
           </li>
         ))}
-      </ul>
+      </Trilho>
       {bloco.nota ? (
         <Revelar atraso={0.2}>
           <Link href={bloco.nota.href} className="perfil-nota">

@@ -11,6 +11,7 @@ import {
 import type { Icon } from "@phosphor-icons/react";
 import { caminhoPublico } from "@/lib/caminho";
 import { Revelar } from "@/components/ui/Revelar";
+import { Trilho } from "@/components/ui/Trilho";
 import { Icone } from "@/components/paginas/Icone";
 import { PassosCaminho } from "@/components/paginas/PassosCaminho";
 import { BlocoChamada, BlocoEmergencia, BlocoLimites, BlocoPerfis, SinaisAlerta } from "@/components/paginas/Destaques";
@@ -75,7 +76,7 @@ function BlocoCartoes({ bloco }: { bloco: Extract<Bloco, { tipo: "cartoes" }> })
   return (
     <>
       <Titulo intro={bloco.intro}>{bloco.titulo}</Titulo>
-      <ul className="mt-10 flex flex-wrap justify-center gap-4 lg:gap-5">
+      <ul className="lista-compacta mt-10 flex flex-wrap justify-center gap-4 lg:gap-5">
         {bloco.itens.map((c, i) => {
           const externo = c.href?.startsWith("http");
           return (
@@ -162,7 +163,10 @@ function BlocoTexto({ bloco }: { bloco: Extract<Bloco, { tipo: "texto" }> }) {
   }
 
   return (
-    <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20">
+    /* Texto e foto como UM conjunto centralizado na página (01/10/2026, JM:
+       "centralizar os textos e imagem nessa seção"). Com colunas em fr, a foto
+       (360px) ficava no meio de uma coluna mais larga e sobrava vão à direita. */
+    <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,640px)_360px] lg:justify-center lg:gap-24">
       <div>
         <Titulo>{bloco.titulo}</Titulo>
         <Paragrafos itens={bloco.paragrafos} />
@@ -171,7 +175,7 @@ function BlocoTexto({ bloco }: { bloco: Extract<Bloco, { tipo: "texto" }> }) {
             {/* Causas em cartão (28/09/2026, JM: "mais destacado e intuitivo"). */}
             <ul className="causas mt-8">
               {bloco.causas.map((c) => (
-                <li key={c.titulo} className="causa">
+                <li key={c.titulo} className="causa" data-destaque={c.selo ? "" : undefined}>
                   <span className="causa-icone" aria-hidden>
                     <Icone nome={c.icone} tamanho={22} />
                   </span>
@@ -237,7 +241,7 @@ function BlocoFases({ bloco }: { bloco: Extract<Bloco, { tipo: "fases" }> }) {
   return (
     <>
       <Titulo intro={bloco.intro}>{bloco.titulo}</Titulo>
-      <ol className="mt-10 grid gap-4 lg:grid-cols-3 lg:gap-5">
+      <Trilho ordenada className="mt-10 grid gap-4 lg:grid-cols-3 lg:gap-5">
         {fases.map((f, i) => {
           const IconeFase = iconesFase[f.id] ?? PawPrintIcon;
           return (
@@ -264,7 +268,7 @@ function BlocoFases({ bloco }: { bloco: Extract<Bloco, { tipo: "fases" }> }) {
             </li>
           );
         })}
-      </ol>
+      </Trilho>
 
       {alerta ? <SinaisAlerta titulo="Sinais de alerta: não espere o check-up." itens={alerta.itens} /> : null}
     </>
@@ -283,7 +287,7 @@ function BlocoEspecialistas({ bloco }: { bloco: Extract<Bloco, { tipo: "especial
   return (
     <>
       <Titulo intro={bloco.intro}>{bloco.titulo}</Titulo>
-      <ul className="mt-10 flex flex-wrap justify-center gap-4 lg:gap-5">
+      <ul className="lista-compacta mt-10 flex flex-wrap justify-center gap-4 lg:gap-5">
         {especialistas.map((e, i) => (
           <li key={e.especialidade} className="flex w-full sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-5rem)/5)]">
             <Revelar atraso={i * 0.04} className="flex w-full">

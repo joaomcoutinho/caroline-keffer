@@ -35,6 +35,15 @@ const useEfeitoLayout = typeof window !== "undefined" ? useLayoutEffect : useEff
  * quadro, sem pintura no meio, então nada pisca.
  */
 function reservarAltura(lista: HTMLElement) {
+  /*
+    Só com as duas colunas lado a lado (>= 1024px), que é onde o bloco ao lado
+    se mexia. No celular as colunas empilham e a reserva virava espaço vazio
+    embaixo das perguntas (01/10/2026, JM: "espaço negativo nas dúvidas").
+  */
+  if (!window.matchMedia("(min-width: 1024px)").matches) {
+    lista.style.minHeight = "";
+    return;
+  }
   const detalhes = Array.from(lista.querySelectorAll("details"));
   if (!detalhes.length) return;
   // Com animação de abertura em curso, a altura lida seria a animada: espera.

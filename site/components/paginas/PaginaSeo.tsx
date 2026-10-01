@@ -106,7 +106,8 @@ export function PaginaSeo({ pagina }: { pagina: Pagina }) {
     return (
       <div key={i}>
         {onda}
-        <Casca tom={tom}>
+        {/* A chamada é um cartão só: centralizada na faixa entre as ondas. */}
+        <Casca tom={tom} className={bloco.tipo === "chamada" ? "casca-chamada" : ""}>
           <MioloBloco bloco={bloco} />
         </Casca>
       </div>
@@ -126,7 +127,11 @@ export function PaginaSeo({ pagina }: { pagina: Pagina }) {
         {secoes}
 
         <Onda cor={corDoTom[tomFaq]} espelhar={nBlocos % 2 === 0} />
-        <Casca tom={tomFaq} id="duvidas" className="faq-secao">
+        {/* Sem a classe `faq-secao` da home (01/10/2026): ela põe as seções
+            seguintes em camadas de GPU (truque de Safari para listas longas) e,
+            nas emendas entre camadas, apareciam linhas de 1 a 2px. As listas
+            daqui são curtas e não precisam disso. */}
+        <Casca tom={tomFaq} id="duvidas">
           {/*
             A coluna da esquerda não fica mais só com o título (27/09/2026, JM:
             "espaço negativo na parte esquerda"). Embaixo dele entra a saída
@@ -159,7 +164,7 @@ export function PaginaSeo({ pagina }: { pagina: Pagina }) {
               Continue por aqui.
             </h2>
           </Revelar>
-          <ul className="mt-8 grid gap-4 md:grid-cols-3 lg:gap-5">
+          <ul className="lista-compacta lista-compacta--sem-icone mt-8 grid gap-4 md:grid-cols-3 lg:gap-5">
             {relacionados.map((r, i) => (
               <li key={r.caminho} className="flex">
                 <Revelar atraso={i * 0.05} className="flex w-full">

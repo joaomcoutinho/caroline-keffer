@@ -1,0 +1,21 @@
+/* Comum aos protótipos de topo das páginas internas. Tokens em ../prototipos-secao-foto/base.css */
+body{background:var(--surface)}
+.nav{position:fixed;z-index:40;top:12px;left:12px;right:12px;height:58px;border-radius:999px;display:flex;align-items:center;gap:10px;padding:0 8px 0 8px;
+  background:linear-gradient(180deg,#123f4e,#0e3342);color:#e6f3f9;box-shadow:0 14px 30px -14px rgb(4 30 40/.7);max-width:1200px;margin:0 auto}
+.nav img{width:42px;height:42px;border-radius:50%;border:2px solid rgb(255 255 255/.8)}
+.nav .status{flex:1;display:flex;justify-content:center;align-items:center;gap:8px;font-size:14px}
+.nav .status i{width:8px;height:8px;border-radius:50%;background:#34d399}
+.nav .status span{color:#a3c2d1}
+.nav .menu{width:42px;height:42px;border-radius:50%;border:1px solid rgb(255 255 255/.25);display:grid;place-items:center}
+.nav .menu svg{width:18px;height:18px}
+.topo{position:relative;padding:0 20px 56px}
+.sobre{margin-top:0}
+h1{font-size:clamp(2rem,6.4vw,3.3rem);line-height:1.07;font-weight:700;text-wrap:balance}
+.lead{margin-top:14px;font-size:1.04rem;line-height:1.6;color:var(--text-2)}
+.cta{margin-top:22px}
+.fatos{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.fatos span{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in srgb,var(--surface) 55%,white 12%);font-size:.84rem;color:var(--text-2)}
+.fatos svg{width:14px;height:14px;color:var(--brand)}
+.revisao{margin-top:14px;font-size:.78rem;color:var(--text-3)}
+.rotulo-opcao{bottom:auto;top:84px;left:auto;right:12px;font-size:12px;padding:7px 10px;opacity:.9}
+@media(min-width:1024px){.topo{padding:0 48px 96px}}

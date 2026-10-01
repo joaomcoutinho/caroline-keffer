@@ -25,8 +25,16 @@ import { linkWhatsapp } from "@/content/site";
 export type Foto = {
   src: string;
   alt: string;
-  /** `object-position` do recorte oval. */
+  /** `object-position` do recorte. No topo, vale para o desktop (o oval ao lado da copy). */
   posicao?: string;
+  /** Só no topo: enquadramento no celular (foto de ponta a ponta), se diferente. */
+  posicaoCelular?: string;
+  /**
+   * Só no topo: outra foto para o celular, quando o rosto da principal fica
+   * por trás da navbar (a foto do celular sobe até o topo da tela).
+   */
+  srcCelular?: string;
+  altCelular?: string;
 };
 
 export type Cartao = {
@@ -154,6 +162,7 @@ const especialidades: Pagina = {
       src: "/images/servico_especialista.webp",
       alt: "Veterinário sorrindo ao lado de um golden retriever sobre a mesa de exame",
       posicao: "58% 22%",
+      posicaoCelular: "50% 10%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de especialidades do site e gostaria de marcar com um especialista.",
   },
@@ -270,6 +279,7 @@ const cardiologia: Pagina = {
       src: "/images/galeria/atendimento-04.webp",
       alt: "Veterinário examinando um border collie deitado na mesa de atendimento",
       posicao: "50% 35%",
+      posicaoCelular: "50% 80%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de cardiologia do site e gostaria de marcar uma consulta.",
   },
@@ -396,6 +406,7 @@ const dermatologia: Pagina = {
       src: "/images/galeria/atendimento-13.webp",
       alt: "Colaboradora no consultório com dois shih-tzus de gravata",
       posicao: "50% 35%",
+      posicaoCelular: "50% 85%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de dermatologia do site e gostaria de marcar uma consulta.",
   },
@@ -483,6 +494,7 @@ const nefrologia: Pagina = {
       src: "/images/galeria/atendimento-11.webp",
       alt: "Duas colaboradoras sorrindo, cada uma com um gato persa no colo",
       posicao: "50% 35%",
+      posicaoCelular: "50% 25%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de nefrologia do site e gostaria de marcar uma consulta.",
   },
@@ -566,6 +578,11 @@ const pneumologia: Pagina = {
       src: "/images/galeria/atendimento-14.webp",
       alt: "Colaboradora agachada com dois buldogues franceses",
       posicao: "50% 40%",
+      // No celular o rosto dela ficava atrás da navbar. O shih-tzu é
+      // braquicefálico, paciente típico da pneumologia (o pug já está nos perfis).
+      srcCelular: "/images/galeria/atendimento-17.webp",
+      altCelular: "Colaboradora abraçando um shih-tzu de laço rosa",
+      posicaoCelular: "50% 50%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de pneumologia do site e gostaria de marcar uma consulta.",
   },
@@ -670,10 +687,14 @@ const nutricaoGastro: Pagina = {
     h1: "Nutrição e gastroenterologia veterinária na Torre.",
     lead:
       "Vômito, diarreia que vai e volta, falta de apetite e peso fora do ideal são casos de gastroenterologia e nutrição. Aqui as duas áreas andam juntas, porque boa parte do tratamento do intestino passa pelo que vai no pote.",
+    /* Sala de espera (01/10/2026, JM: "uma imagem mais genérica, que não fique
+       fora de contexto"). A foto anterior, com um presente na mão, puxava
+       para outro assunto. */
     foto: {
-      src: "/images/galeria/atendimento-08.webp",
-      alt: "Colaboradora agachada ao lado de um beagle",
-      posicao: "50% 40%",
+      src: "/images/sala_espera_alargado.webp",
+      alt: "Sala de espera da clínica, com as cadeiras, o balcão da recepção e a porta do consultório",
+      posicao: "45% 50%",
+      posicaoCelular: "40% 50%",
     },
     mensagemWhatsapp:
       "Olá! Vim pela página de nutrição e gastroenterologia do site e gostaria de marcar uma consulta.",
@@ -765,6 +786,7 @@ const cirurgia: Pagina = {
       src: "/images/servico_cirurgia.webp",
       alt: "Veterinária paramentada realizando procedimento em um cão anestesiado na mesa cirúrgica",
       posicao: "center center",
+      posicaoCelular: "50% 20%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de cirurgia do site e gostaria de uma avaliação.",
   },
@@ -904,12 +926,15 @@ const examesImagem: Pagina = {
     lead:
       "Radiografia, ultrassonografia e eletrocardiograma feitos aqui na clínica, com hora marcada. Seu pet faz o exame no lugar que já conhece, e o resultado volta para quem acompanha o caso.",
     /* ⚠️ Os aparelhos NÃO ficam na clínica (29/09/2026): vêm com médicos
-       volantes, em serviço terceirizado. A clínica vai fotografar nos próximos
-       exames; até lá, a foto é a do consultório. */
+       volantes, em serviço terceirizado. Até chegarem as fotos dos exames, o
+       topo mostra a FACHADA (01/10/2026, JM: "algo mais genérico é melhor do
+       que só um canto da sala") — responde "onde é" antes da primeira linha. */
     foto: {
-      src: "/images/servico_imagem.webp",
-      alt: "Consultório da clínica com bancada de exame em inox, pia e armários",
-      posicao: "center center",
+      src: "/images/fachada_ceu.webp",
+      alt: "Fachada da Clínica Veterinária Caroline Keffer vista da calçada, com o letreiro e o céu aberto",
+      posicao: "50% 50%",
+      // No celular a caixa é mais estreita que a foto: o recorte puxa para o letreiro.
+      posicaoCelular: "35% 50%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de exames de imagem do site e gostaria de agendar um exame.",
   },
@@ -1026,6 +1051,7 @@ const checkUp: Pagina = {
       src: "/images/servico_clinica_geral.webp",
       alt: "Dra. Caroline Keffer sorrindo no consultório com um lulu da pomerânia no colo",
       posicao: "center 30%",
+      posicaoCelular: "50% 30%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de check-up do site e gostaria de marcar um check-up para o meu pet.",
   },
@@ -1123,6 +1149,7 @@ const planos: Pagina = {
       src: "/images/consultorio_card.webp",
       alt: "Consultório da clínica com a mesa de atendimento e o selo da Dra. Caroline Keffer na parede",
       posicao: "center center",
+      posicaoCelular: "50% 60%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de planos do site e queria confirmar a cobertura do meu plano.",
   },
@@ -1244,6 +1271,7 @@ const equipe: Pagina = {
       src: "/images/hero_dra_keffer.webp",
       alt: "Dra. Caroline Keffer sorrindo, retrato em fundo claro",
       posicao: "55% 18%",
+      posicaoCelular: "50% 8%",
     },
     mensagemWhatsapp: "Olá! Vim pela página da equipe no site e gostaria de marcar uma consulta.",
   },
@@ -1317,6 +1345,7 @@ const banhoTosa: Pagina = {
       src: "/images/servico_banho_tosa.webp",
       alt: "Sala de banho e tosa da clínica, com banheira, secador profissional e mural de cão no banho",
       posicao: "center 50%",
+      posicaoCelular: "50% 40%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de banho e tosa do site e gostaria de agendar um horário.",
   },
@@ -1456,18 +1485,21 @@ export const rodapeServicos = [
 export const painelAgora = {
   titulo: "O que fazer agora",
   limiteEmergencia: "18:00",
+  /* As duas saídas lado a lado, cada uma numa frase (01/10/2026); o que não
+     cabe nos cartões vem logo abaixo, em `seguir`. */
   aberta: {
-    quando: "Até as 18h, com a clínica aberta",
-    texto:
-      "Venha direto. A equipe estabiliza o seu pet e, se ele precisar ficar internado, encaminha para um hospital 24h. Avise pelo WhatsApp ou ligue que está a caminho.",
-    botao: "Avisar que estou indo",
-    mensagem: "Olá! É uma emergência, estou indo para a clínica agora.",
-    ligar: "ou ligue",
+    quando: "Até as 18h",
+    condicao: "Clínica aberta",
+    texto: "Venha direto. A equipe estabiliza o seu pet na hora.",
   },
   fechada: {
-    quando: "Depois das 18h ou com a clínica fechada",
-    texto: "Procure um plantão veterinário 24h. Não espere a clínica abrir.",
+    quando: "Após as 18h",
+    condicao: "Ou clínica fechada",
+    texto: "Procure um plantão veterinário 24h. Não espere abrir.",
   },
-  rodape: "Emergência: até as 18h, nos dias de funcionamento.",
+  seguir: "Se ele precisar ficar internado, a equipe encaminha para um hospital 24h. Está a caminho? Avise antes.",
+  botao: "Avisar que estou indo",
+  mensagem: "Olá! É uma emergência, estou indo para a clínica agora.",
+  ligar: "ou ligue",
   marcaAgora: "agora",
 } as const;

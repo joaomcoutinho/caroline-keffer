@@ -62,10 +62,12 @@ export function BotaoWhatsapp({
 }: Props) {
   const t = tamanhos[tamanho];
 
-  // `relative` e `cta-brilho` dão o feixe de luz que atravessa o botão; ver globals.css.
-  const base = `cta-brilho relative inline-flex items-center justify-center rounded-full font-semibold whitespace-nowrap transition-[transform,background-color] duration-200 ease-[var(--ease-soft)] [@media(hover:hover)]:active:scale-[0.98] ${t.caixa} ${t.texto}`;
+  // `relative` e `cta-brilho` dão a sombra que respira e o preenchimento do hover; ver globals.css.
+  const base = `cta-brilho relative inline-flex items-center justify-center rounded-full font-semibold whitespace-nowrap transition-[transform] duration-200 ease-[var(--ease-soft)] [@media(hover:hover)]:active:scale-[0.98] ${t.caixa} ${t.texto}`;
 
-  const estilo = "bg-action text-on-action hover:bg-action-hover";
+  /* O hover é o PREENCHIMENTO que sobe de baixo (`.cta-brilho::before`,
+     globals.css), não troca de cor de fundo. */
+  const estilo = "bg-action text-on-action";
 
   return (
     <a

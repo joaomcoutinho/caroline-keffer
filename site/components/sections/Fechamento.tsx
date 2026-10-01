@@ -16,7 +16,10 @@ import { rodapeServicos } from "@/content/paginas";
  */
 export function Fechamento() {
   return (
-    <div className="bloco-escuro mt-px">
+    // -mt-px, e não mt-px (01/10/2026): a margem de 1px abria uma fresta entre
+    // a onda escura e este bloco, e o fundo claro aparecia como uma linha.
+    // Sobrepondo 1px, a emenda some em todas as páginas.
+    <div className="bloco-escuro -mt-px">
       {/* Patinhas da marca no fundo do convite final (JM, 16/09/2026). */}
       <section className="fechamento-patas fundo-patas relative overflow-hidden px-5 py-24 sm:px-8 md:py-32">
         <div className="mx-auto max-w-[52ch] text-center">

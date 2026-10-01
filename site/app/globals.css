@@ -104,6 +104,9 @@
   /* Ação = ciano da marca. Escurecido o suficiente para passar AA com texto branco. */
   --action: #1f6e88;
   --action-hover: #175a70;
+  /* Hover do CTA: preenchimento que sobe de baixo, um tom mais fundo da marca
+     (nos contextos escuros, um tom mais claro). Ver `.cta-brilho::before`. */
+  --cta-preenche: #134a5d;
   --on-action: #ffffff;
   /*
     A cor de ação tem DOIS papéis, e um valor só não serve para os dois.
@@ -146,6 +149,7 @@
     /* no escuro o ciano vem claro, com tinta escura por cima */
     --action: #7ec0dc;
     --action-hover: #a8d6e8;
+    --cta-preenche: #c4e5f2;
     --on-action: #07222c;
     --acao-texto: #7ec0dc;
 }
@@ -223,6 +227,7 @@
   --brand-soft: #a8d6e8;
   --action: #7ec0dc;
   --action-hover: #a8d6e8;
+  --cta-preenche: #c4e5f2;
   --on-action: #07222c;
   --acao-texto: #7ec0dc;
   background-color: var(--surface);
@@ -919,6 +924,7 @@
   --brand: #a8d6e8;
   --action: #7ec0dc;
   --action-hover: #a8d6e8;
+  --cta-preenche: #c4e5f2;
   --on-action: #07222c;
   color: var(--text);
 }
@@ -979,6 +985,7 @@
     /* Botão principal mais luminoso: precisa dominar o centro da pata. */
     --action: #9ad6ee;
     --action-hover: #c4e8f5;
+    --cta-preenche: #dcf1fa;
     z-index: 2;
     /* A copy passa por cima dos dedos, mas não captura o ponteiro deles. */
     pointer-events: none;
@@ -1278,6 +1285,7 @@ button,
   --brand-soft: #a8d6e8;
   --action: #7ec0dc;
   --action-hover: #a8d6e8;
+  --cta-preenche: #c4e5f2;
   --on-action: #07222c;
   --acao-texto: #7ec0dc;
   color: var(--text);
@@ -3932,24 +3940,51 @@ body[data-menu-aberto] .barra-agendamento {
    ================================================================== */
 
 /* Os três fatos que decidem a visita, logo abaixo do CTA. */
-.topo-fatos {
+/* Ficha do topo das páginas internas: rótulo + dado, separados por fio
+   vertical. Substituiu as pílulas em 01/10/2026 (ver TopoPagina). */
+.topo-ficha {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
 }
-.topo-fatos li {
-  display: inline-flex;
+.topo-ficha > div {
+  min-width: 0;
+  padding-inline: 1.5rem;
+  border-left: 1px solid color-mix(in srgb, var(--brand) 28%, transparent);
+}
+.topo-ficha > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.topo-ficha dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.topo-ficha dd {
+  display: flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid var(--hairline);
-  background-color: color-mix(in srgb, var(--surface) 55%, white 12%);
-  font-size: 0.875rem;
-  color: var(--text-2);
+  gap: 0.35rem;
+  margin-top: 0.3rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text);
 }
-.topo-fatos svg {
+.topo-ficha-estrela {
   color: var(--brand);
+}
+.topo-ficha-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--brand) 35%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.25s var(--ease-soft);
+}
+@media (hover: hover) {
+  .topo-ficha-link:hover {
+    text-decoration-color: var(--brand);
+  }
 }
 
 /* Linha de revisão clínica (YMYL). Pendente = tracejada: é aviso, não selo. */
@@ -4436,20 +4471,64 @@ body[data-menu-aberto] .barra-agendamento {
 .agora-opcao[data-ativo="nao"] {
   opacity: 0.62;
 }
-.agora-quando {
-  display: flex;
-  align-items: center;
+/* As duas opções lado a lado em qualquer largura (01/10/2026, JM: "o máximo
+   que for ajustável, colocar ao lado"). Cada cartão tem só o quando e uma
+   frase; o encaminhamento, o botão e o telefone vêm embaixo dos dois. */
+.agora-opcoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.6rem;
+}
+@media (min-width: 640px) {
+  .agora-opcoes {
+    gap: 0.75rem;
+  }
+}
+.agora-opcao {
+  display: flex;
+  flex-direction: column;
+}
+.agora-quando {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100;
+  font-size: 1.2rem;
+  line-height: 1.15;
   font-weight: 700;
   color: var(--text);
 }
+.agora-condicao {
+  margin-top: 0.15rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-3);
+}
+.agora-texto {
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--hairline);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+.agora-rodape {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.875rem;
+  color: var(--text-3);
+}
 .agora-marca {
+  visibility: hidden;
+  margin-bottom: 0.3rem;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   font-size: 0.8125rem;
   font-weight: 700;
   color: var(--brand-deep);
+}
+.agora-marca[data-visivel] {
+  visibility: visible;
 }
 .agora-marca::before {
   content: "";
@@ -4559,8 +4638,12 @@ body[data-menu-aberto] .barra-agendamento {
   .causas {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  /* O cartão que sobra sozinho na última linha ocupa a largura toda, com o
+     conteúdo (ícone + texto) centralizado nela (01/10/2026). */
   .causa:last-child:nth-child(odd) {
     grid-column: 1 / -1;
+    justify-content: center;
+    align-items: center;
   }
 }
 .causa {
@@ -4757,5 +4840,505 @@ body[data-menu-aberto] .barra-agendamento {
   place-items: center;
   border-radius: 1rem;
   background-color: color-mix(in srgb, var(--brand) 16%, transparent);
+  color: var(--brand-deep);
+}
+
+/* ==================================================================
+   CELULAR NAS PÁGINAS INTERNAS (30/09/2026, JM: "cards ocupando espaço
+   vertical demais, ter que rolar muito"; "imagem do topo desconexa").
+   ================================================================== */
+
+/*
+  LISTA COMPACTA. Até 639px, os cartões de ícone + texto viram UM cartão só,
+  com uma linha por item e fio tracejado entre elas: ícone à esquerda, título
+  e texto no meio, seta à direita (quando é link). Seis sinais que ocupavam
+  ~1.200px de rolagem cabem em ~550px, agrupados como uma lista de verdade.
+*/
+@media (max-width: 639px) {
+  .lista-compacta {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    border: 1px solid color-mix(in srgb, var(--brand) 18%, transparent);
+    background:
+      linear-gradient(160deg, color-mix(in srgb, var(--brand) 7%, transparent), transparent 60%),
+      color-mix(in srgb, var(--surface) 70%, white 10%);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent),
+      0 10px 30px -18px color-mix(in srgb, var(--text) 30%, transparent);
+  }
+  .lista-compacta > li {
+    width: 100% !important;
+  }
+  .lista-compacta > li + li {
+    border-top: 1px dashed var(--hairline);
+  }
+  .lista-compacta .cartao-pagina {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: 0.85rem;
+    row-gap: 0.1rem;
+    align-items: start;
+    padding: 0.95rem 1rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .lista-compacta .cartao-pagina .cartao-icone {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    height: 2.25rem;
+    width: 2.25rem;
+    margin-top: 0.1rem;
+  }
+  .lista-compacta .cartao-pagina .cartao-icone svg {
+    width: 18px;
+    height: 18px;
+  }
+  .lista-compacta .cartao-pagina > h3,
+  .lista-compacta .cartao-pagina > p {
+    grid-column: 2;
+    margin-top: 0;
+  }
+  .lista-compacta .cartao-pagina > h3 {
+    font-size: 1.02rem;
+    line-height: 1.3;
+  }
+  .lista-compacta .cartao-pagina > p {
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  /* O "Ver …" vira só a seta, à direita: o item inteiro já é o link. */
+  .lista-compacta .cartao-link {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+  }
+  .lista-compacta .cartao-link svg {
+    width: 16px;
+    height: 16px;
+  }
+  .lista-compacta .cartao-link::after {
+    display: none;
+  }
+  /* "Continue por aqui": sem ícone, o rótulo e o resumo ocupam a coluna 1. */
+  .lista-compacta--sem-icone .cartao-pagina {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .lista-compacta--sem-icone .cartao-pagina > p {
+    grid-column: 1;
+  }
+  .lista-compacta--sem-icone .cartao-link {
+    grid-column: 2;
+  }
+}
+
+/*
+  TRILHO NO CELULAR. Os blocos altos (fases da vida, perfis com foto) correm
+  na horizontal, com encaixe e a ponta do próximo cartão à vista — o mesmo
+  gesto do trilho de serviços da home. Largura total da tela, sem estourar.
+*/
+@media (max-width: 639px) {
+  .trilho-mobile {
+    display: flex !important;
+    gap: 0.85rem !important;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    margin-inline: -1.25rem;
+    padding: 0 1.25rem 0.75rem;
+    scroll-padding-inline: 1.25rem;
+    scrollbar-width: none;
+  }
+  .trilho-mobile::-webkit-scrollbar {
+    display: none;
+  }
+  .trilho-mobile > li {
+    flex: 0 0 84%;
+    scroll-snap-align: start;
+  }
+  /* Perfis no trilho: foto mais baixa, para o cartão não passar da tela. */
+  .perfis-grade .moldura-pata {
+    aspect-ratio: 3 / 2;
+  }
+  .perfis-grade .perfil-condicao {
+    margin-top: 1.1rem;
+  }
+}
+
+
+/* ==================================================================
+   TOPO DAS PÁGINAS INTERNAS · FOTO SANGRADA (opção H1, 30/09/2026).
+   Celular: foto de ponta a ponta atrás do header, dissolvendo na cor da
+   página; o título entra por cima da parte dissolvida.
+   Desktop: copy à esquerda e a foto no oval com aro branco à direita.
+   O enquadramento vem de --pos-m / --pos-d (por página).
+   ================================================================== */
+.topo-sangrado {
+  position: relative;
+  background-color: var(--surface);
+}
+.topo-sangrado-foto {
+  position: relative;
+  /*
+    01/10/2026, 2ª rodada (JM: "ainda tem um background por trás da navbar;
+    a foto precisa ocupar 100%"). A foto começa no topo da tela e passa por
+    trás da navbar, de ponta a ponta, sem cantos (o canto arredondado deixava
+    uma linha do fundo aparecendo ao lado da navbar). A altura é a área que
+    era visível (4:5) mais a faixa da navbar: a foto aparece praticamente
+    inteira, e o rosto fica abaixo da navbar (enquadramento em posicaoCelular,
+    ou foto própria do celular em srcCelular).
+  */
+  height: calc(min(125vw, 64svh) + 4.5rem);
+  width: 100%;
+  overflow: hidden;
+}
+.topo-sangrado-foto img {
+  object-position: var(--pos-m, 50% 30%);
+}
+
+.topo-sangrado-foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /*
+    Só a base dissolve, na cor da página (o véu de cima saiu em 01/10/2026,
+    JM: "degradê compensando espaço"). O título só começa depois que a
+    dissolução terminou.
+  */
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface) 0%, transparent) 74%,
+    color-mix(in srgb, var(--surface) 80%, transparent) 90%,
+    var(--surface) 96%
+  );
+}
+/*
+  A LINHA DE 1–2px NA BASE DA FOTO (01/10/2026, JM: "tire-a definitivamente").
+  A altura da caixa sai fracionada (vw/svh), e na última fileira de pixels a
+  foto e o véu chegam os dois "pela metade": a soma não dá a cor da página, e
+  sobrava um fio da foto bem na altura do sobretítulo. Duas travas: a altura é
+  arredondada para pixel inteiro, e a foto termina 2px antes da caixa — a base
+  é só o véu na cor da página, sem foto nenhuma por baixo.
+*/
+@media (max-width: 1023px) {
+  @supports (height: round(down, 10.5px, 1px)) {
+    .topo-sangrado-foto {
+      height: round(down, calc(min(125vw, 64svh) + 4.5rem), 1px);
+    }
+  }
+  .topo-sangrado-foto img {
+    height: calc(100% - 2px) !important;
+  }
+}
+.topo-sangrado-copy {
+  position: relative;
+  margin-top: -0.5rem;
+  padding: 0 1.25rem 4rem;
+}
+@media (min-width: 640px) {
+  .topo-sangrado-copy {
+    padding-inline: 2rem;
+  }
+}
+/*
+  DESKTOP: o padrão de antes (JM, 30/09/2026: "a mudança do hero não deve se
+  aplicar no desktop"). Copy à esquerda e a foto no OVAL com aro branco à
+  direita, o mesmo vocabulário das fotos da home. Sem dissolução.
+*/
+@media (min-width: 1024px) {
+  .topo-sangrado {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: 4rem;
+    align-items: center;
+    padding: 9rem max(2rem, calc((100vw - 1200px) / 2)) 7rem;
+  }
+  .topo-sangrado-foto {
+    order: 2;
+    width: 100%;
+    max-width: 420px;
+    max-height: none;
+    margin-top: 0;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    margin-inline: auto;
+    border-radius: 50%;
+    border: 5px solid rgb(255 255 255 / 0.92);
+    box-shadow: 0 22px 44px -24px rgb(4 30 40 / 0.65);
+  }
+  .topo-sangrado-foto img {
+    object-position: var(--pos-d, 50% 30%);
+  }
+  .topo-sangrado-foto::after {
+    display: none;
+  }
+  .topo-sangrado-copy {
+    margin-top: 0;
+    padding: 0;
+  }
+}
+
+/* Celular: a ficha ocupa a largura, três colunas iguais numa linha só. */
+@media (max-width: 639px) {
+  .topo-ficha > div {
+    flex: 1 1 0;
+    padding-inline: 0.9rem;
+  }
+  .topo-ficha dt {
+    font-size: 0.6875rem;
+  }
+  .topo-ficha dd {
+    font-size: 0.9375rem;
+  }
+}
+
+/*
+  HOME NO CELULAR, TELA ALTA (01/10/2026, JM: "o hero da home tá bugado").
+  A foto tem altura máxima (108vw) e a copy ficava presa no pé de uma dobra
+  de 100dvh: em tela alta sobrava uma faixa morta entre a foto e o título.
+  Agora a copy vem logo depois da foto, subindo para dentro do véu, e a dobra
+  termina onde o conteúdo termina — igual em qualquer altura de tela.
+*/
+@media (max-width: 639px) {
+  .hero {
+    min-height: 0;
+    justify-content: flex-start;
+  }
+  .hero-copy > div {
+    padding-top: calc(min(108vw, 62svh) - 4.75rem);
+  }
+}
+@media (max-width: 639px) and (max-height: 720px) {
+  .hero-copy > div {
+    padding-top: calc(min(122vw, 60svh) - 4.75rem);
+  }
+}
+
+/*
+  TRILHO NO CELULAR · correção e indicador (01/10/2026, JM: "essa seção tá
+  bugada quando scrolla; bota um indicador que é scrollável").
+  O bug: cada cartão tinha a sua revelação de entrada, e o IntersectionObserver
+  não enxerga o que está fora do trilho na horizontal — o 2º e o 3º cartão
+  ficavam invisíveis e só "acendiam" no meio do deslize. No trilho, os cartões
+  aparecem juntos (o título da seção já faz a entrada).
+*/
+@media (max-width: 639px) {
+  .trilho-mobile [data-revelar].revelar-oculto {
+    opacity: 1;
+    transform: none;
+  }
+  .trilho-mobile [data-revelar] {
+    transition: none;
+  }
+}
+.trilho-indicador {
+  display: none;
+}
+@media (max-width: 639px) {
+  .trilho-indicador {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.9rem;
+  }
+  .trilho-pontos {
+    display: flex;
+    gap: 0.15rem;
+  }
+  /* Área de toque de 24px; o ponto desenhado é menor. */
+  .trilho-ponto {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .trilho-ponto::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--brand-deep) 28%, transparent);
+    transition:
+      width 0.3s var(--ease-soft),
+      background-color 0.3s var(--ease-soft);
+  }
+  .trilho-ponto[data-ativo]::before {
+    width: 20px;
+    background-color: var(--brand-deep);
+  }
+  .trilho-dica {
+    position: absolute;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--brand-deep);
+    transition: opacity 0.4s var(--ease-soft);
+  }
+  .trilho-dica svg {
+    animation: dica-desliza 1.4s var(--ease-soft) 0.6s 3;
+  }
+  .trilho-dica[data-oculta] {
+    opacity: 0;
+  }
+}
+@keyframes dica-desliza {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trilho-dica svg {
+    animation: none;
+  }
+}
+
+/* Painel "O que fazer agora" no celular: margens menores para as duas
+   opções caberem lado a lado com folga. */
+@media (max-width: 639px) {
+  .agora {
+    padding: 1.35rem 1.1rem;
+  }
+  .agora-opcao {
+    padding: 0.85rem 0.8rem;
+  }
+  .agora-quando {
+    font-size: 1.1rem;
+  }
+  .agora-texto {
+    font-size: 0.875rem;
+  }
+}
+
+/*
+  Perfis no celular (01/10/2026):
+  - no trilho, as fichas não precisam alinhar o fio das raças entre si (só uma
+    aparece por vez): o texto não estica, e o vão antes das raças some;
+  - a nota "Nos três casos…": a frase ocupa a linha ao lado do ícone e o link
+    desce para baixo dela (antes a frase espremia numa coluna estreita).
+*/
+@media (max-width: 639px) {
+  .perfis-grade .perfil > .flex-1 {
+    flex: none;
+  }
+  .perfil-nota > p {
+    flex: 1 1 calc(100% - 4.25rem);
+  }
+  .perfil-nota-link {
+    flex-basis: 100%;
+    padding-left: calc(3rem + 0.9rem);
+  }
+}
+
+/*
+  HOVER DOS CTAs · PREENCHIMENTO (01/10/2026, JM: "ao passar o mouse, um
+  preenchimento da parte inferior subindo para a superior, com uma cor da
+  tonalidade da marca"). Uma lâmina na cor --cta-preenche (um tom mais fundo
+  da marca no claro, mais claro no escuro) sobe de baixo até cobrir o botão,
+  e desce ao sair. Fica atrás do texto e do ícone (z-index -1 dentro do
+  `isolation: isolate` do botão); o recorte é o próprio formato de pílula.
+  Só com mouse; no toque não existe hover. Com reduced-motion, troca sem
+  animar.
+*/
+.cta-brilho::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: var(--cta-preenche);
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .cta-brilho:hover::before {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.cta-brilho:focus-visible::before {
+  clip-path: inset(0 0 0 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-brilho::before {
+    transition: none;
+  }
+}
+/* O "Ver serviços" do hero é vazado sobre a foto: o preenchimento é o ciano da
+   marca em véu, e o fundo branco translúcido do hover antigo sai. */
+.hero-cta-servicos {
+  --cta-preenche: rgb(126 192 220 / 0.3);
+}
+@media (hover: hover) {
+  .hero-cta-servicos:hover {
+    background: transparent;
+  }
+}
+.hero-cta-servicos:focus-visible {
+  background: transparent;
+}
+
+/*
+  CHAMADA ("Veio com pedido de outro veterinário?") CENTRALIZADA NA FAIXA
+  (01/10/2026, JM: "100% centralizado em relação à ondulação"). As ondas se
+  pintam POR CIMA do respiro: a de cima sobe para a seção anterior e a de
+  baixo invade o pé desta. Com respiro igual em cima e embaixo, a faixa
+  visível fica mais alta que a caixa, e o cartão parecia baixo. A curva da
+  onda passa, em média, a 44% da altura dela (medido no path de Onda.tsx):
+  a faixa visível começa 0,56 × onda acima da seção e termina 0,56 × onda
+  acima do fim. O cartão sobe exatamente isso.
+*/
+.casca-chamada {
+  padding-top: calc(5rem - var(--onda-a) * 0.56);
+  padding-bottom: calc(5rem + var(--onda-a) * 0.56);
+}
+@media (min-width: 768px) {
+  .casca-chamada {
+    padding-top: calc(7rem - var(--onda-a) * 0.56);
+    padding-bottom: calc(7rem + var(--onda-a) * 0.56);
+  }
+}
+
+/*
+  A CAUSA MAIS COMUM EM DESTAQUE (01/10/2026, JM: "o card de picada de pulga
+  com um background diferente, para mostrar que é o mais comum mesmo").
+  O cartão com selo vira o único cheio, no tom fundo da marca, com o texto
+  claro; o selo inverte (claro com tinta da marca). Os outros seguem vazados.
+*/
+.causa[data-destaque] {
+  border-color: var(--brand-deep);
+  background-color: var(--brand-deep);
+  box-shadow: 0 14px 30px -18px rgb(4 30 40 / 0.6);
+}
+.causa[data-destaque] .causa-icone {
+  background-color: rgb(255 255 255 / 0.14);
+  color: #ffffff;
+}
+.causa[data-destaque] .causa-titulo {
+  color: #ffffff;
+}
+.causa[data-destaque] .causa-detalhe {
+  color: rgb(255 255 255 / 0.82);
+}
+.causa[data-destaque] .causa-selo {
+  background-color: #ffffff;
   color: var(--brand-deep);
 }

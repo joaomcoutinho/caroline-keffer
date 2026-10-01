@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H4 · Título primeiro</title>
+<link rel="stylesheet" href="../prototipos-secao-foto/base.css"><link rel="stylesheet" href="hero.css">
+<style>
+/* H4 · TÍTULO PRIMEIRO — o H1 aparece antes de tudo (é o que a busca
+   prometeu), e a foto vem logo abaixo recortada pela CURVA DA PAREDE DO
+   CONSULTÓRIO, com uma legenda de quem aparece nela. A resposta curta e o
+   botão fecham a primeira tela. Editorial e direto ao ponto. */
+.topo{padding-top:100px}
+@media(max-width:1023px){.topo{display:flex;flex-direction:column}.topo .sobre{order:0}.topo h1{order:1}.parede{order:2}.direita{order:3}.fatos{order:4}}
+.parede{position:relative;margin:22px -20px 0;height:250px;overflow:hidden;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 600' preserveAspectRatio='none'%3E%3Cpath d='M0 70 C 180 20, 380 8, 600 46 C 820 84, 980 132, 1160 120 C 1280 112, 1370 78, 1440 40 L 1440 600 L 0 600 Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 600' preserveAspectRatio='none'%3E%3Cpath d='M0 70 C 180 20, 380 8, 600 46 C 820 84, 980 132, 1160 120 C 1280 112, 1370 78, 1440 40 L 1440 600 L 0 600 Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat}
+.parede img{width:100%;height:100%;object-fit:cover;object-position:55% 25%}
+.legenda{position:absolute;left:16px;bottom:14px;display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;background:rgb(255 255 255/.9);font-size:.8rem;color:var(--text-2);box-shadow:0 10px 20px -12px rgb(4 30 40/.6)}
+.legenda img{width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:50% 18%}
+.legenda b{color:var(--text)}
+@media(min-width:1024px){
+  .topo{max-width:1200px;margin:0 auto;padding-top:130px;display:grid;grid-template-columns:1fr 1fr;gap:0 56px;align-items:end}
+  .topo h1{grid-column:1}.parede{grid-column:1/-1;grid-row:3;margin:30px 0 0;height:360px;border-radius:0 0 28px 28px}
+  .direita{grid-column:2;grid-row:1/3}
+}</style>
+<body>
+<header class="nav"><img src="../../site/public/images/logo-caroline-keffer.jpg" alt=""><span class="status"><i></i><b>Aberto agora</b><span>· até 19h</span></span><span class="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span></header>
+<section class="topo"><p class="sobre">Especialidades</p>
+<h1 style="margin-top:10px">Cinco especialidades veterinárias atendendo na Torre.</h1>
+<div class="direita"><p class="lead">Cardiologia, dermatologia, nefrologia, pneumologia e nutrição com gastroenterologia atendem aqui dentro, na Rua Araguatins.</p>
+<a class="cta" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>Agendar pelo WhatsApp</a></div>
+<div class="parede"><img src="../../site/public/images/servico_especialista.webp" alt="">
+<span class="legenda"><img src="../../site/public/images/logo-caroline-keffer.jpg" alt=""><span><b>Na Rua Araguatins</b> · há mais de 20 anos</span></span></div><div class="fatos"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>Rua Araguatins, 63 · Torre</span><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3 6.5 7 .8-5.2 4.8 1.4 7L12 17.8 5.8 21l1.4-7L2 9.3l7-.8Z"/></svg>4,8 no Google</span><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 10.4 3.5 2.1-.8 1.3L11 13V6h2Z"/></svg>Seg a sáb</span></div></section>
+<div class="rotulo-opcao">H4 · Título primeiro <a href="index.html">← todas</a></div></body></html>
