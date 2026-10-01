@@ -86,8 +86,9 @@ export const comoChegar: Pagina = {
       origem: "",
       medidas: [
         { rotulo: "Endereço", valor: "Rua Araguatins, 63" },
-        { rotulo: "Bairro", valor: "Torre, Recife" },
-        { rotulo: "CEP", valor: "50710-060" },
+        { rotulo: "Bairro", valor: "Torre" },
+        // Hífen que não quebra (U+2011): o CEP nunca parte em duas linhas.
+        { rotulo: "CEP", valor: "50710\u2011060" },
       ],
       trajeto: [CHEGADA],
     },
@@ -170,10 +171,10 @@ export const madalena: Pagina = {
     lead:
       "A Clínica Pet Caroline Keffer fica na Torre, vizinha da Madalena: são cerca de 2 km de carro pela Rua Real da Torre, ou uns 20 minutos a pé. Consulta, vacina, exames, cirurgia, urgência até as 18h e banho e tosa para cães e gatos.",
     foto: {
-      src: "/images/fachada_keffer.webp",
-      alt: "Fachada da clínica vista da rua, com o letreiro e o logo da pata",
-      posicao: "50% 55%",
-      posicaoCelular: "50% 55%",
+      src: "/images/clinica/fachada.webp",
+      alt: "Fachada da Clínica Veterinária Caroline Keffer, na Rua Araguatins, com o letreiro e o céu aberto",
+      posicao: "50% 50%",
+      posicaoCelular: "30% 50%",
     },
     mensagemWhatsapp: "Olá! Moro na Madalena, vim pelo site e queria marcar um horário para o meu pet.",
   },
@@ -235,10 +236,10 @@ export const cordeiro: Pagina = {
     lead:
       "A Clínica Pet Caroline Keffer fica na Torre, que faz divisa com o Cordeiro: são cerca de 4 km de carro, saindo pela Av. do Forte. Consulta, vacina, exames, cirurgia, urgência até as 18h e banho e tosa para cães e gatos.",
     foto: {
-      src: "/images/clinica/consultorio-bancada.webp",
-      alt: "Consultório da clínica, com a bancada de exame e os armários",
-      posicao: "50% 55%",
-      posicaoCelular: "50% 60%",
+      src: "/images/clinica/fachada.webp",
+      alt: "Fachada da Clínica Veterinária Caroline Keffer, na Rua Araguatins, com o letreiro e o céu aberto",
+      posicao: "50% 50%",
+      posicaoCelular: "30% 50%",
     },
     mensagemWhatsapp: "Olá! Moro no Cordeiro, vim pelo site e queria marcar um horário para o meu pet.",
   },
@@ -301,10 +302,10 @@ export const zumbi: Pagina = {
     lead:
       "A Clínica Pet Caroline Keffer fica na Torre, vizinha do Zumbi: são cerca de 2,5 km de carro saindo da Av. Caxangá, ou uns 30 minutos a pé. Consulta, vacina, exames, cirurgia, urgência até as 18h e banho e tosa para cães e gatos.",
     foto: {
-      src: "/images/fachada_ceu.webp",
-      alt: "Fachada da Clínica Veterinária Caroline Keffer vista da calçada, com o céu aberto",
+      src: "/images/clinica/fachada.webp",
+      alt: "Fachada da Clínica Veterinária Caroline Keffer, na Rua Araguatins, com o letreiro e o céu aberto",
       posicao: "50% 50%",
-      posicaoCelular: "35% 50%",
+      posicaoCelular: "30% 50%",
     },
     mensagemWhatsapp: "Olá! Moro no Zumbi, vim pelo site e queria marcar um horário para o meu pet.",
   },
@@ -366,10 +367,10 @@ export const iputinga: Pagina = {
     lead:
       "A Clínica Pet Caroline Keffer fica na Torre, a cerca de 5 km da Iputinga, passando pelo Cordeiro pela Av. Maurício de Nassau. Consulta, vacina, exames, cirurgia, urgência até as 18h e banho e tosa para cães e gatos.",
     foto: {
-      src: "/images/clinica/recepcao.webp",
-      alt: "Recepção da clínica, com o balcão de atendimento e as cadeiras de espera",
-      posicao: "50% 55%",
-      posicaoCelular: "50% 60%",
+      src: "/images/clinica/fachada.webp",
+      alt: "Fachada da Clínica Veterinária Caroline Keffer, na Rua Araguatins, com o letreiro e o céu aberto",
+      posicao: "50% 50%",
+      posicaoCelular: "30% 50%",
     },
     mensagemWhatsapp: "Olá! Moro na Iputinga, vim pelo site e queria marcar um horário para o meu pet.",
   },
@@ -432,10 +433,10 @@ export const jaqueiraParnamirim: Pagina = {
     lead:
       "A Clínica Pet Caroline Keffer fica na Torre, do outro lado do Capibaribe: da Jaqueira e do Parnamirim são cerca de 1 km a pé, cruzando o rio pela Rua José Bonifácio. Consulta, vacina, exames, cirurgia, urgência até as 18h e banho e tosa para cães e gatos.",
     foto: {
-      src: "/images/fachada_hero.webp",
-      alt: "Fachada da Clínica Veterinária Caroline Keffer vista de frente, com a entrada e as plantas",
-      posicao: "45% 45%",
-      posicaoCelular: "25% 50%",
+      src: "/images/clinica/fachada.webp",
+      alt: "Fachada da Clínica Veterinária Caroline Keffer, na Rua Araguatins, com o letreiro e o céu aberto",
+      posicao: "50% 50%",
+      posicaoCelular: "30% 50%",
     },
     mensagemWhatsapp: "Olá! Moro na Jaqueira/Parnamirim, vim pelo site e queria marcar um horário para o meu pet.",
   },
@@ -514,10 +515,10 @@ export const gracas: Pagina = {
     lead:
       "A Clínica Pet Caroline Keffer fica na Torre, logo depois da Ponte da Torre: das Graças são cerca de 1,6 km de carro, ou uns 15 a 20 minutos a pé. Consulta, vacina, exames, cirurgia, urgência até as 18h e banho e tosa para cães e gatos.",
     foto: {
-      src: "/images/galeria/atendimento-03.webp",
-      alt: "Colaboradora sorrindo com um cocker spaniel de laço vermelho no colo",
-      posicao: "50% 32%",
-      posicaoCelular: "50% 45%",
+      src: "/images/clinica/fachada.webp",
+      alt: "Fachada da Clínica Veterinária Caroline Keffer, na Rua Araguatins, com o letreiro e o céu aberto",
+      posicao: "50% 50%",
+      posicaoCelular: "30% 50%",
     },
     mensagemWhatsapp: "Olá! Moro nas Graças, vim pelo site e queria marcar um horário para o meu pet.",
   },

@@ -5508,9 +5508,28 @@ body[data-menu-aberto] .barra-agendamento {
   font-variation-settings: "SOFT" 100;
   font-size: 1.15rem;
 }
+/*
+  Medidas da rota: o valor QUEBRA dentro da própria coluna (01/10/2026, JM:
+  "Rua Araguatins, 63" passava por cima do fio no celular). A largura de cada
+  coluna acompanha o conteúdo, e nenhum texto atravessa o divisor.
+*/
+.rota-medidas dd {
+  white-space: normal;
+  text-wrap: pretty;
+}
+/* Nunca mais estreita que a palavra mais longa: quebra só nos espaços, e um
+   CEP ou "2,0 km" nunca parte no meio. */
+.rota-medidas > div {
+  min-width: min-content;
+}
 @media (max-width: 639px) {
+  /* Uma linha só: quem quebra é o texto, dentro da coluna, e não a ficha. */
+  .rota-medidas {
+    flex-wrap: nowrap;
+  }
   .rota-medidas > div {
-    flex: 1 1 0;
+    flex: 1 1 auto;
+    padding-inline: 0.85rem;
   }
   .rota-trajeto {
     padding: 1.3rem 1.2rem 1.3rem 2.7rem;
@@ -5518,4 +5537,22 @@ body[data-menu-aberto] .barra-agendamento {
 }
 .texto-ficha-valor::first-letter {
   text-transform: uppercase;
+}
+
+/*
+  Celular muito estreito (320px, iPhone SE da 1ª geração): o botão do cartão
+  "Não achou a sua dúvida?" não quebrava linha e ficava mais largo que o
+  cartão, empurrando a página para o lado. Aqui ele ocupa a largura e pode
+  quebrar.
+*/
+@media (max-width: 359px) {
+  .duvida-cartao {
+    padding: 1.25rem;
+  }
+  .duvida-cartao .cta-brilho {
+    width: 100%;
+    padding-inline: 1rem;
+    white-space: normal;
+    text-align: center;
+  }
 }

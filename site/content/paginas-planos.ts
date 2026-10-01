@@ -59,10 +59,10 @@ export const pethealth: Pagina = {
     lead:
       "Sim, a clínica atende pelo Plano Pet Health. No dia, você apresenta a carteirinha digital do app, e o procedimento é autorizado pelo token de segurança que aparece no próprio aplicativo. A cobertura depende do plano que você contratou, e a gente confirma antes.",
     foto: {
-      src: "/images/consultorio_mesa.webp",
-      alt: "Mesa de atendimento do consultório da clínica",
+      src: "/images/clinica/consultorio-mesa.webp",
+      alt: "Consultório da clínica com a mesa de atendimento e o selo da Dra. Caroline Keffer",
       posicao: "50% 50%",
-      posicaoCelular: "50% 50%",
+      posicaoCelular: "50% 55%",
     },
     mensagemWhatsapp: "Olá! Vim pela página do PetHealth no site. Tenho o plano e queria confirmar a cobertura.",
   },
@@ -142,10 +142,10 @@ export const care: Pagina = {
     lead:
       "Sim, a clínica atende pelo CARE Saúde Animal, o plano de saúde pet daqui de Recife. No dia, você apresenta o cartão virtual do app CARE, e a cobertura depende do nível de plano que você contratou. A gente confirma antes de marcar.",
     foto: {
-      src: "/images/recepcao_balcao.webp",
-      alt: "Recepção da clínica, com o balcão de atendimento e o selo na parede",
-      posicao: "40% 50%",
-      posicaoCelular: "35% 50%",
+      src: "/images/clinica/consultorio-mesa.webp",
+      alt: "Consultório da clínica com a mesa de atendimento e o selo da Dra. Caroline Keffer",
+      posicao: "50% 50%",
+      posicaoCelular: "50% 55%",
     },
     mensagemWhatsapp: "Olá! Vim pela página do CARE no site. Tenho o plano e queria confirmar a cobertura.",
   },
@@ -217,10 +217,10 @@ export const petloveSaude: Pagina = {
     lead:
       "Sim, a clínica atende pelo plano Petlove Saúde e aparece na rede credenciada da Petlove em Recife. No app Petlove você vê a carteirinha, as carências e o que o seu plano cobre, e a gente confirma a cobertura antes do atendimento.",
     foto: {
-      src: "/images/galeria/atendimento-06.webp",
-      alt: "Colaboradora abraçando um dachshund de peitoral verde",
-      posicao: "50% 35%",
-      posicaoCelular: "50% 45%",
+      src: "/images/clinica/consultorio-mesa.webp",
+      alt: "Consultório da clínica com a mesa de atendimento e o selo da Dra. Caroline Keffer",
+      posicao: "50% 50%",
+      posicaoCelular: "50% 55%",
     },
     mensagemWhatsapp: "Olá! Vim pela página da Petlove Saúde no site. Tenho o plano e queria confirmar a cobertura.",
   },
