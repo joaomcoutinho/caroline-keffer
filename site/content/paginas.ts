@@ -162,7 +162,12 @@ const especialidades: Pagina = {
       src: "/images/servico_especialista.webp",
       alt: "Veterinário sorrindo ao lado de um golden retriever sobre a mesa de exame",
       posicao: "58% 22%",
-      posicaoCelular: "50% 10%",
+      // No celular a foto sobe até o topo da tela e o rosto ficava atrás da
+      // navbar. Esta versão tem 140px de parede a mais no alto (estendida a
+      // partir da própria parede, sem inventar nada): o rosto desce para
+      // baixo da navbar e não sobra borda acima dela (01/10/2026).
+      srcCelular: "/images/servico_especialista_celular.webp",
+      posicaoCelular: "50% 0%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de especialidades do site e gostaria de marcar com um especialista.",
   },
