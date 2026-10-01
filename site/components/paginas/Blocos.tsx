@@ -14,7 +14,7 @@ import { Revelar } from "@/components/ui/Revelar";
 import { Trilho } from "@/components/ui/Trilho";
 import { Icone } from "@/components/paginas/Icone";
 import { PassosCaminho } from "@/components/paginas/PassosCaminho";
-import { BlocoChamada, BlocoEmergencia, BlocoLimites, BlocoPerfis, SinaisAlerta } from "@/components/paginas/Destaques";
+import { BlocoChamada, BlocoEmergencia, BlocoLimites, BlocoPerfis, BlocoRota, SinaisAlerta } from "@/components/paginas/Destaques";
 import { preventivo } from "@/content/site";
 import { especialistas, type Bloco, type Cartao } from "@/content/paginas";
 
@@ -135,11 +135,44 @@ function Paragrafos({ itens, centro = false }: { itens: readonly string[]; centr
 
 function BlocoTexto({ bloco }: { bloco: Extract<Bloco, { tipo: "texto" }> }) {
   /*
-    SEM FOTO: bloco centralizado no eixo da página (27/09/2026, JM:
-    "centralizar melhor esse texto"). Encostado à esquerda, metade da seção
-    ficava vazia. A lista, quando existe, vira etiquetas em pílula — lista
-    com marcador centralizada não se lê.
+    SEM FOTO E COM LISTA (01/10/2026, JM: as etiquetas em pílula tinham "cara
+    de IA"). Texto à esquerda e, ao lado, uma FICHA: cada item numa linha,
+    separado por um fio. Item no formato "rótulo: valor" vira par (o rótulo
+    pequeno em cima, o valor embaixo, como na ficha do topo); o resto vira
+    linha com o visto.
   */
+  if (!bloco.foto && bloco.lista) {
+    return (
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center lg:gap-20">
+        <div>
+          <Titulo>{bloco.titulo}</Titulo>
+          <Paragrafos itens={bloco.paragrafos} />
+        </div>
+        <Revelar atraso={0.14}>
+          <ul className="texto-ficha">
+            {bloco.lista.map((item) => {
+              const [rotulo, valor] = item.split(/:\s*/);
+              return valor ? (
+                <li key={item} className="texto-ficha-par">
+                  <span className="texto-ficha-rotulo">{rotulo}</span>
+                  <span className="texto-ficha-valor">{valor}</span>
+                </li>
+              ) : (
+                <li key={item}>
+                  <span className="lista-check" aria-hidden>
+                    <CheckIcon size={12} weight="bold" />
+                  </span>
+                  {item}
+                </li>
+              );
+            })}
+          </ul>
+        </Revelar>
+      </div>
+    );
+  }
+
+  /* SEM FOTO E SEM LISTA: texto centralizado no eixo da página (27/09/2026). */
   if (!bloco.foto) {
     return (
       <div className="mx-auto max-w-[760px] text-center">
@@ -149,15 +182,6 @@ function BlocoTexto({ bloco }: { bloco: Extract<Bloco, { tipo: "texto" }> }) {
           </h2>
         </Revelar>
         <Paragrafos itens={bloco.paragrafos} centro />
-        {bloco.lista ? (
-          <Revelar atraso={0.14}>
-            <ul className="texto-etiquetas mt-8">
-              {bloco.lista.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </Revelar>
-        ) : null}
       </div>
     );
   }
@@ -325,6 +349,8 @@ export function MioloBloco({ bloco }: { bloco: Bloco }) {
       return <BlocoLimites bloco={bloco} />;
     case "perfis":
       return <BlocoPerfis bloco={bloco} />;
+    case "rota":
+      return <BlocoRota bloco={bloco} />;
     case "chamada":
       return <BlocoChamada bloco={bloco} />;
     case "fases":

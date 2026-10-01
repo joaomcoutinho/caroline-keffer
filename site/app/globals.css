@@ -4300,19 +4300,50 @@ body[data-menu-aberto] .barra-agendamento {
 
 
 /* Texto sem foto: a lista vira etiquetas em pílula, centralizadas. */
-.texto-etiquetas {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.6rem;
+/* Ficha ao lado do texto (substituiu as etiquetas em pílula em 01/10/2026). */
+.texto-ficha {
+  display: grid;
+  padding: 0.5rem 1.6rem;
+  border-radius: var(--radius-card);
+  border: 1px solid color-mix(in srgb, var(--brand) 22%, transparent);
+  background-color: color-mix(in srgb, var(--surface) 50%, white 14%);
 }
-.texto-etiquetas li {
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--brand) 26%, transparent);
-  background-color: color-mix(in srgb, var(--surface) 55%, white 16%);
-  font-size: 0.9375rem;
-  color: var(--text-2);
+.texto-ficha li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding-block: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text);
+}
+.texto-ficha li + li {
+  border-top: 1px dashed color-mix(in srgb, var(--brand) 28%, transparent);
+}
+.texto-ficha li .lista-check {
+  margin-top: 0.15rem;
+}
+.texto-ficha-par {
+  flex-direction: column;
+  gap: 0.2rem !important;
+}
+.texto-ficha-rotulo {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.texto-ficha-valor {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+@media (max-width: 639px) {
+  .texto-ficha {
+    padding-inline: 1.2rem;
+  }
 }
 
 /* Cartão "Não achou a sua dúvida?" na coluna esquerda das dúvidas. */
@@ -5341,4 +5372,150 @@ body[data-menu-aberto] .barra-agendamento {
 .causa[data-destaque] .causa-selo {
   background-color: #ffffff;
   color: var(--brand-deep);
+}
+
+/*
+  POLÍTICA DE PRIVACIDADE (01/10/2026). Documento para ler com calma: título
+  da seção na margem esquerda no desktop, texto numa coluna de ~68 caracteres,
+  e um fio fino entre as seções.
+*/
+.politica-secao {
+  display: grid;
+  gap: 0.75rem;
+  padding-block: 1.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--brand) 22%, transparent);
+}
+@media (min-width: 1024px) {
+  .politica-secao {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    gap: 3rem;
+  }
+}
+.politica-secao p {
+  max-width: 68ch;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+.politica-secao p + p {
+  margin-top: 0.9rem;
+}
+.politica-secao ul {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+}
+.politica-secao li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.politica-secao li .lista-check {
+  margin-top: 0.2rem;
+}
+.politica-contato {
+  margin-top: 2.5rem;
+  padding: 1.6rem;
+  border-radius: var(--radius-card);
+  border: 1px solid color-mix(in srgb, var(--brand) 24%, transparent);
+  background-color: color-mix(in srgb, var(--surface) 55%, white 18%);
+}
+
+/*
+  COMO CHEGAR · bloco de rota (01/10/2026). As medidas reaproveitam a ficha do
+  topo; o trajeto é um fio vertical com um ponto por rua, e o último ponto, a
+  clínica, é o único cheio e com a pata.
+*/
+.rota-medidas {
+  flex-wrap: wrap;
+  row-gap: 1rem;
+}
+.rota-botao {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 2rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  background-color: var(--action);
+  color: var(--on-action);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.rota-trajeto {
+  position: relative;
+  display: grid;
+  gap: 1.1rem;
+  padding: 1.6rem 1.6rem 1.6rem 3.1rem;
+  border-radius: var(--radius-card);
+  border: 1px solid color-mix(in srgb, var(--brand) 22%, transparent);
+  background-color: color-mix(in srgb, var(--surface) 50%, white 14%);
+}
+/* O fio: um trecho por rua, do ponto dela até o ponto da seguinte. Termina
+   exatamente na clínica, qualquer que seja a altura de cada linha. */
+.rota-trajeto li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 1.15rem;
+  bottom: -1.55rem;
+  left: calc(-1.25rem - 1px);
+  border-left: 2px dashed color-mix(in srgb, var(--brand) 45%, transparent);
+}
+.rota-trajeto li:has(+ .rota-chegada)::after {
+  bottom: -1.7rem;
+}
+.rota-trajeto li {
+  position: relative;
+  display: grid;
+  gap: 0.1rem;
+}
+.rota-trajeto li::before {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  left: -1.6rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  border: 2px solid var(--brand);
+  background-color: var(--surface);
+}
+.rota-via {
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text);
+}
+.rota-nota {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--text-3);
+}
+.rota-chegada {
+  margin-top: 0.3rem;
+}
+.rota-chegada::before {
+  width: 1rem !important;
+  height: 1rem !important;
+  left: -1.75rem !important;
+  top: 0.3rem !important;
+  border-color: var(--brand-deep) !important;
+  background-color: var(--brand-deep) !important;
+}
+.rota-chegada .rota-via {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100;
+  font-size: 1.15rem;
+}
+@media (max-width: 639px) {
+  .rota-medidas > div {
+    flex: 1 1 0;
+  }
+  .rota-trajeto {
+    padding: 1.3rem 1.2rem 1.3rem 2.7rem;
+  }
+}
+.texto-ficha-valor::first-letter {
+  text-transform: uppercase;
 }

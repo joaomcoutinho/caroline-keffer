@@ -20,7 +20,27 @@
  * docs/seo-local/paginas.md.
  */
 
-import { linkWhatsapp } from "@/content/site";
+import {
+  castracao,
+  consulta,
+  gatos,
+  laboratorio,
+  odontologia,
+  ortopedia,
+  urgencia,
+  vacinacao,
+} from "@/content/paginas-servicos";
+import { eletrocardiograma, raioX, ultrassom } from "@/content/paginas-exames";
+import { care, pethealth, petloveSaude, petTop, plamevPet } from "@/content/paginas-planos";
+import {
+  comoChegar,
+  cordeiro,
+  gracas,
+  iputinga,
+  jaqueiraParnamirim,
+  madalena,
+  zumbi,
+} from "@/content/paginas-local";
 
 export type Foto = {
   src: string;
@@ -102,6 +122,19 @@ export type Bloco =
       e: { titulo: string; itens: readonly string[] };
       naoE: { titulo: string; itens: readonly string[] };
       rodape: string;
+    }
+  /**
+   * Como chegar (01/10/2026): as medidas do trajeto (distância e tempos), o
+   * caminho rua a rua até a porta e o botão que abre a rota no Google Maps
+   * saindo de `origem`. Dados de rota medidos no OpenStreetMap.
+   */
+  | {
+      tipo: "rota";
+      titulo: string;
+      intro?: string;
+      origem: string;
+      medidas: readonly { rotulo: string; valor: string }[];
+      trajeto: readonly { via: string; nota?: string }[];
     }
   /* Blocos que reaproveitam dado que já existe no site. */
   | { tipo: "fases"; titulo: string; intro?: string }
@@ -692,14 +725,14 @@ const nutricaoGastro: Pagina = {
     h1: "Nutrição e gastroenterologia veterinária na Torre.",
     lead:
       "Vômito, diarreia que vai e volta, falta de apetite e peso fora do ideal são casos de gastroenterologia e nutrição. Aqui as duas áreas andam juntas, porque boa parte do tratamento do intestino passa pelo que vai no pote.",
-    /* Sala de espera (01/10/2026, JM: "uma imagem mais genérica, que não fique
-       fora de contexto"). A foto anterior, com um presente na mão, puxava
-       para outro assunto. */
+    /* Sala de espera REAL (01/10/2026, JM: "uma imagem mais genérica, que não
+       fique fora de contexto"; e depois: "não coloca fotos feitas por IA").
+       Foto inteira, em pé, como a clínica mandou. */
     foto: {
-      src: "/images/sala_espera_alargado.webp",
-      alt: "Sala de espera da clínica, com as cadeiras, o balcão da recepção e a porta do consultório",
-      posicao: "45% 50%",
-      posicaoCelular: "40% 50%",
+      src: "/images/clinica/sala-de-espera.webp",
+      alt: "Sala de espera da clínica, com as cadeiras e o mural de cão e gato na parede",
+      posicao: "50% 55%",
+      posicaoCelular: "50% 60%",
     },
     mensagemWhatsapp:
       "Olá! Vim pela página de nutrição e gastroenterologia do site e gostaria de marcar uma consulta.",
@@ -733,7 +766,13 @@ const nutricaoGastro: Pagina = {
         { titulo: "Filhote e idoso", detalhe: "A alimentação certa para cada fase da vida.", icone: "dog" },
         { titulo: "Alimentação natural", detalhe: "Cardápio balanceado, sem faltar nutriente.", icone: "clipboard" },
       ],
-      foto: { src: "/images/galeria/atendimento-17.webp", alt: "Colaboradora abraçando um shih-tzu de laço rosa", posicao: "50% 35%" },
+      /* Pet na balança da clínica (foto real enviada em 01/10/2026): a seção
+         fala de emagrecimento e meta de peso. */
+      foto: {
+        src: "/images/clinica/pet-na-balanca.webp",
+        alt: "Cachorro preto sentado na balança da clínica, com o visor do peso na parede",
+        posicao: "45% 62%",
+      },
     },
     {
       tipo: "passos",
@@ -955,18 +994,24 @@ const examesImagem: Pagina = {
           texto:
             "Ossos, articulações, tórax e objeto engolido. É o exame da fratura, da tosse que não passa e do tamanho do coração.",
           icone: "bone",
+          href: "/exames-de-imagem/raio-x-veterinario",
+          rotuloLink: "Ver o exame",
         },
         {
           titulo: "Ultrassonografia",
           texto:
             "Órgãos do abdome: fígado, rins, bexiga, intestino, baço e útero. Mostra cálculo, nódulo, inflamação e gestação.",
           icone: "scan",
+          href: "/exames-de-imagem/ultrassom-veterinario",
+          rotuloLink: "Ver o exame",
         },
         {
           titulo: "Eletrocardiograma",
           texto:
             "O ritmo e a atividade elétrica do coração. Pedido em arritmia, sopro, desmaio e na avaliação antes de cirurgia.",
           icone: "waveform",
+          href: "/exames-de-imagem/eletrocardiograma-veterinario",
+          rotuloLink: "Ver o exame",
         },
       ],
     },
@@ -1164,43 +1209,43 @@ const planos: Pagina = {
     {
       tipo: "cartoes",
       titulo: "Credenciada aos cinco, na Torre.",
-      intro: "Toque no seu plano para perguntar a cobertura direto no WhatsApp.",
+      intro: "Toque no seu plano para ver como ele funciona aqui na clínica.",
       colunas: 3,
       itens: [
         {
           titulo: "PetHealth",
           texto: "Clínica credenciada PetHealth na Torre, Recife.",
           icone: "shield",
-          href: linkWhatsapp("Olá! Vim pelo site. Tenho PetHealth e queria confirmar a cobertura."),
-          rotuloLink: "Confirmar cobertura",
+          href: "/planos-de-saude-pet/pethealth",
+          rotuloLink: "Como usar aqui",
         },
         {
           titulo: "CARE",
           texto: "Clínica credenciada CARE na Torre, Recife.",
           icone: "shield",
-          href: linkWhatsapp("Olá! Vim pelo site. Tenho o plano CARE e queria confirmar a cobertura."),
-          rotuloLink: "Confirmar cobertura",
+          href: "/planos-de-saude-pet/care",
+          rotuloLink: "Como usar aqui",
         },
         {
           titulo: "Petlove Saúde",
           texto: "Clínica credenciada Petlove Saúde na Torre, Recife.",
           icone: "shield",
-          href: linkWhatsapp("Olá! Vim pelo site. Tenho Petlove Saúde e queria confirmar a cobertura."),
-          rotuloLink: "Confirmar cobertura",
+          href: "/planos-de-saude-pet/petlove-saude",
+          rotuloLink: "Como usar aqui",
         },
         {
           titulo: "Pet Top",
           texto: "Clínica credenciada Pet Top na Torre, Recife.",
           icone: "shield",
-          href: linkWhatsapp("Olá! Vim pelo site. Tenho Pet Top e queria confirmar a cobertura."),
-          rotuloLink: "Confirmar cobertura",
+          href: "/planos-de-saude-pet/pet-top",
+          rotuloLink: "Como usar aqui",
         },
         {
           titulo: "Plamev Pet",
           texto: "Clínica credenciada Plamev Pet na Torre, Recife.",
           icone: "shield",
-          href: linkWhatsapp("Olá! Vim pelo site. Tenho Plamev Pet e queria confirmar a cobertura."),
-          rotuloLink: "Confirmar cobertura",
+          href: "/planos-de-saude-pet/plamev-pet",
+          rotuloLink: "Como usar aqui",
         },
       ],
     },
@@ -1434,6 +1479,30 @@ export const paginas = {
   planos,
   equipe,
   "banho-e-tosa": banhoTosa,
+  /* 2ª leva (01/10/2026): serviços, um exame por página e um plano por página. */
+  vacinacao,
+  castracao,
+  odontologia,
+  consulta,
+  laboratorio,
+  gatos,
+  urgencia,
+  ortopedia,
+  ultrassom,
+  "raio-x": raioX,
+  eletrocardiograma,
+  pethealth,
+  care,
+  "petlove-saude": petloveSaude,
+  "pet-top": petTop,
+  "plamev-pet": plamevPet,
+  "como-chegar": comoChegar,
+  madalena,
+  cordeiro,
+  zumbi,
+  iputinga,
+  "jaqueira-e-parnamirim": jaqueiraParnamirim,
+  gracas,
 } as const satisfies Record<string, Pagina>;
 
 export type ChavePagina = keyof typeof paginas;
@@ -1445,6 +1514,32 @@ export const especialidadesFilhas = {
   nefrologia,
   pneumologia,
   "nutricao-e-gastroenterologia": nutricaoGastro,
+} as const;
+
+/** Um exame por página, filhas de /exames-de-imagem. Alimenta a rota dinâmica. */
+export const examesFilhos = {
+  "ultrassom-veterinario": ultrassom,
+  "raio-x-veterinario": raioX,
+  "eletrocardiograma-veterinario": eletrocardiograma,
+} as const;
+
+/** Um plano por página, filhas de /planos-de-saude-pet. Alimenta a rota dinâmica. */
+export const planosFilhos = {
+  pethealth,
+  care,
+  "petlove-saude": petloveSaude,
+  "pet-top": petTop,
+  "plamev-pet": plamevPet,
+} as const;
+
+/** Um bairro por página, filhas de /como-chegar. Alimenta a rota dinâmica. */
+export const bairros = {
+  madalena,
+  cordeiro,
+  zumbi,
+  iputinga,
+  "jaqueira-e-parnamirim": jaqueiraParnamirim,
+  gracas,
 } as const;
 
 /**
@@ -1466,12 +1561,20 @@ export const especialistas: readonly {
   { especialidade: "Nutrição e gastro", caminho: "/especialidades/nutricao-e-gastroenterologia", icone: "bowl", resumo: "Dieta, estômago e intestino" },
 ];
 
-/** Grupos do rodapé: o que liga a home às páginas internas. */
+/**
+ * Grupos do rodapé: o que liga a home às páginas internas. Os serviços de
+ * mais busca entram aqui; o resto se alcança pelas páginas-mãe (exames,
+ * planos, como chegar) e pelos relacionados.
+ */
 export const rodapeServicos = [
+  { rotulo: "Consulta veterinária", caminho: "/consulta-veterinaria" },
+  { rotulo: "Vacinação", caminho: "/vacinacao-de-caes-e-gatos" },
   { rotulo: "Especialidades", caminho: "/especialidades" },
   { rotulo: "Cirurgia", caminho: "/cirurgia-veterinaria" },
-  { rotulo: "Exames de imagem", caminho: "/exames-de-imagem" },
+  { rotulo: "Castração", caminho: "/castracao-de-caes-e-gatos" },
+  { rotulo: "Exames", caminho: "/exames-de-imagem" },
   { rotulo: "Check-up", caminho: "/check-up-veterinario" },
+  { rotulo: "Urgência até 18h", caminho: "/urgencia-veterinaria" },
   { rotulo: "Planos de saúde pet", caminho: "/planos-de-saude-pet" },
   { rotulo: "Banho e tosa", caminho: "/banho-e-tosa" },
   { rotulo: "Dra. Carol e equipe", caminho: "/equipe" },
@@ -1484,8 +1587,8 @@ export const rodapeServicos = [
  * Confirmado pela clínica (29/09/2026): emergência é atendida ATÉ AS 18H — é o
  * tempo de estabilizar o pet e encaminhar para um internamento 24h. Depois
  * disso, mesmo com a clínica aberta, a orientação é o plantão.
- * VALIDAR: no sábado a clínica fecha antes das 18h; o limite usado é o
- * horário de fechar.
+ * No sábado a clínica fecha às 16h (horário confirmado em 01/10/2026), e o
+ * limite usado é o horário de fechar.
  */
 export const painelAgora = {
   titulo: "O que fazer agora",

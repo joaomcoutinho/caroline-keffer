@@ -5,6 +5,7 @@ import type { MetadataRoute } from "next";
 export const dynamic = "force-static";
 import { meta } from "@/content/site";
 import { paginas } from "@/content/paginas";
+import { politica, termos } from "@/content/documentos";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   /* A data das páginas internas é a da última revisão do conteúdo, e não a do
@@ -25,5 +26,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     ...internas,
+    ...[politica, termos].map((d) => ({
+      url: `${meta.url}${d.caminho}/`,
+      lastModified: new Date(d.atualizadaEm),
+      changeFrequency: "yearly" as const,
+      priority: 0.2,
+    })),
   ];
 }

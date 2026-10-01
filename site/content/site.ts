@@ -36,6 +36,8 @@ export const contato = {
   whatsappExibicao: "(81) 99303-7584",
   telefoneFixo: "(81) 3268-5979",
   telefoneFixoLink: "tel:+558132685979",
+  /* E-mail da clínica (enviado pelo JM em 01/10/2026). */
+  email: "clinicacarolinekeffer@gmail.com",
   instagram: "https://www.instagram.com/clinicapet_carolinekeffer/",
   endereco: "Rua Araguatins, 63",
   bairro: "Torre, Recife - PE",
@@ -45,6 +47,20 @@ export const contato = {
     "Clínica Veterinária Caroline Keffer, Rua Araguatins, 63 - Torre, Recife - PE, 50710-060",
   )}`,
 } as const;
+
+/**
+ * Identificação da empresa (checklist-final L-10: CNPJ e endereço em destaque;
+ * e controlador na política de privacidade). PENDENTE: a clínica vai mandar
+ * razão social e CNPJ. Preenchido aqui, aparece sozinho no rodapé e na
+ * política — nada mais precisa mudar.
+ */
+export const empresa: { razaoSocial: string | null; cnpj: string | null } = {
+  /* Razão social como está na Receita (consultada em 01/10/2026: ativa, Rua
+     Araguatins, 63). A clínica mandou "Caroline Pet Shop Eireli", mas as
+     EIRELIs viraram LTDA por lei em 2021, e o cadastro já mostra LTDA. */
+  razaoSocial: "Caroline Pet Shop Ltda",
+  cnpj: "15.786.546/0001-97",
+};
 
 /** Um único rótulo por intenção, usado no site inteiro. */
 export const CTA_PRIMARIO = "Agendar pelo WhatsApp";
@@ -69,13 +85,19 @@ export const meta = {
  * usam `next/link`, que soma o basePath do GitHub Pages; na própria home o
  * link só rola até a seção.
  */
+/*
+  Navegação principal (header, menu do celular e rodapé). 01/10/2026 (JM):
+  o que tem página própria leva à página, e não à seção da home — Planos,
+  Equipe e Onde ficamos. Serviços, A clínica e Dúvidas continuam âncoras: são
+  seções da home sem uma página única equivalente.
+*/
 export const navegacao = [
   { rotulo: "Serviços", href: "/#servicos" },
-  { rotulo: "Planos", href: "/#planos" },
+  { rotulo: "Planos", href: "/planos-de-saude-pet" },
   { rotulo: "A clínica", href: "/#a-clinica" },
-  { rotulo: "Equipe", href: "/#equipe" },
+  { rotulo: "Equipe", href: "/equipe" },
   { rotulo: "Dúvidas", href: "/#duvidas" },
-  { rotulo: "Onde ficamos", href: "/#onde-ficamos" },
+  { rotulo: "Onde ficamos", href: "/como-chegar" },
 ] as const;
 
 export const hero = {
@@ -794,7 +816,7 @@ export const faq = {
  * O fuso é fixo em Recife: quem acessa de outro estado precisa ver o horário
  * DA CLÍNICA, não o do próprio relógio.
  *
- * ⚠️ Mesmo VALIDAR do resto: as fontes públicas divergem no horário.
+ * Horário confirmado pela clínica em 01/10/2026: seg a sex 9h–19h, sáb 8h–16h.
  */
 export const expediente = {
   fuso: "America/Recife",
@@ -954,7 +976,7 @@ export const preventivo = {
 
 export const ondeFicamos = {
   headline: "Estamos na Araguatins, na Torre.",
-  // VALIDAR: fontes públicas divergem no horário. Confirmar antes de publicar.
+  // Confirmado pela clínica em 01/10/2026.
   horarios: [
     { dia: "Segunda a sexta", hora: "9h às 19h" },
     { dia: "Sábado", hora: "8h às 16h" },

@@ -4,7 +4,7 @@ import { caminhoPublico } from "@/lib/caminho";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
-import { ctaFinal, rodape, contato, navegacao } from "@/content/site";
+import { ctaFinal, rodape, contato, navegacao, empresa } from "@/content/site";
 import { rodapeServicos } from "@/content/paginas";
 
 
@@ -66,6 +66,12 @@ export function Fechamento() {
             <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-text-3">
               {contato.endereco} · {contato.bairro}
             </p>
+            <Link
+              href="/como-chegar"
+              className="-my-2 inline-block py-2.5 text-sm text-text-2 underline decoration-hairline underline-offset-4 transition-colors hover:text-acao-texto"
+            >
+              Como chegar
+            </Link>
           </div>
 
           <nav aria-label="Seções" className="flex flex-col gap-3">
@@ -111,6 +117,12 @@ export function Fechamento() {
               {contato.telefoneFixo}
             </a>
             <a
+              href={`mailto:${contato.email}`}
+              className="-my-2 py-2.5 text-sm break-all text-text-2 transition-colors hover:text-acao-texto"
+            >
+              {contato.email}
+            </a>
+            <a
               href={contato.instagram}
               target="_blank"
               rel="noopener noreferrer"
@@ -129,7 +141,21 @@ export function Fechamento() {
           da página e não o meio do espaço que sobra ao lado do texto legal.
         */}
         <div className="mx-auto mt-12 grid w-full max-w-[1200px] gap-4 border-t border-hairline pt-6 text-xs text-text-3 sm:grid-cols-3 sm:items-center">
-          <p className="text-center sm:text-left">{rodape.legal}</p>
+          <div className="grid gap-1.5 text-center sm:text-left">
+            <p>
+              {rodape.legal}
+              {/* Razão social e CNPJ em destaque (checklist-final L-10). */}
+              {empresa.cnpj ? ` ${empresa.razaoSocial ?? ""} · CNPJ ${empresa.cnpj}.` : null}
+            </p>
+            <p className="flex flex-wrap justify-center gap-x-4 sm:justify-start">
+              <Link href="/politica-de-privacidade" className="-my-2 py-2 underline underline-offset-2 transition-colors hover:text-acao-texto">
+                Política de privacidade
+              </Link>
+              <Link href="/termos-de-uso" className="-my-2 py-2 underline underline-offset-2 transition-colors hover:text-acao-texto">
+                Termos de uso
+              </Link>
+            </p>
+          </div>
 
           {/*
             Assinatura da MXC Digital (JM, 17/09/2026). A marca d'água atrás do

@@ -1,4 +1,4 @@
-import { contato, meta, faq } from "@/content/site";
+import { contato, empresa, meta, faq } from "@/content/site";
 
 /**
  * JSON-LD VeterinaryCare — é o que faz a clínica aparecer no mapa e ser citada
@@ -20,6 +20,9 @@ export function DadosEstruturados() {
     /* O WhatsApp é o telefone principal (JM, 27/09/2026) — é o mesmo número que
        vai como principal no Perfil da Empresa no Google. */
     telephone: "+5581993037584",
+    email: contato.email,
+    legalName: empresa.razaoSocial ?? undefined,
+    taxID: empresa.cnpj ?? undefined,
     address: {
       "@type": "PostalAddress",
       streetAddress: contato.endereco,

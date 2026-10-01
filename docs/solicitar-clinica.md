@@ -7,6 +7,19 @@
 >
 > **29/09/2026 — respostas da Dra. Carol aplicadas no site** (CRMVs, equipe com a Gerlane,
 > castração, emergência até 18h, internação só de dia, exames de imagem com médicos volantes).
+>
+> **01/10/2026 — decisões do JM aplicadas:** horário confirmado (seg a sex 9h–19h, sáb 8h–16h);
+> vacinação só com a lista enviada, a polivalente sem especificar V8/V10; laboratório genérico
+> ("a clínica realiza", sem detalhar processamento); os cinco planos mantidos, e a cobertura o
+> tutor confirma pelo WhatsApp; especialidades sem dias nem "volantes".
+
+> **01/10/2026 — decisão do JM: a única pergunta que segue para a clínica é RAZÃO SOCIAL e CNPJ**
+> (política de privacidade). Todo o resto fica como está no site, com o conteúdo escrito a partir
+> de fontes reais de cada procedimento. Os itens abaixo ficam só como registro; não enviar.
+
+## ✅ Única pendência
+
+- [x] **Razão social e CNPJ** → Caroline Pet Shop Ltda (a clínica mandou "Eireli"; a Receita mostra LTDA, ativa, Rua Araguatins 63), CNPJ 15.786.546/0001-97, e-mail clinicacarolinekeffer@gmail.com ✅ no site (01/10)
 
 ---
 
@@ -18,19 +31,18 @@
 - [x] **CRMV-PE da Dra. Isa Lopes** → **6871** ✅ no site (29/09)
 - [x] **Equipe completa** → Dra. Caroline Keffer, Dra. Isa Lopes, Camila Amaral (gerente),
       **Gerlane Timóteo (recepção, nova)**, Lucas Leal (banho e tosa) ✅ no site (29/09)
-- [ ] **Horário de funcionamento confirmado.** As fontes públicas divergem:
-      seg a sex 9h–19h / sáb 8h–16h **ou** seg a sex 9h–18h / sáb 9h–13h?
+- [x] **Horário de funcionamento** → seg a sex 9h–19h, sáb 8h–16h ✅ (JM, 01/10)
 - [ ] Funciona em **feriado**? Quais? (12/10, 02/11, 15/11, 20/11, 25/12)
 
 ### Especialistas
 - [x] Não há especialista fixo: a equipe clínica são a Dra. Carol e a Dra. Isa. Exames de imagem vêm
       com **médicos volantes** (serviço terceirizado, os aparelhos vêm com eles). O site agora diz
       que os especialistas "vêm até a clínica em dias agendados", sem nomes.
-- [ ] ⚠️ **Confirmar:** as 5 especialidades (cardio, dermato, nefro, pneumo, nutrição/gastro) também
-      são atendidas por médicos volantes, em dias agendados? Quais dias?
+- [x] Especialidades: o site só diz que existem e o que cobrem, sem dias nem "volantes" (JM, 30/09).
 
 ### Revisão clínica (conteúdo de saúde)
-- [ ] **A Dra. Carol precisa ler e aprovar o conteúdo das páginas** (especialidades, cirurgia, exames, check-up, banho e tosa). Enquanto não aprovar, cada página mostra "conteúdo em revisão clínica".
+- [ ] **A Dra. Carol está validando o conteúdo** (a linha "em revisão clínica" saiu do site em 01/10).
+      Incluir as 24 páginas novas de 01/10 na leitura dela.
 - [ ] Aprovação do **calendário preventivo por fase da vida** (seção "Seu pet precisa de quê…" da home e página de check-up).
 
 ### Depoimentos
@@ -52,8 +64,7 @@
 ### Emergência
 - [x] Atende emergência **até as 18h** — tempo de estabilizar e encaminhar para internamento 24h.
       ✅ Painel "O que fazer agora" acende até as 18h; FAQ da home e `llms.txt` atualizados (29/09).
-- [ ] ⚠️ **Sábado:** a clínica fecha antes das 18h. Até que horas atende emergência no sábado?
-      (hoje o site usa o horário de fechar)
+- [x] **Sábado:** urgência até o fechamento, 16h (horário confirmado em 01/10).
 
 ### Especialidades
 - [ ] O tutor pode **marcar direto com o especialista**, ou precisa passar antes pela clínica geral?
@@ -110,6 +121,18 @@
 - [ ] **Formas de pagamento:** Pix, cartão de crédito/débito, parcelamento?
 
 ---
+
+### Páginas novas (01/10/2026)
+- [ ] ⚠️ **Corrigir o horário no cadastro do Pet Top:** a página da clínica na rede do Pet Top
+      mostra seg a sex 9h–13h e 14h30–17h30, sáb 9h30–12h30. O certo é 9h–19h e sáb 8h–16h.
+      Pedir à clínica que atualize com o Pet Top (e conferir nos outros planos).
+- [x] **Planos:** os cinco ficam no site; a cobertura o tutor confirma pelo WhatsApp (JM, 01/10).
+- [x] **Vacinação:** só a lista enviada; polivalente sem especificar (JM, 01/10).
+- [ ] **Limpeza de tártaro:** usa ultrassom odontológico? Faz raio-x odontológico?
+- [x] **Laboratório:** texto genérico, "a clínica realiza", com coleta na clínica (JM, 01/10).
+- [ ] **Gatos:** o gato pode ser examinado dentro da caixa de transporte, se preferir? (o site diz que
+      "ele sai da caixa no tempo dele")
+- [ ] **Política de privacidade:** razão social e CNPJ da clínica.
 
 ## 📸 3. Fotos
 

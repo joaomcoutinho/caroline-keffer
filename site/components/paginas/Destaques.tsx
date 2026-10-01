@@ -226,3 +226,55 @@ export function BlocoChamada({ bloco }: { bloco: Extract<Bloco, { tipo: "chamada
     </Revelar>
   );
 }
+
+/** Endereço que o Google Maps usa como destino (nome + endereço acham a ficha). */
+const DESTINO_MAPA = "Clínica Veterinária Caroline Keffer, Rua Araguatins, 63 - Torre, Recife - PE";
+
+/**
+ * COMO CHEGAR (01/10/2026). À esquerda, o título, as medidas do trajeto
+ * (rótulo + valor, o mesmo desenho da ficha do topo) e o botão que abre a rota
+ * no Google Maps saindo do bairro. À direita, o caminho rua a rua, num fio
+ * vertical que termina na porta da clínica.
+ */
+export function BlocoRota({ bloco }: { bloco: Extract<Bloco, { tipo: "rota" }> }) {
+  /* Sem origem, o Google Maps traça a rota a partir de onde a pessoa está. */
+  const origem = bloco.origem ? `&origin=${encodeURIComponent(bloco.origem)}` : "";
+  const mapa = `https://www.google.com/maps/dir/?api=1${origem}&destination=${encodeURIComponent(DESTINO_MAPA)}`;
+
+  return (
+    <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-20">
+      <div>
+        <Titulo intro={bloco.intro}>{bloco.titulo}</Titulo>
+        <Revelar atraso={0.1}>
+          <dl className="topo-ficha rota-medidas mt-8">
+            {bloco.medidas.map((m) => (
+              <div key={m.rotulo}>
+                <dt>{m.rotulo}</dt>
+                <dd>{m.valor}</dd>
+              </div>
+            ))}
+          </dl>
+          <a href={mapa} target="_blank" rel="noopener noreferrer" className="rota-botao cta-brilho">
+            <Icone nome="map" tamanho={20} />
+            Abrir a rota no Google Maps
+          </a>
+        </Revelar>
+      </div>
+
+      <Revelar atraso={0.14}>
+        <ol className="rota-trajeto" aria-label="Caminho até a clínica">
+          {bloco.trajeto.map((t) => (
+            <li key={t.via}>
+              <span className="rota-via">{t.via}</span>
+              {t.nota ? <span className="rota-nota">{t.nota}</span> : null}
+            </li>
+          ))}
+          <li className="rota-chegada">
+            <span className="rota-via">Rua Araguatins, 63</span>
+            <span className="rota-nota">A clínica, ao lado da Praça Batista da Silva</span>
+          </li>
+        </ol>
+      </Revelar>
+    </div>
+  );
+}
