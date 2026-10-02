@@ -1315,7 +1315,7 @@ const equipe: Pagina = {
     sobretitulo: "Quem cuida do seu pet",
     h1: "Dra. Caroline Keffer e a equipe da clínica.",
     lead:
-      "A Dra. Caroline Keffer (CRMV-PE 3053) é médica veterinária e responsável técnica da clínica, há mais de 20 anos na Torre, em Recife. Ao lado dela, a Dra. Isa Lopes (CRMV-PE 6871), a gerente Camila Amaral, a Gerlane Timóteo na recepção e o Lucas Leal no banho e tosa: as mesmas pessoas a cada visita.",
+      "A Dra. Caroline Keffer (CRMV-PE 3053) é médica veterinária e responsável técnica da clínica, há mais de 20 anos na Torre, em Recife. Ao lado dela, a Dra. Isa Lopes (CRMV-PE 6871), a gerente Camila Amaral e o Lucas Leal no banho e tosa: as mesmas pessoas a cada visita.",
     foto: {
       src: "/images/hero_dra_keffer.webp",
       alt: "Dra. Caroline Keffer sorrindo, retrato em fundo claro",

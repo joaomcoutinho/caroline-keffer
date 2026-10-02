@@ -190,9 +190,10 @@ export const prova = {
       sufixo: "",
       rotulo: "de nota nas avaliações do Google",
       nota: "média de 130 tutores",
-      foto: "/images/galeria/atendimento-03.webp",
+      /* A Dra. Carol na moldura da nota (02/10/2026, JM). */
+      foto: "/images/dra/dra-carol-corgi.webp",
       fotoPosicao: "50% 30%",
-      fotoAlt: "Colaboradora da clínica sorrindo com um cocker spaniel no colo",
+      fotoAlt: "Dra. Caroline Keffer gargalhando com um filhote de corgi no colo",
       /** Só a nota é proporção, então só ela ganha as cinco estrelas embaixo. */
       estrelas: 4.8,
     },
@@ -529,15 +530,6 @@ export const equipe = {
       papel: "Gerente",
       foto: "/images/equipe-camila-amaral.webp",
       alt: "Camila Amaral, de uniforme da clínica, sorrindo",
-    },
-    {
-      /* Entrou na lista da clínica em 29/09/2026. ⚠️ FOTO PENDENTE: pedir no
-         mesmo padrão das outras. Sem `foto`, o card mostra o espaço reservado. */
-      nome: "Gerlane Timóteo",
-      detalhe: "",
-      papel: "Recepção",
-      foto: "",
-      alt: "Gerlane Timóteo, da recepção da clínica",
     },
     {
       nome: "Lucas Leal",
