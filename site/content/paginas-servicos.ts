@@ -419,10 +419,10 @@ export const consulta: Pagina = {
     lead:
       "A consulta de clínica geral é o primeiro atendimento para qualquer problema e o acompanhamento de rotina do seu pet, com a Dra. Caroline Keffer e a Dra. Isa Lopes. Agende pelo WhatsApp, de segunda a sábado.",
     foto: {
-      src: "/images/clinica/dra-carol-consultorio.webp",
-      alt: "Dra. Caroline Keffer sorrindo no consultório com um lulu da pomerânia no colo",
-      posicao: "50% 45%",
-      posicaoCelular: "50% 50%",
+      src: "/images/dra/dra-carol-golden.webp",
+      alt: "Dra. Caroline Keffer sentada, sorrindo para um golden retriever ao lado dela",
+      posicao: "50% 40%",
+      posicaoCelular: "45% 35%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de consulta do site e queria marcar uma consulta para o meu pet.",
   },

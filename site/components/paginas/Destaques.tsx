@@ -166,7 +166,7 @@ export function BlocoPerfis({ bloco }: { bloco: Extract<Bloco, { tipo: "perfis" 
           <li key={p.titulo} className="flex">
             <Revelar atraso={0.06 + i * 0.06} className="flex w-full">
               <article className="perfil">
-                <div className="moldura-pata relative aspect-5/4 w-full">
+                <div className="moldura-pata relative mx-auto aspect-4/5 w-full max-w-[320px]">
                   <Image
                     src={caminhoPublico(p.foto.src)}
                     alt={p.foto.alt}

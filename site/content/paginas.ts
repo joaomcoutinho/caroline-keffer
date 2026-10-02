@@ -658,7 +658,7 @@ const pneumologia: Pagina = {
           texto:
             "A traqueia perde firmeza e a tosse soa como buzina, a tosse de ganso. Piora com agitação e com coleira no pescoço.",
           racas: ["Yorkshire", "Pinscher", "Lulu da Pomerânia", "Poodle"],
-          foto: { src: "/images/galeria/atendimento-15.webp", alt: "Colaboradora na mesa do consultório com um lulu da pomerânia", posicao: "50% 40%" },
+          foto: { src: "/images/dra/dra-carol-lulu.webp", alt: "Dra. Caroline Keffer sorrindo de rosto colado a um lulu da pomerânia branco", posicao: "50% 45%" },
         },
         {
           titulo: "Gatos",
@@ -970,15 +970,14 @@ const examesImagem: Pagina = {
     lead:
       "Radiografia, ultrassonografia e eletrocardiograma feitos aqui na clínica, com hora marcada. Seu pet faz o exame no lugar que já conhece, e o resultado volta para quem acompanha o caso.",
     /* ⚠️ Os aparelhos NÃO ficam na clínica (29/09/2026): vêm com médicos
-       volantes, em serviço terceirizado. Até chegarem as fotos dos exames, o
-       topo mostra a FACHADA (01/10/2026, JM: "algo mais genérico é melhor do
-       que só um canto da sala") — responde "onde é" antes da primeira linha. */
+       volantes, em serviço terceirizado. A fachada ficou aqui até chegarem as
+       fotos dos exames; em 02/10/2026 chegaram as do raio-x feito na clínica.
+       A da página do raio-x é a outra foto da mesma sessão, para não repetir. */
     foto: {
-      src: "/images/fachada_ceu.webp",
-      alt: "Fachada da Clínica Veterinária Caroline Keffer vista da calçada, com o letreiro e o céu aberto",
-      posicao: "50% 50%",
-      // No celular a caixa é mais estreita que a foto: o recorte puxa para o letreiro.
-      posicaoCelular: "35% 50%",
+      src: "/images/clinica/raio-x-preparo.webp",
+      alt: "Veterinário de avental de chumbo preparando o aparelho de raio-x ao lado de um cão na mesa de exame",
+      posicao: "50% 40%",
+      posicaoCelular: "55% 40%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de exames de imagem do site e gostaria de agendar um exame.",
   },
@@ -1146,9 +1145,9 @@ const checkUp: Pagina = {
          de acompanhar o mesmo pet ano a ano, e isso é gente com bicho, não
          bancada. O lulu fica só no topo da página, para não repetir. */
       foto: {
-        src: "/images/galeria/atendimento-09.webp",
-        alt: "Dra. Caroline Keffer agachada no chão cercada por quatro cães pequenos",
-        posicao: "50% 30%",
+        src: "/images/dra/dra-carol-shih-tzus.webp",
+        alt: "Dra. Caroline Keffer sentada no chão com três shih-tzus, em preto e branco",
+        posicao: "50% 55%",
       },
     },
   ],
@@ -1336,8 +1335,9 @@ const equipe: Pagina = {
       ],
       lista: ["Médica Veterinária · CRMV-PE 3053", "Responsável técnica da clínica", "Mais de 20 anos atendendo na Torre"],
       foto: {
-        src: "/images/galeria/atendimento-10.webp",
-        alt: "Dra. Caroline Keffer sentada no chão com um buldogue inglês e um yorkshire",
+        src: "/images/dra/dra-carol-corgi.webp",
+        alt: "Dra. Caroline Keffer gargalhando com um filhote de corgi no colo",
+        posicao: "50% 35%",
       },
     },
     { tipo: "equipe" },

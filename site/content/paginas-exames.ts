@@ -4,8 +4,8 @@
  *
  * ⚠️ Confirmado pela clínica (29/09/2026): os aparelhos NÃO ficam na clínica;
  * vêm com médicos volantes, em dia agendado. Por isso o texto diz "feito aqui
- * na clínica, com hora marcada" e nunca "nosso aparelho". Nenhuma foto é do
- * aparelho: a clínica vai fotografar nos próximos exames.
+ * na clínica, com hora marcada" e nunca "nosso aparelho". O raio-x já tem
+ * foto real (02/10/2026); ultrassom e eletro ainda esperam as da clínica.
  * VALIDAR: horas de jejum, sedação, prazo do laudo e quem fica na sala.
  */
 
@@ -128,11 +128,12 @@ export const raioX: Pagina = {
     h1: "Raio-x veterinário na Torre, em Recife.",
     lead:
       "O raio-x mostra ossos, articulações, o tórax e objetos engolidos, e é o exame da fratura, da tosse que não passa e do tamanho do coração. É feito aqui na clínica, com hora marcada, e normalmente não pede preparo.",
+    /* Raio-x de verdade, feito na clínica (fotos recebidas em 02/10/2026). */
     foto: {
-      src: "/images/clinica/sala-procedimentos.webp",
-      alt: "Sala de procedimentos da clínica, com a mesa de inox e os armários",
-      posicao: "50% 55%",
-      posicaoCelular: "50% 60%",
+      src: "/images/clinica/raio-x-posicionando.webp",
+      alt: "Veterinário de avental de chumbo posicionando o aparelho de raio-x sobre um cão deitado na mesa de exame",
+      posicao: "50% 35%",
+      posicaoCelular: "60% 35%",
     },
     mensagemWhatsapp: "Olá! Vim pela página de raio-x do site e queria agendar o exame.",
   },

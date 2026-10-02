@@ -121,7 +121,7 @@ export const hero = {
    */
   pata: [
     { src: "/images/servico_especialista.webp", alt: "Veterinário sorrindo ao lado de um golden retriever sobre a mesa de exame", posicao: "60% 12%", rotulo: "Especialidades", zoom: 1, origem: "50% 50%", destaque: false },
-    { src: "/images/hero_dra_lulu.webp", alt: "Dra. Caroline Keffer sorrindo com um lulu da pomerânia no colo", posicao: "50% 30%", rotulo: "Dra. Carol", zoom: 1, origem: "50% 50%", destaque: true },
+    { src: "/images/dra/dra-carol-lulu.webp", alt: "Dra. Caroline Keffer sorrindo de rosto colado a um lulu da pomerânia branco", posicao: "45% 45%", rotulo: "Dra. Carol", zoom: 1, origem: "50% 50%", destaque: true },
     { src: "/images/galeria/atendimento-03.webp", alt: "Colaboradora sorrindo com um cocker spaniel de laço vermelho no colo", posicao: "50% 32%", rotulo: "Atendimento", zoom: 1, origem: "50% 50%", destaque: false },
     { src: "/images/galeria/atendimento-05.webp", alt: "Colaboradora segurando um filhote de yorkshire junto ao rosto", posicao: "50% 35%", rotulo: "Equipe", zoom: 1, origem: "50% 50%", destaque: false },
   ],
@@ -627,6 +627,12 @@ export const pets = {
   subhead:
     "Alguns dos cães e gatos que a nossa equipe atendeu.",
   itens: [
+    /* A Dra. Carol abre a galeria (fotos enviadas em 02/10/2026, JM: "dar mais
+       destaque para as fotos dela"). */
+    { src: "/images/dra/dra-carol-corgi.webp", alt: "Dra. Caroline Keffer gargalhando com um filhote de corgi no colo", largura: 960, altura: 1280 },
+    { src: "/images/dra/dra-carol-golden.webp", alt: "Dra. Caroline Keffer sentada, sorrindo para um golden retriever ao lado dela", largura: 960, altura: 1280 },
+    { src: "/images/dra/dra-carol-lulu.webp", alt: "Dra. Caroline Keffer sorrindo de rosto colado a um lulu da pomerânia branco", largura: 960, altura: 1280 },
+    { src: "/images/dra/dra-carol-shih-tzus.webp", alt: "Dra. Caroline Keffer sentada no chão com três shih-tzus, em preto e branco", largura: 960, altura: 1280 },
     { src: "/images/galeria/atendimento-01.webp", alt: "Colaboradora sorrindo e abraçando um buldogue francês preto e branco", largura: 720, altura: 1125 },
     { src: "/images/galeria/atendimento-02.webp", alt: "Veterinária sentada no chão do consultório com dois cães dinamarqueses", largura: 720, altura: 960 },
     { src: "/images/galeria/atendimento-03.webp", alt: "Colaboradora sorrindo com um cocker spaniel de laço vermelho no colo", largura: 720, altura: 1125 },
