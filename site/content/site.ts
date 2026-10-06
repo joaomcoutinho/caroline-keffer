@@ -118,12 +118,14 @@ export const hero = {
   /**
    * Os quatro DEDOS da pata do hero no desktop (a almofada é a fachada).
    * Fotos reais: atendimentos da galeria, o especialista e o consultório.
+   * 06/10/2026 (JM): duas fotos da Dra. Carol na pata. O yorkshire da equipe
+   * deu lugar à Dra. Carol com o persa (carolinepet25), que não estava no site.
    */
   pata: [
     { src: "/images/servico_especialista.webp", alt: "Veterinário sorrindo ao lado de um golden retriever sobre a mesa de exame", posicao: "60% 12%", rotulo: "Especialidades", zoom: 1, origem: "50% 50%", destaque: false },
     { src: "/images/dra/dra-carol-lulu.webp", alt: "Dra. Caroline Keffer sorrindo de rosto colado a um lulu da pomerânia branco", posicao: "45% 45%", rotulo: "Dra. Carol", zoom: 1, origem: "50% 50%", destaque: true },
     { src: "/images/galeria/atendimento-03.webp", alt: "Colaboradora sorrindo com um cocker spaniel de laço vermelho no colo", posicao: "50% 32%", rotulo: "Atendimento", zoom: 1, origem: "50% 50%", destaque: false },
-    { src: "/images/galeria/atendimento-05.webp", alt: "Colaboradora segurando um filhote de yorkshire junto ao rosto", posicao: "50% 35%", rotulo: "Equipe", zoom: 1, origem: "50% 50%", destaque: false },
+    { src: "/images/dra/dra-carol-persa.webp", alt: "Dra. Caroline Keffer sorrindo com um gato persa no colo", posicao: "50% 30%", rotulo: "Gatos", zoom: 1.35, origem: "55% 35%", destaque: false },
   ],
   cta: CTA_PRIMARIO,
   /** CTA secundário do hero: leva à dobra de serviços. */
