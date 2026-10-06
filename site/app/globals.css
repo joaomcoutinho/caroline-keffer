@@ -3581,6 +3581,17 @@ main:has(.faq-secao) ~ .bloco-escuro {
 .membro-ficha {
   margin-top: 0.85rem;
 }
+/* Equipe em duas colunas (até o desktop): o nome reserva duas linhas, para a
+   função ficar na mesma altura lado a lado ("Dra. Caroline Keffer" quebra e
+   "Dra. Isa Lopes" não). 06/10/2026, JM. */
+@media (max-width: 1023px) {
+  .membro-nome {
+    display: flex;
+    min-height: 2lh;
+    align-items: center;
+    justify-content: center;
+  }
+}
 
 .membro-papel {
   margin-top: 0.15rem;
@@ -4734,20 +4745,18 @@ body[data-menu-aberto] .barra-agendamento {
   align-items: center;
   text-align: center;
 }
+/* Vale no celular também (06/10/2026, JM): no trilho o cartão vizinho aparece
+   na borda, e as linhas precisam bater de um cartão para o outro. */
 .perfil-titulo {
+  display: flex;
+  min-height: 2lh;
   margin-top: 0.5rem;
+  align-items: center;
+  justify-content: center;
 }
-@media (min-width: 768px) {
-  .perfil-titulo {
-    display: flex;
-    min-height: 2lh;
-    align-items: center;
-    justify-content: center;
-  }
-  /* As raças também reservam duas linhas: o fio tracejado fica na mesma altura. */
-  .perfil-racas-nomes {
-    min-height: 2lh;
-  }
+/* As raças também reservam duas linhas: o fio tracejado fica na mesma altura. */
+.perfil-racas-nomes {
+  min-height: 2lh;
 }
 .perfil-condicao {
   display: inline-flex;
@@ -5283,14 +5292,23 @@ body[data-menu-aberto] .barra-agendamento {
 
 /*
   Perfis no celular (01/10/2026):
-  - no trilho, as fichas não precisam alinhar o fio das raças entre si (só uma
-    aparece por vez): o texto não estica, e o vão antes das raças some;
+  - (06/10/2026, JM) as fichas do trilho voltaram a alinhar entre si: o
+    cartão vizinho aparece na borda, então título, texto e o fio das raças
+    ficam na mesma altura em todos (o texto estica, como no desktop);
   - a nota "Nos três casos…": a frase ocupa a linha ao lado do ícone e o link
     desce para baixo dela (antes a frase espremia numa coluna estreita).
 */
 @media (max-width: 639px) {
-  .perfis-grade .perfil > .flex-1 {
-    flex: none;
+  /* Sobretítulo numa linha só ("Cardiomiopatia hipertrófica" quebrava e
+     empurrava o título desse cartão para baixo dos outros). */
+  .perfil-condicao {
+    gap: 0.45rem;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .perfil-condicao::before,
+  .perfil-condicao::after {
+    width: 0.75rem;
   }
   .perfil-nota > p {
     flex: 1 1 calc(100% - 4.25rem);

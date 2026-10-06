@@ -887,12 +887,15 @@ const cirurgia: Pagina = {
       tipo: "texto",
       titulo: "Por que a limpeza de tártaro precisa de anestesia.",
       paragrafos: [
-        "Porque a doença está embaixo da gengiva, e não no branco do dente. A limpeza de verdade raspa e dá polimento nessa área, e isso só é possível com o animal anestesiado, sem dor e sem risco de engolir o tártaro solto.",
-        "A chamada limpeza sem anestesia tira só o que aparece e deixa a infecção onde ela está. Entre 70% e 80% dos cães e gatos já têm sinal de doença dentária aos 3 anos, por isso a boca é avaliada em toda consulta.",
+        "A doença fica embaixo da gengiva, não no branco do dente. Raspar e polir ali só dá com o pet anestesiado: sem dor e sem risco de engolir o tártaro.",
+        "Sem anestesia, sai só o que aparece. E 7 em cada 10 cães e gatos já têm doença dentária aos 3 anos: por isso a boca é avaliada em toda consulta.",
       ],
+      /* Foto genérica de exame (06/10/2026, JM) até chegar uma da limpeza de
+         tártaro na clínica. Antes era a internação, que não tinha relação. */
       foto: {
-        src: "/images/internamento.webp",
-        alt: "Internação da clínica, onde os pets se recuperam depois da cirurgia",
+        src: "/images/galeria/atendimento-04.webp",
+        alt: "Veterinário examinando um cão deitado na mesa de atendimento",
+        posicao: "35% 60%",
       },
     },
     {
