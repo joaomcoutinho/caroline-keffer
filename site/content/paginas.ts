@@ -1596,21 +1596,24 @@ export const rodapeServicos = [
 export const painelAgora = {
   titulo: "O que fazer agora",
   limiteEmergencia: "18:00",
-  /* As duas saídas lado a lado, cada uma numa frase (01/10/2026); o que não
-     cabe nos cartões vem logo abaixo, em `seguir`. */
-  aberta: {
-    quando: "Até as 18h",
-    condicao: "Clínica aberta",
-    texto: "Venha direto. A equipe estabiliza o seu pet na hora.",
+  /* 06/10/2026 (JM: "menos poluído, horários mais intuitivos"): no lugar dos
+     dois cartões "Até as 18h / Após as 18h", uma faixa com a instrução que vale
+     AGORA e, embaixo, a janela de emergência de cada dia, calculada do
+     expediente. O cartão antigo dizia "até as 18h" também no sábado, quando a
+     clínica fecha às 16h. */
+  status: {
+    aberta: { rotulo: "Agora: aberto para emergência", texto: "Venha direto. A equipe estabiliza o seu pet na hora." },
+    fechada: { rotulo: "Agora: fechado para emergência", texto: "Procure um plantão veterinário 24h. Não espere a clínica abrir." },
+    /* Antes da hidratação não se sabe a hora: a regra geral, sem acender nada. */
+    neutro: { rotulo: "Em uma emergência", texto: "No horário abaixo, venha direto. Fora dele, procure um plantão 24h." },
   },
-  fechada: {
-    quando: "Após as 18h",
-    condicao: "Ou clínica fechada",
-    texto: "Procure um plantão veterinário 24h. Não espere abrir.",
-  },
-  seguir: "Se ele precisar ficar internado, a equipe encaminha para um hospital 24h. Está a caminho? Avise antes.",
+  rotuloHorarios: "Emergência na clínica",
+  rotuloHoje: "hoje",
+  nota: "Se precisar de internação à noite, a equipe encaminha para um hospital 24h.",
   botao: "Avisar que estou indo",
   mensagem: "Olá! É uma emergência, estou indo para a clínica agora.",
+  /* Fora da janela, "estou indo" contradiz a faixa: o botão vira recado. */
+  botaoFechada: "Falar com a equipe",
+  mensagemFechada: "Olá! Meu pet teve uma emergência fora do horário e queria orientação da equipe.",
   ligar: "ou ligue",
-  marcaAgora: "agora",
 } as const;

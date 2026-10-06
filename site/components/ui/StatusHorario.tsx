@@ -145,6 +145,12 @@ export function useDentroDaJanela(limite: string): boolean | null {
   return bruto === "1";
 }
 
+/** Dia da semana EM RECIFE (0 = domingo). `null` antes da montagem. */
+export function useDiaRecife(): number | null {
+  const bruto = useSyncExternalStore(assinar, () => String(agoraEmRecife().dia), () => "");
+  return bruto ? Number(bruto) : null;
+}
+
 type Props = { className?: string };
 
 /**
