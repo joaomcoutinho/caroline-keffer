@@ -1598,23 +1598,23 @@ export const rodapeServicos = [
 export const painelAgora = {
   titulo: "O que fazer agora",
   limiteEmergencia: "18:00",
-  /* 06/10/2026 (JM: "menos poluído, horários mais intuitivos"): no lugar dos
-     dois cartões "Até as 18h / Após as 18h", uma faixa com a instrução que vale
-     AGORA e, embaixo, a janela de emergência de cada dia, calculada do
-     expediente. O cartão antigo dizia "até as 18h" também no sábado, quando a
-     clínica fecha às 16h. */
+  /* 06/10/2026, segunda versão (JM: a faixa com borda e a etiqueta "HOJE"
+     tinham "cara de IA"). Agora o card fala a língua do site: a instrução do
+     momento no título da marca, com o sobretítulo entre fios dos perfis, e a
+     semana desenhada em PEGADAS (as mesmas da trilha do hero), com o coração
+     do logo marcando o dia de hoje. A janela de cada dia sai do expediente:
+     até as 18h, ou até fechar no sábado (16h). */
   status: {
-    aberta: { rotulo: "Agora: aberto para emergência", texto: "Venha direto. A equipe estabiliza o seu pet na hora." },
-    fechada: { rotulo: "Agora: fechado para emergência", texto: "Procure um plantão veterinário 24h. Não espere a clínica abrir." },
-    /* Antes da hidratação não se sabe a hora: a regra geral, sem acender nada. */
-    neutro: { rotulo: "Em uma emergência", texto: "No horário abaixo, venha direto. Fora dele, procure um plantão 24h." },
+    aberta: { rotulo: "Agora: aberto", titulo: "Pode vir direto.", texto: "A equipe estabiliza o seu pet na hora." },
+    fechada: { rotulo: "Agora: fechado", titulo: "Procure um plantão 24h.", texto: "Não espere a clínica abrir para levar o seu pet." },
+    /* Antes da hidratação não se sabe a hora: a regra geral. */
+    neutro: { rotulo: "Em uma emergência", titulo: "No horário, venha direto.", texto: "Fora dele, procure um plantão veterinário 24h." },
   },
-  rotuloHorarios: "Emergência na clínica",
-  rotuloHoje: "hoje",
+  rotuloSemana: "Emergência na clínica",
   nota: "Se precisar de internação à noite, a equipe encaminha para um hospital 24h.",
   botao: "Avisar que estou indo",
   mensagem: "Olá! É uma emergência, estou indo para a clínica agora.",
-  /* Fora da janela, "estou indo" contradiz a faixa: o botão vira recado. */
+  /* Fora da janela, "estou indo" contradiz o título: o botão vira recado. */
   botaoFechada: "Falar com a equipe",
   mensagemFechada: "Olá! Meu pet teve uma emergência fora do horário e queria orientação da equipe.",
   ligar: "ou ligue",
