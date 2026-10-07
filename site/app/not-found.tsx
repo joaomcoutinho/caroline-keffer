@@ -8,9 +8,12 @@ import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { BotaoFlutuante } from "@/components/ui/BotaoFlutuante";
 import { CTA_PRIMARIO, linkWhatsapp } from "@/content/site";
 
+/* Sem `robots` aqui: o Next já emite `noindex` na 404, e repetir gerava duas
+   metas. E sem canônica (checklist-final, bloco 2): herdada do layout, ela
+   apontava a 404 para a home. */
 export const metadata: Metadata = {
   title: "Página não encontrada | Clínica Pet Caroline Keffer",
-  robots: { index: false, follow: true },
+  alternates: { canonical: null },
 };
 
 /*

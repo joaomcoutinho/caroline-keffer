@@ -423,7 +423,7 @@ const cardiologia: Pagina = {
     ],
   },
   relacionados: ["exames-de-imagem", "pneumologia", "check-up"],
-  revisao: PENDENTE,
+  revisao: { por: null, data: "2026-10-06" },
 };
 
 const dermatologia: Pagina = {
@@ -595,7 +595,7 @@ const nefrologia: Pagina = {
     ],
   },
   relacionados: ["check-up", "nutricao-e-gastroenterologia", "exames-de-imagem"],
-  revisao: PENDENTE,
+  revisao: { por: null, data: "2026-10-06" },
 };
 
 const pneumologia: Pagina = {
@@ -956,7 +956,7 @@ const cirurgia: Pagina = {
     ],
   },
   relacionados: ["exames-de-imagem", "check-up", "planos"],
-  revisao: PENDENTE,
+  revisao: { por: null, data: "2026-10-06" },
 };
 
 const examesImagem: Pagina = {
@@ -1183,7 +1183,7 @@ const checkUp: Pagina = {
     ],
   },
   relacionados: ["exames-de-imagem", "nefrologia", "planos"],
-  revisao: PENDENTE,
+  revisao: { por: null, data: "2026-10-06" },
 };
 
 const planos: Pagina = {

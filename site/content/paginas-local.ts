@@ -20,7 +20,7 @@
 
 import type { Pagina, Pergunta } from "@/content/paginas";
 
-const PENDENTE = { por: null, data: "2026-10-01" } as const;
+const PENDENTE = { por: null, data: "2026-10-06" } as const;
 const paiComoChegar = [{ rotulo: "Como chegar", caminho: "/como-chegar" }] as const;
 
 /** O último trecho é o mesmo para todo mundo. */
@@ -32,7 +32,7 @@ const CHEGADA = {
 const perguntaUrgencia: Pergunta = {
   pergunta: "Vocês atendem urgência?",
   resposta:
-    "Sim, até as 18h, nos dias de funcionamento: a equipe estabiliza o pet e, se ele precisar ficar internado à noite, encaminha para um hospital 24h. Avise pelo WhatsApp antes de sair.",
+    "Sim, até as 18h de segunda a sexta e até as 16h no sábado: a equipe estabiliza o pet e, se ele precisar ficar internado à noite, encaminha para um hospital 24h. Avise pelo WhatsApp antes de sair.",
 };
 
 const perguntaEstacionamento: Pergunta = {

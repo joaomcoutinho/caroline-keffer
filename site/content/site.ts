@@ -8,9 +8,11 @@
  */
 
 /**
- * Trilha SPEC: o site é uma PROPOSTA de um negócio real que ainda não contratou.
- * Enquanto isto for `true`, a página sai com `noindex` e o robots.txt bloqueia tudo.
- * Vire para `false` (ou defina NEXT_PUBLIC_SITE_APROVADO=1) só depois da clínica aprovar.
+ * Prévia × site no ar. Enquanto isto for `true`, a página sai com `noindex` e
+ * o robots.txt bloqueia tudo: é o caso da prévia em github.io, que não pode
+ * competir na busca com o domínio da clínica. O workflow define
+ * NEXT_PUBLIC_SITE_APROVADO=1 sozinho quando publica no domínio próprio
+ * (variável SITE_DOMINIO; ver .github/workflows/deploy.yml).
  */
 export const ehProposta = process.env.NEXT_PUBLIC_SITE_APROVADO !== "1";
 
@@ -77,6 +79,9 @@ export const meta = {
    */
   url:
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://clinicapetcarolinekeffer.com.br",
+  /** Última revisão de CONTEÚDO da home (o `lastmod` dela no sitemap). Atualize
+   *  quando o texto ou as fotos da home mudarem, não a cada deploy. */
+  revisao: "2026-10-06",
 } as const;
 
 /*
@@ -785,7 +790,7 @@ export const faq = {
       pergunta: "Vocês atendem emergência 24 horas?",
       resposta:
         /* Janela de emergência confirmada pela clínica em 29/09/2026. */
-        "Não. Emergência é atendida até as 18h, nos dias de funcionamento: a equipe estabiliza o seu pet e, se ele precisar ficar internado, encaminha para um hospital 24h. Depois das 18h ou com a clínica fechada, procure um plantão veterinário 24h.",
+        "Não. Emergência é atendida até as 18h de segunda a sexta e até as 16h no sábado: a equipe estabiliza o seu pet e, se ele precisar ficar internado, encaminha para um hospital 24h. Fora desses horários, procure um plantão veterinário 24h.",
     },
     {
       pergunta: "Preciso agendar ou posso chegar direto?",

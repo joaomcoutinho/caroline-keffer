@@ -8,29 +8,21 @@ import { paginas } from "@/content/paginas";
 import { politica, termos } from "@/content/documentos";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  /* A data das páginas internas é a da última revisão do conteúdo, e não a do
-     build: `lastmod` que muda a cada deploy sem o conteúdo mudar ensina o
-     Google a ignorar o campo. */
+  /* `lastmod` é a data da última revisão do conteúdo, inclusive na home, e
+     nunca a do build: data que muda a cada deploy sem o conteúdo mudar ensina
+     o Google a ignorar o sitemap inteiro. `changefreq` e `priority` ficaram de
+     fora porque o Google os ignora (checklist-final, bloco 2). */
   const internas = Object.values(paginas).map((p) => ({
     url: `${meta.url}${p.caminho}/`,
     lastModified: new Date(p.revisao.data),
-    changeFrequency: "monthly" as const,
-    priority: p.pais ? 0.6 : 0.8,
   }));
 
   return [
-    {
-      url: `${meta.url}/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
+    { url: `${meta.url}/`, lastModified: new Date(meta.revisao) },
     ...internas,
     ...[politica, termos].map((d) => ({
       url: `${meta.url}${d.caminho}/`,
       lastModified: new Date(d.atualizadaEm),
-      changeFrequency: "yearly" as const,
-      priority: 0.2,
     })),
   ];
 }

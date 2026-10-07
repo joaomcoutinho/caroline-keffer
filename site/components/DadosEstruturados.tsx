@@ -46,11 +46,10 @@ export function DadosEstruturados() {
         closes: "16:00",
       },
     ],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      reviewCount: "130",
-    },
+    /* Sem `aggregateRating` (06/10/2026, checklist-final bloco 16): a nota é
+       do Google, não de avaliações publicadas aqui. Marcá-la como da própria
+       clínica é avaliação auto-atribuída, que o Google trata como marcação
+       enganosa e não exibe. A nota continua no texto da página. */
   } satisfies Record<string, unknown>;
 
   /**

@@ -10,11 +10,12 @@ import type { NextConfig } from "next";
      `unoptimized`. As fotos já foram convertidas para WebP em ~2000px, então o
      peso total de imagem do site é de ~2 MB, e não os 66 MB dos PNGs originais.
 
-  O `basePath` só entra no build de produção do Pages: o site vive em
-  /caroline-keffer, e não na raiz do domínio. Deixá-lo ligado em
-  desenvolvimento quebraria o `npm run dev` em localhost:3000.
+  O `basePath` vem de NEXT_PUBLIC_BASE_PATH, definido pelo workflow: na prévia
+  do Pages o site vive em /caroline-keffer; no domínio próprio, na raiz (vazio).
+  Em desenvolvimento ele não existe, e o `npm run dev` roda em localhost:3000.
 */
 const noPages = process.env.DEPLOY_ALVO === "pages";
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 /*
   Só vale no `npm run dev`. O Next bloqueia (403) os scripts de desenvolvimento
@@ -27,11 +28,9 @@ const ipsDaMaquina = Object.values(networkInterfaces())
   .flat()
   .filter((i) => i && i.family === "IPv4")
   .map((i) => i!.address);
-const base = "/caroline-keffer";
-
 const nextConfig: NextConfig = {
   ...(noPages
-    ? { output: "export", basePath: base, assetPrefix: base }
+    ? { output: "export", ...(base ? { basePath: base, assetPrefix: base } : {}) }
     : {}),
   allowedDevOrigins: ipsDaMaquina,
   images: { unoptimized: true },

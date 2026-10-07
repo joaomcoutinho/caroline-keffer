@@ -40,14 +40,26 @@ jobs:
         run: npm run lint
 
       - name: Build estático
-        # DEPLOY_ALVO liga o output export e o basePath (ver next.config.ts).
+        # DEPLOY_ALVO liga o output export (ver next.config.ts).
+        #
+        # VIRADA PARA O DOMÍNIO PRÓPRIO (checklist-final, 06/10/2026): uma
+        # variável só, `SITE_DOMINIO` (Settings → Secrets and variables →
+        # Actions → Variables), ex.: clinicapetcarolinekeffer.com.br.
+        #   - vazia (hoje): prévia em joaomcoutinho.github.io/caroline-keffer,
+        #     com basePath, e SEM indexação (noindex + robots bloqueando);
+        #   - preenchida: site na raiz do domínio, canônica/OG/sitemap no
+        #     domínio e indexação liberada. O domínio também precisa ser
+        #     cadastrado em Settings → Pages → Custom domain.
+        # Indexar só no domínio próprio impede a prévia de competir com ele.
         env:
           DEPLOY_ALVO: pages
           # O basePath do Next não alcança o `src` das imagens quando o
           # otimizador está desligado; o helper lib/caminho.ts usa isto.
-          NEXT_PUBLIC_BASE_PATH: /caroline-keffer
-          # URL absoluta de onde o site vive: usada no card de compartilhamento.
-          NEXT_PUBLIC_SITE_URL: https://joaomcoutinho.github.io/caroline-keffer
+          NEXT_PUBLIC_BASE_PATH: ${{ vars.SITE_DOMINIO == '' && '/caroline-keffer' || '' }}
+          # URL absoluta de onde o site vive: canônica, card de compartilhamento,
+          # sitemap e dados estruturados.
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_DOMINIO == '' && 'https://joaomcoutinho.github.io/caroline-keffer' || format('https://{0}', vars.SITE_DOMINIO) }}
+          NEXT_PUBLIC_SITE_APROVADO: ${{ vars.SITE_DOMINIO != '' && '1' || '' }}
         run: npm run build
 
       - name: Impedir que o Jekyll ignore a pasta _next

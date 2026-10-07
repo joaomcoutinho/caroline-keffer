@@ -143,7 +143,7 @@ export const termos: Documento = {
     descricao:
       "As regras de uso do site da Clínica Pet Caroline Keffer: conteúdo informativo, agendamento, valores, planos de saúde pet e emergência.",
   },
-  atualizadaEm: "2026-10-01",
+  atualizadaEm: "2026-10-06",
   intro:
     "O site existe para você conhecer a clínica, tirar dúvidas e chegar até a gente. Estas são as regras de uso dele, curtas e sem letra miúda.",
   secoes: [
@@ -156,7 +156,7 @@ export const termos: Documento = {
     {
       titulo: "Emergência",
       paragrafos: [
-        "O site não é canal de emergência. A clínica atende urgência até as 18h, nos dias de funcionamento. Fora disso, ou com a clínica fechada, procure um plantão veterinário 24h e não espere a resposta de uma mensagem.",
+        "O site não é canal de emergência. A clínica atende urgência até as 18h de segunda a sexta e até as 16h no sábado. Fora disso, ou com a clínica fechada, procure um plantão veterinário 24h e não espere a resposta de uma mensagem.",
       ],
     },
     {

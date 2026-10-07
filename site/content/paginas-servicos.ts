@@ -739,7 +739,7 @@ export const urgencia: Pagina = {
     sobretitulo: "Urgência",
     h1: "Urgência veterinária na Torre: atendimento até as 18h.",
     lead:
-      "A clínica atende urgência de cães e gatos até as 18h, nos dias de funcionamento: a equipe estabiliza o seu pet na hora e, se ele precisar ficar internado à noite, encaminha para um hospital 24h. Depois das 18h ou com a clínica fechada, procure um plantão veterinário 24h.",
+      "A clínica atende urgência de cães e gatos até as 18h de segunda a sexta e até as 16h no sábado: a equipe estabiliza o seu pet na hora e, se ele precisar ficar internado à noite, encaminha para um hospital 24h. Fora desses horários, procure um plantão veterinário 24h.",
     foto: {
       src: "/images/galeria/atendimento-01.webp",
       alt: "Veterinária abraçando um buldogue francês na área de atendimento",
@@ -791,7 +791,7 @@ export const urgencia: Pagina = {
       e: {
         titulo: "É",
         itens: [
-          "Atendimento até as 18h, nos dias de funcionamento",
+          "Atendimento até as 18h (no sábado, até as 16h)",
           "Primeiro atendimento e estabilização na hora",
           "Encaminhamento a um hospital 24h, quando ele precisa ficar",
         ],
@@ -809,7 +809,7 @@ export const urgencia: Pagina = {
       {
         pergunta: "A clínica atende emergência 24 horas?",
         resposta:
-          "Não. A urgência é atendida até as 18h, nos dias de funcionamento. Depois disso ou com a clínica fechada, procure um plantão veterinário 24h.",
+          "Não. A urgência é atendida até as 18h de segunda a sexta e até as 16h no sábado. Fora desses horários, procure um plantão veterinário 24h.",
       },
       {
         pergunta: "Até que horas vocês atendem urgência?",
@@ -834,7 +834,7 @@ export const urgencia: Pagina = {
     ],
   },
   relacionados: ["consulta", "gatos", "cirurgia"],
-  revisao: PENDENTE,
+  revisao: { por: null, data: "2026-10-06" },
 };
 
 /* ------------------------------------------------------------------ */
