@@ -280,14 +280,13 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
             mais rápido que texto separado por vírgula.
           */}
           {atual.itens && atual.itens.length > 0 ? (
-            <ul className="mt-5 flex flex-wrap gap-2">
+            /* No celular é lista, um item por linha (06/10/2026, JM: as pílulas
+               quebravam em larguras diferentes e ficavam desalinhadas); do
+               tablet para cima, as pílulas cabem numa linha. Ver
+               `.servico-subitens` no globals.css. */
+            <ul className="servico-subitens">
               {atual.itens.map((sub) => (
-                <li
-                  key={sub}
-                  className="rounded-full border border-hairline bg-surface/55 px-3.5 py-1.5 text-sm text-text-2"
-                >
-                  {sub}
-                </li>
+                <li key={sub}>{sub}</li>
               ))}
             </ul>
           ) : null}
