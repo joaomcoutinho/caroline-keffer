@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "publicar": "rm -rf out && DEPLOY_ALVO=pages NEXT_PUBLIC_BASE_PATH= NEXT_PUBLIC_SITE_URL=https://clinicacarolinekeffer.com.br NEXT_PUBLIC_SITE_APROVADO=1 next build && npx wrangler pages deploy out --project-name=clinica-caroline-keffer --branch=main --commit-dirty=true"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

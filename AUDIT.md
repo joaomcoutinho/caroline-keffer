@@ -1,7 +1,7 @@
 # Auditoria — Clínica Pet Caroline Keffer · 2026-10-06
 
 **URL auditada:** https://joaomcoutinho.github.io/caroline-keffer/ (prévia no GitHub Pages)
-**Domínio do cliente:** clinicapetcarolinekeffer.com.br — **ainda não resolve** (DNS vazio)
+**Domínio do cliente:** clinicacarolinekeffer.com.br — **ainda não resolve** (DNS vazio)
 **Perfil:** institucional estático (Next.js `output: export`, GitHub Pages) · **Jurisdição:** BR
 **Recorrência:** não respondida — tratada como **não** até alguém dizer o contrário
 **Escopo pedido:** arquivos e configuração técnica de SEO, política de privacidade, termos e cookies
@@ -20,7 +20,7 @@ código: é o **domínio no ar** e a **decisão sobre medição**.
 ## Crítico
 
 - [ ] **O site ainda não está no domínio da clínica** — ausência (P0-1).
-  **Evidência:** `dig +short clinicapetcarolinekeffer.com.br` → vazio.
+  **Evidência:** `dig +short clinicacarolinekeffer.com.br` → vazio.
   **Conserto:** registrar/apontar o domínio e fazer a virada (abaixo) · **Custo:** 30 min + propagação
 
 - [ ] **Nenhuma medição instalada** — ausência (P0-4). Não é falha de conformidade: é a
@@ -62,11 +62,11 @@ código: é o **domínio no ar** e a **decisão sobre medição**.
 
 1. Apontar o DNS do domínio para o GitHub Pages (apex: registros A do Pages; `www`: CNAME
    para `joaomcoutinho.github.io`).
-2. Repositório → Settings → Pages → **Custom domain** = `clinicapetcarolinekeffer.com.br`
+2. Repositório → Settings → Pages → **Custom domain** = `clinicacarolinekeffer.com.br`
    e marcar **Enforce HTTPS** depois do certificado sair.
 3. Settings → Secrets and variables → Actions → **Variables** → `SITE_DOMINIO` =
-   `clinicapetcarolinekeffer.com.br`. Rodar o workflow (aba Actions → Run workflow).
-4. Conferir: `curl -sI https://www.clinicapetcarolinekeffer.com.br/equipe/` → 301 para o
+   `clinicacarolinekeffer.com.br`. Rodar o workflow (aba Actions → Run workflow).
+4. Conferir: `curl -sI https://www.clinicacarolinekeffer.com.br/equipe/` → 301 para o
    apex **com o caminho**; `robots.txt` com `Allow: /`; home sem `noindex`.
 5. Search Console + Bing Webmaster, enviar `sitemap.xml`.
 

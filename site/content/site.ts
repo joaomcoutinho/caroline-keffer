@@ -78,7 +78,7 @@ export const meta = {
    * prévia sai quebrada. Quando o domínio próprio entrar, é só remover a env.
    */
   url:
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://clinicapetcarolinekeffer.com.br",
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://clinicacarolinekeffer.com.br",
   /** Última revisão de CONTEÚDO da home (o `lastmod` dela no sitemap). Atualize
    *  quando o texto ou as fotos da home mudarem, não a cada deploy. */
   revisao: "2026-10-06",

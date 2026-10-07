@@ -44,7 +44,7 @@ jobs:
         #
         # VIRADA PARA O DOMÍNIO PRÓPRIO (checklist-final, 06/10/2026): uma
         # variável só, `SITE_DOMINIO` (Settings → Secrets and variables →
-        # Actions → Variables), ex.: clinicapetcarolinekeffer.com.br.
+        # Actions → Variables), ex.: clinicacarolinekeffer.com.br.
         #   - vazia (hoje): prévia em joaomcoutinho.github.io/caroline-keffer,
         #     com basePath, e SEM indexação (noindex + robots bloqueando);
         #   - preenchida: site na raiz do domínio, canônica/OG/sitemap no

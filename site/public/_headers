@@ -1,0 +1,14 @@
+# Cloudflare Pages (06/10/2026). No GitHub Pages este arquivo é ignorado.
+
+# O endereço .pages.dev (e as prévias de cada deploy) não pode ser indexado:
+# competiria na busca com clinicacarolinekeffer.com.br. O domínio próprio não
+# casa com estas regras e sai indexável.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# JS e CSS do Next levam hash no nome: o conteúdo de um endereço nunca muda.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
