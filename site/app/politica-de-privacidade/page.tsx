@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PaginaDocumento } from "@/components/paginas/PaginaDocumento";
 import { politica } from "@/content/documentos";
-import { meta } from "@/content/site";
+import { meta, ogImagem } from "@/content/site";
 
 export const metadata: Metadata = {
   title: politica.seo.titulo,
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     siteName: "Clínica Pet Caroline Keffer",
     locale: "pt_BR",
     type: "website",
-    images: [{ url: `${meta.url}/og.jpg`, width: 1200, height: 630 }],
+    images: [ogImagem],
   },
 };
 

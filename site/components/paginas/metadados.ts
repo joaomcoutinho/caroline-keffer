@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { meta } from "@/content/site";
+import { meta, ogImagem } from "@/content/site";
 import type { Pagina } from "@/content/paginas";
 
 /**
@@ -12,7 +12,7 @@ import type { Pagina } from "@/content/paginas";
  */
 export function metadadosDe(pagina: Pagina): Metadata {
   const url = `${meta.url}${pagina.caminho}/`;
-  const imagem = { url: `${meta.url}/og.jpg`, width: 1200, height: 630, alt: pagina.topo.foto.alt };
+  const imagem = ogImagem;
 
   return {
     title: pagina.seo.titulo,

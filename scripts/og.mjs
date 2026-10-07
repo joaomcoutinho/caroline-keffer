@@ -1,14 +1,14 @@
 // Gera site/public/og.jpg (1200x630), o card de compartilhamento.
 //
-// 15/09/2026: o card acompanha o hero atual. A foto passou a ser a FACHADA (a
-// mesma do hero) e a copy é a headline do site, não mais o retrato da Dra.
-// Carol com a chamada antiga.
+// 07/10/2026: o card é o hero em miniatura (fundo claro, Fraunces e a pata de
+// fotos reais). Ver o comentário de COMPOSIÇÃO abaixo.
 //
 // POR QUE CHROME, E NÃO MAIS SHARP + OPENTYPE. O gerador anterior convertia o
 // texto em vetor com opentype.js a partir de TTFs estáticos da Bricolage e da
 // Jakarta, que eram as fontes do site. O site hoje usa Nunito e Nunito Sans, e
 // a Nunito é variável: o opentype.js não resolve o eixo de peso, então o título
-// sairia em Regular. Renderizar HTML no Chrome resolve fonte variável, quebra de
+// sairia em Regular. (Hoje o título é a Fraunces, também variável, com o eixo
+// SOFT.) Renderizar HTML no Chrome resolve fonte variável, quebra de
 // linha e kerning do mesmo jeito que o site, com a MESMA tipografia.
 //
 // Precisa do Google Chrome instalado (caminho em CHROME, ou a variável de
@@ -33,98 +33,104 @@ const H = 630;
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const base64 = (arquivo) => readFileSync(path.join(RAIZ_SITE, arquivo)).toString("base64");
-const fachada = `data:image/webp;base64,${base64("public/images/fachada_ceu.webp")}`;
-const selo = `data:image/jpeg;base64,${base64("public/images/logo-caroline-keffer.jpg")}`;
+const img = (arquivo) => `data:image/${arquivo.endsWith(".jpg") ? "jpeg" : "webp"};base64,${base64(`public${arquivo}`)}`;
 
 /*
-  COMPOSIÇÃO (17/09/2026, JM: "og estético, com a foto da fachada e transição
-  natural da copy para a imagem, e alguns serviços em categorias").
+  COMPOSIÇÃO (07/10/2026, JM: "algo mais autêntico, bonito e atrativo, de
+  acordo com o design do site"). O card anterior era uma foto escura com
+  pílulas e um botão de WhatsApp desenhado — que no WhatsApp não clica.
 
-  A fachada é FULL-BLEED: ocupa o card inteiro e some para a esquerda num
-  degradê horizontal longo (petróleo sólido até 30%, transparente em 78%). É
-  a mesma ideia do hero no celular, onde a copy nasce sobre a foto, e não um
-  card partido ao meio com emenda dura.
-
-  A prévia aparece pequena no WhatsApp: por isso a copy é curta, o contraste é
-  alto (texto claro sobre petróleo) e as categorias são só QUATRO dos seis
-  serviços, as que mais separam a clínica de um pet shop de bairro.
+  Agora ele é o HERO do site em miniatura: fundo azul-claro da marca, título
+  na Fraunces (o clone livre da Recoleta, com o eixo SOFT no máximo) e, à
+  direita, a PATA montada com fotos reais — a fachada na almofada e a equipe
+  nos dedos, com o coração do logo no canto. Mesma geometria e mesmos
+  recortes do hero no celular (`.hero-palco` em globals.css).
 */
-// [x, y, tamanho, giro, opacidade] — posições escolhidas à mão, longe do texto.
-const PATAS = [
-  [34, 118, 52, -18, 0.1],
-  [96, 236, 34, 24, 0.08],
-  [22, 402, 44, 12, 0.07],
-  [150, 74, 30, 40, 0.07],
-  [612, 128, 40, -28, 0.08],
-  [700, 520, 46, 16, 0.06],
-  [420, 570, 32, -12, 0.07],
-  [268, 118, 24, 8, 0.06],
+const fachada = img("/images/fachada_ceu.webp");
+const selo = img("/images/logo-caroline-keffer.jpg");
+// [arquivo, object-position, zoom, origem] — os quatro dedos do hero, na ordem.
+const DEDOS = [
+  ["/images/servico_especialista.webp", "60% 12%", 1, "50% 50%"],
+  ["/images/dra/dra-carol-lulu.webp", "45% 45%", 1, "50% 50%"],
+  ["/images/galeria/atendimento-03.webp", "50% 32%", 1, "50% 50%"],
+  ["/images/dra/dra-carol-persa.webp", "50% 30%", 1.35, "55% 35%"],
 ];
-
-const CATEGORIAS = ["Clínica geral", "Cirurgia", "Especialidades", "Banho e tosa"];
+// Posição de cada dedo no palco (em %), igual a `.hero-dedo:nth-of-type(n)`.
+const GEOMETRIA = [
+  [-24, 0, 21.79, 24.29, 26.92],
+  [-8, 21.43, 1.28, 25.71, 28.85],
+  [8, 52.86, 1.28, 25.71, 28.85],
+  [24, 75.71, 21.79, 24.29, 26.92],
+];
+// [x, y, tamanho, giro, opacidade] — patinhas de fundo, longe do texto.
+const PATAS = [
+  [560, 40, 34, 18, 0.1],
+  [600, 520, 44, -14, 0.08],
+  [40, 560, 30, 22, 0.08],
+  [470, 470, 26, -30, 0.07],
+  [1130, 560, 36, 10, 0.08],
+];
+const pata = `<ellipse cx="20" cy="27" rx="10" ry="8.5"/><ellipse cx="8" cy="17" rx="4" ry="5" transform="rotate(-20 8 17)"/><ellipse cx="15.5" cy="9.5" rx="4" ry="5.2"/><ellipse cx="24.5" cy="9.5" rx="4" ry="5.2"/><ellipse cx="32" cy="17" rx="4" ry="5" transform="rotate(20 32 17)"/>`;
 
 const html = `<!doctype html><html><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,600..800,0..100&family=Nunito+Sans:wght@400;600;700&display=block" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: ${W}px; height: ${H}px; overflow: hidden; }
   body {
     position: relative;
-    background: #0b3141;
     font-family: "Nunito Sans", sans-serif;
-    color: #f3fafc;
-  }
-  .foto {
-    position: absolute; inset: 0;
-    background: url(${fachada}) center 26% / cover;
-  }
-  /* Transição da foto para a copy: horizontal longa + leve véu geral. */
-  .veu {
-    position: absolute; inset: 0;
+    color: #081c24;
     background:
-      linear-gradient(100deg, #0b3141 0%, #0b3141 32%, rgba(11, 49, 65, 0.9) 50%, rgba(11, 49, 65, 0.5) 68%, rgba(11, 49, 65, 0) 86%),
-      linear-gradient(180deg, rgba(7, 34, 44, 0.45) 0%, rgba(7, 34, 44, 0) 28%, rgba(7, 34, 44, 0.35) 100%);
+      radial-gradient(70% 90% at 80% 55%, #e3f1f8 0%, rgba(227, 241, 248, 0) 70%),
+      linear-gradient(160deg, #d6ebf5 0%, #cce4f0 55%, #bcdbea 100%);
   }
-  /* Poucas patinhas, espalhadas à mão: capricho de fundo, não textura. */
-  .pata { position: absolute; fill: #a8d6e8; opacity: 0.1; }
-  .copy { position: absolute; left: 72px; top: 52px; bottom: 52px; width: 648px; display: flex; flex-direction: column; }
-  .marca { display: flex; align-items: center; gap: 18px; }
-  .marca img { width: 62px; height: 62px; border-radius: 50%; border: 2px solid #fff; }
-  .marca b { display: block; font-weight: 700; font-size: 25px; line-height: 1.1; }
-  .marca span { display: block; margin-top: 4px; font-weight: 700; font-size: 13px; letter-spacing: 0.12em; color: #a8d6e8; }
-  .corpo { margin-top: auto; margin-bottom: auto; padding-top: 28px; }
-  h1 { font-family: "Nunito", sans-serif; font-weight: 800; font-size: 54px; line-height: 1.02; letter-spacing: -0.025em; color: #fff; text-shadow: 0 2px 18px rgba(4, 30, 40, 0.45); }
-  h1 em { font-style: normal; color: #a8d6e8; }
-  .cats { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
-  .cats span {
-    display: inline-flex; align-items: center; height: 42px; padding: 0 17px;
-    border-radius: 999px; border: 1.5px solid rgba(168, 214, 232, 0.55);
-    background: rgba(168, 214, 232, 0.12);
-    font-size: 18px; font-weight: 600; color: #e3f2f7; white-space: nowrap;
+  .pata { position: absolute; fill: #1f6e88; }
+  .copy { position: absolute; left: 72px; top: 56px; bottom: 56px; width: 560px; display: flex; flex-direction: column; }
+  .marca { display: flex; align-items: center; gap: 16px; }
+  .marca img { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 10px 22px -14px rgba(4, 30, 40, 0.6); }
+  .marca b { display: block; font-weight: 700; font-size: 22px; line-height: 1.15; }
+  .marca span { display: block; margin-top: 3px; font-size: 15px; font-weight: 600; color: #3d5a66; }
+  .corpo { margin-top: auto; }
+  h1 {
+    font-family: "Fraunces", serif; font-variation-settings: "SOFT" 100, "opsz" 96;
+    font-weight: 700; font-size: 62px; line-height: 1.04; letter-spacing: -0.015em; color: #081c24;
   }
-  .rodape { margin-top: 30px; display: flex; }
-  .cta { display: inline-flex; align-items: center; gap: 12px; height: 64px; padding: 0 34px; border-radius: 999px; background: #7ec0dc; color: #07222c; font-weight: 700; font-size: 24px; white-space: nowrap; box-shadow: 0 18px 40px -18px rgba(4, 30, 40, 0.9); }
-  .cta svg { width: 26px; height: 26px; }
+  h1 em { font-style: normal; color: #2e7a94; }
+  .sub { margin-top: 22px; font-size: 22px; line-height: 1.45; color: #2c4752; max-width: 520px; text-wrap: balance; }
+  .prova { margin-top: auto; display: flex; align-items: center; gap: 14px; font-size: 18px; font-weight: 700; color: #1d5a70; }
+  .prova i { width: 5px; height: 5px; border-radius: 50%; background: #1d5a70; opacity: 0.5; }
+  .estrela { color: #e0a426; }
+
+  /* A pata: palco 700x780 do hero, aqui com 545px de altura. */
+  .palco { position: absolute; right: 64px; top: 46px; width: 489px; height: 545px; }
+  .janela, .dedo { position: absolute; overflow: hidden; border: 5px solid rgba(255, 255, 255, 0.95); box-shadow: 0 26px 48px -26px rgba(4, 30, 40, 0.7); }
+  .janela { left: 14.3%; top: 40.1%; width: 71.4%; height: 56.9%; border-radius: 50% 50% 40% 40% / 64% 64% 36% 36%; }
+  .janela img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; transform: scale(1.16); transform-origin: 28% 45%; }
+  .dedo { border-radius: 50%; }
+  .dedo img { width: 100%; height: 100%; object-fit: cover; }
+  .coracao { position: absolute; right: 19%; bottom: 7%; width: 9%; filter: drop-shadow(0 6px 10px rgba(4, 30, 40, 0.45)); }
 </style></head><body>
-  <div class="foto"></div>
-  <div class="veu"></div>
-  ${PATAS.map(
-    (p) =>
-      `<svg class="pata" viewBox="0 0 40 40" style="left:${p[0]}px;top:${p[1]}px;width:${p[2]}px;transform:rotate(${p[3]}deg);opacity:${p[4]}"><ellipse cx="20" cy="27" rx="10" ry="8.5"/><ellipse cx="8" cy="17" rx="4" ry="5"/><ellipse cx="15.5" cy="9.5" rx="4" ry="5.2"/><ellipse cx="24.5" cy="9.5" rx="4" ry="5.2"/><ellipse cx="32" cy="17" rx="4" ry="5"/></svg>`,
-  ).join("")}
+  ${PATAS.map((p) => `<svg class="pata" viewBox="0 0 40 40" style="left:${p[0]}px;top:${p[1]}px;width:${p[2]}px;transform:rotate(${p[3]}deg);opacity:${p[4]}">${pata}</svg>`).join("")}
   <div class="copy">
     <div class="marca">
       <img src="${selo}" alt="">
-      <div><b>Caroline Keffer</b><span>CLÍNICA VETERINÁRIA · TORRE, RECIFE</span></div>
+      <div><b>Clínica Pet Caroline Keffer</b><span>Veterinária na Torre, Recife</span></div>
     </div>
     <div class="corpo">
-      <h1>Tudo para seu pet,<br>onde ele se sente <em>em&nbsp;casa.</em></h1>
-      <div class="cats">${CATEGORIAS.map((c) => `<span>${c}</span>`).join("")}</div>
-      <div class="rodape">
-        <span class="cta"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>Agendar pelo WhatsApp</span>
-      </div>
+      <h1>Tudo para seu pet, onde ele se sente <em>em&nbsp;casa.</em></h1>
+      <p class="sub">Clínica geral, cirurgia, especialidades, exames e banho e tosa, com a Dra.&nbsp;Carol.</p>
     </div>
+    <div class="prova" style="margin-top:34px"><span><span class="estrela">★</span> 4,8 no Google</span><i></i><span>Há mais de 20 anos na Torre</span></div>
+  </div>
+  <div class="palco">
+    ${DEDOS.map((d, i) => {
+      const [giro, x, y, w, h] = GEOMETRIA[i];
+      return `<div class="dedo" style="left:${x}%;top:${y}%;width:${w}%;height:${h}%;transform:rotate(${giro}deg)"><img src="${img(d[0])}" style="object-position:${d[1]};transform:scale(${d[2]});transform-origin:${d[3]}"></div>`;
+    }).join("")}
+    <div class="janela"><img src="${fachada}"></div>
+    <svg class="coracao" viewBox="0 0 32 30"><path d="M16 28 C 5 20, 1 13, 3 7.5 C 5 2.5, 11.5 1.8, 16 7 C 20.5 1.8, 27 2.5, 29 7.5 C 31 13, 27 20, 16 28 Z" fill="#e2463f" stroke="#ffffff" stroke-width="2.5"/></svg>
   </div>
 </body></html>`;
 

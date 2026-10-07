@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Nunito_Sans } from "next/font/google";
-import { meta, ehProposta } from "@/content/site";
+import { meta, ehProposta, ogImagem } from "@/content/site";
 import "./globals.css";
 
 /*
@@ -52,21 +52,14 @@ export const metadata: Metadata = {
     siteName: "Clínica Pet Caroline Keffer",
     locale: "pt_BR",
     type: "website",
-    images: [
-      {
-        url: `${meta.url}/og.jpg`,
-        width: 1200,
-        height: 630,
-        alt: "Fachada da Clínica Veterinária Caroline Keffer, na Torre, ao lado da chamada do site",
-      },
-    ],
+    images: [ogImagem],
   },
   // O WhatsApp, que é por onde este site mais circula, lê o card do Twitter.
   twitter: {
     card: "summary_large_image",
     title: meta.titulo,
     description: meta.descricao,
-    images: [`${meta.url}/og.jpg`],
+    images: [ogImagem],
   },
 };
 

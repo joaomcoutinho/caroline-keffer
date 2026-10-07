@@ -84,6 +84,18 @@ export const meta = {
   revisao: "2026-10-06",
 } as const;
 
+/**
+ * Card de compartilhamento (gerado por scripts/og.mjs). O `?v=` muda quando a
+ * imagem muda: WhatsApp e Facebook guardam a prévia pelo endereço da imagem,
+ * e sem isso continuam mostrando a antiga.
+ */
+export const ogImagem = {
+  url: `${meta.url}/og.jpg?v=2`,
+  width: 1200,
+  height: 630,
+  alt: "Clínica Pet Caroline Keffer: a fachada na Torre e a equipe com os pets, montadas na pata do logo, ao lado da chamada do site",
+} as const;
+
 /*
  * Âncoras com "/" na frente (27/09/2026): com as páginas internas, o menu
  * precisa levar de volta à seção da HOME de qualquer página. Os componentes
