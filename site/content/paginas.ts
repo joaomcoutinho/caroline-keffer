@@ -1598,19 +1598,18 @@ export const rodapeServicos = [
 export const painelAgora = {
   titulo: "O que fazer agora",
   limiteEmergencia: "18:00",
-  /* 06/10/2026, segunda versão (JM: a faixa com borda e a etiqueta "HOJE"
-     tinham "cara de IA"). Agora o card fala a língua do site: a instrução do
-     momento no título da marca, com o sobretítulo entre fios dos perfis, e a
-     semana desenhada em PEGADAS (as mesmas da trilha do hero), com o coração
-     do logo marcando o dia de hoje. A janela de cada dia sai do expediente:
-     até as 18h, ou até fechar no sábado (16h). */
+  /* 06/10/2026, terceira versão (JM: "mais simples, sem muitos elementos e
+     ícones, sem a bolinha vermelha"). Só tipografia: o título diz o que fazer
+     AGORA, e os horários de emergência vêm na mesma ficha de colunas do topo
+     das páginas internas. A janela de cada dia sai do expediente: até as 18h,
+     ou até fechar no sábado (16h). */
   status: {
-    aberta: { rotulo: "Agora: aberto", titulo: "Pode vir direto.", texto: "A equipe estabiliza o seu pet na hora." },
-    fechada: { rotulo: "Agora: fechado", titulo: "Procure um plantão 24h.", texto: "Não espere a clínica abrir para levar o seu pet." },
+    aberta: { titulo: "Pode vir direto.", texto: "A equipe estabiliza o seu pet na hora." },
+    fechada: { titulo: "Procure um plantão 24h.", texto: "Não espere a clínica abrir para levar o seu pet." },
     /* Antes da hidratação não se sabe a hora: a regra geral. */
-    neutro: { rotulo: "Em uma emergência", titulo: "No horário, venha direto.", texto: "Fora dele, procure um plantão veterinário 24h." },
+    neutro: { titulo: "No horário abaixo, venha direto.", texto: "Fora dele, procure um plantão veterinário 24h." },
   },
-  rotuloSemana: "Emergência na clínica",
+  rotuloHorarios: "Emergência na clínica",
   nota: "Se precisar de internação à noite, a equipe encaminha para um hospital 24h.",
   botao: "Avisar que estou indo",
   mensagem: "Olá! É uma emergência, estou indo para a clínica agora.",

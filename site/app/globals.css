@@ -4497,52 +4497,11 @@ body[data-menu-aberto] .barra-agendamento {
     padding: 2rem;
   }
 }
-/* Painel de emergência, segunda versão (06/10/2026, JM: a faixa com borda e
-   a etiqueta "HOJE" tinham "cara de IA"). Peças da casa: o sobretítulo entre
-   fios dos perfis, o título da marca, a pegada da trilha do hero, o coração do
-   logo e o fio tracejado das fichas. */
-/* O momento: sobretítulo entre fios + a instrução no título da marca. */
-.agora-momento {
-  margin-top: 1.4rem;
-}
-.agora-momento-rotulo {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--brand-deep);
-}
-.agora-momento-rotulo::after {
-  content: "";
-  height: 1px;
-  flex: 1;
-  background-color: color-mix(in srgb, var(--brand) 45%, transparent);
-}
-/* O ponto de estado: azul e pulsando com a clínica aberta, vermelho do
-   coração com ela fechada. */
-.agora-momento:not([data-estado="neutro"]) .agora-momento-rotulo::before {
-  content: "";
-  height: 0.5rem;
-  width: 0.5rem;
-  flex-shrink: 0;
-  border-radius: 999px;
-  background-color: var(--brand);
-}
-.agora-momento[data-estado="aberta"] .agora-momento-rotulo::before {
-  animation: agora-pulso 2.4s ease-out infinite;
-}
-.agora-momento[data-estado="fechada"] .agora-momento-rotulo::before {
-  background-color: #e2463f;
-}
-@keyframes agora-pulso {
-  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand) 55%, transparent); }
-  70%, 100% { box-shadow: 0 0 0 0.45rem transparent; }
-}
+/* Painel de emergência, terceira versão (06/10/2026, JM: "mais simples, sem
+   muitos elementos e ícones"). Só tipografia: o título da marca diz o que
+   fazer agora, e os horários usam a ficha de colunas do topo das páginas. */
 .agora-momento-titulo {
-  margin-top: 0.55rem;
+  margin-top: 1rem;
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.1;
@@ -4551,113 +4510,17 @@ body[data-menu-aberto] .barra-agendamento {
   color: var(--text);
 }
 .agora-momento-texto {
-  margin-top: 0.4rem;
+  margin-top: 0.45rem;
   line-height: 1.5;
   color: var(--text-2);
 }
-
-/* A semana em pegadas. */
-.agora-semana-rotulo {
+.agora-horarios-rotulo {
   margin-top: 1.6rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.875rem;
   color: var(--text-3);
 }
-.semana {
-  margin-top: 0.75rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-.semana-grupo {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-.semana-dias {
-  display: flex;
-  justify-content: center;
-  gap: 0.3rem;
-}
-.semana-dia {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-}
-.semana-inicial {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--text-3);
-}
-.semana-dia[data-hoje] .semana-inicial {
-  color: var(--brand-deep);
-}
-.semana-marca {
-  position: relative;
-  display: block;
-  width: 1.75rem;
-  height: 1.75rem;
-}
-.semana-pegada {
-  width: 100%;
-  height: 100%;
-  fill: color-mix(in srgb, var(--brand) 38%, transparent);
-}
-.semana-dia[data-hoje] .semana-pegada {
-  fill: var(--brand-deep);
-}
-/* Domingo: a pegada só no contorno, apagada. */
-.semana-grupo[data-fechado] .semana-pegada {
-  fill: none;
-  stroke: color-mix(in srgb, var(--text-3) 60%, transparent);
-  stroke-width: 1.4;
-  stroke-dasharray: 2.2 2;
-}
-.semana-coracao {
-  position: absolute;
-  right: -0.35rem;
-  bottom: -0.25rem;
-  width: 0.95rem;
-  filter: drop-shadow(0 2px 3px rgb(4 30 40 / 0.3));
-}
-/* A janela embaixo do grupo, num fio com as pontas viradas para cima (o
-   colchete que junta segunda a sexta). */
-.semana-hora {
-  margin-top: 0.55rem;
-  padding-top: 0.45rem;
-  border-top: 1.5px solid color-mix(in srgb, var(--brand) 45%, transparent);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  text-align: center;
-  white-space: nowrap;
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-  position: relative;
-}
-.semana-hora::before,
-.semana-hora::after {
-  content: "";
-  position: absolute;
-  top: -0.35rem;
-  height: 0.35rem;
-  width: 1.5px;
-  background-color: color-mix(in srgb, var(--brand) 45%, transparent);
-}
-.semana-hora::before { left: 0; }
-.semana-hora::after { right: 0; }
-.semana-grupo[data-fechado] .semana-hora {
-  border-top-style: dashed;
-  border-top-color: color-mix(in srgb, var(--text-3) 50%, transparent);
-  font-weight: 600;
-  color: var(--text-3);
-}
-.semana-grupo[data-fechado] .semana-hora::before,
-.semana-grupo[data-fechado] .semana-hora::after {
-  display: none;
+.agora-ficha {
+  margin-top: 0.6rem;
 }
 
 /* Ações e nota, depois do fio tracejado das fichas. */
@@ -4679,24 +4542,6 @@ body[data-menu-aberto] .barra-agendamento {
 @media (max-width: 639px) {
   .agora-momento-titulo {
     font-size: 1.5rem;
-  }
-  .semana {
-    gap: 0.5rem;
-  }
-  .semana-dias {
-    gap: 0.15rem;
-  }
-  .semana-marca {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-  .semana-hora {
-    font-size: 0.75rem;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .agora-momento[data-estado="aberta"] .agora-momento-rotulo::before {
-    animation: none;
   }
 }
 .agora-ligar {
