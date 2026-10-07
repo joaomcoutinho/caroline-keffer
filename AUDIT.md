@@ -1,7 +1,7 @@
 # Auditoria — Clínica Pet Caroline Keffer · 2026-10-06
 
 **URL auditada:** https://joaomcoutinho.github.io/caroline-keffer/ (prévia no GitHub Pages)
-**Domínio do cliente:** clinicacarolinekeffer.com.br — **ainda não resolve** (DNS vazio)
+**Domínio do cliente:** clinicacarolinekeffer.com.br — **no ar desde 06/10/2026** (Cloudflare Pages)
 **Perfil:** institucional estático (Next.js `output: export`, GitHub Pages) · **Jurisdição:** BR
 **Recorrência:** não respondida — tratada como **não** até alguém dizer o contrário
 **Escopo pedido:** arquivos e configuração técnica de SEO, política de privacidade, termos e cookies
@@ -19,9 +19,15 @@ código: é o **domínio no ar** e a **decisão sobre medição**.
 
 ## Crítico
 
-- [ ] **O site ainda não está no domínio da clínica** — ausência (P0-1).
-  **Evidência:** `dig +short clinicacarolinekeffer.com.br` → vazio.
-  **Conserto:** registrar/apontar o domínio e fazer a virada (abaixo) · **Custo:** 30 min + propagação
+- [x] **O site não estava no domínio da clínica** — ausência (P0-1). **Resolvido em 06/10/2026.**
+  Domínio na Cloudflare (nameservers `audrey`/`guy`, delegação AA no registro.br), site no
+  Cloudflare Pages `clinica-caroline-keffer`, certificado válido até 05/01/2027.
+  **Evidência:** home 200 com canônica no domínio, sem `noindex` nem `x-robots-tag`;
+  `robots.txt` com `Allow: /` + sitemap; 38/38 URLs do sitemap → 200; 404 → 404;
+  `https://www…/especialidades/cardiologia/?utm_source=teste` → 301 para o apex com caminho
+  e query; `http://www…/equipe/` → 2 saltos → 200 no apex; OAI-SearchBot, GPTBot, ClaudeBot,
+  PerplexityBot, Googlebot e bingbot → 200. O `.pages.dev` sai com `x-robots-tag: noindex`.
+  Publicar: `npm run publicar` em `site/`.
 
 - [ ] **Nenhuma medição instalada** — ausência (P0-4). Não é falha de conformidade: é a
   clínica sem nenhum dado sobre o próprio site.
@@ -58,7 +64,7 @@ código: é o **domínio no ar** e a **decisão sobre medição**.
 - [ ] **Decisão escrita sobre robô de treino de IA** (GPTBot, Google-Extended).
   Hoje nenhum é bloqueado, o que é o padrão seguro. É do dono, não da agência.
 
-## Como virar para o domínio
+## Como virar para o domínio (GitHub Pages — não usado; produção é Cloudflare)
 
 1. Apontar o DNS do domínio para o GitHub Pages (apex: registros A do Pages; `www`: CNAME
    para `joaomcoutinho.github.io`).
