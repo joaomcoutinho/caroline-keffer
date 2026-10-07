@@ -87,15 +87,15 @@ const html = `<!doctype html><html><head><meta charset="utf-8">
       linear-gradient(160deg, #d6ebf5 0%, #cce4f0 55%, #bcdbea 100%);
   }
   .pata { position: absolute; fill: #1f6e88; }
-  .copy { position: absolute; left: 72px; top: 56px; bottom: 56px; width: 560px; display: flex; flex-direction: column; }
-  .marca { display: flex; align-items: center; gap: 16px; }
-  .marca img { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 10px 22px -14px rgba(4, 30, 40, 0.6); }
-  .marca b { display: block; font-weight: 700; font-size: 22px; line-height: 1.15; }
-  .marca span { display: block; margin-top: 3px; font-size: 15px; font-weight: 600; color: #3d5a66; }
+  .copy { position: absolute; left: 72px; top: 48px; bottom: 52px; width: 560px; display: flex; flex-direction: column; }
+  .marca { display: flex; align-items: center; gap: 22px; }
+  .marca img { width: 104px; height: 104px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 16px 30px -16px rgba(4, 30, 40, 0.6); }
+  .marca b { display: block; font-family: "Fraunces", serif; font-variation-settings: "SOFT" 100, "opsz" 72; font-weight: 700; font-size: 36px; line-height: 1.05; letter-spacing: -0.01em; }
+  .marca span { display: block; margin-top: 6px; font-size: 18px; font-weight: 600; color: #3d5a66; }
   .corpo { margin-top: auto; }
   h1 {
     font-family: "Fraunces", serif; font-variation-settings: "SOFT" 100, "opsz" 96;
-    font-weight: 700; font-size: 62px; line-height: 1.04; letter-spacing: -0.015em; color: #081c24;
+    font-weight: 700; font-size: 56px; line-height: 1.04; letter-spacing: -0.015em; color: #081c24;
   }
   h1 em { font-style: normal; color: #2e7a94; }
   .sub { margin-top: 22px; font-size: 22px; line-height: 1.45; color: #2c4752; max-width: 520px; text-wrap: balance; }
@@ -116,10 +116,10 @@ const html = `<!doctype html><html><head><meta charset="utf-8">
   <div class="copy">
     <div class="marca">
       <img src="${selo}" alt="">
-      <div><b>Clínica Pet Caroline Keffer</b><span>Veterinária na Torre, Recife</span></div>
+      <div><b>Clínica Pet<br>Caroline Keffer</b><span>Veterinária na Torre, Recife</span></div>
     </div>
     <div class="corpo">
-      <h1>Tudo para seu pet, onde ele se sente <em>em&nbsp;casa.</em></h1>
+      <h1>Tudo para seu pet,<br>onde ele se sente<br><em>em&nbsp;casa.</em></h1>
       <p class="sub">Clínica geral, cirurgia, especialidades, exames e banho e tosa, com a Dra.&nbsp;Carol.</p>
     </div>
     <div class="prova" style="margin-top:34px"><span><span class="estrela">★</span> 4,8 no Google</span><i></i><span>Há mais de 20 anos na Torre</span></div>

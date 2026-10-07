@@ -90,7 +90,7 @@ export const meta = {
  * e sem isso continuam mostrando a antiga.
  */
 export const ogImagem = {
-  url: `${meta.url}/og.jpg?v=2`,
+  url: `${meta.url}/og.jpg?v=3`,
   width: 1200,
   height: 630,
   alt: "Clínica Pet Caroline Keffer: a fachada na Torre e a equipe com os pets, montadas na pata do logo, ao lado da chamada do site",
