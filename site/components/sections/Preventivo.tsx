@@ -13,7 +13,7 @@ import type { Icon } from "@phosphor-icons/react";
 import { Secao } from "@/components/ui/Secao";
 import { Revelar } from "@/components/ui/Revelar";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
-import { preventivo, CTA_PRIMARIO } from "@/content/site";
+import { preventivo, CTA_PRIMARIO, fonteAaha } from "@/content/site";
 
 /**
  * Cuidado preventivo por fase de vida.
@@ -167,7 +167,13 @@ export function Preventivo() {
               className="mt-0.5 shrink-0 text-brand"
               aria-hidden
             />
-            {preventivo.aviso}
+            <span>
+              {preventivo.aviso}{" "}
+              <a href={fonteAaha.url} target="_blank" rel="noopener" className="underline underline-offset-2">
+                Fonte: {fonteAaha.rotulo}
+              </a>
+              .
+            </span>
           </p>
 
           <div className="mt-6 flex justify-center">

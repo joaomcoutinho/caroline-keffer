@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "publicar": "node scripts/variantes-imagem.mjs && rm -rf out && DEPLOY_ALVO=pages NEXT_PUBLIC_BASE_PATH= NEXT_PUBLIC_SITE_URL=https://clinicacarolinekeffer.com.br NEXT_PUBLIC_SITE_APROVADO=1 next build && node $HOME/.claude/skills/seo-mxc/ferramentas/conferir-seo.mjs --dist=out --dominio=https://clinicacarolinekeffer.com.br --barra=com > out-conferir-seo.txt; tail -3 out-conferir-seo.txt && npx wrangler pages deploy out --project-name=clinica-caroline-keffer --branch=main --commit-dirty=true"
+    "publicar": "node scripts/variantes-imagem.mjs && rm -rf out && DEPLOY_ALVO=pages NEXT_PUBLIC_BASE_PATH= NEXT_PUBLIC_SITE_URL=https://clinicacarolinekeffer.com.br NEXT_PUBLIC_SITE_APROVADO=1 next build && node $HOME/.claude/skills/seo-mxc/ferramentas/conferir-seo.mjs --dist=out --dominio=https://clinicacarolinekeffer.com.br --barra=com > out-conferir-seo.txt; tail -3 out-conferir-seo.txt && node scripts/conferir-build.mjs out https://clinicacarolinekeffer.com.br && npx wrangler pages deploy out --project-name=clinica-caroline-keffer --branch=main --commit-dirty=true"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

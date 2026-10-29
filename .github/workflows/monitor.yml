@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 5
     env:
       DOMINIO: clinicacarolinekeffer.com.br
-      PALAVRA: "TESTE-DE-QUEDA-29-10"
+      PALAVRA: "Rua Araguatins"
     steps:
       - name: Páginas respondem com o conteúdo certo
         run: |

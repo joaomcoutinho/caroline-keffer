@@ -950,6 +950,16 @@ export const comparativo = {
  * antes de publicar: periodicidade é decisão clínica e muda com porte, raça e
  * histórico.
  */
+/**
+ * Fonte citada no calendário preventivo (seo-mxc 1.50): o resumo oficial da
+ * AAHA sobre as diretrizes AAHA/AVMA (exame anual, semestral no idoso, 70% a
+ * 80% com doença dental aos 3 anos). Conferido por busca em 29/10/2026.
+ */
+export const fonteAaha = {
+  rotulo: "resumo das diretrizes na AAHA",
+  url: "https://www.aaha.org/resources/preventive-healthcare-for-pets/",
+} as const;
+
 export const preventivo = {
   headline: "Seu pet precisa de quê, e de quanto em quanto tempo?",
   subhead:

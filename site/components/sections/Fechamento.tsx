@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { caminhoPublico } from "@/lib/caminho";
-import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr";
+import { InstagramLogoIcon, WheelchairIcon } from "@phosphor-icons/react/dist/ssr";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
 import { ctaFinal, rodape, contato, navegacao, empresa } from "@/content/site";
@@ -158,6 +158,13 @@ export function Fechamento() {
               </Link>
               <Link href="/termos-de-uso" className="-my-2 py-2 underline underline-offset-2 transition-colors hover:text-acao-texto">
                 Termos de uso
+              </Link>
+              {/* Símbolo e nome "Acessibilidade" em destaque (LBI art. 63; seo-mxc
+                  1.115): leva a como avisar a clínica, nunca a um selo de
+                  "site acessível". */}
+              <Link href="/politica-de-privacidade#acessibilidade" className="-my-2 inline-flex items-center gap-1 py-2 underline underline-offset-2 transition-colors hover:text-acao-texto">
+                <WheelchairIcon size={14} weight="bold" aria-hidden />
+                Acessibilidade
               </Link>
               {medicaoLigada ? (
                 <BotaoPreferenciasCookies className="-my-2 cursor-pointer py-2 underline underline-offset-2 transition-colors hover:text-acao-texto" />

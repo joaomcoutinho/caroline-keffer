@@ -15,7 +15,7 @@ import { Trilho } from "@/components/ui/Trilho";
 import { Icone } from "@/components/paginas/Icone";
 import { PassosCaminho } from "@/components/paginas/PassosCaminho";
 import { BlocoChamada, BlocoEmergencia, BlocoLimites, BlocoPerfis, BlocoRota, SinaisAlerta } from "@/components/paginas/Destaques";
-import { preventivo } from "@/content/site";
+import { preventivo, fonteAaha } from "@/content/site";
 import { especialistas, type Bloco, type Cartao } from "@/content/paginas";
 
 /*
@@ -265,6 +265,11 @@ function BlocoFases({ bloco }: { bloco: Extract<Bloco, { tipo: "fases" }> }) {
   return (
     <>
       <Titulo intro={bloco.intro}>{bloco.titulo}</Titulo>
+      <p className="mt-3 text-sm text-text-3">
+        <a href={fonteAaha.url} target="_blank" rel="noopener" className="underline underline-offset-2">
+          Fonte: {fonteAaha.rotulo}
+        </a>
+      </p>
       <Trilho ordenada className="mt-10 grid gap-4 lg:grid-cols-3 lg:gap-5">
         {fases.map((f, i) => {
           const IconeFase = iconesFase[f.id] ?? PawPrintIcon;

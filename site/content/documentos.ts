@@ -52,7 +52,7 @@ export const politica: Documento = {
     descricao:
       "Como a Clínica Pet Caroline Keffer trata os dados de quem visita o site e fala com a clínica pelo WhatsApp: cookies de análise só com o seu aceite, conforme a LGPD.",
   },
-  atualizadaEm: "2026-10-28",
+  atualizadaEm: "2026-10-29",
   intro:
     "Este site não tem formulário e só usa cookies de análise se você aceitar. Os seus dados pessoais só chegam até a clínica quando você escolhe falar com a gente pelo WhatsApp ou pelo telefone. Abaixo, o que acontece com eles, em linguagem simples.",
   secoes: [
@@ -124,6 +124,12 @@ export const politica: Documento = {
       paragrafos: [
         `Quem responde pelos dados pessoais é a própria clínica. Para qualquer pedido sobre os seus dados, escreva para ${contato.email} ou fale pelo WhatsApp ${contato.whatsappExibicao}, dizendo que o assunto é dados pessoais. A resposta vem em até 15 dias.`,
         "Se não ficar satisfeito com a resposta, você também pode procurar a Autoridade Nacional de Proteção de Dados (ANPD).",
+      ],
+    },
+    {
+      titulo: "Acessibilidade",
+      paragrafos: [
+        `Se alguma parte deste site não funcionar para você, com leitor de tela, teclado, zoom ou em qualquer aparelho, avise a clínica pelo WhatsApp ${contato.whatsappExibicao} ou pelo e-mail ${contato.email}. A gente corrige e, enquanto isso, passa a informação que você precisa pelo próprio WhatsApp.`,
       ],
     },
     {

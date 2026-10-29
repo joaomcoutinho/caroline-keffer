@@ -44,6 +44,15 @@ export const horarioClinica: Record<string, unknown>[] = [
   })),
 ];
 
+const endereco = {
+  "@type": "PostalAddress",
+  streetAddress: contato.endereco,
+  addressLocality: "Recife",
+  addressRegion: "PE",
+  postalCode: contato.cep,
+  addressCountry: "BR",
+};
+
 export function DadosEstruturados() {
   const dados = {
     "@context": "https://schema.org",
@@ -65,14 +74,7 @@ export function DadosEstruturados() {
     email: contato.email,
     legalName: empresa.razaoSocial ?? undefined,
     taxID: empresa.cnpj ?? undefined,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: contato.endereco,
-      addressLocality: "Recife",
-      addressRegion: "PE",
-      postalCode: contato.cep,
-      addressCountry: "BR",
-    },
+    address: endereco,
     /* O Perfil da Empresa no Google (pelo CID) entra no `sameAs` e no `hasMap`:
        é o que amarra o site à ficha do mapa. */
     sameAs: [contato.instagram, contato.mapa],
@@ -80,7 +82,26 @@ export function DadosEstruturados() {
     /* Logo quadrado (802 px) e a fachada real como imagem da entidade (seo-mxc
        1.42 e 1.111): o resultado do Google mostra foto de verdade, não arte. */
     logo: `${meta.url}/images/logo-caroline-keffer.jpg`,
-    image: `${meta.url}/images/fachada_hero.webp`,
+    /* Foto autoral da clínica, com autoria e licença (seo-mxc 1.53). */
+    image: {
+      "@type": "ImageObject",
+      url: `${meta.url}/images/fachada_hero.webp`,
+      creator: { "@type": "Organization", name: "Clínica Pet Caroline Keffer" },
+      copyrightNotice: "© Clínica Pet Caroline Keffer",
+      license: `${meta.url}/termos-de-uso/`,
+    },
+    /* Banho e tosa e loja no mesmo endereço (seo-mxc 1.90): a natureza
+       principal é veterinária. */
+    department: [
+      { "@type": "LocalBusiness", name: "Banho e tosa Caroline Keffer", url: `${meta.url}/banho-e-tosa/` },
+      { "@type": "PetStore", name: "Loja da Clínica Pet Caroline Keffer" },
+    ].map((d) => ({
+      ...d,
+      /* Mesmo endereço, telefone e horário da clínica: é tudo no mesmo balcão. */
+      address: endereco,
+      telephone: "+5581993037584",
+      openingHoursSpecification: horarioClinica,
+    })),
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer service",
