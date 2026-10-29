@@ -6,7 +6,7 @@
 
 ## Decisões já tomadas (JM, 27/09/2026)
 
-- **Telefone principal: o WhatsApp (81) 99303-7584.** O fixo (81) 3268-5979 entra como adicional.
+- **Telefone principal: o WhatsApp (81) 99303-7584.** O fixo (81) 3082-0083 entra como adicional.
 - **São vários profissionais atendendo no endereço.** Pela diretriz do Google isso permite
   **um perfil da clínica + um perfil por profissional** que atende público próprio ali.
   Nunca um perfil por especialidade da mesma pessoa.
@@ -30,7 +30,7 @@
 ## 2. NAP — igual ao site, letra por letra
 - [ ] Nome (ver pendência acima).
 - [ ] Endereço: Rua Araguatins, 63 — Torre, Recife - PE, 50710-060. **Pino sobre a fachada.**
-- [ ] Telefone principal: WhatsApp (81) 99303-7584 · adicional: (81) 3268-5979.
+- [ ] Telefone principal: WhatsApp (81) 99303-7584 · adicional: (81) 3082-0083.
 - [ ] Horário regular + **horários de feriado** (12/10, 02/11, 15/11, 20/11, 25/12).
 
 ## 3. Categoria e serviços
