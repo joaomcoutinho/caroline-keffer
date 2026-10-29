@@ -2,7 +2,7 @@
 
 **Cliente no painel:** Caroline Keffer · **Domínio canônico:** https://clinicacarolinekeffer.com.br
 **Site:** Clínica Pet Caroline Keffer (clínica veterinária com banho e tosa e loja, Dra. Caroline Keffer, CRMV-PE 3053; Caroline Pet Shop Ltda, CNPJ 15.786.546/0001-97; Rua Araguatins, 63, Torre, Recife/PE) · **Domínio:** https://clinicacarolinekeffer.com.br (no ar desde 06/10/2026, Cloudflare Pages `clinica-caroline-keffer`)
-**Tipo:** site institucional de negócio local (clínica veterinária, um endereço), sem loja, sem login, sem formulário (contato só por WhatsApp), sem medição instalada · **Etiquetas que valem:** `[local]` · não valem: `[loja]` `[ref]` `[UE]` `[landing]` `[portal]` `[blog]` `[evento]` `[saas]` `[vagas]` `[hotel]` `[pago]` `[plano]` `[plano 597]`
+**Tipo:** site institucional de negócio local (clínica veterinária, um endereço), sem loja, sem login, sem formulário (contato só por WhatsApp), com GA4 G-WE1TTDQTL7 atrás do aviso de cookies desde 28/10 · **Etiquetas que valem:** `[local]` · não valem: `[loja]` `[ref]` `[UE]` `[landing]` `[portal]` `[blog]` `[evento]` `[saas]` `[vagas]` `[hotel]` `[pago]` `[plano]` `[plano 597]`
 **Plano:** nenhum. A pergunta de recorrência mensal não foi respondida e é tratada como NÃO (SKILL.md, pergunta de recorrência): base de medição obrigatória mesmo assim (3.10), aviso escrito e guia no fim (6.05); 0.06 segue aberto · **Data:** 28/10/2026 · **molde:** `seo-mxc/SEO-MXC.md`
 
 347 itens · 61 feitos · 132 N/A · 154 abertos
@@ -339,7 +339,7 @@ Loja Nuvemshop: onde cada item deste bloco mora está em `referencias/nuvemshop.
 - [ ] 4.11 Um nome só em todas as redes (Dra. Carol (clínica): um nome só nas redes (Instagram @clinicapet_carolinekeffer × Facebook clinicavetkeffer))
 - [ ] 4.12 Link do site na bio de **cada** rede (Instagram, TikTok, YouTube, Facebook, LinkedIn, Spotify, link na bio) — no lugar do `wa.me` (Dra. Carol (clínica): a bio do Instagram aponta pro WhatsApp (brief); trocar pelo site com UTM)
 - [ ] 4.13 WhatsApp Business com site, endereço (só área de atendimento: cidade, sem a casa, 4.24), horário e mensagem de ausência (Dra. Carol (clínica): site, endereço, horário e mensagem de ausência no WhatsApp Business)
-- [ ] 4.14 Cada perfil novo entra na lista de redes dos dados estruturados (MXC: o `sameAs` só tem o Instagram; faltam o Facebook e o link do Perfil)
+- [ ] 4.14 Cada perfil novo entra na lista de redes dos dados estruturados (MXC: 28/10 o `sameAs` tem o Instagram e o link do Perfil pelo CID; falta o Facebook, que só entra depois de a página ter o nome, o horário e o site certos (4.08, 4.11))
 - [ ] 4.18 Página da empresa no LinkedIn e canal no YouTube quando fizer sentido pro negócio (Dra. Carol (clínica): decidir se LinkedIn ou YouTube fazem sentido)
 - [ ] 4.19 Estar de verdade onde a IA lê: YouTube, sites de avaliação, imprensa, fóruns (presença real; menção artificial não ajuda) (Dra. Carol (clínica): presença real onde a IA lê (YouTube, avaliações, imprensa))
 - [ ] 4.20 Painel de conhecimento do Google reivindicado quando aparecer; Wikidata só quando o cliente cumpre o critério de notoriedade de lá (entidade descrita em referência séria e pública: imprensa, registro oficial); artigo na Wikipédia: ver Não fazer (MXC: ver se aparece painel de conhecimento e reivindicar)
@@ -356,7 +356,7 @@ Loja Nuvemshop: onde cada item deste bloco mora está em `referencias/nuvemshop.
 
 - [ ] 5.01 Relatório Páginas do Search Console + Inspeção de URL (o `site:` não é completo, serve só de olhada rápida) e Bing; repetir o que estourou a cota (JM: relatório Páginas do Search Console (em 11/10, 4 indexadas confirmadas e o resto na fila) e Bing (depois do 3.04))
 - [x] 5.02 Perfil da Empresa verificado? — 28/10: Perfil verificado
-- [ ] 5.03 Eventos chegando no GA4 (JM: sem GA4 (3.10))
+- [ ] 5.03 Eventos chegando no GA4 (JM: 28/10 duas visitas de teste chegaram no Tempo real do GA4; conferir em 29/10 se clique_whatsapp, clique_telefone e clique_rotas aparecem em Eventos e marcar clique_whatsapp como principal (3.10))
 - [x] 5.04 `[ref]` Duas semanas olhando 404 de endereço antigo com clique → vira 301 N/A — `[ref]` não vale: site novo, não havia site antes (a bio do Instagram ia direto pro WhatsApp)
 - [ ] 5.05 Relatórios de resultado rico do Search Console (Melhorias, Experiência de compras e, com página de vídeo, Vídeos) sem erro (JM: relatórios de Melhorias do Search Console sem erro)
 - [ ] 5.06 Robôs de IA visitaram de verdade: log da hospedagem ou painel do Cloudflare mostra OAI-SearchBot, PerplexityBot, Claude-SearchBot, meta-webindexer e Bingbot recebendo 200 (MXC: painel da Cloudflare mostrando OAI-SearchBot, PerplexityBot, Claude-SearchBot, meta-webindexer e Bingbot com 200)
