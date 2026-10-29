@@ -53,7 +53,7 @@ export function Fechamento() {
             <div className="flex items-center gap-3">
               <Image
                 src={caminhoPublico("/images/logo-caroline-keffer.jpg")}
-                alt=""
+                alt="Clínica Pet Caroline Keffer"
                 width={72}
                 height={72}
                 className="h-16 w-16 rounded-full object-cover sm:h-[72px] sm:w-[72px]"
