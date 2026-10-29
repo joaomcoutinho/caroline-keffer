@@ -12,3 +12,16 @@ https://:version.:project.pages.dev/*
 # JS e CSS do Next levam hash no nome: o conteúdo de um endereço nunca muda.
 /_next/static/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Fotos sem hash no nome (seo-mxc 1.114): 1 dia no navegador e 7 na borda. Foto
+# trocada com o MESMO nome leva até 1 dia pra aparecer; troca urgente = nome novo.
+/images/*
+  Cache-Control: public, max-age=86400, s-maxage=604800
+
+# Segurança (seo-mxc 1.22, 29/10/2026). HSTS em escada: começa em 1 dia; depois
+# de uma semana sem problema sobe para 1 mês e, em seguida, 1 ano. Sem CSP: o
+# site carrega o GA4 depois do aceite e uma CSP mal feita mata a medição.
+/*
+  Strict-Transport-Security: max-age=86400
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()

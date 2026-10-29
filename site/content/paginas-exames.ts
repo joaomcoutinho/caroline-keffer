@@ -19,7 +19,7 @@ export const ultrassom: Pagina = {
   rotulo: "Ultrassom",
   pais: paiExames,
   seo: {
-    titulo: "Ultrassom veterinário para cães e gatos | Torre, Recife",
+    titulo: "Ultrassom veterinário na Torre, Recife | Caroline Keffer",
     descricao:
       "Ultrassonografia de abdome para cães e gatos na Torre, Recife: fígado, rins, bexiga, intestino, útero e gestação. Veja o preparo e agende pelo WhatsApp.",
   },
@@ -119,7 +119,7 @@ export const raioX: Pagina = {
   rotulo: "Raio-x",
   pais: paiExames,
   seo: {
-    titulo: "Raio-x veterinário para cães e gatos | Torre, Recife",
+    titulo: "Raio-x veterinário na Torre, Recife | Caroline Keffer",
     descricao:
       "Radiografia para cães e gatos na Torre, Recife: fratura, tosse, coração, objeto engolido e articulações. Normalmente sem preparo. Agende pelo WhatsApp.",
   },
@@ -214,7 +214,7 @@ export const eletrocardiograma: Pagina = {
   rotulo: "Eletrocardiograma",
   pais: paiExames,
   seo: {
-    titulo: "Eletrocardiograma para cães e gatos | Torre, Recife",
+    titulo: "Eletrocardiograma veterinário em Recife | Caroline Keffer",
     descricao:
       "Eletrocardiograma veterinário na Torre, Recife: arritmia, sopro, desmaio e avaliação antes da cirurgia. Sem jejum e sem dor. Agende pelo WhatsApp.",
   },

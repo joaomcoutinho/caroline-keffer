@@ -25,3 +25,4 @@ out/
 # Variantes WebP das fotos: geradas por site/scripts/variantes-imagem.mjs a cada
 # `npm run publicar` (20 MB que se refazem sozinhos).
 site/public/images/_v/
+site/out-conferir-seo.txt

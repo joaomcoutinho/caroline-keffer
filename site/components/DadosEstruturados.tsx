@@ -1,4 +1,4 @@
-import { contato, empresa, meta, faq } from "@/content/site";
+import { contato, empresa, meta, faq, expediente } from "@/content/site";
 
 /**
  * JSON-LD VeterinaryCare — é o que faz a clínica aparecer no mapa e ser citada
@@ -7,28 +7,41 @@ import { contato, empresa, meta, faq } from "@/content/site";
  *
  * ⚠️ Horário e telefone ainda pendentes de validação com a clínica (ver brief.md).
  */
-/** Pino da ficha no Google Maps (pelo CID, lido em 28/10/2026). */
+/** Pino da ficha no Google Maps (coordenadas do lugar, plus code X35R+HM,
+ *  lidas em 29/10/2026; a leitura de 28/10 pegou o centro do mapa, ~1 km fora). */
 export const geoClinica = {
   "@type": "GeoCoordinates",
-  latitude: -8.04408,
-  longitude: -34.91758,
+  latitude: -8.04107,
+  longitude: -34.90832,
 };
 
-/* Horário confirmado pela clínica em 01/10/2026 — o mesmo do Perfil da Empresa.
-   Exportado para as páginas internas repetirem na entidade (seo-mxc 1.41). */
-export const horarioClinica = [
-  {
+/* Horário do dado estruturado sai do MESMO `expediente` que pinta a tela e o
+   "aberto agora" (seo-mxc 1.101): mudou o horário, muda tudo junto. Dias com o
+   mesmo horário viram um bloco só. Exportado para as páginas internas (1.41). */
+const DIAS_SCHEMA = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const blocosDaSemana = Object.values(
+  expediente.semana.reduce<Record<string, { opens: string; closes: string; dayOfWeek: string[] }>>(
+    (blocos, dia, i) => {
+      if (!dia) return blocos;
+      const chave = `${dia.abre}-${dia.fecha}`;
+      blocos[chave] ??= { opens: dia.abre, closes: dia.fecha, dayOfWeek: [] };
+      blocos[chave].dayOfWeek.push(DIAS_SCHEMA[i]);
+      return blocos;
+    },
+    {},
+  ),
+);
+
+export const horarioClinica: Record<string, unknown>[] = [
+  ...blocosDaSemana.map((b) => ({ "@type": "OpeningHoursSpecification", ...b })),
+  /* Feriado = fechado o dia todo (00:00 às 00:00), como o Google pede. */
+  ...expediente.feriados.map((dia) => ({
     "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    opens: "09:00",
-    closes: "19:00",
-  },
-  {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Saturday"],
-    opens: "08:00",
-    closes: "16:00",
-  },
+    opens: "00:00",
+    closes: "00:00",
+    validFrom: dia,
+    validThrough: dia,
+  })),
 ];
 
 export function DadosEstruturados() {
@@ -64,6 +77,16 @@ export function DadosEstruturados() {
        é o que amarra o site à ficha do mapa. */
     sameAs: [contato.instagram, contato.mapa],
     hasMap: contato.mapa,
+    /* Logo quadrado (802 px) e a fachada real como imagem da entidade (seo-mxc
+       1.42 e 1.111): o resultado do Google mostra foto de verdade, não arte. */
+    logo: `${meta.url}/images/logo-caroline-keffer.jpg`,
+    image: `${meta.url}/images/fachada_hero.webp`,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      telephone: "+5581993037584",
+      availableLanguage: "Portuguese",
+    },
     geo: geoClinica,
     openingHoursSpecification: horarioClinica,
     /* Sem `aggregateRating` (06/10/2026, checklist-final bloco 16): a nota é
@@ -88,11 +111,29 @@ export function DadosEstruturados() {
     })),
   } satisfies Record<string, unknown>;
 
+  /**
+   * WebSite só na home (seo-mxc 1.35): é de onde o Google tira o nome do site
+   * que aparece em cima do resultado. Mesmo nome do `og:site_name`.
+   */
+  const site = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${meta.url}/#site`,
+    name: "Clínica Pet Caroline Keffer",
+    alternateName: [contato.nomePerfilGoogle, "clinicacarolinekeffer.com.br"],
+    url: `${meta.url}/`,
+    publisher: { "@id": `${meta.url}/#clinica` },
+  } satisfies Record<string, unknown>;
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(dados) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(site) }}
       />
       <script
         type="application/ld+json"

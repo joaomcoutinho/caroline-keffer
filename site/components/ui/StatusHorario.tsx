@@ -36,6 +36,9 @@ function agoraEmRecife() {
   const partes = new Intl.DateTimeFormat("en-US", {
     timeZone: expediente.fuso,
     weekday: "short",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
@@ -47,12 +50,26 @@ function agoraEmRecife() {
   return {
     dia: Math.max(0, DIAS_EN.indexOf(pega("weekday"))),
     minutos: hora * 60 + Number(pega("minute")),
+    data: `${pega("year")}-${pega("month")}-${pega("day")}`,
   };
 }
 
+/** Data AAAA-MM-DD de `dias` depois de `data` (conta só no calendário). */
+function somaDias(data: string, dias: number) {
+  const d = new Date(`${data}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + dias);
+  return d.toISOString().slice(0, 10);
+}
+
+/** Horário do dia, ou null se a clínica fecha (domingo ou feriado). */
+function horarioDe(dia: number, data: string) {
+  if ((expediente.feriados as readonly string[]).includes(data)) return null;
+  return expediente.semana[dia];
+}
+
 function calcular(): Estado {
-  const { dia, minutos } = agoraEmRecife();
-  const hoje = expediente.semana[dia];
+  const { dia, minutos, data } = agoraEmRecife();
+  const hoje = horarioDe(dia, data);
 
   if (hoje && minutos >= emMinutos(hoje.abre) && minutos < emMinutos(hoje.fecha)) {
     return {
@@ -74,7 +91,7 @@ function calcular(): Estado {
   // Procura o próximo dia com expediente.
   for (let i = 1; i <= 7; i++) {
     const proximoDia = (dia + i) % 7;
-    const proximo = expediente.semana[proximoDia];
+    const proximo = horarioDe(proximoDia, somaDias(data, i));
     if (!proximo) continue;
     const quando = i === 1 ? "amanhã" : expediente.nomes[proximoDia];
     return {
@@ -128,8 +145,8 @@ export function useAbertoAgora(): boolean | null {
  * internamento, mesmo com a clínica ainda aberta. `null` antes da montagem.
  */
 function dentroDaJanela(limite: string) {
-  const { dia, minutos } = agoraEmRecife();
-  const hoje = expediente.semana[dia];
+  const { dia, minutos, data } = agoraEmRecife();
+  const hoje = horarioDe(dia, data);
   if (!hoje) return false;
   const fim = Math.min(emMinutos(hoje.fecha), emMinutos(limite));
   return minutos >= emMinutos(hoje.abre) && minutos < fim;

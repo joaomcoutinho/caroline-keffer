@@ -57,5 +57,5 @@ var m=document.cookie.match(new RegExp('(?:^|; )'+C+'=([^;]*)'));
 if(m&&m[1]==='v1.sim'){H.dataset.cookies='sim';window.kfMedir()}else if(m&&m[1]==='v1.nao'){H.dataset.cookies='nao'}
 document.addEventListener('click',function(e){if(!window.kfMedindo)return;var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href')||'',n=null;
 if(/wa\\.me|api\\.whatsapp/.test(h))n='clique_whatsapp';else if(/^tel:/.test(h))n='clique_telefone';else if(/google\\.[^/]+\\/maps|maps\\.app\\.goo|maps\\.google/.test(h))n='clique_rotas';
-if(n)gtag('event',n,{pagina:location.pathname,link_url:h.split('?')[0]})},true)})();`;
+if(n)gtag('event',n,{link_url:h.split('?')[0]})},true)})();`;
 }

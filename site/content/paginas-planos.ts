@@ -132,7 +132,7 @@ export const care: Pagina = {
   rotulo: "CARE",
   pais: paiPlanos,
   seo: {
-    titulo: "Clínica credenciada CARE Saúde Animal | Torre, Recife",
+    titulo: "Clínica credenciada CARE em Recife | Caroline Keffer",
     descricao:
       "A Clínica Caroline Keffer é credenciada CARE Saúde Animal na Torre, Recife. Veja como usar o cartão virtual do app e confirme a cobertura pelo WhatsApp.",
   },
@@ -207,7 +207,7 @@ export const petloveSaude: Pagina = {
   rotulo: "Petlove Saúde",
   pais: paiPlanos,
   seo: {
-    titulo: "Clínica credenciada Petlove Saúde na Torre, Recife",
+    titulo: "Clínica credenciada Petlove Saúde em Recife | Caroline Keffer",
     descricao:
       "A Clínica Caroline Keffer é credenciada Petlove Saúde na Torre, Recife. Veja como usar o plano na clínica e confirme a cobertura pelo WhatsApp.",
   },
@@ -286,7 +286,7 @@ export const petTop: Pagina = {
   rotulo: "Pet Top",
   pais: paiPlanos,
   seo: {
-    titulo: "Clínica credenciada Pet Top Saúde na Torre, Recife",
+    titulo: "Clínica credenciada Pet Top em Recife | Caroline Keffer",
     descricao:
       "A Clínica Caroline Keffer é credenciada Pet Top Saúde, plano de Recife, na Torre. Veja como usar a carteirinha digital e confirme a cobertura pelo WhatsApp.",
   },
@@ -360,7 +360,7 @@ export const plamevPet: Pagina = {
   rotulo: "Plamev Pet",
   pais: paiPlanos,
   seo: {
-    titulo: "Clínica credenciada Plamev Pet na Torre, Recife",
+    titulo: "Clínica credenciada Plamev Pet em Recife | Caroline Keffer",
     descricao:
       "A Clínica Caroline Keffer é credenciada Plamev Pet na Torre, Recife. Veja como ativar o ID Pet no app e confirme a cobertura pelo WhatsApp.",
   },

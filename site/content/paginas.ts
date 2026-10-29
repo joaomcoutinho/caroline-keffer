@@ -716,7 +716,7 @@ const nutricaoGastro: Pagina = {
   rotulo: "Nutrição e gastroenterologia",
   pais: paiEspecialidades,
   seo: {
-    titulo: "Nutrição e gastroenterologia veterinária | Torre, Recife",
+    titulo: "Nutrição e gastro veterinária em Recife | Caroline Keffer",
     descricao:
       "Vômito, diarreia, falta de apetite, obesidade e dieta para doenças: nutrição e gastroenterologia para cães e gatos na Torre, Recife. Agende pelo WhatsApp.",
   },
@@ -963,7 +963,7 @@ const examesImagem: Pagina = {
   caminho: "/exames-de-imagem",
   rotulo: "Exames de imagem",
   seo: {
-    titulo: "Raio-x, ultrassom e eletro para pets | Torre, Recife",
+    titulo: "Raio-x, ultrassom e eletro para pets em Recife | Caroline Keffer",
     descricao:
       "Raio-x, ultrassonografia e eletrocardiograma para cães e gatos na Torre, Recife, com o resultado explicado por quem acompanha seu pet. Agende pelo WhatsApp.",
   },
@@ -1090,7 +1090,7 @@ const checkUp: Pagina = {
   caminho: "/check-up-veterinario",
   rotulo: "Check-up",
   seo: {
-    titulo: "Check-up veterinário para cães e gatos | Torre, Recife",
+    titulo: "Check-up veterinário na Torre, Recife | Caroline Keffer",
     descricao:
       "De quanto em quanto tempo levar o pet ao veterinário e quais exames fazer em cada fase da vida. Check-up com exames na clínica, na Torre, Recife.",
   },

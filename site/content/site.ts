@@ -852,6 +852,13 @@ export const expediente = {
     { abre: "09:00", fecha: "19:00" },
     { abre: "08:00", fecha: "16:00" },
   ],
+  /**
+   * Dias em que a clínica fecha (seo-mxc 1.101 e 7.10). A clínica fecha em todo
+   * feriado nacional (confirmado em 28/10/2026); os mesmos estão no Perfil da
+   * Empresa como horário especial. Os municipais do Recife entram quando a
+   * clínica confirmar. Formato AAAA-MM-DD, no fuso de Recife.
+   */
+  feriados: ["2026-11-02", "2026-11-15", "2026-11-20", "2026-12-25", "2027-01-01"],
   nomes: [
     "domingo",
     "segunda",

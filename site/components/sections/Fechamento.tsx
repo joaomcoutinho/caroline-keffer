@@ -174,13 +174,15 @@ export function Fechamento() {
             ⚠️ LINK RASTREÁVEL (skill /rodape-rastreavel, 28/09/2026). O UTM em
             `rodape.agenciaUrl` é DE PROPÓSITO — não "limpe" o link: sem ele a
             visita cai em "direto" no GA4 da MXC e não dá para saber que veio
-            daqui. E `rel` é só "noopener", SEM "noreferrer": o noreferrer apaga
-            o referenciador, que é justamente o dado que interessa.
+            daqui. E `rel` é "nofollow noopener", SEM "noreferrer": o noreferrer
+            apaga o referenciador, que é justamente o dado que interessa; o
+            nofollow é a regra da skill desde 09/10 (link de crédito em todo
+            site de cliente não pode parecer troca de links pro Google).
           */}
           <a
             href={rodape.agenciaUrl}
             target="_blank"
-            rel="noopener"
+            rel="nofollow noopener"
             className="assinatura-mxc justify-self-center"
           >
             <span className="assinatura-texto">{rodape.credito}</span>

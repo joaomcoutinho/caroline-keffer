@@ -61,7 +61,7 @@ export const comoChegar: Pagina = {
   caminho: "/como-chegar",
   rotulo: "Como chegar",
   seo: {
-    titulo: "Como chegar à Clínica Caroline Keffer | Torre, Recife",
+    titulo: "Como chegar à clínica na Torre, Recife | Caroline Keffer",
     descricao:
       "Rua Araguatins, 63, na Torre, Recife: ao lado da Praça Batista da Silva, perto da Rua José Bonifácio. Estacionamento, horário e rota a partir dos bairros vizinhos.",
   },

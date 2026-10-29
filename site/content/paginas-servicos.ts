@@ -295,7 +295,7 @@ export const odontologia: Pagina = {
   caminho: "/odontologia-veterinaria",
   rotulo: "Limpeza de tártaro",
   seo: {
-    titulo: "Limpeza de tártaro em cães e gatos | Torre, Recife",
+    titulo: "Limpeza de tártaro em pets na Torre, Recife | Caroline Keffer",
     descricao:
       "Limpeza de tártaro com anestesia, extração de dente e tratamento de gengiva para cães e gatos na Torre, Recife. Mau hálito tem causa. Agende pelo WhatsApp.",
   },
@@ -409,7 +409,7 @@ export const consulta: Pagina = {
   caminho: "/consulta-veterinaria",
   rotulo: "Consulta veterinária",
   seo: {
-    titulo: "Consulta veterinária e clínica geral | Torre, Recife",
+    titulo: "Consulta veterinária na Torre, Recife | Caroline Keffer",
     descricao:
       "Consulta de clínica geral para cães e gatos com a Dra. Caroline Keffer e a Dra. Isa Lopes, na Torre, Recife. Segunda a sábado. Agende pelo WhatsApp.",
   },
@@ -509,7 +509,7 @@ export const laboratorio: Pagina = {
   caminho: "/exames-laboratoriais",
   rotulo: "Exames laboratoriais",
   seo: {
-    titulo: "Exame de sangue para cães e gatos | Torre, Recife",
+    titulo: "Exame de sangue para pets na Torre, Recife | Caroline Keffer",
     descricao:
       "Hemograma, bioquímico, exame de urina e de fezes para cães e gatos, com coleta na clínica, na Torre, Recife, e o resultado explicado por quem acompanha o seu pet.",
   },
@@ -731,7 +731,7 @@ export const urgencia: Pagina = {
   caminho: "/urgencia-veterinaria",
   rotulo: "Urgência até 18h",
   seo: {
-    titulo: "Urgência veterinária na Torre, Recife | até as 18h",
+    titulo: "Urgência veterinária até 18h na Torre, Recife | Caroline Keffer",
     descricao:
       "Emergência com cão ou gato na Torre, Recife: a clínica atende urgência até as 18h, estabiliza e, se preciso, encaminha a um hospital 24h. Avise pelo WhatsApp.",
   },

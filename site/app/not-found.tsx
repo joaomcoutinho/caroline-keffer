@@ -14,6 +14,10 @@ import { CTA_PRIMARIO, linkWhatsapp, ogImagem } from "@/content/site";
 export const metadata: Metadata = {
   title: "Página não encontrada | Clínica Pet Caroline Keffer",
   alternates: { canonical: null },
+  /* Zera o robots herdado do layout (o "index, max-image-preview" de 29/10):
+     sem isto a 404 saía com duas metas robots, uma dizendo index. O Next já
+     emite o noindex da 404 sozinho. */
+  robots: null,
   /* openGraph próprio, sem `url`: herdado do layout, ele dava à 404 o endereço
      da home (seo-mxc 1.98). */
   openGraph: {

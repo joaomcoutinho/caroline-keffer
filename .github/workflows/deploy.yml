@@ -1,19 +1,24 @@
-name: Publicar no GitHub Pages
+name: Prévia antiga no GitHub Pages vira redirecionamento
+
+# O site vive no Cloudflare Pages, em clinicacarolinekeffer.com.br, desde
+# 06/10/2026 (publicar: `npm run publicar` em site/). A prévia antiga em
+# joaomcoutinho.github.io/caroline-keffer não pode competir com o domínio
+# (seo-mxc 1.18 e 2.09, 29/10/2026). Antes ela saía como cópia do site com
+# `Disallow` no robots.txt, que esconde a página do robô mas deixa o endereço
+# indexável. Agora toda URL dela manda o visitante para o MESMO caminho no
+# domínio, e a página leva `noindex` + canônica no domínio. Sem robots.txt de
+# propósito: o robô precisa entrar para ver o `noindex`.
 
 on:
   push:
     branches: [main]
-  # Permite disparar o deploy à mão pela aba Actions.
   workflow_dispatch:
 
-# Só o token do próprio workflow, com a permissão mínima para publicar.
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Um deploy por vez. Não cancela o que já está rodando, para não publicar
-# um build pela metade.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -21,59 +26,37 @@ concurrency:
 jobs:
   construir:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: site
-
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: site/package-lock.json
-
-      - run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Build estático
-        # DEPLOY_ALVO liga o output export (ver next.config.ts).
-        #
-        # VIRADA PARA O DOMÍNIO PRÓPRIO (checklist-final, 06/10/2026): uma
-        # variável só, `SITE_DOMINIO` (Settings → Secrets and variables →
-        # Actions → Variables), ex.: clinicacarolinekeffer.com.br.
-        #   - vazia (hoje): prévia em joaomcoutinho.github.io/caroline-keffer,
-        #     com basePath, e SEM indexação (noindex + robots bloqueando);
-        #   - preenchida: site na raiz do domínio, canônica/OG/sitemap no
-        #     domínio e indexação liberada. O domínio também precisa ser
-        #     cadastrado em Settings → Pages → Custom domain.
-        # Indexar só no domínio próprio impede a prévia de competir com ele.
-        env:
-          DEPLOY_ALVO: pages
-          # O basePath do Next não alcança o `src` das imagens quando o
-          # otimizador está desligado; o helper lib/caminho.ts usa isto.
-          NEXT_PUBLIC_BASE_PATH: ${{ vars.SITE_DOMINIO == '' && '/caroline-keffer' || '' }}
-          # URL absoluta de onde o site vive: canônica, card de compartilhamento,
-          # sitemap e dados estruturados.
-          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_DOMINIO == '' && 'https://joaomcoutinho.github.io/caroline-keffer' || format('https://{0}', vars.SITE_DOMINIO) }}
-          NEXT_PUBLIC_SITE_APROVADO: ${{ vars.SITE_DOMINIO != '' && '1' || '' }}
-        run: npm run build
-
-      - name: Impedir que o Jekyll ignore a pasta _next
-        run: touch out/.nojekyll
+      - name: Página de redirecionamento
+        run: |
+          mkdir -p out
+          cat > out/index.html <<'HTML'
+          <!doctype html>
+          <html lang="pt-BR">
+          <head>
+          <meta charset="utf-8">
+          <meta name="robots" content="noindex">
+          <link rel="canonical" href="https://clinicacarolinekeffer.com.br/">
+          <title>Clínica Pet Caroline Keffer</title>
+          <script>
+          var p = location.pathname.replace(/^\/caroline-keffer/, "") || "/";
+          location.replace("https://clinicacarolinekeffer.com.br" + p + location.search + location.hash);
+          </script>
+          <meta http-equiv="refresh" content="0; url=https://clinicacarolinekeffer.com.br/">
+          </head>
+          <body><a href="https://clinicacarolinekeffer.com.br/">clinicacarolinekeffer.com.br</a></body>
+          </html>
+          HTML
+          cp out/index.html out/404.html
+          touch out/.nojekyll
 
       - uses: actions/configure-pages@v5
         with:
-          # Liga o Pages na primeira execução. Sem isto o passo falha em
-          # repositório onde o Pages nunca foi habilitado à mão.
           enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site/out
+          path: out
 
   publicar:
     needs: construir

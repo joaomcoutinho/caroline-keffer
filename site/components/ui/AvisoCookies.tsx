@@ -19,6 +19,36 @@ import { COOKIE_ESCOLHA, avisoCookies } from "@/content/medicao";
  * A altura da faixa vira `--altura-cookies`, que sobe a barra de agendamento
  * e o botão flutuante: o aviso nunca tapa o botão de WhatsApp.
  */
+/**
+ * Grava a escolha e liga ou desliga a medição. Fica fora do componente porque
+ * mexe em `document` e `window`, que o compilador do React não deixa alterar
+ * de dentro de um componente.
+ */
+function escolher(aceitou: boolean) {
+  const valor = aceitou ? "v1.sim" : "v1.nao";
+  document.cookie = `${COOKIE_ESCOLHA}=${valor}; Max-Age=31536000; Path=/; SameSite=Lax; Secure`;
+  document.documentElement.dataset.cookies = aceitou ? "sim" : "nao";
+  const janela = window as unknown as {
+    kfMedir?: () => void;
+    kfMedindo?: number;
+    gtag?: (...args: unknown[]) => void;
+  };
+  if (aceitou) {
+    janela.kfMedir?.();
+    return;
+  }
+  // Mudou de ideia depois de aceitar: para de medir e apaga os cookies do GA.
+  janela.gtag?.("consent", "update", { analytics_storage: "denied" });
+  janela.kfMedindo = 0;
+  for (const par of document.cookie.split("; ")) {
+    const nome = par.split("=")[0];
+    if (!/^_ga/.test(nome)) continue;
+    for (const dominio of ["", `; Domain=.${location.hostname.replace(/^www\./, "")}`]) {
+      document.cookie = `${nome}=; Max-Age=0; Path=/${dominio}`;
+    }
+  }
+}
+
 export function AvisoCookies() {
   const faixa = useRef<HTMLDivElement>(null);
 
@@ -35,31 +65,6 @@ export function AvisoCookies() {
       raiz.style.removeProperty("--altura-cookies");
     };
   }, []);
-
-  function escolher(aceitou: boolean) {
-    const valor = aceitou ? "v1.sim" : "v1.nao";
-    document.cookie = `${COOKIE_ESCOLHA}=${valor}; Max-Age=31536000; Path=/; SameSite=Lax; Secure`;
-    document.documentElement.dataset.cookies = aceitou ? "sim" : "nao";
-    const janela = window as unknown as {
-      kfMedir?: () => void;
-      kfMedindo?: number;
-      gtag?: (...args: unknown[]) => void;
-    };
-    if (aceitou) {
-      janela.kfMedir?.();
-      return;
-    }
-    // Mudou de ideia depois de aceitar: para de medir e apaga os cookies do GA.
-    janela.gtag?.("consent", "update", { analytics_storage: "denied" });
-    janela.kfMedindo = 0;
-    for (const par of document.cookie.split("; ")) {
-      const nome = par.split("=")[0];
-      if (!/^_ga/.test(nome)) continue;
-      for (const dominio of ["", `; Domain=.${location.hostname.replace(/^www\./, "")}`]) {
-        document.cookie = `${nome}=; Max-Age=0; Path=/${dominio}`;
-      }
-    }
-  }
 
   return (
     <div
