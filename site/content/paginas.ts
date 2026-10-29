@@ -32,15 +32,7 @@ import {
 } from "@/content/paginas-servicos";
 import { eletrocardiograma, raioX, ultrassom } from "@/content/paginas-exames";
 import { care, pethealth, petloveSaude, petTop, plamevPet } from "@/content/paginas-planos";
-import {
-  comoChegar,
-  cordeiro,
-  gracas,
-  iputinga,
-  jaqueiraParnamirim,
-  madalena,
-  zumbi,
-} from "@/content/paginas-local";
+import { comoChegar } from "@/content/paginas-local";
 
 export type Foto = {
   src: string;
@@ -130,6 +122,8 @@ export type Bloco =
    */
   | {
       tipo: "rota";
+      /** Âncora na página (hub /como-chegar: um trajeto por bairro). */
+      id?: string;
       titulo: string;
       intro?: string;
       origem: string;
@@ -422,7 +416,7 @@ const cardiologia: Pagina = {
       },
     ],
   },
-  relacionados: ["exames-de-imagem", "pneumologia", "check-up"],
+  relacionados: ["eletrocardiograma", "exames-de-imagem", "pneumologia"],
   revisao: { por: null, data: "2026-10-06" },
 };
 
@@ -1502,12 +1496,6 @@ export const paginas = {
   "pet-top": petTop,
   "plamev-pet": plamevPet,
   "como-chegar": comoChegar,
-  madalena,
-  cordeiro,
-  zumbi,
-  iputinga,
-  "jaqueira-e-parnamirim": jaqueiraParnamirim,
-  gracas,
 } as const satisfies Record<string, Pagina>;
 
 export type ChavePagina = keyof typeof paginas;
@@ -1537,15 +1525,6 @@ export const planosFilhos = {
   "plamev-pet": plamevPet,
 } as const;
 
-/** Um bairro por página, filhas de /como-chegar. Alimenta a rota dinâmica. */
-export const bairros = {
-  madalena,
-  cordeiro,
-  zumbi,
-  iputinga,
-  "jaqueira-e-parnamirim": jaqueiraParnamirim,
-  gracas,
-} as const;
 
 /**
  * Especialidades atendidas por especialistas que VÊM ATÉ A CLÍNICA em dias

@@ -1,0 +1,14 @@
+# 29/10/2026: as seis páginas de bairro viraram seções de /como-chegar/
+# (seo-mxc 1.83/1.84). 301 escrito em toda linha: sem ele o Cloudflare Pages faz 302.
+/como-chegar/madalena /como-chegar/#madalena 301
+/como-chegar/madalena/ /como-chegar/#madalena 301
+/como-chegar/cordeiro /como-chegar/#cordeiro 301
+/como-chegar/cordeiro/ /como-chegar/#cordeiro 301
+/como-chegar/zumbi /como-chegar/#zumbi 301
+/como-chegar/zumbi/ /como-chegar/#zumbi 301
+/como-chegar/iputinga /como-chegar/#iputinga 301
+/como-chegar/iputinga/ /como-chegar/#iputinga 301
+/como-chegar/jaqueira-e-parnamirim /como-chegar/#jaqueira-e-parnamirim 301
+/como-chegar/jaqueira-e-parnamirim/ /como-chegar/#jaqueira-e-parnamirim 301
+/como-chegar/gracas /como-chegar/#gracas 301
+/como-chegar/gracas/ /como-chegar/#gracas 301

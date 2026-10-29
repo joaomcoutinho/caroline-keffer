@@ -18,7 +18,7 @@
  * VALIDAR: estacionamento em frente à clínica (exclusivo para clientes?).
  */
 
-import type { Pagina, Pergunta } from "@/content/paginas";
+import type { Bloco, Pagina, Pergunta } from "@/content/paginas";
 
 const PENDENTE = { por: null, data: "2026-10-06" } as const;
 const paiComoChegar = [{ rotulo: "Como chegar", caminho: "/como-chegar" }] as const;
@@ -53,105 +53,6 @@ const servicosPerto = {
     { titulo: "Cirurgia e castração", texto: "Com recuperação durante o dia.", icone: "firstAid", href: "/cirurgia-veterinaria", rotuloLink: "Ver cirurgia" },
     { titulo: "Banho e tosa", texto: "Dentro da clínica, para cães e gatos.", icone: "bath", href: "/banho-e-tosa", rotuloLink: "Ver banho e tosa" },
   ],
-};
-
-/* ------------------------------------------------------------------ */
-
-export const comoChegar: Pagina = {
-  caminho: "/como-chegar",
-  rotulo: "Como chegar",
-  seo: {
-    titulo: "Como chegar à clínica na Torre, Recife | Caroline Keffer",
-    descricao:
-      "Rua Araguatins, 63, na Torre, Recife: ao lado da Praça Batista da Silva, perto da Rua José Bonifácio. Estacionamento, horário e rota a partir dos bairros vizinhos.",
-  },
-  topo: {
-    sobretitulo: "Como chegar",
-    h1: "Como chegar à clínica, na Torre.",
-    lead:
-      "A clínica fica na Rua Araguatins, 63, na Torre, ao lado da Praça Batista da Silva e a uma esquina da Rua José Bonifácio. Tem estacionamento em frente, e quem vem da Madalena, das Graças ou da Jaqueira chega em poucos minutos.",
-    foto: {
-      src: "/images/fachada_hero.webp",
-      alt: "Fachada da Clínica Veterinária Caroline Keffer vista de frente, com a entrada e o estacionamento",
-      posicao: "45% 45%",
-      posicaoCelular: "25% 50%",
-    },
-    mensagemWhatsapp: "Olá! Vim pela página de como chegar do site e queria marcar um horário.",
-  },
-  blocos: [
-    {
-      tipo: "rota",
-      titulo: "O último trecho é sempre o mesmo.",
-      intro: "Venha de onde vier, a chegada é pela Rua José Bonifácio. O botão abre a rota a partir de onde você está.",
-      origem: "",
-      medidas: [
-        { rotulo: "Endereço", valor: "Rua Araguatins, 63" },
-        { rotulo: "Bairro", valor: "Torre" },
-        // Hífen que não quebra (U+2011): o CEP nunca parte em duas linhas.
-        { rotulo: "CEP", valor: "50710\u2011060" },
-      ],
-      trajeto: [CHEGADA],
-    },
-    {
-      tipo: "cartoes",
-      titulo: "Na chegada.",
-      colunas: 3,
-      itens: [
-        {
-          titulo: "Estacionamento",
-          texto: "Em frente à clínica. Se estiver cheio, o do Carrefour da José Bonifácio fica a uns 200 m.",
-          icone: "car",
-        },
-        {
-          titulo: "Ponto de referência",
-          texto: "Ao lado da Praça Batista da Silva, a uns 300 m do Hospital Evangélico de Pernambuco.",
-          icone: "mapPin",
-        },
-        {
-          titulo: "Horário",
-          texto: "Segunda a sexta, das 9h às 19h. Sábado, das 8h às 16h. Domingo, fechado.",
-          icone: "clock",
-        },
-      ],
-    },
-    {
-      tipo: "cartoes",
-      titulo: "Saindo dos bairros vizinhos.",
-      intro: "Distância de carro, medida no mapa. O tempo depende do trânsito.",
-      colunas: 3,
-      itens: [
-        { titulo: "Graças", texto: "1,6 km pela Ponte da Torre. 5 a 10 min de carro.", icone: "bridge", href: "/como-chegar/gracas", rotuloLink: "Ver o caminho" },
-        { titulo: "Madalena", texto: "2,0 km pela Rua Real da Torre. 5 a 10 min de carro.", icone: "path", href: "/como-chegar/madalena", rotuloLink: "Ver o caminho" },
-        { titulo: "Jaqueira e Parnamirim", texto: "A partir de 1,1 km a pé, cruzando o Capibaribe.", icone: "tree", href: "/como-chegar/jaqueira-e-parnamirim", rotuloLink: "Ver o caminho" },
-        { titulo: "Zumbi", texto: "2,5 km saindo da Av. Caxangá. 5 a 15 min de carro.", icone: "bus", href: "/como-chegar/zumbi", rotuloLink: "Ver o caminho" },
-        { titulo: "Cordeiro", texto: "4,2 km pela Av. do Forte. 10 a 20 min de carro.", icone: "path", href: "/como-chegar/cordeiro", rotuloLink: "Ver o caminho" },
-        { titulo: "Iputinga", texto: "5,0 km pela Av. Maurício de Nassau. 15 a 25 min de carro.", icone: "car", href: "/como-chegar/iputinga", rotuloLink: "Ver o caminho" },
-      ],
-    },
-  ],
-  faq: {
-    titulo: "Dúvidas sobre como chegar.",
-    itens: [
-      {
-        pergunta: "Onde fica a Clínica Caroline Keffer?",
-        resposta:
-          "Na Rua Araguatins, 63, na Torre, em Recife (CEP 50710-060), ao lado da Praça Batista da Silva e perto da Rua José Bonifácio.",
-      },
-      perguntaEstacionamento,
-      {
-        pergunta: "Abre no domingo?",
-        resposta:
-          "Não. A clínica abre de segunda a sexta, das 9h às 19h, e no sábado, das 8h às 16h. Em urgência com a clínica fechada, procure um plantão veterinário 24h.",
-      },
-      {
-        pergunta: "Quais bairros ficam mais perto?",
-        resposta:
-          "Graças, Madalena, Jaqueira, Zumbi e Cordeiro fazem divisa com a Torre. Das Graças e da Madalena, são uns 2 km de carro.",
-      },
-    ],
-  },
-  relacionados: ["consulta", "urgencia", "planos"],
-  revisao: PENDENTE,
 };
 
 /* ------------------------------------------------------------------ */
@@ -562,3 +463,123 @@ export const gracas: Pagina = {
   relacionados: ["como-chegar", "madalena", "consulta"],
   revisao: PENDENTE,
 };
+
+/* ------------------------------------------------------------------ */
+
+/*
+  29/10/2026 (JM, régua seo-mxc 1.83/1.84 e portão 3): as seis páginas de
+  bairro viraram SEÇÕES deste hub. O texto delas era 76-81% igual entre si e
+  cada uma tinha uma prova local só (o trajeto medido). O trajeto de cada
+  bairro continua aqui, com âncora própria (/como-chegar/#madalena etc.), e as
+  URLs antigas fazem 301 para a âncora (public/_redirects). Os objetos dos
+  bairros ficam acima só como fonte dos trajetos: não geram mais página.
+*/
+function trajetos(bairro: Pagina, id: string) {
+  return bairro.blocos
+    .filter((b): b is Extract<Bloco, { tipo: "rota" }> => b.tipo === "rota")
+    .map((b, i) => ({ ...b, id: i === 0 ? id : `${id}-${i + 1}` }));
+}
+
+export const comoChegar: Pagina = {
+  caminho: "/como-chegar",
+  rotulo: "Como chegar",
+  seo: {
+    titulo: "Como chegar à clínica na Torre, Recife | Caroline Keffer",
+    descricao:
+      "Rua Araguatins, 63, na Torre, Recife: ao lado da Praça Batista da Silva, perto da Rua José Bonifácio. Estacionamento, horário e rota a partir dos bairros vizinhos.",
+  },
+  topo: {
+    sobretitulo: "Como chegar",
+    h1: "Como chegar à clínica, na Torre.",
+    lead:
+      "A clínica fica na Rua Araguatins, 63, na Torre, ao lado da Praça Batista da Silva e a uma esquina da Rua José Bonifácio. Tem estacionamento em frente, e quem vem da Madalena, das Graças ou da Jaqueira chega em poucos minutos.",
+    foto: {
+      src: "/images/fachada_hero.webp",
+      alt: "Fachada da Clínica Veterinária Caroline Keffer vista de frente, com a entrada e o estacionamento",
+      posicao: "45% 45%",
+      posicaoCelular: "25% 50%",
+    },
+    mensagemWhatsapp: "Olá! Vim pela página de como chegar do site e queria marcar um horário.",
+  },
+  blocos: [
+    {
+      tipo: "rota",
+      titulo: "O último trecho é sempre o mesmo.",
+      intro: "Venha de onde vier, a chegada é pela Rua José Bonifácio. O botão abre a rota a partir de onde você está.",
+      origem: "",
+      medidas: [
+        { rotulo: "Endereço", valor: "Rua Araguatins, 63" },
+        { rotulo: "Bairro", valor: "Torre" },
+        // Hífen que não quebra (U+2011): o CEP nunca parte em duas linhas.
+        { rotulo: "CEP", valor: "50710\u2011060" },
+      ],
+      trajeto: [CHEGADA],
+    },
+    {
+      tipo: "cartoes",
+      titulo: "Na chegada.",
+      colunas: 3,
+      itens: [
+        {
+          titulo: "Estacionamento",
+          texto: "Em frente à clínica. Se estiver cheio, o do Carrefour da José Bonifácio fica a uns 200 m.",
+          icone: "car",
+        },
+        {
+          titulo: "Ponto de referência",
+          texto: "Ao lado da Praça Batista da Silva, a uns 300 m do Hospital Evangélico de Pernambuco.",
+          icone: "mapPin",
+        },
+        {
+          titulo: "Horário",
+          texto: "Segunda a sexta, das 9h às 19h. Sábado, das 8h às 16h. Domingo, fechado.",
+          icone: "clock",
+        },
+      ],
+    },
+    {
+      tipo: "cartoes",
+      titulo: "Saindo dos bairros vizinhos.",
+      intro: "Distância de carro, medida no mapa. O tempo depende do trânsito.",
+      colunas: 3,
+      itens: [
+        { titulo: "Graças", texto: "1,6 km pela Ponte da Torre. 5 a 10 min de carro.", icone: "bridge", href: "/como-chegar/#gracas", rotuloLink: "Ver o caminho" },
+        { titulo: "Madalena", texto: "2,0 km pela Rua Real da Torre. 5 a 10 min de carro.", icone: "path", href: "/como-chegar/#madalena", rotuloLink: "Ver o caminho" },
+        { titulo: "Jaqueira e Parnamirim", texto: "A partir de 1,1 km a pé, cruzando o Capibaribe.", icone: "tree", href: "/como-chegar/#jaqueira-e-parnamirim", rotuloLink: "Ver o caminho" },
+        { titulo: "Zumbi", texto: "2,5 km saindo da Av. Caxangá. 5 a 15 min de carro.", icone: "bus", href: "/como-chegar/#zumbi", rotuloLink: "Ver o caminho" },
+        { titulo: "Cordeiro", texto: "4,2 km pela Av. do Forte. 10 a 20 min de carro.", icone: "path", href: "/como-chegar/#cordeiro", rotuloLink: "Ver o caminho" },
+        { titulo: "Iputinga", texto: "5,0 km pela Av. Maurício de Nassau. 15 a 25 min de carro.", icone: "car", href: "/como-chegar/#iputinga", rotuloLink: "Ver o caminho" },
+      ],
+    },
+    ...trajetos(gracas, "gracas"),
+    ...trajetos(madalena, "madalena"),
+    ...trajetos(jaqueiraParnamirim, "jaqueira-e-parnamirim"),
+    ...trajetos(zumbi, "zumbi"),
+    ...trajetos(cordeiro, "cordeiro"),
+    ...trajetos(iputinga, "iputinga"),
+  ],
+  faq: {
+    titulo: "Dúvidas sobre como chegar.",
+    itens: [
+      {
+        pergunta: "Onde fica a Clínica Caroline Keffer?",
+        resposta:
+          "Na Rua Araguatins, 63, na Torre, em Recife (CEP 50710-060), ao lado da Praça Batista da Silva e perto da Rua José Bonifácio.",
+      },
+      perguntaEstacionamento,
+      {
+        pergunta: "Abre no domingo?",
+        resposta:
+          "Não. A clínica abre de segunda a sexta, das 9h às 19h, e no sábado, das 8h às 16h. Em urgência com a clínica fechada, procure um plantão veterinário 24h.",
+      },
+      {
+        pergunta: "Quais bairros ficam mais perto?",
+        resposta:
+          "Graças, Madalena, Jaqueira, Zumbi e Cordeiro fazem divisa com a Torre. Das Graças e da Madalena, são uns 2 km de carro.",
+      },
+    ],
+  },
+  relacionados: ["consulta", "urgencia", "planos"],
+  revisao: PENDENTE,
+};
+

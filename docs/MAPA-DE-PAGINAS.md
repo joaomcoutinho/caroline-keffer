@@ -13,6 +13,13 @@ tags: [mxc, seo, mapa-de-paginas, caroline-keffer]
 > `docs/seo-local/paginas.md` (12 páginas, 27/09/2026). Title e H1 lidos do HTML no ar em
 > 29/10/2026 (`curl` de cada URL do `sitemap.xml`).
 
+
+> **Decisão de 29/10/2026 (JM):** as 6 páginas `/como-chegar/<bairro>/` viraram seções do hub
+> `/como-chegar/` (âncoras #gracas, #madalena, #jaqueira-e-parnamirim, #zumbi, #cordeiro,
+> #iputinga), com 301 de cada URL antiga. Cardiologia × eletrocardiograma ficam separadas:
+> no Google (aba anônima, 29/10) as duas buscas dividem só 3 de 10 resultados (Kardyo, Instagram
+> da Kardyo e PetHealth Recife), então são vizinhas e passam a se linkar nos dois sentidos.
+
 ## Réguas deste site
 
 - **Copy:** a home converte; as internas existem pra busca (H1 e H2 com o que se digita).

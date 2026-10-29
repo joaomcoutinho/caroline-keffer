@@ -242,7 +242,7 @@ export function BlocoRota({ bloco }: { bloco: Extract<Bloco, { tipo: "rota" }> }
   const mapa = `https://www.google.com/maps/dir/?api=1${origem}&destination=${encodeURIComponent(DESTINO_MAPA)}`;
 
   return (
-    <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-20">
+    <div id={bloco.id} className="grid scroll-mt-28 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-20">
       <div>
         <Titulo intro={bloco.intro}>{bloco.titulo}</Titulo>
         <Revelar atraso={0.1}>
