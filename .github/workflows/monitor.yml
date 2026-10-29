@@ -1,0 +1,52 @@
+name: Monitor do site no ar
+
+# Monitor de queda (seo-mxc 6.08, 29/10/2026). Roda de fora da Cloudflare, nos
+# servidores do GitHub, a cada 15 minutos. Falha quando:
+#   - a home ou a página da equipe não respondem 200;
+#   - a página responde, mas sem as palavras que só o site certo tem (pega
+#     página de erro da hospedagem, domínio estacionado e site trocado);
+#   - o certificado vence em menos de 14 dias.
+# Falhou = o GitHub manda e-mail ao dono do repositório (JM, conta
+# joaomcoutinho), pelo aviso padrão de workflow que falha.
+# ⚠️ O GitHub pausa agendamento depois de 60 dias sem commit no repositório:
+# um commit qualquer (ou "Enable workflow" na aba Actions) religa.
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/monitor.yml
+
+permissions:
+  contents: read
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      DOMINIO: clinicacarolinekeffer.com.br
+      PALAVRA: "TESTE-DE-QUEDA-29-10"
+    steps:
+      - name: Páginas respondem com o conteúdo certo
+        run: |
+          set -u
+          falhou=0
+          for rota in / /equipe/; do
+            url="https://${DOMINIO}${rota}"
+            corpo=$(curl -sS -L --max-time 20 -A "MonitorMXC/1.0" -w '\n%{http_code}' "$url") || { echo "::error::${url} sem resposta"; falhou=1; continue; }
+            codigo=$(printf '%s' "$corpo" | tail -n1)
+            if [ "$codigo" != "200" ]; then echo "::error::${url} respondeu ${codigo}"; falhou=1; continue; fi
+            if ! printf '%s' "$corpo" | grep -q "$PALAVRA"; then echo "::error::${url} respondeu 200 sem \"${PALAVRA}\""; falhou=1; continue; fi
+            echo "ok ${url}"
+          done
+          exit $falhou
+
+      - name: Certificado com mais de 14 dias
+        run: |
+          fim=$(echo | openssl s_client -servername "$DOMINIO" -connect "$DOMINIO:443" 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2)
+          dias=$(( ( $(date -d "$fim" +%s) - $(date +%s) ) / 86400 ))
+          echo "certificado vence em ${dias} dias (${fim})"
+          if [ "$dias" -lt 14 ]; then echo "::error::certificado vence em ${dias} dias"; exit 1; fi
