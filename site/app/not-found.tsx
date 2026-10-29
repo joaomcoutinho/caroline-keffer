@@ -6,7 +6,7 @@ import { Fechamento } from "@/components/sections/Fechamento";
 import { Onda } from "@/components/ui/Onda";
 import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { BotaoFlutuante } from "@/components/ui/BotaoFlutuante";
-import { CTA_PRIMARIO, linkWhatsapp } from "@/content/site";
+import { CTA_PRIMARIO, linkWhatsapp, ogImagem } from "@/content/site";
 
 /* Sem `robots` aqui: o Next já emite `noindex` na 404, e repetir gerava duas
    metas. E sem canônica (checklist-final, bloco 2): herdada do layout, ela
@@ -14,6 +14,15 @@ import { CTA_PRIMARIO, linkWhatsapp } from "@/content/site";
 export const metadata: Metadata = {
   title: "Página não encontrada | Clínica Pet Caroline Keffer",
   alternates: { canonical: null },
+  /* openGraph próprio, sem `url`: herdado do layout, ele dava à 404 o endereço
+     da home (seo-mxc 1.98). */
+  openGraph: {
+    title: "Página não encontrada | Clínica Pet Caroline Keffer",
+    siteName: "Clínica Pet Caroline Keffer",
+    locale: "pt_BR",
+    type: "website",
+    images: [ogImagem],
+  },
 };
 
 /*

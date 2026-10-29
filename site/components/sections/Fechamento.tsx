@@ -6,6 +6,8 @@ import { BotaoWhatsapp } from "@/components/ui/BotaoWhatsapp";
 import { Revelar } from "@/components/ui/Revelar";
 import { ctaFinal, rodape, contato, navegacao, empresa } from "@/content/site";
 import { rodapeServicos } from "@/content/paginas";
+import { medicaoLigada } from "@/content/medicao";
+import { BotaoPreferenciasCookies } from "@/components/ui/AvisoCookies";
 
 
 /**
@@ -146,6 +148,9 @@ export function Fechamento() {
               {rodape.legal}
               {/* Razão social e CNPJ em destaque (checklist-final L-10). */}
               {empresa.cnpj ? ` ${empresa.razaoSocial ?? ""} · CNPJ ${empresa.cnpj}.` : null}
+              {/* Responsável técnica com o CRMV em toda página (seo-mxc 1.31: o
+                  CFMV pede o registro na publicidade, não só em /equipe). */}
+              {" "}Responsável técnica: Dra. Caroline Keffer, CRMV-PE 3053.
             </p>
             <p className="flex flex-wrap justify-center gap-x-4 sm:justify-start">
               <Link href="/politica-de-privacidade" className="-my-2 py-2 underline underline-offset-2 transition-colors hover:text-acao-texto">
@@ -154,6 +159,9 @@ export function Fechamento() {
               <Link href="/termos-de-uso" className="-my-2 py-2 underline underline-offset-2 transition-colors hover:text-acao-texto">
                 Termos de uso
               </Link>
+              {medicaoLigada ? (
+                <BotaoPreferenciasCookies className="-my-2 cursor-pointer py-2 underline underline-offset-2 transition-colors hover:text-acao-texto" />
+              ) : null}
             </p>
           </div>
 

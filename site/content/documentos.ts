@@ -14,8 +14,12 @@
  *   prazo de resposta do art. 19 da LGPD (15 dias).
  * - CNPJ e endereço em destaque (L-10): vêm de `empresa` em content/site.ts.
  *
- * ⚠️ Se entrar analytics, pixel, formulário ou mapa embutido, a política
- * muda ANTES do deploy, e aí sim entra banner com Aceitar e Recusar.
+ * - 28/10/2026: entrou o GA4, só depois do Aceitar (content/medicao.ts). A
+ *   seção "Cookies" e "O que o site registra" passaram a dizer isso, e o aviso
+ *   com Aceitar e Recusar entrou no mesmo deploy.
+ *
+ * ⚠️ Se entrar pixel, formulário ou mapa embutido, a política muda ANTES do
+ * deploy.
  */
 
 import { contato, empresa } from "@/content/site";
@@ -46,11 +50,11 @@ export const politica: Documento = {
   seo: {
     titulo: "Política de privacidade | Clínica Pet Caroline Keffer",
     descricao:
-      "Como a Clínica Pet Caroline Keffer trata os dados de quem visita o site e fala com a clínica pelo WhatsApp: sem cookies, sem rastreamento, conforme a LGPD.",
+      "Como a Clínica Pet Caroline Keffer trata os dados de quem visita o site e fala com a clínica pelo WhatsApp: cookies de análise só com o seu aceite, conforme a LGPD.",
   },
-  atualizadaEm: "2026-10-01",
+  atualizadaEm: "2026-10-28",
   intro:
-    "Este site não usa cookies, não tem formulário e não acompanha a sua navegação. Os seus dados só chegam até a clínica quando você escolhe falar com a gente pelo WhatsApp ou pelo telefone. Abaixo, o que acontece com eles, em linguagem simples.",
+    "Este site não tem formulário e só usa cookies de análise se você aceitar. Os seus dados pessoais só chegam até a clínica quando você escolhe falar com a gente pelo WhatsApp ou pelo telefone. Abaixo, o que acontece com eles, em linguagem simples.",
   secoes: [
     {
       titulo: "Quem cuida dos seus dados",
@@ -61,14 +65,15 @@ export const politica: Documento = {
     {
       titulo: "Cookies",
       paragrafos: [
-        "O site não usa cookies, nem de análise, nem de anúncio, nem de terceiros, e não guarda nenhuma informação no seu navegador. Por isso não existe aviso de cookies: não há o que aceitar ou recusar.",
-        "Se um dia isso mudar, esta política muda antes, e o site passa a pedir a sua escolha, com a opção de recusar no mesmo lugar e do mesmo jeito que a de aceitar.",
+        "O site usa um tipo de cookie só, o de análise, e só se você tocar em Aceitar no aviso que aparece na primeira visita. Ele é do Google Analytics e serve para a clínica saber quantas pessoas visitam o site, quais páginas leem e quantas tocam em WhatsApp, Ligar ou Como chegar. Não usamos cookie de anúncio nem de redes sociais.",
+        "Esses dados chegam à clínica somados, sem o seu nome nem o seu telefone, e o Google guarda os números por até 14 meses. O Google é a empresa que presta esse serviço e pode tratar esses dados nos Estados Unidos, com as garantias da própria política dele.",
+        "Se você recusar, nada muda no site e nenhum cookie de análise é gravado. A sua escolha fica guardada no seu navegador por 12 meses, num cookie que só diz se você aceitou ou recusou. Para mudar de ideia a qualquer momento, toque em Preferências de cookies, no rodapé de qualquer página.",
       ],
     },
     {
       titulo: "O que o site registra",
       paragrafos: [
-        "Por conta própria, nada. Como qualquer site, ele é entregue por um serviço de hospedagem, que registra dados técnicos de acesso, como o endereço IP e o tipo de navegador, para manter o serviço funcionando e seguro. Esses registros ficam com o provedor de hospedagem e não são usados pela clínica para identificar ninguém.",
+        "Sem o seu aceite, nada além do que qualquer site registra: ele é entregue por um serviço de hospedagem, que anota dados técnicos de acesso, como o endereço IP e o tipo de navegador, para manter o serviço funcionando e seguro. Esses registros ficam com o provedor de hospedagem e não são usados pela clínica para identificar ninguém. Com o aceite, entram também os números de visita do Google Analytics, descritos em Cookies.",
       ],
     },
     {
@@ -143,7 +148,7 @@ export const termos: Documento = {
     descricao:
       "As regras de uso do site da Clínica Pet Caroline Keffer: conteúdo informativo, agendamento, valores, planos de saúde pet e emergência.",
   },
-  atualizadaEm: "2026-10-06",
+  atualizadaEm: "2026-10-28",
   intro:
     "O site existe para você conhecer a clínica, tirar dúvidas e chegar até a gente. Estas são as regras de uso dele, curtas e sem letra miúda.",
   secoes: [
@@ -187,7 +192,7 @@ export const termos: Documento = {
     {
       titulo: "Privacidade",
       paragrafos: [
-        "O site não usa cookies nem rastreia a sua navegação. Como os dados que você passa no atendimento são tratados está na política de privacidade.",
+        "O site só usa cookies de análise se você aceitar, e recusar não muda nada nele. Como isso funciona, e como são tratados os dados que você passa no atendimento, está na política de privacidade.",
       ],
     },
     {

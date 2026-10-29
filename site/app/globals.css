@@ -5583,3 +5583,15 @@ body[data-menu-aberto] .barra-agendamento {
     font-weight: 400;
   }
 }
+
+/*
+  AVISO DE COOKIES (28/10/2026). Quem já escolheu não vê a faixa: o script do
+  <head> marca o <html> antes da primeira pintura. A barra de agendamento sobe
+  a altura da faixa para o aviso nunca tapar o WhatsApp (ver AvisoCookies.tsx).
+*/
+html[data-cookies] .aviso-cookies {
+  display: none;
+}
+.barra-agendamento {
+  bottom: var(--altura-cookies, 0px);
+}

@@ -45,6 +45,7 @@ export function TopoPagina({ pagina }: { pagina: Pagina }) {
           alt={foto.alt}
           fill
           priority
+          fetchPriority="high"
           sizes="(max-width: 1024px) 100vw, 50vw"
           className={`object-cover${foto.srcCelular ? " hidden lg:block" : ""}`}
           style={enquadramento}
@@ -56,6 +57,7 @@ export function TopoPagina({ pagina }: { pagina: Pagina }) {
             alt={foto.altCelular ?? foto.alt}
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover lg:hidden"
             style={enquadramento}

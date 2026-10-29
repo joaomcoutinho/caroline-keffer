@@ -1,4 +1,5 @@
 import { contato, meta, equipe } from "@/content/site";
+import { geoClinica, horarioClinica } from "@/components/DadosEstruturados";
 import type { Pagina } from "@/content/paginas";
 
 /**
@@ -20,7 +21,7 @@ export function DadosPagina({ pagina }: { pagina: Pagina }) {
   const idClinica = `${meta.url}/#clinica`;
 
   const clinica = {
-    "@type": "VeterinaryCare",
+    "@type": ["VeterinaryCare", "LocalBusiness"],
     "@id": idClinica,
     name: "Clínica Pet Caroline Keffer",
     url: `${meta.url}/`,
@@ -33,6 +34,8 @@ export function DadosPagina({ pagina }: { pagina: Pagina }) {
       postalCode: contato.cep,
       addressCountry: "BR",
     },
+    geo: geoClinica,
+    openingHoursSpecification: horarioClinica,
   };
 
   const pessoaDraCarol = {

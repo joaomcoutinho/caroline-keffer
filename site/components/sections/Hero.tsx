@@ -59,6 +59,7 @@ export function Hero() {
           alt={hero.fotoMobile.alt}
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
           style={{ objectPosition: hero.fotoMobile.posicao }}

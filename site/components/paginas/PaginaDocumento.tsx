@@ -31,7 +31,7 @@ export function PaginaDocumento({ doc }: { doc: Documento }) {
 
             <div className="politica mt-14">
               {doc.secoes.map((s) => (
-                <section key={s.titulo} className="politica-secao">
+                <section key={s.titulo} id={s.titulo === "Cookies" ? "cookies" : undefined} className="politica-secao scroll-mt-28">
                   <h2 className="font-display text-xl leading-snug font-bold sm:text-2xl">{s.titulo}</h2>
                   <div>
                     {s.paragrafos.map((p) => (

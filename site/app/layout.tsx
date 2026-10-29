@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Nunito_Sans } from "next/font/google";
 import { meta, ehProposta, ogImagem } from "@/content/site";
+import { medicaoLigada, scriptMedicao } from "@/content/medicao";
+import { AvisoCookies } from "@/components/ui/AvisoCookies";
 import "./globals.css";
 
 /*
@@ -44,7 +46,11 @@ export const metadata: Metadata = {
   description: meta.descricao,
   alternates: { canonical: "/" },
   // Enquanto for proposta, nenhum buscador indexa (ver `ehProposta` em content/site.ts).
-  robots: ehProposta ? { index: false, follow: false } : undefined,
+  /* No ar: `max-image-preview:large` deixa o Google usar as fotos grandes no
+     Discover e nos resultados (seo-mxc 1.38). */
+  robots: ehProposta
+    ? { index: false, follow: false }
+    : { index: true, follow: true, "max-image-preview": "large" },
   openGraph: {
     title: meta.titulo,
     description: meta.descricao,
@@ -77,7 +83,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pt-BR"
       className={`${fonteTitulo.variable} ${fonteCorpo.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      {/* GA4 no modo básico: nada carrega antes do Aceitar (content/medicao.ts). */}
+      {medicaoLigada ? (
+        <head>
+          <script dangerouslySetInnerHTML={{ __html: scriptMedicao() }} />
+        </head>
+      ) : null}
+      <body className="min-h-full flex flex-col">
+        {children}
+        {medicaoLigada ? <AvisoCookies /> : null}
+      </body>
     </html>
   );
 }

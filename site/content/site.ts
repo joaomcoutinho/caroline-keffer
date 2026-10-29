@@ -36,18 +36,21 @@ export const contato = {
     WHATSAPP_MENSAGEM,
   )}`,
   whatsappExibicao: "(81) 99303-7584",
-  telefoneFixo: "(81) 3268-5979",
-  telefoneFixoLink: "tel:+558132685979",
+  // 28/10/2026: a clínica confirmou que o fixo certo é o do Perfil do Google.
+  telefoneFixo: "(81) 3082-0083",
+  telefoneFixoLink: "tel:+558130820083",
   /* E-mail da clínica (enviado pelo JM em 01/10/2026). */
   email: "clinicacarolinekeffer@gmail.com",
   instagram: "https://www.instagram.com/clinicapet_carolinekeffer/",
   endereco: "Rua Araguatins, 63",
   bairro: "Torre, Recife - PE",
   cep: "50710-060",
-  /* Abre direto a clínica no Google Maps (nome + endereço acham a ficha dela). */
-  mapa: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    "Clínica Veterinária Caroline Keffer, Rua Araguatins, 63 - Torre, Recife - PE, 50710-060",
-  )}`,
+  /* Abre a FICHA da clínica no Google Maps pelo CID (28/10/2026). A busca por
+     nome + endereço caía numa lista de resultados quando o Google achava mais
+     de um lugar; o CID é o identificador fixo do Perfil da Empresa. */
+  mapa: "https://www.google.com/maps?cid=6250309149219830390",
+  /** Nome como está no Perfil da Empresa e no letreiro (o site usa "Clínica Pet"). */
+  nomePerfilGoogle: "Clínica Veterinária Caroline Keffer",
 } as const;
 
 /**
@@ -68,9 +71,11 @@ export const empresa: { razaoSocial: string | null; cnpj: string | null } = {
 export const CTA_PRIMARIO = "Agendar pelo WhatsApp";
 
 export const meta = {
-  titulo: "Clínica Pet Caroline Keffer | Veterinária na Torre, Recife",
+  /* 28/10/2026 (seo-mxc 1.75): serviço + bairro na frente e a marca no fim. A
+     marca continua no `siteName`, de onde o Google tira o nome do site. */
+  titulo: "Veterinária na Torre, Recife | Clínica Pet Caroline Keffer",
   descricao:
-    "Veterinária na Torre, Recife, há mais de 20 anos. Consulta, cirurgia, exames e banho e tosa. Agende pelo WhatsApp.",
+    "Clínica para cães e gatos há mais de 20 anos: consulta, vacina, cirurgia, especialistas, exames e banho e tosa. Agende pelo WhatsApp.",
   /*
    * Endereço real de onde o site está publicado. O card de compartilhamento
    * exige URL ABSOLUTA de imagem: sem isto o WhatsApp monta o link com o
@@ -93,6 +98,7 @@ export const ogImagem = {
   url: `${meta.url}/og.jpg?v=3`,
   width: 1200,
   height: 630,
+  type: "image/jpeg",
   alt: "Clínica Pet Caroline Keffer: a fachada na Torre e a equipe com os pets, montadas na pata do logo, ao lado da chamada do site",
 } as const;
 
@@ -208,7 +214,7 @@ export const prova = {
       casas: 1,
       sufixo: "",
       rotulo: "de nota nas avaliações do Google",
-      nota: "média de 130 tutores",
+      nota: "média de mais de 140 tutores",
       /* A Dra. Carol na moldura da nota (02/10/2026, JM). */
       foto: "/images/dra/dra-carol-corgi.webp",
       fotoPosicao: "50% 30%",

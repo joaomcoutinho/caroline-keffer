@@ -33,7 +33,18 @@ const nextConfig: NextConfig = {
     ? { output: "export", ...(base ? { basePath: base, assetPrefix: base } : {}) }
     : {}),
   allowedDevOrigins: ipsDaMaquina,
-  images: { unoptimized: true },
+  /*
+    28/10/2026: o `unoptimized` mandava a foto inteira para todo aparelho (LCP
+    de 7,8 s no celular). Agora o loader aponta para variantes WebP geradas por
+    scripts/variantes-imagem.mjs. As larguras abaixo são as mesmas de LARGURAS
+    lá: mudar uma, mudar a outra.
+  */
+  images: {
+    loader: "custom",
+    loaderFile: "./lib/imagem-loader.ts",
+    deviceSizes: [480, 640, 828, 1080, 1280, 1920],
+    imageSizes: [96, 160, 256, 384],
+  },
   // Sem servidor não há redirect de /rota para /rota/: cada uma vira index.html.
   trailingSlash: true,
 };
