@@ -311,7 +311,7 @@ const cardiologia: Pagina = {
     lead:
       "O cardiologista avalia sopro, tosse, cansaço e desmaio em cães e gatos. Eletrocardiograma e raio-x de tórax são feitos aqui na clínica, sem levar seu pet a outro endereço.",
     foto: {
-      src: "/images/galeria/atendimento-04.webp",
+      src: "/images/galeria/veterinario-border-collie-na-mesa.webp",
       alt: "Veterinário examinando um border collie deitado na mesa de atendimento",
       posicao: "50% 35%",
       posicaoCelular: "50% 80%",
@@ -345,7 +345,7 @@ const cardiologia: Pagina = {
           texto:
             "É a cardiopatia mais comum em cães. O primeiro sinal costuma ser um sopro na consulta de rotina, antes de qualquer sintoma.",
           racas: ["Poodle", "Pinscher", "Yorkshire", "Shih-tzu", "Cavalier"],
-          foto: { src: "/images/galeria/atendimento-18.webp", alt: "Colaboradora abraçando um yorkshire", posicao: "50% 35%" },
+          foto: { src: "/images/galeria/colaboradora-yorkshire.webp", alt: "Colaboradora abraçando um yorkshire", posicao: "50% 35%" },
         },
         {
           titulo: "Cães de porte grande",
@@ -354,7 +354,7 @@ const cardiologia: Pagina = {
             "O músculo do coração perde força aos poucos. Pode passar despercebida até o cansaço ou o desmaio aparecerem.",
           racas: ["Dobermann", "Boxer", "Dogue alemão"],
           foto: {
-            src: "/images/galeria/atendimento-02.webp",
+            src: "/images/galeria/veterinaria-dois-dinamarqueses.webp",
             alt: "Veterinária sentada no chão do consultório com dois cães dinamarqueses",
             /* 10%: o rosto da Dra. Carol fica no terço de cima da foto (28/09/2026, JM). */
             posicao: "50% 10%",
@@ -366,7 +366,7 @@ const cardiologia: Pagina = {
           texto:
             "A mais frequente nos gatos, e muitas vezes não dá sinal nenhum até ficar grave.",
           racas: ["Maine Coon", "Ragdoll", "Sem raça definida"],
-          foto: { src: "/images/galeria/atendimento-12.webp", alt: "Colaboradora abraçando um gato maine coon cinza e branco", posicao: "50% 35%" },
+          foto: { src: "/images/galeria/colaboradora-gato-maine-coon.webp", alt: "Colaboradora abraçando um gato maine coon cinza e branco", posicao: "50% 35%" },
         },
       ],
       nota: {
@@ -438,7 +438,7 @@ const dermatologia: Pagina = {
     lead:
       "Coceira que não passa, queda de pelo, feridas, otite que volta e alergia são casos de dermatologia. Com o calor e a umidade de Recife, problema de pele é dos motivos mais comuns de consulta, e quase sempre tem uma causa que dá para identificar.",
     foto: {
-      src: "/images/galeria/atendimento-13.webp",
+      src: "/images/galeria/colaboradora-dois-shih-tzus.webp",
       alt: "Colaboradora no consultório com dois shih-tzus de gravata",
       posicao: "50% 35%",
       posicaoCelular: "50% 85%",
@@ -473,7 +473,7 @@ const dermatologia: Pagina = {
         { titulo: "Fungos e bactérias", detalhe: "Infecção que costuma vir junto com a alergia.", icone: "flask" },
         { titulo: "Sarnas", detalhe: "Causadas por ácaros que vivem na pele.", icone: "microscope" },
       ],
-      foto: { src: "/images/galeria/atendimento-06.webp", alt: "Colaboradora abraçando um dachshund de peitoral verde", posicao: "50% 35%" },
+      foto: { src: "/images/galeria/colaboradora-dachshund.webp", alt: "Colaboradora abraçando um dachshund de peitoral verde", posicao: "50% 35%" },
     },
     {
       tipo: "passos",
@@ -526,7 +526,7 @@ const nefrologia: Pagina = {
     lead:
       "A nefrologia cuida dos rins e do trato urinário. A doença renal crônica é das mais comuns em gatos idosos e costuma dar sinal só quando boa parte do rim já foi perdida, por isso o exame de rotina faz tanta diferença.",
     foto: {
-      src: "/images/galeria/atendimento-11.webp",
+      src: "/images/galeria/colaboradoras-gatos-persas.webp",
       alt: "Duas colaboradoras sorrindo, cada uma com um gato persa no colo",
       posicao: "50% 35%",
       posicaoCelular: "50% 25%",
@@ -610,12 +610,12 @@ const pneumologia: Pagina = {
     lead:
       "A pneumologia investiga tosse, espirro, chiado e respiração difícil. Nem toda tosse vem do pulmão: pode ser traqueia, coração ou garganta, e o raio-x de tórax, feito aqui na clínica, é o primeiro passo para saber de onde ela vem.",
     foto: {
-      src: "/images/galeria/atendimento-14.webp",
+      src: "/images/galeria/colaboradora-dois-buldogues-franceses.webp",
       alt: "Colaboradora agachada com dois buldogues franceses",
       posicao: "50% 40%",
       // No celular o rosto dela ficava atrás da navbar. O shih-tzu é
       // braquicefálico, paciente típico da pneumologia (o pug já está nos perfis).
-      srcCelular: "/images/galeria/atendimento-17.webp",
+      srcCelular: "/images/galeria/colaboradora-shih-tzu-laco-rosa.webp",
       altCelular: "Colaboradora abraçando um shih-tzu de laço rosa",
       posicaoCelular: "50% 50%",
     },
@@ -647,7 +647,7 @@ const pneumologia: Pagina = {
           texto:
             "Nascem com as vias aéreas mais estreitas: roncam, cansam no calor e respiram com esforço.",
           racas: ["Pug", "Buldogue francês", "Shih-tzu", "Buldogue inglês"],
-          foto: { src: "/images/galeria/atendimento-16.webp", alt: "Colaboradora sorrindo com um pug no colo", posicao: "50% 35%" },
+          foto: { src: "/images/galeria/colaboradora-pug.webp", alt: "Colaboradora sorrindo com um pug no colo", posicao: "50% 35%" },
         },
         {
           titulo: "Raças pequenas",
@@ -663,7 +663,7 @@ const pneumologia: Pagina = {
           texto:
             "Tosse, chiado e crises de respiração difícil. Tem tratamento e controle, mas gato respirando de boca aberta é urgência.",
           racas: ["Qualquer raça"],
-          foto: { src: "/images/galeria/atendimento-19.webp", alt: "Colaboradora com dois gatos persas no colo", posicao: "50% 35%" },
+          foto: { src: "/images/galeria/colaboradora-dois-gatos-persas.webp", alt: "Colaboradora com dois gatos persas no colo", posicao: "50% 35%" },
         },
       ],
       nota: {
@@ -890,7 +890,7 @@ const cirurgia: Pagina = {
       /* Foto genérica de exame (06/10/2026, JM) até chegar uma da limpeza de
          tártaro na clínica. Antes era a internação, que não tinha relação. */
       foto: {
-        src: "/images/galeria/atendimento-04.webp",
+        src: "/images/galeria/veterinario-border-collie-na-mesa.webp",
         alt: "Veterinário examinando um cão deitado na mesa de atendimento",
         posicao: "35% 60%",
       },
@@ -1433,7 +1433,7 @@ const banhoTosa: Pagina = {
       /* Pet de banho tomado na bancada da clínica, no lugar do retrato do Lucas
          (28/09/2026, JM: "não tem nada a ver"). A seção fala do banho, não de quem dá. */
       foto: {
-        src: "/images/cao.webp",
+        src: "/images/maltes-depois-do-banho.webp",
         alt: "Maltês de gravatinha azul na bancada, depois do banho na clínica",
         posicao: "50% 35%",
       },
@@ -1463,7 +1463,7 @@ const banhoTosa: Pagina = {
       {
         pergunta: "Meu cachorro tem alergia de pele. Pode tomar banho aí?",
         resposta:
-          "Pode, e é até o melhor lugar: o banho é feito com o produto indicado no tratamento, e qualquer piora é vista pela veterinária no mesmo dia.",
+          "Pode, e com uma vantagem: o banho é feito com o produto indicado no tratamento, e qualquer piora é vista pela veterinária no mesmo dia.",
       },
     ],
   },

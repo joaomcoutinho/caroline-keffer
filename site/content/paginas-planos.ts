@@ -370,7 +370,7 @@ export const plamevPet: Pagina = {
     lead:
       "Sim, a clínica atende pelo Plamev Pet. Antes da primeira consulta, ative o ID Pet no app Plamev Appet: é ele que você apresenta no dia. A cobertura depende do plano que você contratou, e a gente confirma antes.",
     foto: {
-      src: "/images/galeria/atendimento-18.webp",
+      src: "/images/galeria/colaboradora-yorkshire.webp",
       alt: "Colaboradora abraçando um yorkshire",
       posicao: "50% 35%",
       posicaoCelular: "50% 45%",

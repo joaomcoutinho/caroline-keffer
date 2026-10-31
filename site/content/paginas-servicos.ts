@@ -33,7 +33,7 @@ export const vacinacao: Pagina = {
     lead:
       "A clínica aplica a vacina polivalente e a antirrábica em cães e gatos e, para cães, a vacina da gripe (tosse dos canis), a de giárdia e o ProHeart, contra o verme do coração. O calendário do seu pet é montado na consulta, conforme a idade, o histórico e a rotina dele.",
     foto: {
-      src: "/images/galeria/atendimento-05.webp",
+      src: "/images/galeria/colaboradora-filhote-de-yorkshire.webp",
       alt: "Colaboradora da clínica segurando um filhote de yorkshire junto ao rosto",
       posicao: "50% 35%",
       posicaoCelular: "50% 45%",
@@ -170,7 +170,7 @@ export const castracao: Pagina = {
     lead:
       "A clínica faz castração de cachorro e gato, macho e fêmea, com avaliação e exames antes da cirurgia e recuperação na internação durante o dia. A idade certa é decidida na consulta, conforme a espécie, o porte e o sexo.",
     foto: {
-      src: "/images/galeria/atendimento-20.webp",
+      src: "/images/galeria/veterinario-pug-de-roupinha.webp",
       alt: "Veterinário de máscara segurando um pug no colo, na área de internação",
       posicao: "50% 35%",
       posicaoCelular: "50% 40%",
@@ -305,7 +305,7 @@ export const odontologia: Pagina = {
     lead:
       "Mau hálito, tártaro e gengiva vermelha são sinais de doença periodontal, e o tratamento é a limpeza com anestesia: raspagem acima e abaixo da gengiva, polimento e, se preciso, a extração do dente que não tem mais como ser salvo. Tudo aqui na clínica, com exames antes e volta para casa no mesmo dia.",
     foto: {
-      src: "/images/cao.webp",
+      src: "/images/maltes-depois-do-banho.webp",
       alt: "Maltês de gravatinha azul, de boca aberta e língua de fora",
       posicao: "50% 40%",
       posicaoCelular: "50% 45%",
@@ -629,7 +629,7 @@ export const gatos: Pagina = {
     lead:
       "A clínica atende gatos em consulta, vacina, exames, castração, cirurgia e nas cinco especialidades, com manejo calmo e sem pressa. Gato esconde muito bem quando está doente, e por isso a consulta de rotina pesa ainda mais para ele.",
     foto: {
-      src: "/images/galeria/atendimento-07.webp",
+      src: "/images/galeria/colaboradora-dois-gatos.webp",
       alt: "Colaboradora da clínica sorrindo com dois gatos no colo",
       posicao: "50% 35%",
       posicaoCelular: "50% 45%",
@@ -689,7 +689,7 @@ export const gatos: Pagina = {
         "Por isso a orientação é a mesma do cão: consulta pelo menos uma vez por ano e, a partir dos 7 anos, a cada seis meses, com vacina em dia mesmo para quem nunca pisa na rua.",
       ],
       foto: {
-        src: "/images/galeria/atendimento-19.webp",
+        src: "/images/galeria/colaboradora-dois-gatos-persas.webp",
         alt: "Colaboradora da clínica com dois gatos persas no colo",
         posicao: "50% 35%",
       },
@@ -741,7 +741,7 @@ export const urgencia: Pagina = {
     lead:
       "A clínica atende urgência de cães e gatos até as 18h de segunda a sexta e até as 16h no sábado: a equipe estabiliza o seu pet na hora e, se ele precisar ficar internado à noite, encaminha para um hospital 24h. Fora desses horários, procure um plantão veterinário 24h.",
     foto: {
-      src: "/images/galeria/atendimento-01.webp",
+      src: "/images/galeria/colaboradora-buldogue-frances.webp",
       alt: "Veterinária abraçando um buldogue francês na área de atendimento",
       posicao: "50% 35%",
       posicaoCelular: "50% 40%",
@@ -853,7 +853,7 @@ export const ortopedia: Pagina = {
     lead:
       "Mancar, evitar a escada, sentir dor para levantar ou ter levado uma pancada são casos de ortopedia. A avaliação começa na consulta, o raio-x é feito aqui na clínica e, quando indicada, a cirurgia ortopédica também.",
     foto: {
-      src: "/images/galeria/atendimento-02.webp",
+      src: "/images/galeria/veterinaria-dois-dinamarqueses.webp",
       alt: "Veterinária sentada no chão do consultório com dois cães de porte grande deitados ao lado",
       posicao: "50% 50%",
       posicaoCelular: "60% 50%",
@@ -877,7 +877,7 @@ export const ortopedia: Pagina = {
         { titulo: "Trauma", detalhe: "Pancada, torção ou mordida em pata e articulação.", icone: "warning" },
       ],
       foto: {
-        src: "/images/galeria/atendimento-10.webp",
+        src: "/images/galeria/dra-carol-buldogue-e-yorkshire.webp",
         alt: "Colaboradora sentada no chão abraçando dois cães pequenos",
         posicao: "50% 35%",
       },

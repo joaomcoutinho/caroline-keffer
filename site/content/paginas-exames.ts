@@ -224,7 +224,7 @@ export const eletrocardiograma: Pagina = {
     lead:
       "O eletrocardiograma registra o ritmo e a atividade elétrica do coração em poucos minutos, sem dor e sem preparo. É pedido em arritmia, sopro, desmaio e antes de cirurgia, e é feito aqui na clínica, com hora marcada.",
     foto: {
-      src: "/images/cachorro4.webp",
+      src: "/images/maltes-na-mesa-de-exame.webp",
       alt: "Cachorro maltês branco em pé sobre a mesa de exame",
       posicao: "50% 45%",
       posicaoCelular: "50% 50%",
