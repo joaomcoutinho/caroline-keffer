@@ -29,6 +29,8 @@ export const medicaoLigada = !ehProposta && Boolean(GA4_ID);
 export const COOKIE_ESCOLHA = "kf_cookies";
 
 export const avisoCookies = {
+  /** Só no cartão do desktop (31/10/2026); no celular a faixa fica só com o texto. */
+  titulo: "Sua privacidade",
   texto:
     "Cookies de análise só se você aceitar. Recusar não muda nada no site.",
   recusar: "Recusar",

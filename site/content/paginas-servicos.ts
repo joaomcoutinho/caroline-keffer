@@ -944,6 +944,8 @@ export const ortopedia: Pagina = {
  * pós-cirúrgico e o bem-estar do pet idoso. Nada além disso é afirmado.
  * VALIDAR: duração da sessão, quantas sessões costuma levar, se atende em
  * domicílio (a foto da sessão não parece ser na clínica) e preço.
+ * A foto da sessão foi melhorada no ChatGPT (nitidez, luz e cor, mesmo
+ * conteúdo), em 31/10/2026; a original fica em _fontes/equipe/.
  */
 export const acupuntura: Pagina = {
   caminho: "/acupuntura-veterinaria",
