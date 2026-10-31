@@ -21,6 +21,7 @@
  */
 
 import {
+  acupuntura,
   castracao,
   consulta,
   gatos,
@@ -1314,7 +1315,7 @@ const equipe: Pagina = {
     sobretitulo: "Quem cuida do seu pet",
     h1: "Dra. Caroline Keffer e a equipe da clínica.",
     lead:
-      "A Dra. Caroline Keffer (CRMV-PE 3053) é médica veterinária e responsável técnica da clínica, há mais de 20 anos na Torre, em Recife. Ao lado dela, a Dra. Isa Lopes (CRMV-PE 6871), a gerente Camila Amaral e o Lucas Leal no banho e tosa: as mesmas pessoas a cada visita.",
+      "A Dra. Caroline Keffer (CRMV-PE 3053) é médica veterinária e responsável técnica da clínica, há mais de 20 anos na Torre, em Recife. Ao lado dela, a Dra. Isa Lopes (CRMV-PE 6871), a Dra. Adriana Lyra (CRMV-PE 7763) na acupuntura, a gerente Camila Amaral e o Lucas Leal no banho e tosa: as mesmas pessoas a cada visita.",
     foto: {
       src: "/images/hero_dra_keffer.webp",
       alt: "Dra. Caroline Keffer sorrindo, retrato em fundo claro",
@@ -1353,7 +1354,7 @@ const equipe: Pagina = {
       {
         pergunta: "Quem atende na clínica?",
         resposta:
-          "A Dra. Caroline Keffer (CRMV-PE 3053) e a Dra. Isa Lopes (CRMV-PE 6871) na clínica geral. A clínica tem ainda especialistas em cardiologia, dermatologia, nefrologia, pneumologia e nutrição com gastroenterologia.",
+          "A Dra. Caroline Keffer (CRMV-PE 3053) e a Dra. Isa Lopes (CRMV-PE 6871) na clínica geral, e a Dra. Adriana Lyra (CRMV-PE 7763) na acupuntura veterinária. A clínica tem ainda especialistas em cardiologia, dermatologia, nefrologia, pneumologia e nutrição com gastroenterologia.",
       },
       {
         pergunta: "Meu pet vai ser atendido sempre pela mesma veterinária?",
@@ -1367,13 +1368,19 @@ const equipe: Pagina = {
           "Há mais de 20 anos. É a mesma veterinária acompanhando o seu pet de filhote a idoso, sem rodízio de plantonista.",
       },
       {
+        pergunta: "A clínica faz acupuntura veterinária?",
+        resposta:
+          "Faz, com a Dra. Adriana Lyra (CRMV-PE 7763), para cães e gatos: alívio da dor, problemas ortopédicos e neurológicos, mobilidade e ansiedade. Agende uma avaliação pelo WhatsApp.",
+      },
+      {
         pergunta: "Quem cuida do banho e tosa?",
         resposta:
           "O Lucas Leal, do banho e tosa. Se ele notar algo na pele ou no ouvido durante o banho, a veterinária avalia no mesmo dia.",
       },
     ],
   },
-  relacionados: ["especialidades", "check-up", "cirurgia"],
+  /* A acupuntura entrou no lugar da cirurgia (31/10/2026): é o serviço da Dra. Adriana, que acabou de chegar à equipe. */
+  relacionados: ["especialidades", "acupuntura", "check-up"],
   revisao: PENDENTE,
 };
 
@@ -1487,6 +1494,8 @@ export const paginas = {
   gatos,
   urgencia,
   ortopedia,
+  /* 31/10/2026: com a Dra. Adriana Lyra. */
+  acupuntura,
   ultrassom,
   "raio-x": raioX,
   eletrocardiograma,
@@ -1559,6 +1568,7 @@ export const rodapeServicos = [
   { rotulo: "Exames", caminho: "/exames-de-imagem" },
   { rotulo: "Check-up", caminho: "/check-up-veterinario" },
   { rotulo: "Urgência até 18h", caminho: "/urgencia-veterinaria" },
+  { rotulo: "Acupuntura", caminho: "/acupuntura-veterinaria" },
   { rotulo: "Planos de saúde pet", caminho: "/planos-de-saude-pet" },
   { rotulo: "Banho e tosa", caminho: "/banho-e-tosa" },
   { rotulo: "Dra. Carol e equipe", caminho: "/equipe" },

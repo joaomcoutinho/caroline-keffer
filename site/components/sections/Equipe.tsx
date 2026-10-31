@@ -6,7 +6,7 @@ import { caminhoPublico } from "@/lib/caminho";
 import { equipe, CTA_PRIMARIO } from "@/content/site";
 
 /**
- * Dobra da equipe: grade rígida, quatro iguais, e HOLOFOTE no cursor.
+ * Dobra da equipe: grade rígida, todos iguais, e HOLOFOTE no cursor.
  *
  * 11/09/2026 (JM): a versão em arco foi lida como hierarquia ("por que alguns
  * em destaque no meio?"), e a leitura está certa. Deslocamento vertical sempre
@@ -61,10 +61,12 @@ export function Equipe() {
         No toque não há hover: ficam o nome e a função — lá quem agenda é a
         barra fixa.
       */}
-      {/* Quatro pessoas: a Gerlane, da recepção, saiu em 02/10/2026 (JM). */}
-      <ul className="equipe-grade mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+      {/* A Gerlane, da recepção, saiu em 02/10/2026 (JM); a Dra. Adriana
+          entrou em 31/10/2026. Com cinco, a grade virou linha que quebra e
+          centraliza: no celular a quinta fica no meio, não sozinha à esquerda. */}
+      <ul className="equipe-grade mt-12 flex flex-wrap justify-center gap-4 lg:flex-nowrap lg:gap-6">
         {equipe.membros.map((membro, i) => (
-          <li key={membro.nome}>
+          <li key={membro.nome} className="w-[calc((100%-1rem)/2)] lg:w-auto lg:flex-1">
             <Revelar atraso={0.08 + i * 0.06}>
               <article className="membro-card">
                 <div className="membro-foto moldura-pata">
@@ -73,7 +75,7 @@ export function Equipe() {
                     alt={membro.alt}
                     width={640}
                     height={854}
-                    sizes="(max-width: 1024px) 45vw, 230px"
+                    sizes="(max-width: 1024px) 45vw, 220px"
                     className="h-full w-full object-cover"
                   />
                 </div>

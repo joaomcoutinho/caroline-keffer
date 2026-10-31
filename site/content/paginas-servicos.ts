@@ -934,3 +934,115 @@ export const ortopedia: Pagina = {
   relacionados: ["cirurgia", "raio-x", "urgencia"],
   revisao: PENDENTE,
 };
+
+/* ------------------------------------------------------------------ */
+
+/*
+ * ACUPUNTURA (31/10/2026). Serviço novo, com a Dra. Adriana Lyra (CRMV-PE
+ * 7763), que entrou na equipe. A copy parte do texto que a clínica mandou:
+ * dor, problemas neurológicos e ortopédicos, mobilidade, ansiedade e estresse,
+ * pós-cirúrgico e o bem-estar do pet idoso. Nada além disso é afirmado.
+ * VALIDAR: duração da sessão, quantas sessões costuma levar, se atende em
+ * domicílio (a foto da sessão não parece ser na clínica) e preço.
+ */
+export const acupuntura: Pagina = {
+  caminho: "/acupuntura-veterinaria",
+  rotulo: "Acupuntura",
+  seo: {
+    titulo: "Acupuntura veterinária na Torre, Recife | Caroline Keffer",
+    descricao:
+      "Acupuntura para cães e gatos na Torre, Recife: alívio da dor, ortopedia, problemas neurológicos, mobilidade e ansiedade. Agende pelo WhatsApp.",
+  },
+  topo: {
+    sobretitulo: "Acupuntura veterinária",
+    h1: "Acupuntura veterinária na Torre, em Recife.",
+    lead:
+      "A acupuntura é uma terapia integrativa que alivia a dor e ajuda no tratamento de problemas neurológicos e ortopédicos, na mobilidade, na ansiedade e no estresse de cães e gatos. Quem atende é a Dra. Adriana Lyra (CRMV-PE 7763), da equipe da clínica.",
+    foto: {
+      src: "/images/acupuntura/sessao-cao.webp",
+      alt: "Dra. Adriana Lyra sentada no chão aplicando acupuntura em um cão de pelo longo caramelo e preto, deitado e tranquilo",
+      posicao: "62% 30%",
+      posicaoCelular: "62% 30%",
+    },
+    mensagemWhatsapp: "Olá! Vim pela página de acupuntura do site e gostaria de agendar uma avaliação.",
+  },
+  servico: { nome: "Acupuntura veterinária", tipo: "Acupuntura veterinária" },
+  blocos: [
+    {
+      tipo: "cartoes",
+      titulo: "Quando a acupuntura ajuda.",
+      intro: "Ela entra junto do tratamento que o seu pet já faz, para ele viver com mais conforto.",
+      colunas: 3,
+      itens: [
+        { titulo: "Dor", texto: "Alívio da dor que não passa, da articulação à coluna.", icone: "pill" },
+        { titulo: "Ortopedia", texto: "Artrose, displasia e problemas de coluna e articulação.", icone: "bone" },
+        { titulo: "Problemas neurológicos", texto: "Apoio no tratamento de quadros que afetam nervos e movimento.", icone: "waveform" },
+        { titulo: "Mobilidade", texto: "Para quem passou a evitar a escada, o passeio ou o salto no sofá.", icone: "walk" },
+        { titulo: "Ansiedade e estresse", texto: "Mais calma e equilíbrio para o pet agitado ou medroso.", icone: "paw" },
+        { titulo: "Pós-cirúrgico", texto: "Ajuda na recuperação depois da cirurgia.", icone: "firstAid" },
+      ],
+    },
+    {
+      tipo: "texto",
+      titulo: "Dra. Adriana Lyra",
+      paragrafos: [
+        "A Dra. Adriana é médica veterinária e cuida da acupuntura na clínica. A terapia estimula pontos específicos do corpo e ajuda a ativar os mecanismos naturais de recuperação do organismo, trazendo mais conforto, equilíbrio e qualidade de vida.",
+        "Faz diferença principalmente para cães e gatos idosos, que convivem com dor e rigidez e merecem envelhecer bem.",
+      ],
+      lista: ["Médica Veterinária · CRMV-PE 7763", "Acupuntura veterinária", "Cães e gatos, de filhote a idoso"],
+      foto: {
+        src: "/images/acupuntura/dra-adriana-gato.webp",
+        alt: "Dra. Adriana Lyra, de óculos e camiseta preta, sorrindo com um gato siamês no colo",
+        posicao: "50% 30%",
+      },
+    },
+    {
+      tipo: "passos",
+      titulo: "Como funciona.",
+      itens: [
+        {
+          titulo: "Avaliação",
+          texto: "A veterinária conhece o histórico, os exames e o que incomoda o seu pet no dia a dia.",
+        },
+        {
+          titulo: "As sessões",
+          texto: "Agulhas finas em pontos específicos do corpo, com o pet acomodado e tranquilo.",
+        },
+        {
+          titulo: "Acompanhamento",
+          texto: "A evolução é acompanhada a cada sessão, junto do tratamento que ele já faz.",
+        },
+      ],
+    },
+  ],
+  faq: {
+    titulo: "Dúvidas sobre acupuntura.",
+    itens: [
+      {
+        pergunta: "Acupuntura veterinária funciona para quê?",
+        resposta:
+          "Ajuda no alívio da dor, no tratamento de problemas neurológicos e ortopédicos, na mobilidade, na ansiedade e no estresse, e na recuperação depois de cirurgia. A avaliação diz se ela é indicada para o caso do seu pet.",
+      },
+      {
+        pergunta: "A acupuntura substitui o remédio?",
+        resposta:
+          "Não. É uma terapia integrativa: soma ao tratamento que o seu pet já faz. Qualquer mudança na medicação é decidida pela veterinária.",
+      },
+      {
+        pergunta: "Gato pode fazer acupuntura?",
+        resposta: "Pode. A acupuntura é para cães e gatos, e ajuda muito os idosos.",
+      },
+      {
+        pergunta: "Quantas sessões o meu pet vai precisar?",
+        resposta:
+          "Depende do caso. Na avaliação, a Dra. Adriana explica o plano e como acompanhar a evolução.",
+      },
+      {
+        pergunta: "O plano de saúde pet cobre acupuntura?",
+        resposta: "Depende do plano e da modalidade. Mande o nome do plano no WhatsApp que a gente confirma.",
+      },
+    ],
+  },
+  relacionados: ["ortopedia", "equipe", "check-up"],
+  revisao: { por: null, data: "2026-10-31" },
+};

@@ -565,6 +565,17 @@ export const equipe = {
       foto: "/images/equipe-lucas-leal.webp",
       alt: "Lucas Leal, pet groomer da clínica",
     },
+    {
+      /* Entrou na equipe em 31/10/2026 (JM), com a acupuntura. CRMV enviado
+         pela clínica. Retrato: foto dela com o gato, fundo trocado no
+         ChatGPT pelo cinza claro das outras (original em _fontes/equipe/). */
+      nome: "Dra. Adriana Lyra",
+      detalhe: "Acupuntura veterinária",
+      papel: "Médica Veterinária",
+      registro: "CRMV-PE 7763",
+      foto: "/images/equipe-adriana-lyra.webp",
+      alt: "Dra. Adriana Lyra, de óculos e camiseta preta, sorrindo com um gato siamês no colo",
+    },
   ],
 } as const;
 
