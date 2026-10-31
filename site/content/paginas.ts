@@ -157,6 +157,8 @@ export type Pagina = {
   };
   /** Vira `Service` no JSON-LD. Ausente em página que não é serviço (equipe). */
   servico?: { nome: string; tipo: string };
+  /** Quem atende o serviço, pelo nome em `equipe.membros` (entra no JSON-LD como `Person` com `knowsAbout`). */
+  profissional?: string;
   blocos: readonly Bloco[];
   faq: { titulo: string; itens: readonly Pergunta[] };
   relacionados: readonly string[];

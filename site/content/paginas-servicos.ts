@@ -969,6 +969,7 @@ export const acupuntura: Pagina = {
     mensagemWhatsapp: "Olá! Vim pela página de acupuntura do site e gostaria de agendar uma avaliação.",
   },
   servico: { nome: "Acupuntura veterinária", tipo: "Acupuntura veterinária" },
+  profissional: "Dra. Adriana Lyra",
   blocos: [
     {
       tipo: "cartoes",
@@ -1021,9 +1022,10 @@ export const acupuntura: Pagina = {
     titulo: "Dúvidas sobre acupuntura.",
     itens: [
       {
-        pergunta: "Acupuntura veterinária funciona para quê?",
+        /* "acupuntura para cachorro funciona" aparece no autocompletar do Google (31/10/2026). */
+        pergunta: "Acupuntura para cachorro funciona?",
         resposta:
-          "Ajuda no alívio da dor, no tratamento de problemas neurológicos e ortopédicos, na mobilidade, na ansiedade e no estresse, e na recuperação depois de cirurgia. A avaliação diz se ela é indicada para o caso do seu pet.",
+          "Funciona como terapia integrativa. Ajuda no alívio da dor, no tratamento de problemas neurológicos e ortopédicos, na mobilidade, na ansiedade e no estresse, e na recuperação depois de cirurgia. A avaliação diz se ela é indicada para o caso do seu pet.",
       },
       {
         pergunta: "A acupuntura substitui o remédio?",

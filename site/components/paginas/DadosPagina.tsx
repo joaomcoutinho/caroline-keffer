@@ -38,21 +38,33 @@ export function DadosPagina({ pagina }: { pagina: Pagina }) {
     openingHoursSpecification: horarioClinica,
   };
 
-  const pessoaDraCarol = {
-    "@type": "Person",
-    "@id": `${meta.url}/equipe/#dra-caroline-keffer`,
-    name: "Caroline Keffer",
-    honorificPrefix: "Dra.",
-    jobTitle: equipe.membros[0].papel,
-    worksFor: { "@id": idClinica },
-    /* Registro no conselho, confirmado pela clínica (29/09/2026). */
-    hasCredential: {
-      "@type": "EducationalOccupationalCredential",
-      credentialCategory: "Registro profissional",
-      name: "CRMV-PE 3053",
-      recognizedBy: { "@type": "Organization", name: "Conselho Regional de Medicina Veterinária de Pernambuco" },
-    },
-  };
+  /* As veterinárias (quem tem registro na equipe). Os três números foram
+     conferidos na consulta pública do CFMV/CRMV (siscad.cfmv.gov.br) em
+     31/10/2026: 03053, 06871 e 07763, todos ativos (seo-mxc 1.31 e 1.88). */
+  const veterinarias = equipe.membros.flatMap((m) =>
+    "registro" in m
+      ? [
+          {
+            "@type": "Person",
+            "@id": `${meta.url}/equipe/#${idPessoa(m.nome)}`,
+            name: m.nome.replace(/^Dra?\.\s*/, ""),
+            honorificPrefix: "Dra.",
+            jobTitle: m.papel,
+            worksFor: { "@id": idClinica },
+            hasCredential: {
+              "@type": "EducationalOccupationalCredential",
+              credentialCategory: "Registro profissional",
+              name: m.registro,
+              recognizedBy: { "@type": "Organization", name: "Conselho Regional de Medicina Veterinária de Pernambuco" },
+            },
+          },
+        ]
+      : [],
+  );
+  const pessoaDraCarol = veterinarias[0];
+  const profissional = pagina.profissional
+    ? veterinarias.find((v) => v["@id"].endsWith(`#${idPessoa(pagina.profissional!)}`))
+    : undefined;
 
   const pagina_ = {
     "@type": "WebPage",
@@ -95,8 +107,16 @@ export function DadosPagina({ pagina }: { pagina: Pagina }) {
     pagina_,
     perguntas,
     ...(servico ? [servico] : []),
-    // A página da equipe e qualquer página já revisada precisam da pessoa no grafo.
-    ...(pagina.caminho === "/equipe" || pagina.revisao.por ? [pessoaDraCarol] : []),
+    // A equipe leva as três; página revisada leva a Dra. Carol; serviço com
+    // profissional nomeado leva quem atende.
+    ...(pagina.caminho === "/equipe"
+      ? veterinarias
+      : [
+          ...(pagina.revisao.por ? [pessoaDraCarol] : []),
+          ...(profissional && profissional !== pessoaDraCarol
+            ? [{ ...profissional, knowsAbout: pagina.servico?.nome }]
+            : []),
+        ]),
   ];
 
   return (
@@ -107,4 +127,14 @@ export function DadosPagina({ pagina }: { pagina: Pagina }) {
       }}
     />
   );
+}
+
+/** "Dra. Adriana Lyra" → "dra-adriana-lyra" (o @id da Dra. Carol já era assim). */
+function idPessoa(nome: string) {
+  return nome
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
