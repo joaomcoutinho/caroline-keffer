@@ -567,8 +567,9 @@ export const equipe = {
     },
     {
       /* Entrou na equipe em 31/10/2026 (JM), com a acupuntura. CRMV enviado
-         pela clínica. Retrato: foto dela com o gato, fundo trocado no
-         ChatGPT pelo cinza claro das outras (original em _fontes/equipe/). */
+         pela clínica. Retrato: foto dela com o gato, fundo limpo no ChatGPT e
+         recortado pra branco puro com scripts/recorta-fundo.swift, como a
+         Camila e o Lucas (JM: "exatamente branco"; original em _fontes/equipe/). */
       nome: "Dra. Adriana Lyra",
       detalhe: "Acupuntura veterinária",
       papel: "Médica Veterinária",
