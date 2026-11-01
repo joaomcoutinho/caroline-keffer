@@ -574,7 +574,7 @@ export const equipe = {
       detalhe: "Acupuntura veterinária",
       papel: "Médica Veterinária",
       registro: "CRMV-PE 7763",
-      foto: "/images/equipe-adriana-lyra.webp",
+      foto: "/images/equipe-adriana-lyra-v2.webp",
       alt: "Dra. Adriana Lyra, de óculos e camiseta preta, sorrindo com um gato siamês no colo",
     },
   ],
