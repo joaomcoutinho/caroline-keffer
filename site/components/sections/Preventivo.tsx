@@ -145,20 +145,28 @@ export function Preventivo() {
             colunas ele ligaria o item 2 ao 3 atravessando o vão. Com quatro
             itens por etapa, uma coluna cabe sem alongar a dobra.
           */}
-          <ol key={etapa.id} className="lista-passos mt-6">
-            {etapa.itens.map((item, i) => (
-              <li
-                key={item}
-                className="vacina-item"
-                style={{ animationDelay: `${i * 70}ms` }}
-              >
-                <span className="lista-num" aria-hidden>
-                  {i + 1}
-                </span>
-                <p className="leading-relaxed text-text-2">{item}</p>
-              </li>
-            ))}
-          </ol>
+          {/*
+            03/11/2026 (SEO 1.54): as listas de TODAS as etapas vêm no HTML e só
+            a escolhida aparece; as outras ficam com `hidden`. Antes só a etapa
+            ativa existia no HTML servido. Sair do `hidden` reanima a entrada,
+            como fazia a remontagem pela key.
+          */}
+          {preventivo.etapas.map((e) => (
+            <ol key={e.id} hidden={e.id !== etapa.id} className="lista-passos mt-6">
+              {e.itens.map((item, i) => (
+                <li
+                  key={item}
+                  className="vacina-item"
+                  style={{ animationDelay: `${i * 70}ms` }}
+                >
+                  <span className="lista-num" aria-hidden>
+                    {i + 1}
+                  </span>
+                  <p className="leading-relaxed text-text-2">{item}</p>
+                </li>
+              ))}
+            </ol>
+          ))}
 
           <p className="mt-7 flex items-start gap-3 border-t border-hairline pt-6 text-sm leading-relaxed text-text-3">
             <InfoIcon

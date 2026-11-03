@@ -126,7 +126,6 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
     irPara(destino);
   };
 
-  const atual = itens[ativo];
 
   return (
     /*
@@ -261,45 +260,58 @@ export function ExploradorServicos({ itens, rotulo }: Props) {
           são UM bloco, centrado na altura da foto, com o texto maior
           ocupando o espaço.
         */}
-        <div key={atual.nome} className="servico-painel flex flex-col lg:justify-center">
-          <p className="mt-6 text-sm font-semibold tracking-[0.08em] text-brand tabular-nums sm:mt-0">
-            {String(ativo + 1).padStart(2, "0")}
-            <span className="text-text-3"> / {String(itens.length).padStart(2, "0")}</span>
-          </p>
-          <h3 className="mt-3 font-display text-2xl leading-tight font-bold text-balance lg:text-[2.35rem] lg:leading-[1.1]">
-            {atual.nome}
-          </h3>
-          <p className="mt-3 text-lg leading-relaxed text-text-2 lg:mt-4 lg:text-xl">
-            {atual.texto}
-          </p>
+        {/*
+          TODOS OS PAINÉIS NO HTML (03/11/2026, SEO 1.54): antes só o serviço
+          ativo era renderizado, e o texto dos outros nove não existia no HTML
+          servido (o Google e as IAs não liam). Agora todos vêm do servidor e
+          só o ativo aparece; os outros ficam com `hidden`. Sair do `hidden`
+          reinicia a animação `entra-painel`, como fazia a remontagem pela key.
+        */}
+        {itens.map((atual, i) => (
+          <div
+            key={atual.nome}
+            hidden={i !== ativo}
+            className="servico-painel flex flex-col lg:justify-center"
+          >
+            <p className="mt-6 text-sm font-semibold tracking-[0.08em] text-brand tabular-nums sm:mt-0">
+              {String(i + 1).padStart(2, "0")}
+              <span className="text-text-3"> / {String(itens.length).padStart(2, "0")}</span>
+            </p>
+            <h3 className="mt-3 font-display text-2xl leading-tight font-bold text-balance lg:text-[2.35rem] lg:leading-[1.1]">
+              {atual.nome}
+            </h3>
+            <p className="mt-3 text-lg leading-relaxed text-text-2 lg:mt-4 lg:text-xl">
+              {atual.texto}
+            </p>
 
-          {/*
-            As partes nomeadas do serviço. Ficam em pílulas e não em frase
-            corrida porque aqui a leitura é de VARREDURA: o tutor procura a
-            especialidade do caso dele, e lista com fio em volta se percorre
-            mais rápido que texto separado por vírgula.
-          */}
-          {atual.itens && atual.itens.length > 0 ? (
-            /* No celular é lista, um item por linha (06/10/2026, JM: as pílulas
-               quebravam em larguras diferentes e ficavam desalinhadas); do
-               tablet para cima, as pílulas cabem numa linha. Ver
-               `.servico-subitens` no globals.css. */
-            <ul className="servico-subitens">
-              {atual.itens.map((sub) => (
-                <li key={sub}>{sub}</li>
-              ))}
-            </ul>
-          ) : null}
+            {/*
+              As partes nomeadas do serviço. Ficam em pílulas e não em frase
+              corrida porque aqui a leitura é de VARREDURA: o tutor procura a
+              especialidade do caso dele, e lista com fio em volta se percorre
+              mais rápido que texto separado por vírgula.
+            */}
+            {atual.itens && atual.itens.length > 0 ? (
+              /* No celular é lista, um item por linha (06/10/2026, JM: as pílulas
+                 quebravam em larguras diferentes e ficavam desalinhadas); do
+                 tablet para cima, as pílulas cabem numa linha. Ver
+                 `.servico-subitens` no globals.css. */
+              <ul className="servico-subitens">
+                {atual.itens.map((sub) => (
+                  <li key={sub}>{sub}</li>
+                ))}
+              </ul>
+            ) : null}
 
-          {/*
-            CTA do serviço (15/09/2026, JM: "um CTA mais destacado"). É o botão
-            único do site, com o mesmo rótulo, e só a mensagem que chega no
-            WhatsApp já vem com o nome do serviço. Vem pronto do servidor
-            (`Servicos.tsx`): assim o conteúdo do site não entra no pacote de
-            JavaScript deste componente.
-          */}
-          {atual.cta ? <div className="mt-8">{atual.cta}</div> : null}
-        </div>
+            {/*
+              CTA do serviço (15/09/2026, JM: "um CTA mais destacado"). É o botão
+              único do site, com o mesmo rótulo, e só a mensagem que chega no
+              WhatsApp já vem com o nome do serviço. Vem pronto do servidor
+              (`Servicos.tsx`): assim o conteúdo do site não entra no pacote de
+              JavaScript deste componente.
+            */}
+            {atual.cta ? <div className="mt-8">{atual.cta}</div> : null}
+          </div>
+        ))}
       </div>
     </div>
   );

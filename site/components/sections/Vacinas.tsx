@@ -181,27 +181,37 @@ export function Vacinas() {
               </span>
             </p>
 
-            {/* `key` remonta a lista a cada troca, então a entrada reanima. */}
-            <ol
-              key={`${especie.id}-${fase.id}`}
-              className="lista-passos mt-6"
-            >
-              {fase.itens.map((item, i) => (
-                <li
-                  key={item.nome}
-                  className="vacina-item"
-                  style={{ animationDelay: `${i * 70}ms` }}
+            {/*
+              03/11/2026 (SEO 1.54): as listas de TODAS as espécies e fases vêm
+              no HTML e só a escolhida aparece; as outras ficam com `hidden`.
+              Antes só a combinação ativa existia no HTML servido. Sair do
+              `hidden` reanima a entrada, como fazia a remontagem pela key.
+            */}
+            {vacinas.especies.map((esp) =>
+              esp.fases.map((fs) => (
+                <ol
+                  key={`${esp.id}-${fs.id}`}
+                  hidden={esp.id !== especie.id || fs.id !== fase.id}
+                  className="lista-passos mt-6"
                 >
-                  <span className="lista-num" aria-hidden>
-                    {i + 1}
-                  </span>
-                  <p className="font-medium text-text">{item.nome}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-text-2">
-                    {item.quando}
-                  </p>
-                </li>
-              ))}
-            </ol>
+                  {fs.itens.map((item, i) => (
+                    <li
+                      key={item.nome}
+                      className="vacina-item"
+                      style={{ animationDelay: `${i * 70}ms` }}
+                    >
+                      <span className="lista-num" aria-hidden>
+                        {i + 1}
+                      </span>
+                      <p className="font-medium text-text">{item.nome}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-text-2">
+                        {item.quando}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              )),
+            )}
 
             <p className="mt-7 flex items-start gap-3 border-t border-hairline pt-6 text-sm leading-relaxed text-text-3">
               <InfoIcon
