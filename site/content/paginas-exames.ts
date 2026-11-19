@@ -214,7 +214,7 @@ export const eletrocardiograma: Pagina = {
   rotulo: "Eletrocardiograma",
   pais: paiExames,
   seo: {
-    titulo: "Eletrocardiograma veterinário em Recife | Caroline Keffer",
+    titulo: "Eletrocardiograma veterinário na Torre, Recife | Caroline Keffer", // 19/11: = H1 (1.03, 6.03)
     descricao:
       "Eletrocardiograma veterinário na Torre, Recife: arritmia, sopro, desmaio e avaliação antes da cirurgia. Sem jejum e sem dor. Agende pelo WhatsApp.",
   },

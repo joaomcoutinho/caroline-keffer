@@ -69,7 +69,9 @@ export function Trilho({ children, className = "", ordenada = false }: Props) {
 
   return (
     <>
-      <Lista ref={ref} className={`trilho-mobile ${className}`}>
+      {/* tabIndex: no celular a lista rola de lado e precisa ser alcançável
+          pelo teclado mesmo sem link dentro (axe scrollable-region-focusable, 1.21). */}
+      <Lista ref={ref} tabIndex={0} className={`trilho-mobile ${className}`}>
         {children}
       </Lista>
       {total > 1 ? (

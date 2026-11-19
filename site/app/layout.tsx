@@ -34,10 +34,15 @@ const fonteTitulo = Fraunces({
   axes: ["SOFT", "opsz"],
 });
 
+/* 19/11/2026 (seo-mxc 1.20, playbook 04 P-05): o corpo usa `fallback` (100 ms
+   de espera e, se a fonte não chegar em ~3 s, fica a do sistema, sem trocar no
+   meio da leitura) e NÃO é pré-carregado: só a fonte do título, que pinta o
+   maior elemento da primeira tela no celular, entra no preload. */
 const fonteCorpo = Nunito_Sans({
   variable: "--fonte-corpo",
   subsets: ["latin"],
-  display: "swap",
+  display: "fallback",
+  preload: false,
 });
 
 export const metadata: Metadata = {

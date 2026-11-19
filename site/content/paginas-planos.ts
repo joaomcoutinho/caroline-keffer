@@ -132,7 +132,7 @@ export const care: Pagina = {
   rotulo: "CARE",
   pais: paiPlanos,
   seo: {
-    titulo: "Clínica credenciada CARE em Recife | Caroline Keffer",
+    titulo: "Clínica credenciada CARE Saúde Animal na Torre, Recife | Caroline Keffer", // 19/11: = H1 (1.03, 6.03)
     descricao:
       "A Clínica Caroline Keffer é credenciada CARE Saúde Animal na Torre, Recife. Veja como usar o cartão virtual do app e confirme a cobertura pelo WhatsApp.",
   },
@@ -207,7 +207,9 @@ export const petloveSaude: Pagina = {
   rotulo: "Petlove Saúde",
   pais: paiPlanos,
   seo: {
-    titulo: "Clínica credenciada Petlove Saúde em Recife | Caroline Keffer",
+    // 19/11/2026 (seo-mxc 6.03): título igual ao H1 (1.03), como na Pet Top ("petlove recife":
+    // 12 aparições, posição 8,4, nenhum clique de 08/10 a 19/11).
+    titulo: "Clínica credenciada Petlove Saúde na Torre, Recife | Caroline Keffer",
     descricao:
       "A Clínica Caroline Keffer é credenciada Petlove Saúde na Torre, Recife. Veja como usar o plano na clínica e confirme a cobertura pelo WhatsApp.",
   },
@@ -286,9 +288,11 @@ export const petTop: Pagina = {
   rotulo: "Pet Top",
   pais: paiPlanos,
   seo: {
-    titulo: "Clínica credenciada Pet Top em Recife | Caroline Keffer",
+    // 19/11/2026 (seo-mxc 6.03): título igual ao H1 (1.03). Na busca "pet top rede
+    // credenciada recife" o Google trocava o título pelo H1 no resultado.
+    titulo: "Clínica credenciada Pet Top Saúde na Torre, Recife | Caroline Keffer",
     descricao:
-      "A Clínica Caroline Keffer é credenciada Pet Top Saúde, plano de Recife, na Torre. Veja como usar a carteirinha digital e confirme a cobertura pelo WhatsApp.",
+      "A Clínica Caroline Keffer, na Torre, faz parte da rede credenciada Pet Top Saúde em Recife. Veja como usar a carteirinha digital e confirme a cobertura pelo WhatsApp.",
   },
   topo: {
     sobretitulo: "Planos de saúde pet · Pet Top",
@@ -360,7 +364,7 @@ export const plamevPet: Pagina = {
   rotulo: "Plamev Pet",
   pais: paiPlanos,
   seo: {
-    titulo: "Clínica credenciada Plamev Pet em Recife | Caroline Keffer",
+    titulo: "Clínica credenciada Plamev Pet na Torre, Recife | Caroline Keffer", // 19/11: = H1 (1.03, 6.03)
     descricao:
       "A Clínica Caroline Keffer é credenciada Plamev Pet na Torre, Recife. Veja como ativar o ID Pet no app e confirme a cobertura pelo WhatsApp.",
   },

@@ -64,9 +64,11 @@ export function Equipe() {
       {/* A Gerlane, da recepção, saiu em 02/10/2026 (JM); a Dra. Adriana
           entrou em 31/10/2026. Com cinco, a grade virou linha que quebra e
           centraliza: no celular a quinta fica no meio, não sozinha à esquerda. */}
+      {/* lg:min-w-0 (19/11/2026, seo-mxc 1.21): com 5 retratos, entre 1024 e ~1200 px a
+          largura mínima do conteúdo empurrava a fileira pra fora da tela. */}
       <ul className="equipe-grade mt-12 flex flex-wrap justify-center gap-4 lg:flex-nowrap lg:gap-6">
         {equipe.membros.map((membro, i) => (
-          <li key={membro.nome} className="w-[calc((100%-1rem)/2)] lg:w-auto lg:flex-1">
+          <li key={membro.nome} className="w-[calc((100%-1rem)/2)] lg:w-auto lg:min-w-0 lg:flex-1">
             <Revelar atraso={0.08 + i * 0.06}>
               <article className="membro-card">
                 <div className="membro-foto moldura-pata">

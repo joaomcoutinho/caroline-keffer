@@ -183,11 +183,13 @@ export function StatusHorario({ className = "" }: Props) {
   const aberto = marca === "1";
 
   return (
-    <span
-      className={`inline-flex items-center gap-2 text-sm ${className}`}
-      // Uma frase só para quem ouve, em vez de dois pedaços soltos.
-      aria-label={`${principal}${complemento ? `, ${complemento}` : ""}`}
-    >
+    <span className={`inline-flex items-center gap-2 text-sm ${className}`}>
+      {/* Uma frase só para quem ouve, em vez de dois pedaços soltos. Em texto
+          escondido, não em `aria-label`: `span` sem papel não pode ter rótulo
+          (axe aria-prohibited-attr, seo-mxc 1.21, 19/11/2026). */}
+      <span className="sr-only">
+        {`${principal}${complemento ? `, ${complemento}` : ""}`}
+      </span>
       <span
         aria-hidden
         className={`relative flex h-2 w-2 shrink-0 rounded-full ${

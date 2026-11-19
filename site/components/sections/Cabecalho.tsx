@@ -47,7 +47,9 @@ export function Cabecalho() {
             alt="Clínica Pet Caroline Keffer"
             width={48}
             height={48}
-            priority
+            // Sem `priority` (19/11, seo-mxc 1.20): o selo de 48 px não é o maior
+            // elemento da tela e não precisa de preload; `eager` só não o deixa lazy.
+            loading="eager"
             className="cabecalho-selo h-12 w-12 rounded-full object-cover ring-1 ring-white/25"
           />
         </Link>

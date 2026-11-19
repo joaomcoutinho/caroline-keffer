@@ -59,6 +59,8 @@ export function BarraAgendamento() {
       role="complementary"
       aria-label="Agendamento rápido"
       aria-hidden={!mostrar}
+      // Escondida, também sai da ordem do Tab (axe aria-hidden-focus, 1.21).
+      inert={!mostrar}
     >
       <div className="vidro flex items-center gap-2 rounded-[1.4rem] p-2.5">
         {/*

@@ -142,7 +142,7 @@
     --surface-3: #163742;
     --text: #eef3f3;
     --text-2: #c6d6da;
-    --text-3: #92abb2;
+    --text-3: #96afb6; /* 19/11: 7,2:1 no #0b2129 (seo-mxc 1.21, texto pequeno 7:1); era #92abb2, 6,88:1 */
     --hairline: #214954;
     --brand: #7ec0dc;
     --brand-soft: #a8d6e8;
@@ -221,7 +221,7 @@
   --surface-3: #163742;
   --text: #eef3f3;
   --text-2: #c6d6da;
-  --text-3: #92abb2;
+  --text-3: #96afb6; /* 19/11: 7,2:1 no #0b2129 (seo-mxc 1.21, texto pequeno 7:1); era #92abb2, 6,88:1 */
   --hairline: #214954;
   --brand: #7ec0dc;
   --brand-soft: #a8d6e8;

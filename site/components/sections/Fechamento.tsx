@@ -152,22 +152,25 @@ export function Fechamento() {
                   CFMV pede o registro na publicidade, não só em /equipe). */}
               {" "}Responsável técnica: Dra. Caroline Keffer, CRMV-PE 3053.
             </p>
-            <p className="flex flex-wrap justify-center gap-x-4 sm:justify-start">
-              <Link href="/politica-de-privacidade" className="-my-2 py-2 underline underline-offset-2 transition-colors hover:text-acao-texto">
+            {/* 19/11/2026 (seo-mxc 1.21, axe target-size): cada link tem 24 px de altura
+                (py-1) e as linhas que quebram ficam 8 px separadas (gap-y-2); com o
+                -my-2/py-2 de antes, a linha de baixo cobria metade da de cima. */}
+            <p className="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:justify-start">
+              <Link href="/politica-de-privacidade" className="-my-1 inline-block py-1 underline underline-offset-2 transition-colors hover:text-acao-texto">
                 Política de privacidade
               </Link>
-              <Link href="/termos-de-uso" className="-my-2 py-2 underline underline-offset-2 transition-colors hover:text-acao-texto">
+              <Link href="/termos-de-uso" className="-my-1 inline-block py-1 underline underline-offset-2 transition-colors hover:text-acao-texto">
                 Termos de uso
               </Link>
               {/* Símbolo e nome "Acessibilidade" em destaque (LBI art. 63; seo-mxc
                   1.115): leva a como avisar a clínica, nunca a um selo de
                   "site acessível". */}
-              <Link href="/politica-de-privacidade#acessibilidade" className="-my-2 inline-flex items-center gap-1 py-2 underline underline-offset-2 transition-colors hover:text-acao-texto">
+              <Link href="/politica-de-privacidade#acessibilidade" className="-my-1 inline-flex items-center gap-1 py-1 underline underline-offset-2 transition-colors hover:text-acao-texto">
                 <WheelchairIcon size={14} weight="bold" aria-hidden />
                 Acessibilidade
               </Link>
               {medicaoLigada ? (
-                <BotaoPreferenciasCookies className="-my-2 cursor-pointer py-2 underline underline-offset-2 transition-colors hover:text-acao-texto" />
+                <BotaoPreferenciasCookies className="-my-1 cursor-pointer py-1 underline underline-offset-2 transition-colors hover:text-acao-texto" />
               ) : null}
             </p>
           </div>
