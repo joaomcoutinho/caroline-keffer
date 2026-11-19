@@ -3,6 +3,7 @@ import { Fraunces, Nunito_Sans } from "next/font/google";
 import { meta, ehProposta, ogImagem } from "@/content/site";
 import { medicaoLigada, scriptMedicao } from "@/content/medicao";
 import { AvisoCookies } from "@/components/ui/AvisoCookies";
+import { ContagemVisitas } from "@/components/ui/ContagemVisitas";
 import "./globals.css";
 
 /*
@@ -97,6 +98,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         {children}
         {medicaoLigada ? <AvisoCookies /> : null}
+        {/* Contagem sem cookie de todas as visitas, com ou sem aceite (19/11/2026). */}
+        {medicaoLigada ? <ContagemVisitas /> : null}
       </body>
     </html>
   );
