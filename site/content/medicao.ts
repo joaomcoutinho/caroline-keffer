@@ -15,6 +15,11 @@
  * Só mede no domínio da clínica: a cópia no .pages.dev e o `npm run dev` não
  * mandam dado nenhum, nem mostram o aviso.
  *
+ * APARELHOS DA MXC (19/11/2026): abrir uma vez https://clinicacarolinekeffer.com.br/?mxc_interno=1 marca o
+ * aparelho (localStorage `kf_mxc`) e daí em diante ele não manda nada ao GA4 (`ga-disable`) e vai pro total "teste"
+ * da contagem sem cookie. `?mxc_interno=0` desmarca. Substitui o filtro por IP, que era de internet residencial
+ * dinâmica (o IP 177.206.185.43 da MXC mudou e o filtro passou a não pegar mais a MXC).
+ *
  * ⚠️ Se entrar outra ferramenta (Clarity, Pixel), ela entra AQUI, carregando
  * no mesmo `aceitar`, e a seção "Cookies" da política muda antes do deploy.
  */
@@ -51,6 +56,7 @@ var ID=${JSON.stringify(GA4_ID)},C=${JSON.stringify(COOKIE_ESCOLHA)},H=document.
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;
 gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});
 if(location.hostname!=='clinicacarolinekeffer.com.br'){H.dataset.cookies='fora';return}
+try{var q=location.search;if(/[?&]mxc_interno=1/.test(q))localStorage.setItem('kf_mxc','1');if(/[?&]mxc_interno=0/.test(q))localStorage.removeItem('kf_mxc');if(localStorage.getItem('kf_mxc')==='1')window['ga-disable-'+ID]=true}catch(e){}
 window.kfMedir=function(){if(window.kfMedindo)return;window.kfMedindo=1;
 gtag('consent','update',{analytics_storage:'granted'});
 var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id='+ID;document.head.appendChild(s);

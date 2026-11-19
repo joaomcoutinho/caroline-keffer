@@ -61,7 +61,14 @@ export function ContagemVisitas() {
     let n = 0;
     if (primeira) {
       primeira = false;
-      teste = /[?&]mxc_teste=1/.test(location.search);
+      // Aparelho marcado como da MXC (?mxc_interno=1, ver content/medicao.ts) também vai pro total "teste".
+      let mxc = false;
+      try {
+        mxc = localStorage.getItem("kf_mxc") === "1";
+      } catch {
+        /* sem armazenamento: segue como visitante */
+      }
+      teste = /[?&]mxc_teste=1/.test(location.search) || mxc;
       // começo de visita: chegou de fora do site (ou sem origem)
       try {
         n = new URL(document.referrer).hostname.replace(/^www\./, "") !== location.hostname.replace(/^www\./, "") ? 1 : 0;
