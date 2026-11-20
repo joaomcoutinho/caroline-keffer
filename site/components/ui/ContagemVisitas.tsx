@@ -14,22 +14,30 @@ import { usePathname } from "next/navigation";
  * resposta ao aviso de cookies. O Worker keffer-contagem (~/.mxc-build/keffer-contagem, conta contato@ da MXC) soma 1
  * no total do dia e joga o resto fora. Está descrito na política de privacidade ("O que o site registra").
  *
- * Quem pede para não ser rastreado (Global Privacy Control ou Do Not Track) não é contado. Só conta no domínio
- * oficial (prévias e desenvolvimento ficam fora). `?mxc_teste=1` no endereço vai para o total "teste" até a aba fechar.
+ * 20/11/2026 (JM: "contagem real e mais confiável"): quem tem Global Privacy Control ou Do Not Track ligado passa a
+ * contar também (a contagem não rastreia nem identifica ninguém; a política diz isso), e recarregar a página ou voltar
+ * pelo botão do navegador não abre visita nova. Só conta no domínio oficial (prévias e desenvolvimento ficam fora).
+ * `?mxc_teste=1` no endereço vai para o total "teste" até a aba fechar.
  */
-const URL_C = "https://keffer-contagem.delicate-boat-7a84.workers.dev/c";
+// 20/11/2026: no próprio domínio (rota do Worker keffer-contagem na zona do site, conta joaomcclima), pra bloqueador
+// de terceiros e Safari não barrarem a contagem.
+const URL_C = "/_contagem/c";
 
 let primeira = true;
 let teste = false;
 
 function naoContar() {
-  const nav = navigator as Navigator & { globalPrivacyControl?: boolean };
-  return (
-    location.hostname !== "clinicacarolinekeffer.com.br" ||
-    nav.globalPrivacyControl === true ||
-    nav.doNotTrack === "1" ||
-    nav.webdriver === true
-  );
+  return location.hostname !== "clinicacarolinekeffer.com.br" || navigator.webdriver === true;
+}
+
+/** Recarregar a página ou voltar/avançar pelo navegador não é visita nova. */
+function recarregou() {
+  try {
+    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    return nav?.type === "reload" || nav?.type === "back_forward";
+  } catch {
+    return false;
+  }
 }
 
 /** Resposta ao aviso, lida da marca que o script do <head> e o aviso põem no <html>. */
@@ -69,11 +77,13 @@ export function ContagemVisitas() {
         /* sem armazenamento: segue como visitante */
       }
       teste = /[?&]mxc_teste=1/.test(location.search) || mxc;
-      // começo de visita: chegou de fora do site (ou sem origem)
-      try {
-        n = new URL(document.referrer).hostname.replace(/^www\./, "") !== location.hostname.replace(/^www\./, "") ? 1 : 0;
-      } catch {
-        n = 1;
+      // começo de visita: chegou de fora do site (ou sem origem), sem ser recarga
+      if (!recarregou()) {
+        try {
+          n = new URL(document.referrer).hostname.replace(/^www\./, "") !== location.hostname.replace(/^www\./, "") ? 1 : 0;
+        } catch {
+          n = 1;
+        }
       }
     }
     enviar({ t: "v", g: paginaDe(caminho), n, c: resposta() });

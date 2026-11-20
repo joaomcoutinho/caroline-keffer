@@ -55,7 +55,7 @@ export const politica: Documento = {
     descricao:
       "Como a Clínica Pet Caroline Keffer trata os dados de quem visita o site e fala com a clínica pelo WhatsApp: cookies de análise só com o seu aceite, conforme a LGPD.",
   },
-  atualizadaEm: "2026-11-19",
+  atualizadaEm: "2026-11-20",
   intro:
     "Este site não tem formulário e só usa cookies de análise se você aceitar. Os seus dados pessoais só chegam até a clínica quando você escolhe falar com a gente pelo WhatsApp ou pelo telefone. Abaixo, o que acontece com eles, em linguagem simples.",
   secoes: [
@@ -76,7 +76,7 @@ export const politica: Documento = {
     {
       titulo: "O que o site registra",
       paragrafos: [
-        "Com ou sem o seu aceite, o site conta as visitas de forma anônima, só em números somados por dia: a cada página aberta ele soma 1 ao total, junto com qual página foi (por exemplo, Banho e tosa), se o aviso de cookies foi aceito, recusado ou ainda não respondido, e se houve toque em WhatsApp, Ligar ou Como chegar. Essa contagem não usa cookie, não grava nada no seu aparelho e não guarda o seu endereço IP nem nada que identifique você ou o seu aparelho. Quem ativa no navegador o pedido para não ser rastreado (Global Privacy Control ou Do Not Track) não é contado. É assim que a clínica sabe quantas pessoas visitam o site no total, inclusive quem recusa os cookies.",
+        "Com ou sem o seu aceite, o site conta as visitas de forma anônima, só em números somados por dia: a cada página aberta ele soma 1 ao total, junto com qual página foi (por exemplo, Banho e tosa), se o aviso de cookies foi aceito, recusado ou ainda não respondido, e se houve toque em WhatsApp, Ligar ou Como chegar. Essa contagem não usa cookie, não grava nada no seu aparelho e não guarda o seu endereço IP nem nada que identifique você ou o seu aparelho. Como a contagem não rastreia nem identifica ninguém, ela vale para todo mundo, inclusive para quem ativa no navegador o pedido para não ser rastreado (Global Privacy Control ou Do Not Track). Visitas de robôs e de servidores automáticos são descartadas. É assim que a clínica sabe quantas pessoas visitam o site no total, inclusive quem recusa os cookies.",
         "Além disso, o site é entregue por um serviço de hospedagem, que anota dados técnicos de acesso, como o endereço IP e o tipo de navegador, para manter o serviço funcionando e seguro, e mede a velocidade das páginas em números somados, também sem cookie. Esses registros ficam com o provedor de hospedagem e não são usados pela clínica para identificar ninguém. Com o aceite, entram também os números de visita do Google Analytics, descritos em Cookies.",
       ],
     },
