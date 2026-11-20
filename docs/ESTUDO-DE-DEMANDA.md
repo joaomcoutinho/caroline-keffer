@@ -268,3 +268,26 @@ se mede em %, nunca "posição no ChatGPT".
 Primeira revisão em **05/11/2026** (dia 30 da ficha, item 6.12: consulta sem página dona e URL
 rastreada sem indexar), decisão das próximas páginas e fusões em **05/12/2026** e **04/01/2027**
 (60 e 90 dias, item 7.03 e 7.22 para as páginas de bairro).
+
+## 11 · Revisão com dados reais (6.12) · 20/11/2026
+
+**Search Console, 08/10 a 19/11** (576 aparições, 11 cliques, posição média 8,4): os cliques vêm quase todos de quem
+busca pelo nome ("caroline keffer", "clínica caroline keffer"). Consultas com aparição e sem página dona: "loja pet perto
+de mim abertos agora", "cobre cirurgia", "farmácia" não aparecem com volume; as de plano ("petlove recife", "pet top rede
+credenciada recife") já têm página e ganharam título = H1 em 19/11 (6.03). Genéricas ainda longe: "clínica veterinária
+recife" (21), "banho e tosa recife" (82), "clinicas veterinarias recife" (103).
+
+**Perfil da Empresa, Desempenho jun–nov/2026** (lido em 20/11, conta da clínica, só leitura): 1.365 visualizações
+(−32% contra jun–out/2025), **463 interações: 103 ligações, 359 pedidos de rota, 1 clique no site, 0 agendamentos**.
+55 pesquisas mostraram o Perfil (−22,5%): "clínica veterinária caroline keffer - r. araguatins…" 22, "hospitais e
+clínicas" 17, "… rua araguatins…" 16, e com menos de 15 cada: "clin karoline oliveira", **"clinica de exoticos"**,
+"clinica veterinaria na torre recife", "clinica veterinaria olinda", "clinica veterinaria recife", "clinica veterinaria",
+"clínica veterinária perto de mim", **"farmacia"**, "feline", "karina motta veterinária recife", "pet", **"pet shop"**,
+"pets" e o endereço.
+
+**Leitura:**
+- O Perfil é a porta de entrada da clínica (ligar e traçar rota); o site recebe quase nenhum clique pelo Perfil.
+- **Candidatas a página nova, se a clínica confirmar o serviço:** exóticos/pássaros (Dr. Rivaldo, só com hora marcada;
+  ligado ao 1.81) e loja/pet shop/farmácia (o Instagram antigo cita "Pet Shop, Exames/Vacina e Medicamentos").
+- Nenhuma página indexada some por falta de página: as 33 estão no Google (6.01); com o volume atual, nenhuma é candidata
+  a fundir.
